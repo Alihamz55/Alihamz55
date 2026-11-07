@@ -1,0 +1,15 @@
+[
+  { "text": "Halo", "startMs": 500, "endMs": 900, "timestampMs": 700, "confidence": 1 },
+  { "text": " semua!", "startMs": 900, "endMs": 1500, "timestampMs": 1200, "confidence": 1 },
+  { "text": " Ini", "startMs": 2000, "endMs": 2300, "timestampMs": 2150, "confidence": 1 },
+  { "text": " video", "startMs": 2300, "endMs": 2700, "timestampMs": 2500, "confidence": 1 },
+  { "text": " 3D", "startMs": 2700, "endMs": 3200, "timestampMs": 2950, "confidence": 1 },
+  { "text": " pertamaku", "startMs": 3500, "endMs": 4200, "timestampMs": 3850, "confidence": 1 },
+  { "text": " dibuat", "startMs": 4800, "endMs": 5200, "timestampMs": 5000, "confidence": 1 },
+  { "text": " pakai", "startMs": 5200, "endMs": 5600, "timestampMs": 5400, "confidence": 1 },
+  { "text": " kode!", "startMs": 5600, "endMs": 6300, "timestampMs": 5950, "confidence": 1 },
+  { "text": " Jangan", "startMs": 7000, "endMs": 7400, "timestampMs": 7200, "confidence": 1 },
+  { "text": " lupa", "startMs": 7400, "endMs": 7800, "timestampMs": 7600, "confidence": 1 },
+  { "text": " follow", "startMs": 8000, "endMs": 8600, "timestampMs": 8300, "confidence": 1 },
+  { "text": " ya!", "startMs": 8600, "endMs": 9500, "timestampMs": 9000, "confidence": 1 }
+]
