@@ -1,7 +1,7 @@
 import { AbsoluteFill, Audio, staticFile, useVideoConfig } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
 import { Warung } from "./Warung";
-import { BalonDialog, Intro, Outro, PapanNama } from "./Overlay";
+import { BalonDialog, Intro, Outro, PapanWarung } from "./Overlay";
 
 export type Episode12Props = { pakaiMusik: boolean };
 
@@ -10,11 +10,11 @@ export const Episode12: React.FC<Episode12Props> = ({ pakaiMusik }) => {
   return (
     <AbsoluteFill>
       {/* 3D: warung coto + 2 karakter */}
-      <ThreeCanvas width={width} height={height} camera={{ fov: 50, position: [0, 2.1, 8.2] }}>
+      <ThreeCanvas width={width} height={height} camera={{ fov: 50, position: [0, 2.6, 10] }}>
         <Warung />
       </ThreeCanvas>
 
-      <PapanNama />
+      <PapanWarung />
       <BalonDialog />
       <Intro />
       <Outro />
