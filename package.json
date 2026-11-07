@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "remotion studio",
     "render": "remotion render Video3D out/video.mp4",
+    "render:ep12": "remotion render Episode12 out/episode12.mp4",
     "still": "remotion still Video3D out/thumbnail.png --frame=60",
     "lint": "tsc --noEmit"
   },
