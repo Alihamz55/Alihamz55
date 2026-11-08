@@ -77,3 +77,18 @@ Contoh pemakaian di episode baru:
 2. Ubah naskah di `src/ep13/naskah.ts` dan judul di `src/ep13/Overlay.tsx`.
 3. Daftarkan di `src/Root.tsx` (salin blok `<Composition id="Episode12" ...>` lalu ganti jadi 13).
 4. Render: `npx remotion render Episode13 out/episode13.mp4`
+
+## Video "Doa di Panggung" (karakter hijab pink + lagu)
+
+Komposisi `DoaPanggung`: gambar karakter dianimasikan (napas/goyang halus, kamera pelan mendekat ke wajah),
+sorot lampu dan partikel cahaya berdenyut mengikuti lagu, efek air mata mengalir di pipi, dan lirik Arab.
+
+| Mau ganti... | Edit file |
+|---|---|
+| **Lirik Arab + terjemahan + waktunya** | `src/doa/lirik.ts` |
+| Bagian puncak lagu (air mata lebih deras, cahaya lebih terang) | `puncak` di `src/doa/lirik.ts` |
+| Gambar karakter | ganti `public/doa/karakter.png` (ukuran 941x1672) |
+| Lagu | ganti `public/doa/lagu.mp3` + ubah `DURASI_DETIK` |
+| Posisi jalur air mata | `JALUR_KIRI` / `JALUR_KANAN` di `src/doa/AirMata.tsx` |
+
+Render: `npm run render:doa` → hasil di `out/doa-panggung.mp4`

@@ -2,11 +2,21 @@ import { Composition } from "remotion";
 import { Video3D } from "./Video3D";
 import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
+import { Doa } from "./doa/Doa";
+import { DURASI_DETIK } from "./doa/lirik";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="DoaPanggung"
+        component={Doa}
+        durationInFrames={Math.round(DURASI_DETIK * 30)}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
       <Composition
         id="Episode12"
         component={Episode12}
