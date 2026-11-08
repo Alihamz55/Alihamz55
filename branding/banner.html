@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&display=block" rel="stylesheet">
+<style>
+html,body{margin:0;width:2560px;height:1440px;overflow:hidden}
+body{background:radial-gradient(ellipse at 50% 60%,#5b3fe0 0%,#2a1585 45%,#120640 100%);position:relative;font-family:'Baloo 2'}
+.beam{position:absolute;top:-100px;width:420px;height:1700px;background:linear-gradient(rgba(255,215,130,.45),rgba(255,215,130,0) 80%);filter:blur(14px);transform-origin:top center}
+.lantai{position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(transparent,rgba(255,140,200,.25));}
+.dot{position:absolute;border-radius:50%;background:#fff3c4;box-shadow:0 0 18px #ffd76a}
+.kanan{position:absolute;right:120px;bottom:-40px;height:1300px}
+.kiri{position:absolute;left:120px;bottom:-40px;height:1300px;transform:scaleX(-1);opacity:.9}
+/* area aman (terlihat di semua perangkat): 1546 x 423 di tengah */
+.aman{position:absolute;left:507px;top:508px;width:1546px;height:423px;display:flex;align-items:center;gap:56px;justify-content:center}
+.foto{width:360px;height:360px;flex:none;border-radius:50%;background:url(karakter.png) no-repeat;background-size:590px auto;background-position:-128px -152px;border:12px solid #ffd6ea;box-shadow:0 0 0 8px #ff7fbf,0 0 50px rgba(255,200,120,.8)}
+h1{margin:0;font-weight:800;font-size:170px;line-height:1;color:#fff;text-shadow:0 8px 0 #ff5fa8,0 0 40px rgba(255,210,120,.7)}
+h1 span{color:#ffd76a}
+p{margin:18px 0 0;font-weight:600;font-size:54px;color:#ffe6f3}
+.jadwal{display:inline-block;margin-top:22px;background:#ff5fa8;color:#fff;font-weight:800;font-size:42px;padding:4px 34px;border-radius:40px;border:6px solid #fff}
+</style></head><body>
+<div class="beam" style="left:500px;transform:rotate(-20deg)"></div>
+<div class="beam" style="right:500px;transform:rotate(20deg)"></div>
+<div class="beam" style="left:1070px;opacity:.6"></div>
+<div class="lantai"></div>
+<div id="dots"></div>
+<div class="aman">
+  <div class="foto"></div>
+  <div>
+    <h1>Cahaya <span>Doa</span></h1>
+    <p>Animasi doa &amp; nasyid anak</p>
+    <div class="jadwal">Video baru setiap Jumat</div>
+  </div>
+</div>
+<script>
+const d=document.getElementById('dots');
+for(let i=0;i<90;i++){const s=document.createElement('div');s.className='dot';const r=Math.abs(Math.sin(i*91.7)*43758.5)%1,q=Math.abs(Math.sin(i*12.3)*1234.5)%1,z=Math.abs(Math.sin(i*5.1)*777.7)%1;
+s.style.cssText=`left:${r*2560}px;top:${q*1440}px;width:${6+z*16}px;height:${6+z*16}px;opacity:${.4+z*.6}`;d.appendChild(s)}
+</script>
+</body></html>
