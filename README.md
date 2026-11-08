@@ -81,14 +81,24 @@ Contoh pemakaian di episode baru:
 ## Video "Doa di Panggung" (karakter hijab pink + lagu)
 
 Komposisi `DoaPanggung`: gambar karakter dianimasikan (napas/goyang halus, kamera pelan mendekat ke wajah),
-sorot lampu dan partikel cahaya berdenyut mengikuti lagu, efek air mata mengalir di pipi, dan lirik Arab.
+**mulut bergerak mengikuti suara vokal lagu**, sorot lampu dan partikel cahaya berdenyut mengikuti musik,
+dan efek air mata mengalir di pipi.
 
 | Mau ganti... | Edit file |
 |---|---|
-| **Lirik Arab + terjemahan + waktunya** | `src/doa/lirik.ts` |
-| Bagian puncak lagu (air mata lebih deras, cahaya lebih terang) | `puncak` di `src/doa/lirik.ts` |
-| Gambar karakter | ganti `public/doa/karakter.png` (ukuran 941x1672) |
-| Lagu | ganti `public/doa/lagu.mp3` + ubah `DURASI_DETIK` |
+| Bagian puncak lagu (air mata lebih deras, cahaya lebih terang) | `puncak` di `src/doa/lagu.ts` |
+| Posisi & besar gerak mulut | bagian `GERAK MULUT` di `src/doa/Panggung.tsx` |
 | Posisi jalur air mata | `JALUR_KIRI` / `JALUR_KANAN` di `src/doa/AirMata.tsx` |
+| Gambar karakter | ganti `public/doa/karakter.png` (ukuran 941x1672) |
+
+### Ganti lagu
+Gerak mulut dibaca dari file `src/doa/mulut.json` (1 angka per frame, 0 = tertutup, 1 = terbuka lebar).
+Kalau lagunya diganti, buat ulang file itu:
+
+```bash
+cp lagu-baru.mp3 public/doa/lagu.mp3
+python3 scripts/buat-gerak-mulut.py public/doa/lagu.mp3 src/doa/mulut.json
+```
+lalu ubah `DURASI_DETIK` di `src/doa/lagu.ts`.
 
 Render: `npm run render:doa` → hasil di `out/doa-panggung.mp4`

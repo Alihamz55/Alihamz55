@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { CatmullRomCurve3, Vector3 } from "three";
 import { interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { puncak } from "./lirik";
+import { puncak } from "./lagu";
 
 type KePlane = (px: number, py: number) => [number, number, number];
 

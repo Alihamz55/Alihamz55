@@ -2,8 +2,7 @@ import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig } from
 import { ThreeCanvas } from "@remotion/three";
 import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import { Panggung } from "./Panggung";
-import { LirikOverlay } from "./LirikOverlay";
-import { DURASI_DETIK } from "./lirik";
+import { DURASI_DETIK } from "./lagu";
 
 const LAGU = staticFile("doa/lagu.mp3");
 
@@ -24,7 +23,6 @@ export const Doa: React.FC = () => {
       <ThreeCanvas width={width} height={height} flat camera={{ fov: 50, position: [0, 0, 5] }}>
         <Panggung durasi={DURASI_DETIK} volume={volume} />
       </ThreeCanvas>
-      <LirikOverlay />
       <Audio src={LAGU} />
     </AbsoluteFill>
   );

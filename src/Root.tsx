@@ -3,7 +3,7 @@ import { Video3D } from "./Video3D";
 import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
-import { DURASI_DETIK } from "./doa/lirik";
+import { DURASI_DETIK } from "./doa/lagu";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {

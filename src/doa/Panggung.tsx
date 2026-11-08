@@ -4,7 +4,7 @@ import { useThree } from "@react-three/fiber";
 import { AdditiveBlending, ShaderMaterial, SRGBColorSpace, Texture, TextureLoader } from "three";
 import { cancelRender, continueRender, delayRender, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { AirMata } from "./AirMata";
-import { puncak } from "./lirik";
+import { bukaMulut, puncak } from "./lagu";
 
 const GBR_W = 941;
 const GBR_H = 1672;
@@ -23,7 +23,7 @@ export const kePlane = (px: number, py: number): [number, number, number] => [
 // Shader: gambar + gerakan napas/goyang halus di area kepala & tangan
 const vertex = `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`;
 const fragment = `
-uniform sampler2D map; uniform float t; uniform float terang;
+uniform sampler2D map; uniform float t; uniform float terang; uniform float buka;
 varying vec2 vUv;
 void main(){
   vec2 uv = vUv;
@@ -31,6 +31,18 @@ void main(){
   float m = smoothstep(0.30, 0.04, distance(uv * rasio, vec2(0.537, 0.64) * rasio));
   uv.x += sin(t * 0.8) * 0.0020 * m;
   uv.y += sin(t * 1.6) * 0.0018 * m;
+
+  // GERAK MULUT: bibir bawah & dagu ditarik ke bawah sesuai suara vokal
+  vec2 px = vec2(vUv.x * ${GBR_W}.0, (1.0 - vUv.y) * ${GBR_H}.0); // posisi dalam piksel gambar
+  vec2 mulut = vec2(512.0, 534.0); // tepat di bagian dalam mulut (di bawah gigi)
+  float dx = (px.x - mulut.x) / 42.0;
+  float bawah = px.y - mulut.y;  // positif = di bawah garis mulut
+  float wx = exp(-dx * dx);
+  float turun = smoothstep(0.0, 7.0, bawah) * (1.0 - smoothstep(50.0, 110.0, bawah));
+  float naik = smoothstep(0.0, -10.0, bawah) * (1.0 - smoothstep(-14.0, -40.0, bawah));
+  uv.y += buka * wx * (turun * 12.0 - naik * 2.0) / ${GBR_H}.0;
+  // sedikit melebar ke samping saat terbuka lebar
+  uv.x -= buka * dx * 0.08 * exp(-dx * dx) * turun * 4.0 / ${GBR_W}.0;
   vec4 c = texture2D(map, uv);
   c.rgb *= 1.0 + terang * 0.10;
   gl_FragColor = c;
@@ -137,7 +149,7 @@ export const Panggung: React.FC<{ durasi: number; volume: number }> = ({ durasi,
   const bahan = useMemo(
     () =>
       tekstur
-        ? new ShaderMaterial({ uniforms: { map: { value: tekstur }, t: { value: 0 }, terang: { value: 0 } }, vertexShader: vertex, fragmentShader: fragment })
+        ? new ShaderMaterial({ uniforms: { map: { value: tekstur }, t: { value: 0 }, terang: { value: 0 }, buka: { value: 0 } }, vertexShader: vertex, fragmentShader: fragment })
         : null,
     [tekstur]
   );
@@ -155,6 +167,7 @@ export const Panggung: React.FC<{ durasi: number; volume: number }> = ({ durasi,
   if (bahan) {
     bahan.uniforms.t.value = detik;
     bahan.uniforms.terang.value = kuat;
+    bahan.uniforms.buka.value = bukaMulut(frame);
   }
 
   const kePlaneStabil = useCallback(kePlane, []);
