@@ -19,7 +19,7 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={3000}
         height={3000}
-        defaultProps={{ subjudul: "" }}
+        defaultProps={{ subjudul: "ALIHAMZ" }}
       />
       <Composition
         id="NeonStreets"
