@@ -117,3 +117,6 @@ Video lirik 3D 16 detik: mobil lowrider melaju di kota neon malam hari, lirik ho
 Render: `npm run render:neon`, hasilnya `out/neon-streets.mp4` (sudah dengan lagu).
 Ganti lagu: timpa `public/neon/lagu.mp3`, lalu sesuaikan `BPM`, `MULAI_LAGU`, dan `HOOK_DI_LAGU` di `src/neon/lirik.ts`.
 Render tanpa suara: `npm run render:neon -- --props='{"pakaiLagu":false}'`.
+
+Cover art 3000x3000 (untuk Spotify/DistroKid): `npm run cover:neon`, hasilnya `out/neon-cover.png`.
+Mau tambah nama artis di bawah: `npm run cover:neon -- --props='{"subjudul":"NAMA ARTIS"}'`.

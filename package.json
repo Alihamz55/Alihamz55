@@ -10,6 +10,7 @@
     "render:doa": "remotion render DoaPanggung out/doa-panggung.mp4 --crf=26",
     "render:doa-laki": "remotion render DoaPanggungLaki out/doa-panggung-laki.mp4 --crf=26",
     "render:neon": "remotion render NeonStreets out/neon-streets.mp4 --crf=26",
+    "cover:neon": "remotion still NeonCover out/neon-cover.png",
     "still": "remotion still Video3D out/thumbnail.png --frame=60",
     "lint": "tsc --noEmit"
   },
