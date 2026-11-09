@@ -1,4 +1,5 @@
-"""Miko - kucing kecil bermain piano sambil bernyanyi di bawah gerimis.
+"""Miko - kucing kecil duduk bermain piano sambil bernyanyi di bawah gerimis.
+Mulut disinkronkan ke vokal penyanyi (lihat vocal_lipsync.py).
 
 Pemakaian: python3 render_miko.py <lagu.mp3> <output.mp4> [detik_maks]
 """
@@ -92,6 +93,12 @@ def key_for(i, lo, hi, base, span):
     return base + int(w) % span
 def at(arr, i): return float(arr[min(i, len(arr) - 1)])
 
+# data lip-sync dari vokal yang sudah dipisahkan
+import os
+_lp = OUT + '.lips.npz'
+subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'vocal_lipsync.py'), AUD, _lp], check=True)
+LIP = dict(np.load(_lp)); os.remove(_lp)
+
 # ======================= BACKGROUND STATIS =======================
 HORIZON = 1250
 bg_surf = skia.Surface(W, H); c = bg_surf.getCanvas()
@@ -155,7 +162,7 @@ paw = {'L': dict(x=key_x(5), k=5, press=0.0, tx=key_x(5)), 'R': dict(x=key_x(14)
 key_glow = np.zeros(NK)
 blink_t = 0
 font_note = skia.Font(skia.Typeface('DejaVu Sans'), 46)
-font_neon = skia.Font(skia.Typeface('DejaVu Sans', skia.FontStyle.Bold()), 50)
+font_neon = skia.Font(skia.Typeface('DejaVu Sans', skia.FontStyle.Bold()), 46)
 
 def in_cone(x, y):
     if y < LAMP[1]: return 0.0
@@ -200,26 +207,32 @@ def draw_eye(c, cx, cy, s, openness, look):
         c.drawLine(xi - s * 3, yi + 1, xo + s * 3, yo + 1, P(C('#2a1208'), stroke=6))
         c.drawOval(oval(cx, cy + 4 + eh * 0.7, 26, 5), P(C('#bfe6ff', 150), blur=2))   # mata berkaca-kaca
 
-def draw_mouth(c, mo, vowel):
+def draw_mouth(c, lp):
+    mo, wide, rnd = lp
     mx, my = HEAD[0], HEAD[1] + 98
-    if mo < 0.08:
+    if mo < 0.06:
         p = skia.Path(); p.moveTo(mx - 30, my + 4); p.quadTo(mx - 15, my + 16, mx, my + 2)
         p.quadTo(mx + 15, my + 16, mx + 30, my + 4)
         c.drawPath(p, P(C('#4a1a10'), stroke=6))
         return
-    w = 22 + 26 * (vowel * 0.8 + 0.2) * (0.6 + 0.4 * mo)
-    h = 10 + 52 * mo * (1.1 - 0.35 * vowel)
-    p = skia.Path(); p.moveTo(mx - w, my)
-    p.cubicTo(mx - w * 0.6, my - 6, mx + w * 0.6, my - 6, mx + w, my)
-    p.cubicTo(mx + w * 0.9, my + h * 1.1, mx - w * 0.9, my + h * 1.1, mx - w, my); p.close()
+    w = (20 + 28 * wide - 10 * rnd) * (0.75 + 0.25 * mo)
+    h = 9 + 54 * mo * (1 - 0.35 * wide) * (1 + 0.15 * rnd)
+    top = my
+    if rnd > 0.5 and wide < 0.4:          # bentuk "O / U"
+        p = skia.Path(); p.addOval(skia.Rect.MakeLTRB(mx - w, top, mx + w, top + h))
+    else:                                 # bentuk "A / E / I"
+        p = skia.Path(); p.moveTo(mx - w, top)
+        p.cubicTo(mx - w * 0.6, top - 6, mx + w * 0.6, top - 6, mx + w, top)
+        p.cubicTo(mx + w * 0.9, top + h * 1.1, mx - w * 0.9, top + h * 1.1, mx - w, top); p.close()
     c.drawPath(p, P(C('#5a1622')))
     c.save(); c.clipPath(p, doAntiAlias=True)
-    c.drawOval(oval(mx, my + h * 0.95, w * 0.7, h * 0.45), P(C('#e86a7a')))
-    c.drawRect(skia.Rect.MakeLTRB(mx - w, my - 8, mx + w, my + 5), P(C('#fff6ee')))  # gigi atas
+    c.drawOval(oval(mx, top + h * 0.95, w * 0.7, h * 0.45), P(C('#e86a7a')))
+    if wide > 0.3 and h > 14:
+        c.drawRect(skia.Rect.MakeLTRB(mx - w, top - 8, mx + w, top + 5 + 4 * wide), P(C('#fff6ee')))
     c.restore()
     c.drawPath(p, P(C('#4a1a10'), stroke=5))
 
-def draw_head(c, i, mo, vowel, eye_open, look, twitch, tear_on):
+def draw_head(c, i, mo, lp, eye_open, look, twitch, tear_on):
     hx, hy = HEAD
     draw_ear(c, 'L', twitch); draw_ear(c, 'R', -twitch * 0.5)
     # pipi tembem: kepala sedikit lebih lebar di bawah
@@ -248,7 +261,7 @@ def draw_head(c, i, mo, vowel, eye_open, look, twitch, tear_on):
     n = skia.Path(); n.moveTo(hx - 16, hy + 62); n.lineTo(hx + 16, hy + 62); n.quadTo(hx, hy + 84, hx - 16, hy + 62); n.close()
     c.drawPath(n, P(C('#e2647a'))); c.drawCircle(hx - 5, hy + 66, 3.5, P(C('#ffffff', 180)))
     c.drawLine(hx, hy + 78, hx, hy + 96, P(C('#4a1a10'), stroke=5))
-    draw_mouth(c, mo, vowel)
+    draw_mouth(c, lp)
     # kumis
     for s in (-1, 1):
         for k, dy in enumerate((-8, 8, 24)):
@@ -274,16 +287,26 @@ def draw_body(c, i, scarf_wave):
     t.cubicTo(650 + scarf_wave * 12, 1070, 660 + scarf_wave * 6, 1020, 640, 972); t.close()
     c.drawPath(t, P(C('#3d6be0'))); c.drawPath(t, P(C('#1b2f6a'), stroke=4))
 
-def draw_legs(c, i):
-    for bx in (420, 650):
-        c.drawRect(skia.Rect.MakeLTRB(bx, KY + 125, bx + 12, 1520), P(C('#24140a')))
-    for s, ph in ((-1, 0), (1, 1.7)):
-        sw = 10 * math.sin(i / 14 + ph)
-        x = 540 + s * 70
-        c.drawLine(x, 1250, x + sw * 0.4, 1390, P(C('#f0a050'), stroke=46))
-        b = skia.Path(); b.addRRect(skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(x - 34 + sw * 0.5, 1370, x + 40 + sw * 0.5, 1440), 22, 22))
+def draw_legs(c, i, tap):
+    # bangku bulat berlapis kulit + pijakan kaki
+    for x0, x1 in ((430, 400), (650, 680)):
+        c.drawLine(x0, 1300, x1, 1560, P(C('#2a160a'), stroke=14))
+    c.drawLine(410, 1462, 670, 1462, P(C('#3a2210'), stroke=10))
+    seat = skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(385, 1262, 695, 1308), 22, 22)
+    c.drawRRect(seat, P(shader=lin(0, 1262, 0, 1308, [C('#a8433f'), C('#6a1f1f')])))
+    c.drawRRect(seat, P(C('#3a0f0f'), stroke=4))
+    for s_, ph in ((-1, 0.0), (1, 1.3)):
+        x = 540 + s_ * 72
+        lift = 5 * tap * (1 if s_ < 0 else 0) + 2 * math.sin(i / 16 + ph)
+        # lutut (paha mengarah ke depan) lalu tulang kering turun ke pijakan
+        c.drawLine(x, 1282, x - s_ * 4, 1408 - lift, P(C('#c9773a'), stroke=52))
+        c.drawLine(x, 1282, x - s_ * 4, 1408 - lift, P(C('#f0a050'), stroke=44))
+        c.drawCircle(x, 1280, 34, P(C('#f4c430')))   # ujung jas hujan menutup lutut
+        c.drawCircle(x, 1280, 34, P(C('#7a5a05'), stroke=4))
+        bx = x - s_ * 4
+        b = skia.Path(); b.addRRect(skia.RRect.MakeRectXY(skia.Rect.MakeLTRB(bx - 36, 1396 - lift, bx + 38, 1458 - lift), 20, 20))
         c.drawPath(b, P(C('#f4c430'))); c.drawPath(b, P(C('#7a5a05'), stroke=4))
-        c.drawRect(skia.Rect.MakeLTRB(x - 34 + sw * 0.5, 1428, x + 40 + sw * 0.5, 1440), P(C('#3a2a05')))
+        c.drawRect(skia.Rect.MakeLTRB(bx - 36, 1447 - lift, bx + 38, 1458 - lift), P(C('#3a2a05')))
 
 def draw_arm(c, sh, px, py, side):
     s = -1 if side == 'L' else 1
@@ -338,10 +361,11 @@ def draw_light(c, flick):
     c.drawOval(oval(LAMP[0] + 60, 1610, 380, 70), P(C('#ffcf7a', int(70 * flick)), blur=25, blend=skia.BlendMode.kScreen))
 
 def draw_neon(c, on):
-    x, y = 800, 1065
-    for blur, al in ((22, 160), (8, 200)):
-        c.drawString('RINDU', x, y, font_neon, P(C('#d05bff', int(al * on)), blur=blur))
-    c.drawString('RINDU', x, y, font_neon, P(C('#f6d6ff', int(240 * on)), stroke=3))
+    txt = 'I miss u \u2661'
+    x = 985 - font_neon.measureText(txt); y = 1072   # aman dari potongan zoom
+    for blur, al in ((22, 170), (8, 210)):
+        c.drawString(txt, x, y, font_neon, P(C('#ff4f9a', int(al * on)), blur=blur))
+    c.drawString(txt, x, y, font_neon, P(C('#ffd9ea', int(245 * on)), stroke=3))
 
 # ======================= RENDER =======================
 scene = skia.Surface(W, H); out = skia.Surface(W, H)
@@ -360,9 +384,9 @@ still_frames = [int(x * FPS) for x in (3, 15, 30, 45)] if STILL else []
 next_blink = 90
 
 for i in range(N):
-    mo = at(env, i); vowel = at(cent, i); lo = at(loud, i); em = at(emo, i)
+    mo = at(LIP['open'], i + 1); lp = (mo, at(LIP['wide'], i + 1), at(LIP['round'], i + 1)); lo = at(loud, i); em = at(emo, i)
     # --- tangan / piano ---
-    for side, ons, rng_ in (('L', on_lo, (55, 300, 0, 8)), ('R', on_hi, (300, 1500, 12, 9))):
+    for side, ons, rng_ in (('L', on_lo, (55, 300, 3, 7)), ('R', on_hi, (300, 1500, 11, 7))):
         pw = paw[side]
         if i in ons:
             k = key_for(i, *rng_)
@@ -405,7 +429,7 @@ for i in range(N):
     neon_on = 1.0 if not (i % 211 < 6 and (i % 3)) else 0.25
     draw_neon(c, neon_on)
     draw_lamp(c, flick)
-    draw_legs(c, i)
+    draw_legs(c, i, paw['L']['press'])
     # badan + kepala bergoyang
     sway = 2.5 * math.sin(i / 37) + 1.5 * math.sin(i / 13) * (0.3 + lo)
     bob = 3 * math.sin(i / 11) * (0.3 + lo)
@@ -413,7 +437,7 @@ for i in range(N):
     draw_body(c, i, math.sin(i / 17))
     c.save(); c.rotate(sway, NECK[0], NECK[1])
     hx, hy = HEAD
-    draw_head(c, i, mo, vowel, eye_open, look, twitch, tear_on)
+    draw_head(c, i, mo, lp, eye_open, look, twitch, tear_on)
     c.restore(); c.restore()
     draw_keyboard(c, key_glow, pressed)
     for side, sh in (('L', SHL), ('R', SHR)):
