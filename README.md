@@ -62,6 +62,7 @@ Karakter dan tampilan sudah dibuat terpisah supaya bisa dipakai ulang di setiap 
 | Karakter **Anak Jaksel** (stickman, topi + kacamata hitam, syal kuning, sneakers) | `src/karakter/Jaksel.tsx` |
 | Papan nama, balon dialog komik, tanda kaget kuning | `src/shared/Komik.tsx` |
 | Font (Lilita One + Permanent Marker) | `src/shared/font.ts` |
+| Template judul episode (pembukaan) | `src/shared/JudulEpisode.tsx` |
 
 Contoh pemakaian di episode baru:
 
@@ -74,7 +75,21 @@ Contoh pemakaian di episode baru:
 
 ### Bikin episode baru (misal episode 13)
 1. Salin folder `src/ep12` jadi `src/ep13`.
-2. Ubah naskah di `src/ep13/naskah.ts` dan judul di `src/ep13/Overlay.tsx`.
+2. Ubah naskah di `src/ep13/naskah.ts`. Untuk judul, cukup ganti satu baris di `src/ep13/Overlay.tsx`:
+   ```tsx
+   <JudulSeriJaksel episode={13} bahasa="Sunda" durasi={INTRO_DETIK * FPS} />
+   ```
+   Mau judul dengan susunan lain? Rakit sendiri dari potongan `JudulEpisode`:
+   ```tsx
+   <JudulEpisode.Root durasi={90}>
+     <JudulEpisode.Lencana>SPESIAL LEBARAN</JudulEpisode.Lencana>
+     <JudulEpisode.Judul>
+       <JudulEpisode.Seru />
+       <JudulEpisode.Baris>JAKSEL</JudulEpisode.Baris>
+       <JudulEpisode.BarisSorot>MUDIK!</JudulEpisode.BarisSorot>
+     </JudulEpisode.Judul>
+   </JudulEpisode.Root>
+   ```
 3. Daftarkan di `src/Root.tsx` (salin blok `<Composition id="Episode12" ...>` lalu ganti jadi 13).
 4. Render: `npx remotion render Episode13 out/episode13.mp4`
 

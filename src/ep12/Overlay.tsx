@@ -1,37 +1,13 @@
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { AKHIR_DIALOG, INTRO_DETIK, FPS, kamus, pembicaraDiFrame } from "./naskah";
-import { BalonKomik, PapanNama, SeruKuning } from "../shared/Komik";
+import { BalonKomik, PapanNama } from "../shared/Komik";
+import { JudulSeriJaksel } from "../shared/JudulEpisode";
 import { FONT_JUDUL, FONT_KOMIK } from "../shared/font";
 
 const WARNA = { penjual: "#d62828", jaksel: "#141414" };
 
 // ===== PEMBUKAAN =====
-export const Intro: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const akhir = INTRO_DETIK * FPS;
-  if (frame >= akhir) return null;
-
-  const pop = spring({ frame: frame - 4, fps, config: { damping: 10 } });
-  const pop2 = spring({ frame: frame - 14, fps, config: { damping: 10 } });
-  const hilang = interpolate(frame, [akhir - 10, akhir], [1, 0], { extrapolateLeft: "clamp" });
-
-  return (
-    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: hilang, background: "rgba(0,0,0,0.45)" }}>
-      <div style={{ transform: `scale(${pop}) rotate(-3deg)`, background: "#ffd400", border: "7px solid #111", color: "#111", padding: "10px 44px", borderRadius: 24, fontSize: 76, fontFamily: FONT_JUDUL }}>
-        EPISODE 12
-      </div>
-      <div style={{ position: "relative", transform: `scale(${pop2})`, marginTop: 40, color: "white", fontSize: 120, fontFamily: FONT_JUDUL, textAlign: "center", lineHeight: 1.05, WebkitTextStroke: "10px #111", paintOrder: "stroke" }}>
-        <SeruKuning ukuran={1.3} putar={40} style={{ right: -60, top: -110 }} />
-        JAKSEL vs
-        <br />
-        <span style={{ color: "#ffd400" }}>BAHASA</span>
-        <br />
-        <span style={{ color: "#ffd400" }}>MAKASSAR</span>
-      </div>
-    </AbsoluteFill>
-  );
-};
+export const Intro: React.FC = () => <JudulSeriJaksel episode={12} bahasa="Makassar" durasi={INTRO_DETIK * FPS} />;
 
 export const PapanWarung: React.FC = () => {
   const frame = useCurrentFrame();
