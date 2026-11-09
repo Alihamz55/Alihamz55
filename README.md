@@ -103,3 +103,16 @@ lalu ubah `DURASI_DETIK` di `src/doa/lagu.ts`.
 
 Render karakter perempuan: `npm run render:doa` → `out/doa-panggung.mp4`
 Render karakter laki-laki: `npm run render:doa-laki` → `out/doa-panggung-laki.mp4`
+
+## Video "Neon Streets" (G-Funk rap)
+
+Video lirik 3D 16 detik: mobil lowrider melaju di kota neon malam hari, lirik hook muncul ikut ketukan 92 BPM.
+
+| Mau ganti... | Edit file |
+|---|---|
+| Teks lirik + waktu muncul | `src/neon/lirik.ts` |
+| Kota, mobil, warna neon | `src/neon/Kota.tsx` |
+| Judul, font, efek VHS | `src/neon/NeonStreets.tsx` |
+
+Render tanpa suara: `npm run render:neon`, hasilnya `out/neon-streets.mp4`.
+Untuk menyertakan lagu, taruh file lagu di `public/neon/lagu.mp3`, lalu render dengan `npm run render:neon -- --props='{"pakaiLagu":true}'`.

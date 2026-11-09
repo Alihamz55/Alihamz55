@@ -4,11 +4,22 @@ import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
+import { NeonStreets } from "./neon/NeonStreets";
+import { DURASI_DETIK as DURASI_NEON, FPS as FPS_NEON } from "./neon/lirik";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="NeonStreets"
+        component={NeonStreets}
+        durationInFrames={Math.round(DURASI_NEON * FPS_NEON)}
+        fps={FPS_NEON}
+        width={1080}
+        height={1920}
+        defaultProps={{ pakaiLagu: false }}
+      />
       <Composition
         id="DoaPanggung"
         component={Doa}
