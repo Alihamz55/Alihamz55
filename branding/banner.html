@@ -9,9 +9,13 @@ body{background:radial-gradient(ellipse at 50% 60%,#5b3fe0 0%,#2a1585 45%,#12064
 .kanan{position:absolute;right:120px;bottom:-40px;height:1300px}
 .kiri{position:absolute;left:120px;bottom:-40px;height:1300px;transform:scaleX(-1);opacity:.9}
 /* area aman (terlihat di semua perangkat): 1546 x 423 di tengah */
-.aman{position:absolute;left:507px;top:508px;width:1546px;height:423px;display:flex;align-items:center;gap:56px;justify-content:center}
-.foto{width:360px;height:360px;flex:none;border-radius:50%;background:url(karakter.png) no-repeat;background-size:590px auto;background-position:-128px -152px;border:12px solid #ffd6ea;box-shadow:0 0 0 8px #ff7fbf,0 0 50px rgba(255,200,120,.8)}
-h1{margin:0;font-weight:800;font-size:170px;line-height:1;color:#fff;text-shadow:0 8px 0 #ff5fa8,0 0 40px rgba(255,210,120,.7)}
+.aman{position:absolute;left:507px;top:508px;width:1546px;height:423px;display:flex;align-items:center;gap:60px;justify-content:center}
+.foto{width:340px;height:340px;flex:none;border-radius:50%;background-repeat:no-repeat;background-size:800px auto;border:12px solid #fff}
+.cewek{background-image:url(karakter.png);background-position:-241px -283px;box-shadow:0 0 0 8px #ff7fbf,0 0 50px rgba(255,200,120,.8)}
+.cowok{background-image:url(karakter-laki.png);background-position:-251px -272px;box-shadow:0 0 0 8px #5aa9ff,0 0 50px rgba(255,200,120,.8)}
+.teks{text-align:center;flex:none;width:720px}
+.teks p{white-space:nowrap;font-size:46px}
+h1{margin:0;font-weight:800;font-size:150px;line-height:1;color:#fff;text-shadow:0 8px 0 #ff5fa8,0 0 40px rgba(255,210,120,.7)}
 h1 span{color:#ffd76a}
 p{margin:18px 0 0;font-weight:600;font-size:54px;color:#ffe6f3}
 .jadwal{display:inline-block;margin-top:22px;background:#ff5fa8;color:#fff;font-weight:800;font-size:42px;padding:4px 34px;border-radius:40px;border:6px solid #fff}
@@ -22,12 +26,13 @@ p{margin:18px 0 0;font-weight:600;font-size:54px;color:#ffe6f3}
 <div class="lantai"></div>
 <div id="dots"></div>
 <div class="aman">
-  <div class="foto"></div>
-  <div>
+  <div class="foto cowok"></div>
+  <div class="teks">
     <h1>Nasyid <span>Mungil</span></h1>
     <p>Lagu nasyid &amp; doa anak muslim</p>
     <div class="jadwal">Video baru setiap Jumat</div>
   </div>
+  <div class="foto cewek"></div>
 </div>
 <script>
 const d=document.getElementById('dots');

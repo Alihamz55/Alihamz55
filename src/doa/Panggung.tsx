@@ -4,6 +4,7 @@ import { useThree } from "@react-three/fiber";
 import { AdditiveBlending, ShaderMaterial, SRGBColorSpace, Texture, TextureLoader } from "three";
 import { cancelRender, continueRender, delayRender, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { AirMata } from "./AirMata";
+import type { KonfigKarakter } from "./karakter";
 import { bukaMulut, puncak } from "./lagu";
 
 const GBR_W = 941;
@@ -23,7 +24,7 @@ export const kePlane = (px: number, py: number): [number, number, number] => [
 // Shader: gambar + gerakan napas/goyang halus di area kepala & tangan
 const vertex = `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`;
 const fragment = `
-uniform sampler2D map; uniform float t; uniform float terang; uniform float buka;
+uniform sampler2D map; uniform float t; uniform float terang; uniform float buka; uniform vec2 mulut;
 varying vec2 vUv;
 void main(){
   vec2 uv = vUv;
@@ -34,7 +35,6 @@ void main(){
 
   // GERAK MULUT: bibir bawah & dagu ditarik ke bawah sesuai suara vokal
   vec2 px = vec2(vUv.x * ${GBR_W}.0, (1.0 - vUv.y) * ${GBR_H}.0); // posisi dalam piksel gambar
-  vec2 mulut = vec2(512.0, 534.0); // tepat di bagian dalam mulut (di bawah gigi)
   float dx = (px.x - mulut.x) / 42.0;
   float bawah = px.y - mulut.y;  // positif = di bawah garis mulut
   float wx = exp(-dx * dx);
@@ -57,7 +57,7 @@ const tingkatPuncak = (detik: number) =>
     )
   );
 
-const Kamera: React.FC<{ durasi: number }> = ({ durasi }) => {
+const Kamera: React.FC<{ durasi: number; wajahPx: [number, number] }> = ({ durasi, wajahPx }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const camera = useThree((s) => s.camera);
@@ -65,7 +65,7 @@ const Kamera: React.FC<{ durasi: number }> = ({ durasi }) => {
   // Kamera pelan-pelan mendekat ke wajah, lebih dekat saat puncak
   const maju = interpolate(detik, [0, durasi], [0, 1]);
   const dekat = maju * 0.9 + tingkatPuncak(detik) * 0.35;
-  const wajah = kePlane(490, 560);
+  const wajah = kePlane(...wajahPx);
   camera.position.set(wajah[0] * dekat * 0.5, wajah[1] * dekat * 0.45, JARAK - dekat);
   camera.lookAt(wajah[0] * dekat * 0.5, wajah[1] * dekat * 0.45, 0);
   return null;
@@ -127,7 +127,7 @@ const Partikel: React.FC<{ kuat: number }> = ({ kuat }) => {
   );
 };
 
-export const Panggung: React.FC<{ durasi: number; volume: number }> = ({ durasi, volume }) => {
+export const Panggung: React.FC<{ durasi: number; volume: number; karakter: KonfigKarakter }> = ({ durasi, volume, karakter }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const detik = frame / fps;
@@ -136,7 +136,7 @@ export const Panggung: React.FC<{ durasi: number; volume: number }> = ({ durasi,
 
   useEffect(() => {
     new TextureLoader().load(
-      staticFile("doa/karakter.png"),
+      staticFile(karakter.gambar),
       (t) => {
         t.colorSpace = SRGBColorSpace;
         setTekstur(t);
@@ -144,14 +144,14 @@ export const Panggung: React.FC<{ durasi: number; volume: number }> = ({ durasi,
       undefined,
       (e) => cancelRender(e)
     );
-  }, [handle]);
+  }, [handle, karakter.gambar]);
 
   const bahan = useMemo(
     () =>
       tekstur
-        ? new ShaderMaterial({ uniforms: { map: { value: tekstur }, t: { value: 0 }, terang: { value: 0 }, buka: { value: 0 } }, vertexShader: vertex, fragmentShader: fragment })
+        ? new ShaderMaterial({ uniforms: { map: { value: tekstur }, t: { value: 0 }, terang: { value: 0 }, buka: { value: 0 }, mulut: { value: karakter.mulut } }, vertexShader: vertex, fragmentShader: fragment })
         : null,
-    [tekstur]
+    [tekstur, karakter.mulut]
   );
 
   // Setelah bahan siap: gambar ulang adegan, baru lanjutkan render
@@ -174,7 +174,7 @@ export const Panggung: React.FC<{ durasi: number; volume: number }> = ({ durasi,
 
   return (
     <>
-      <Kamera durasi={durasi} />
+      <Kamera durasi={durasi} wajahPx={karakter.wajah} />
       {bahan && (
         <mesh material={bahan}>
           <planeGeometry args={[W, H]} />
@@ -184,7 +184,7 @@ export const Panggung: React.FC<{ durasi: number; volume: number }> = ({ durasi,
       <SorotLampu dari={[830, 0]} ke={[560, 1250]} kuat={0.4 + kuat * 0.8} warna="vec3(1.0, 0.85, 0.5)" />
       <SorotLampu dari={[470, -100]} ke={[480, 1400]} kuat={pk * 0.9} warna="vec3(0.75, 0.7, 1.0)" />
       <Partikel kuat={kuat} />
-      <AirMata kePlane={kePlaneStabil} durasi={durasi} />
+      <AirMata kePlane={kePlaneStabil} durasi={durasi} karakter={karakter} />
     </>
   );
 };

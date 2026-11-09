@@ -89,7 +89,7 @@ dan efek air mata mengalir di pipi.
 | Bagian puncak lagu (air mata lebih deras, cahaya lebih terang) | `puncak` di `src/doa/lagu.ts` |
 | Posisi & besar gerak mulut | bagian `GERAK MULUT` di `src/doa/Panggung.tsx` |
 | Posisi jalur air mata | `JALUR_KIRI` / `JALUR_KANAN` di `src/doa/AirMata.tsx` |
-| Gambar karakter | ganti `public/doa/karakter.png` (ukuran 941x1672) |
+| Karakter (perempuan / laki-laki / tambah baru) | `src/doa/karakter.ts` + gambar di `public/doa/` (ukuran 941x1672) |
 
 ### Ganti lagu
 Gerak mulut dibaca dari file `src/doa/mulut.json` (1 angka per frame, 0 = tertutup, 1 = terbuka lebar).
@@ -101,4 +101,5 @@ python3 scripts/buat-gerak-mulut.py public/doa/lagu.mp3 src/doa/mulut.json
 ```
 lalu ubah `DURASI_DETIK` di `src/doa/lagu.ts`.
 
-Render: `npm run render:doa` → hasil di `out/doa-panggung.mp4`
+Render karakter perempuan: `npm run render:doa` → `out/doa-panggung.mp4`
+Render karakter laki-laki: `npm run render:doa-laki` → `out/doa-panggung-laki.mp4`

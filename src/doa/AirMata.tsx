@@ -6,9 +6,7 @@ import { puncak } from "./lagu";
 
 type KePlane = (px: number, py: number) => [number, number, number];
 
-// Jalur air mata (koordinat piksel di gambar karakter 941x1672)
-const JALUR_KIRI: [number, number][] = [[415, 492], [410, 515], [405, 550], [407, 585], [410, 612]];
-const JALUR_KANAN: [number, number][] = [[560, 467], [570, 495], [580, 530], [580, 565], [576, 602]];
+import type { KonfigKarakter } from "./karakter";
 
 // Jadwal tetesan (detik mulai, sisi). Lebih rapat saat puncak lagu.
 const buatJadwal = (durasi: number) => {
@@ -102,16 +100,16 @@ const KilauMata: React.FC<{ posisi: [number, number, number]; kuat: number }> = 
   );
 };
 
-export const AirMata: React.FC<{ kePlane: KePlane; durasi: number }> = ({ kePlane, durasi }) => {
+export const AirMata: React.FC<{ kePlane: KePlane; durasi: number; karakter: KonfigKarakter }> = ({ kePlane, durasi, karakter }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const z = 0.01;
   const [kiri, kanan] = useMemo(
     () =>
-      [JALUR_KIRI, JALUR_KANAN].map(
+      [karakter.jalurAirMataKiri, karakter.jalurAirMataKanan].map(
         (j) => new CatmullRomCurve3(j.map(([x, y]) => new Vector3(...kePlane(x, y))))
       ),
-    [kePlane]
+    [kePlane, karakter]
   );
   const jadwal = useMemo(() => buatJadwal(durasi), [durasi]);
   const detik = frame / fps;
@@ -119,8 +117,8 @@ export const AirMata: React.FC<{ kePlane: KePlane; durasi: number }> = ({ kePlan
 
   return (
     <group>
-      <KilauMata posisi={kePlane(412, 494)} kuat={kilau} />
-      <KilauMata posisi={kePlane(557, 469)} kuat={kilau} />
+      <KilauMata posisi={kePlane(...karakter.jalurAirMataKiri[0])} kuat={kilau} />
+      <KilauMata posisi={kePlane(...karakter.jalurAirMataKanan[0])} kuat={kilau} />
       {jadwal.map((j, i) => (
         <Tetes key={i} jalur={j.sisi === "kiri" ? kiri : kanan} mulai={j.t} z={z} />
       ))}

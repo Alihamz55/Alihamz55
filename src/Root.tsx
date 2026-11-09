@@ -16,6 +16,16 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={1920}
+        defaultProps={{ karakter: "perempuan" as const }}
+      />
+      <Composition
+        id="DoaPanggungLaki"
+        component={Doa}
+        durationInFrames={Math.round(DURASI_DETIK * 30)}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ karakter: "laki" as const }}
       />
       <Composition
         id="Episode12"
