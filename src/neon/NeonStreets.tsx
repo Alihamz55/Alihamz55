@@ -3,7 +3,7 @@ import { ThreeCanvas } from "@remotion/three";
 import { loadFont as loadBungee } from "@remotion/google-fonts/Bungee";
 import { loadFont as loadMonoton } from "@remotion/google-fonts/Monoton";
 import { Kota } from "./Kota";
-import { DURASI_DETIK, LIRIK, hentakan } from "./lirik";
+import { AKHIR_LIRIK, DURASI_DETIK, LIRIK, MULAI_LAGU, hentakan } from "./lirik";
 
 const FONT_LIRIK = loadBungee("normal", { weights: ["400"], subsets: ["latin"] }).fontFamily;
 const FONT_JUDUL = loadMonoton("normal", { weights: ["400"], subsets: ["latin"] }).fontFamily;
@@ -24,8 +24,8 @@ export const NeonStreets: React.FC<{ pakaiLagu: boolean }> = ({ pakaiLagu }) => 
   const baris = LIRIK.find((l) => detik >= l.mulai && detik < l.selesai);
   const masuk = baris ? spring({ frame: frame - baris.mulai * fps, fps, config: { damping: 12 } }) : 0;
 
-  const judulOpacity = interpolate(detik, [0.2, 0.8, 2.1, 2.6], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const akhirOpacity = interpolate(detik, [13.1, 13.7], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const judulOpacity = interpolate(detik, [0.2, 0.8, LIRIK[0].mulai - 0.5, LIRIK[0].mulai], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const akhirOpacity = interpolate(detik, [AKHIR_LIRIK, AKHIR_LIRIK + 0.6], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const fadeHitam = interpolate(detik, [0, 0.4, DURASI_DETIK - 0.5, DURASI_DETIK], [1, 0, 0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
@@ -90,8 +90,19 @@ export const NeonStreets: React.FC<{ pakaiLagu: boolean }> = ({ pakaiLagu }) => 
 
       <AbsoluteFill style={{ backgroundColor: "#000", opacity: fadeHitam }} />
 
-      {/* Taruh lagu dari Flow di public/neon/lagu.mp3, lalu render dengan pakaiLagu=true */}
-      {pakaiLagu && <Audio src={staticFile("neon/lagu.mp3")} />}
+      {/* Lagu dari Flow (public/neon/lagu.mp3), dipotong mulai dari build-up sebelum hook */}
+      {pakaiLagu && (
+        <Audio
+          src={staticFile("neon/lagu.mp3")}
+          trimBefore={Math.round(MULAI_LAGU * fps)}
+          volume={(f) =>
+            interpolate(f, [0, 8, DURASI_DETIK * fps - 30, DURASI_DETIK * fps], [0, 1, 1, 0], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            })
+          }
+        />
+      )}
     </AbsoluteFill>
   );
 };

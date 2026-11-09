@@ -18,7 +18,7 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS_NEON}
         width={1080}
         height={1920}
-        defaultProps={{ pakaiLagu: false }}
+        defaultProps={{ pakaiLagu: true }}
       />
       <Composition
         id="DoaPanggung"
