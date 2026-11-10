@@ -118,3 +118,15 @@ lalu ubah `DURASI_DETIK` di `src/doa/lagu.ts`.
 
 Render karakter perempuan: `npm run render:doa` → `out/doa-panggung.mp4`
 Render karakter laki-laki: `npm run render:doa-laki` → `out/doa-panggung-laki.mp4`
+
+## Hari Ayah Nasional — elemen untuk template CapCut (#HariAyah2026)
+
+3 klip vertikal (1080x1920) di `src/ayah/HariAyah.tsx`, render sekaligus dengan `npm run render:ayah`:
+
+| Klip | File hasil | Cara pakai di CapCut |
+|---|---|---|
+| Pembuka "Untuk Ayah, dengan Cinta" (4 detik) | `out/ayah-1-pembuka.mp4` | Taruh paling depan di timeline |
+| Bingkai + label DULU / SEKARANG (6 detik, latar hijau) | `out/ayah-2-dulu-sekarang.mp4` | Overlay di atas 2 foto → Hapus latar → **Chroma key** → pilih warna hijau |
+| Penutup "Terima kasih, Ayah" + #HariAyah2026 (4 detik) | `out/ayah-3-penutup.mp4` | Taruh paling belakang |
+
+Ganti teks lewat `defaultProps` di `src/Root.tsx` (contoh: `labelDulu: "TAHUN 2005"`), atau panel kanan saat `npm run dev`.

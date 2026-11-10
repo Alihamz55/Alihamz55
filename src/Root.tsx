@@ -4,11 +4,40 @@ import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
+import { AyahDuluSekarang, AyahPembuka, AyahPenutup } from "./ayah/HariAyah";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* ===== Hari Ayah Nasional: elemen untuk template CapCut ===== */}
+      <Composition
+        id="AyahPembuka"
+        component={AyahPembuka}
+        durationInFrames={30 * 4}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ baris1: "Untuk Ayah,", baris2: "DENGAN CINTA", keterangan: "HARI AYAH NASIONAL · 12 NOVEMBER" }}
+      />
+      <Composition
+        id="AyahDuluSekarang"
+        component={AyahDuluSekarang}
+        durationInFrames={30 * 6}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ labelDulu: "DULU", labelSekarang: "SEKARANG" }}
+      />
+      <Composition
+        id="AyahPenutup"
+        component={AyahPenutup}
+        durationInFrames={30 * 4}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ pesan: "Terima kasih, Ayah", tagar: "#HariAyah2026" }}
+      />
       <Composition
         id="DoaPanggung"
         component={Doa}
