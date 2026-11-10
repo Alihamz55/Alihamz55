@@ -21,10 +21,10 @@ Sebelahnya lagi dibawa. Kayak hati gue... tinggal setengah."
 ## 3. REFF GALAU (22–34 detik)
 *(Nyanyi pelan, lebay, boleh fals. Tempo lambat ala lagu galau.)*
 
-> 🎵 *Sisa rasa cinta... masih di dada*
-> *Seperti sendal jepit... tinggal sebelah saja*
-> *Kau pergi membawa... separuh jiwaku*
-> *Sisa rasaaa... uwooo... masih untukmuuu...* 🎵
+> 🎵 *Masih tersimpan...*
+> *Oh masih tersimpaaan*
+> *setiap kenangan*
+> *woo.. wooo.. woooooo* 🎵
 
 ## 4. PUNCHLINE (34–45 detik)
 *(Berhenti nyanyi mendadak, nada biasa.)*
