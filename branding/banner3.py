@@ -91,12 +91,25 @@ def bouncy(word, cy, size, fills, extr, rot_amp, gap):
 bouncy("MALAM", 128, 112, [(255, 255, 255)], 10, 5, 14)
 bouncy("KOMEDI", 262, 158, [(255, 216, 74), (255, 110, 180)], 16, 6, 10)
 
-sign = sign.resize((920, 368), Image.LANCZOS)
+sign = sign.resize((820, 328), Image.LANCZOS)
 sign = sign.rotate(-2, resample=Image.BICUBIC, expand=True)
 ssh = Image.new("RGBA", sign.size, (0, 0, 0, 0)); ssh.paste((0, 0, 0, 140), mask=sign.split()[3]); ssh = ssh.filter(ImageFilter.GaussianBlur(16))
-sx, sy = 1560 - sign.width // 2, 720 - sign.height // 2
+sx, sy = 1560 - sign.width // 2, 674 - sign.height // 2
 im.paste(ssh, (sx + 16, sy + 22), ssh)
 im.paste(sign, (sx, sy), sign)
+
+# pita tagline
+rib = Image.new("RGBA", (900, 120), (0, 0, 0, 0))
+rd = ImageDraw.Draw(rib)
+rd.polygon([(0, 30), (60, 30), (60, 100), (0, 100), (28, 65)], fill=(200, 60, 140), outline=INK)
+rd.polygon([(900, 30), (840, 30), (840, 100), (900, 100), (872, 65)], fill=(200, 60, 140), outline=INK)
+rd.rounded_rectangle((40, 14, 860, 106), 20, fill=(255, 255, 255), outline=INK, width=8)
+rd.text((450, 60), "Kartun Stand-Up & Cerita Sehari-hari", font=F(40), fill=INK, anchor="mm")
+rib = rib.rotate(1.5, resample=Image.BICUBIC, expand=True)
+rsh = Image.new("RGBA", rib.size, (0, 0, 0, 0)); rsh.paste((0, 0, 0, 130), mask=rib.split()[3]); rsh = rsh.filter(ImageFilter.GaussianBlur(10))
+rx, ry = 1560 - rib.width // 2, 866 - rib.height // 2
+im.paste(rsh, (rx + 10, ry + 14), rsh)
+im.paste(rib, (rx, ry), rib)
 
 im.save(HERE + "banner-malam-komedi.png")
 print("ok")
