@@ -142,3 +142,18 @@ Render: `npm run render:duel` → `out/stickman-duel.mp4`. Tambahkan musik & efe
 | Urutan & waktu gerakan | `kunciJagoan` / `kunciLawan` (daftar `[frame, pose]`) di file yang sama |
 | Jumlah pukulan beruntun | `JUMLAH_PUKULAN` |
 | Sistem pose & gambar stickman | `src/stickman/Stickman.tsx` |
+
+### Stickman 1 VS 4 (pertarungan cepat + slow-motion + efek suara)
+
+Komposisi `StickmanKeroyok` (12,6 detik): 3 lawan + 1 bos menyerang bergantian dari kanan & kiri.
+Setiap pukulan pamungkas memakai slow-motion, zoom kamera, kilatan putih, dan dentuman.
+Render: `npm run render:keroyok` → `out/stickman-1vs4.mp4` (sudah ada suaranya).
+
+| Mau ganti... | Edit di `src/stickman/Keroyok.tsx` |
+|---|---|
+| Bagian mana yang slow-motion & seberapa lambat | `LAMBAT` (`[mulai, akhir, kecepatan]`, 0.25 = 4x lebih lambat) |
+| Gerakan jagoan / lawan | `kunciJagoan` / `MUSUH` |
+| Teks POW!/WHAM!/BOOM! | `PUKULAN_BESAR` |
+
+Efek suara (whoosh, pukul, dentum, slowmo, gong) dibuat dari nol oleh `python3 scripts/buat-efek-suara.py`
+dan disimpan di `public/sfx/` — bebas hak cipta.

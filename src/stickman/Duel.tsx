@@ -9,29 +9,29 @@ import { Keyframe, Pose, Stickman, keLayar, poseDi, sendi } from "./Stickman";
  * Musik & efek suara (whoosh, pukulan) tambahkan di CapCut.
  */
 
-const FONT = loadFont("normal", { weights: ["400"], subsets: ["latin"] }).fontFamily;
-const LANTAI = 1500;
-const SKALA = 1.3;
+export const FONT = loadFont("normal", { weights: ["400"], subsets: ["latin"] }).fontFamily;
+export const LANTAI = 1500;
+export const SKALA = 1.3;
 
 // ===== Pose-pose dasar (tanpa posisi x) =====
-type Bentuk = Omit<Pose, "x" | "naik">;
-const pose = (b: Bentuk, x: number, naik = 0): Pose => ({ ...b, x, naik });
+export type Bentuk = Omit<Pose, "x" | "naik">;
+export const pose = (b: Bentuk, x: number, naik = 0): Pose => ({ ...b, x, naik });
 
-const KUDA_KUDA: Bentuk = { badan: 5, lenganDepan: 60, tanganDepan: 95, lenganBelakang: 35, tanganBelakang: 110, pahaDepan: 22, betisDepan: -5, pahaBelakang: -18, betisBelakang: -12 };
-const TANGKIS: Bentuk = { badan: -6, lenganDepan: 120, tanganDepan: 165, lenganBelakang: 70, tanganBelakang: 95, pahaDepan: 18, betisDepan: -5, pahaBelakang: -22, betisBelakang: -15 };
-const PUKUL_A: Bentuk = { badan: 10, lenganDepan: 90, tanganDepan: 90, lenganBelakang: 40, tanganBelakang: 125, pahaDepan: 28, betisDepan: -5, pahaBelakang: -20, betisBelakang: -15 };
-const PUKUL_B: Bentuk = { badan: 10, lenganDepan: 45, tanganDepan: 125, lenganBelakang: 92, tanganBelakang: 90, pahaDepan: 28, betisDepan: -5, pahaBelakang: -20, betisBelakang: -15 };
-const ANCANG: Bentuk = { badan: -6, lenganDepan: 50, tanganDepan: 120, lenganBelakang: -45, tanganBelakang: 40, pahaDepan: 25, betisDepan: -8, pahaBelakang: -25, betisBelakang: -15 };
-const PAMUNGKAS: Bentuk = { badan: 22, lenganDepan: 25, tanganDepan: 80, lenganBelakang: 95, tanganBelakang: 92, pahaDepan: 55, betisDepan: -8, pahaBelakang: -55, betisBelakang: -35 };
-const HORMAT: Bentuk = { badan: 0, lenganDepan: 30, tanganDepan: 118, lenganBelakang: 25, tanganBelakang: 128, pahaDepan: 6, betisDepan: 0, pahaBelakang: -6, betisBelakang: 0 };
+export const KUDA_KUDA: Bentuk = { badan: 5, lenganDepan: 60, tanganDepan: 95, lenganBelakang: 35, tanganBelakang: 110, pahaDepan: 22, betisDepan: -5, pahaBelakang: -18, betisBelakang: -12 };
+export const TANGKIS: Bentuk = { badan: -6, lenganDepan: 120, tanganDepan: 165, lenganBelakang: 70, tanganBelakang: 95, pahaDepan: 18, betisDepan: -5, pahaBelakang: -22, betisBelakang: -15 };
+export const PUKUL_A: Bentuk = { badan: 10, lenganDepan: 90, tanganDepan: 90, lenganBelakang: 40, tanganBelakang: 125, pahaDepan: 28, betisDepan: -5, pahaBelakang: -20, betisBelakang: -15 };
+export const PUKUL_B: Bentuk = { badan: 10, lenganDepan: 45, tanganDepan: 125, lenganBelakang: 92, tanganBelakang: 90, pahaDepan: 28, betisDepan: -5, pahaBelakang: -20, betisBelakang: -15 };
+export const ANCANG: Bentuk = { badan: -6, lenganDepan: 50, tanganDepan: 120, lenganBelakang: -45, tanganBelakang: 40, pahaDepan: 25, betisDepan: -8, pahaBelakang: -25, betisBelakang: -15 };
+export const PAMUNGKAS: Bentuk = { badan: 22, lenganDepan: 25, tanganDepan: 80, lenganBelakang: 95, tanganBelakang: 92, pahaDepan: 55, betisDepan: -8, pahaBelakang: -55, betisBelakang: -35 };
+export const HORMAT: Bentuk = { badan: 0, lenganDepan: 30, tanganDepan: 118, lenganBelakang: 25, tanganBelakang: 128, pahaDepan: 6, betisDepan: 0, pahaBelakang: -6, betisBelakang: 0 };
 
-const SIAGA: Bentuk = { badan: 8, lenganDepan: 45, tanganDepan: 150, lenganBelakang: 30, tanganBelakang: 160, pahaDepan: 25, betisDepan: 0, pahaBelakang: -25, betisBelakang: -10 };
-const LARI: Bentuk = { badan: 18, lenganDepan: 20, tanganDepan: 120, lenganBelakang: -30, tanganBelakang: 60, pahaDepan: 55, betisDepan: -30, pahaBelakang: -40, betisBelakang: -70 };
-const SERANG: Bentuk = { badan: 20, lenganDepan: 40, tanganDepan: 150, lenganBelakang: 92, tanganBelakang: 90, pahaDepan: 35, betisDepan: 0, pahaBelakang: -35, betisBelakang: -10 };
-const KENA_A: Bentuk = { badan: -15, lenganDepan: 75, tanganDepan: 170, lenganBelakang: 100, tanganBelakang: 175, pahaDepan: 20, betisDepan: 0, pahaBelakang: -30, betisBelakang: -10 };
-const KENA_B: Bentuk = { badan: -24, lenganDepan: 110, tanganDepan: 160, lenganBelakang: 55, tanganBelakang: 150, pahaDepan: 15, betisDepan: 0, pahaBelakang: -32, betisBelakang: -12 };
-const TERLEMPAR: Bentuk = { badan: -70, lenganDepan: 160, tanganDepan: 200, lenganBelakang: 120, tanganBelakang: 180, pahaDepan: 60, betisDepan: 40, pahaBelakang: 30, betisBelakang: 10 };
-const TERKAPAR: Bentuk = { badan: -88, lenganDepan: -150, tanganDepan: -120, lenganBelakang: -100, tanganBelakang: -92, pahaDepan: 140, betisDepan: 50, pahaBelakang: 95, betisBelakang: 85 };
+export const SIAGA: Bentuk = { badan: 8, lenganDepan: 45, tanganDepan: 150, lenganBelakang: 30, tanganBelakang: 160, pahaDepan: 25, betisDepan: 0, pahaBelakang: -25, betisBelakang: -10 };
+export const LARI: Bentuk = { badan: 18, lenganDepan: 20, tanganDepan: 120, lenganBelakang: -30, tanganBelakang: 60, pahaDepan: 55, betisDepan: -30, pahaBelakang: -40, betisBelakang: -70 };
+export const SERANG: Bentuk = { badan: 20, lenganDepan: 40, tanganDepan: 150, lenganBelakang: 92, tanganBelakang: 90, pahaDepan: 35, betisDepan: 0, pahaBelakang: -35, betisBelakang: -10 };
+export const KENA_A: Bentuk = { badan: -15, lenganDepan: 75, tanganDepan: 170, lenganBelakang: 100, tanganBelakang: 175, pahaDepan: 20, betisDepan: 0, pahaBelakang: -30, betisBelakang: -10 };
+export const KENA_B: Bentuk = { badan: -24, lenganDepan: 110, tanganDepan: 160, lenganBelakang: 55, tanganBelakang: 150, pahaDepan: 15, betisDepan: 0, pahaBelakang: -32, betisBelakang: -12 };
+export const TERLEMPAR: Bentuk = { badan: -70, lenganDepan: 160, tanganDepan: 200, lenganBelakang: 120, tanganBelakang: 180, pahaDepan: 60, betisDepan: 40, pahaBelakang: 30, betisBelakang: 10 };
+export const TERKAPAR: Bentuk = { badan: -88, lenganDepan: -150, tanganDepan: -120, lenganBelakang: -100, tanganBelakang: -92, pahaDepan: 140, betisDepan: 50, pahaBelakang: 95, betisBelakang: 85 };
 
 // ===== Koreografi (dalam "waktu adegan") =====
 const JUMLAH_PUKULAN = 12;
@@ -78,7 +78,7 @@ const keAsli = (adegan: number) => (adegan < 110 ? adegan : adegan < 120 ? 110 +
 export const DURASI_DUEL = 260;
 
 // ===== Latar senja =====
-const Latar: React.FC = () => (
+export const Latar: React.FC = () => (
   <>
     <defs>
       <linearGradient id="langit" x1="0" y1="0" x2="0" y2="1">
@@ -101,7 +101,7 @@ const Latar: React.FC = () => (
 );
 
 // Ledakan kilat di titik pukulan
-const Kilat: React.FC<{ x: number; y: number; umur: number; besar: number }> = ({ x, y, umur, besar }) => {
+export const Kilat: React.FC<{ x: number; y: number; umur: number; besar: number }> = ({ x, y, umur, besar }) => {
   if (umur < 0 || umur > 8) return null;
   const s = interpolate(umur, [0, 2, 8], [0.4, 1, 1.3]) * besar;
   const o = interpolate(umur, [0, 5, 8], [1, 0.8, 0]);
@@ -117,7 +117,7 @@ const Kilat: React.FC<{ x: number; y: number; umur: number; besar: number }> = (
   );
 };
 
-const TeksPop: React.FC<{ teks: string; mulai: number; akhir: number; y: number; ukuran: number; warna: string }> = ({
+export const TeksPop: React.FC<{ teks: string; mulai: number; akhir: number; y: number; ukuran: number; warna: string }> = ({
   teks, mulai, akhir, y, ukuran, warna,
 }) => {
   const frame = useCurrentFrame();
