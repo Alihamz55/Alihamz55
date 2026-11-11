@@ -4,12 +4,21 @@ import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
+import { DURASI_DUEL, StickmanDuel } from "./stickman/Duel";
 import { AyahDuluSekarang, AyahPembuka, AyahPenutup } from "./ayah/HariAyah";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="StickmanDuel"
+        component={StickmanDuel}
+        durationInFrames={DURASI_DUEL}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
       {/* ===== Hari Ayah Nasional: elemen untuk template CapCut ===== */}
       <Composition
         id="AyahPembuka"

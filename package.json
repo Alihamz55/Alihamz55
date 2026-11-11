@@ -10,6 +10,7 @@
     "render:doa": "remotion render DoaPanggung out/doa-panggung.mp4 --crf=26",
     "render:doa-laki": "remotion render DoaPanggungLaki out/doa-panggung-laki.mp4 --crf=26",
     "render:ayah": "remotion render AyahPembuka out/ayah-1-pembuka.mp4 && remotion render AyahDuluSekarang out/ayah-2-dulu-sekarang.mp4 && remotion render AyahPenutup out/ayah-3-penutup.mp4",
+    "render:duel": "remotion render StickmanDuel out/stickman-duel.mp4",
     "still": "remotion still Video3D out/thumbnail.png --frame=60",
     "lint": "tsc --noEmit"
   },

@@ -130,3 +130,15 @@ Render karakter laki-laki: `npm run render:doa-laki` → `out/doa-panggung-laki.
 | Penutup "Terima kasih, Ayah" + #HariAyah2026 (4 detik) | `out/ayah-3-penutup.mp4` | Taruh paling belakang |
 
 Ganti teks lewat `defaultProps` di `src/Root.tsx` (contoh: `labelDulu: "TAHUN 2005"`), atau panel kanan saat `npm run dev`.
+
+## Stickman Duel (animasi kung fu 2D)
+
+Komposisi `StickmanDuel` (8,7 detik): kuda-kuda → tangkisan → 12x pukulan beruntun → pukulan pamungkas slow-motion → K.O.
+Render: `npm run render:duel` → `out/stickman-duel.mp4`. Tambahkan musik & efek suara (whoosh, pukulan) di CapCut.
+
+| Mau ganti... | Edit |
+|---|---|
+| Pose (sudut tangan/kaki) | konstanta `KUDA_KUDA`, `PUKUL_A`, dst. di `src/stickman/Duel.tsx` |
+| Urutan & waktu gerakan | `kunciJagoan` / `kunciLawan` (daftar `[frame, pose]`) di file yang sama |
+| Jumlah pukulan beruntun | `JUMLAH_PUKULAN` |
+| Sistem pose & gambar stickman | `src/stickman/Stickman.tsx` |
