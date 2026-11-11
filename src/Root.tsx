@@ -4,6 +4,7 @@ import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
+import { BingkaiDroste, Droste } from "./droste/Droste";
 import { DURASI_DUEL, StickmanDuel } from "./stickman/Duel";
 import { DURASI_KEROYOK, StickmanKeroyok } from "./stickman/Keroyok";
 import { AyahDuluSekarang, AyahPembuka, AyahPenutup } from "./ayah/HariAyah";
@@ -12,6 +13,33 @@ import { AyahDuluSekarang, AyahPembuka, AyahPenutup } from "./ayah/HariAyah";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* ===== Efek Droste (gambar di dalam gambar, tanpa ujung) ===== */}
+      <Composition
+        id="Droste"
+        component={Droste}
+        durationInFrames={30 * 6}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          gambar: "doa/karakter.png",
+          rasio: 0.4,
+          putar: 12,
+          durasiPutaran: 2,
+          pusatX: 0.5,
+          pusatY: 0.75,
+          warnaBingkai: "#ffffff",
+        }}
+      />
+      <Composition
+        id="BingkaiDroste"
+        component={BingkaiDroste}
+        durationInFrames={1}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ warnaBingkai: "#ffffff" }}
+      />
       <Composition
         id="StickmanKeroyok"
         component={StickmanKeroyok}

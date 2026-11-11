@@ -157,3 +157,18 @@ Render: `npm run render:keroyok` → `out/stickman-1vs4.mp4` (sudah ada suaranya
 
 Efek suara (whoosh, pukul, dentum, slowmo, gong) dibuat dari nol oleh `python3 scripts/buat-efek-suara.py`
 dan disimpan di `public/sfx/` — bebas hak cipta.
+
+## Efek Droste / Mise en abyme (gambar di dalam gambar, tanpa ujung)
+
+Komposisi `Droste` (6 detik, 3 putaran yang menyambung mulus): foto memuat dirinya sendiri di dalam bingkai,
+kamera terus masuk ke bingkai sambil sedikit berputar.
+
+1. Taruh foto di folder `public/` (contoh `public/foto-ayah.jpg`).
+2. Ubah `defaultProps` komposisi `Droste` di `src/Root.tsx`:
+   - `gambar`: nama file foto
+   - `pusatX` / `pusatY`: letak bingkai dalam (0–1). Taruh di bagian yang **tidak menutupi wajah**, misalnya tangan atau badan.
+   - `rasio`: besar bingkai dalam (0.35–0.65), `putar`: 0 = lurus, 10–20 = spiral
+3. Render: `npx remotion render Droste out/droste.mp4`
+
+`BingkaiDroste` = bingkai putih PNG transparan untuk merakit efek ini manual di CapCut:
+`npx remotion still BingkaiDroste out/bingkai-droste.png --image-format=png`
