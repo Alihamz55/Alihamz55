@@ -1,32 +1,27 @@
-# Roasting: Heboh Soal Ijazah (berita 5–12 November 2026)
+# Komedi: Heboh Soal Ijazah (versi ringan)
 
-Durasi target: ±40 detik. Format: TANPA intro.
+Durasi target: ±35 detik. Format: TANPA intro.
 Teks besar di frame pertama: **"INDONESIA LAGI HEBOH SOAL IJAZAH"**
 
-## Ringkasan berita (dasar naskah)
-- 5 Nov 2026: Jokowi hadir sebagai saksi di PN Jakarta Timur, dalam perkara pencemaran nama baik terkait tuduhan ijazah palsu (terdakwa Roy Suryo dkk).
-- Oktober 2026: MK menyatakan permohonan sengketa syarat pendidikan Gibran tidak dapat diterima; 30 Okt 2026 MA mengabulkan kasasi soal surat penyetaraan ijazah Gibran.
-- 11 Nov 2026: 120 anggota DPR menandatangani usulan hak menyatakan pendapat yang bisa membuka jalan pemakzulan Wapres Gibran.
-- 11–12 Nov 2026: ada kabar Gibran menyerahkan surat pengunduran diri (laporan satu sumber; belum dikonfirmasi resmi).
+Revisi: tanpa menyebut DPR, MPR, MK, MA, atau nama tokoh. Yang dibahas cuma "heboh ijazah" sebagai pemicu, lalu lucunya dari nasib ijazah komika sendiri.
 
 ## Naskah
 
-Indonesia lagi heboh soal ijazah. Gue jadi deg-degan... ijazah gue juga belum gue ambil, nunggak SPP. Bayangin, ada ijazah dipersoalkan sampai MK, MA, sampai DPR. Gue? Dipersoalkan HRD doang udah gemeteran. "Mas, ini nilai matematikanya beneran lima?" Asli, Bu. Saking aslinya... nggak ada yang mau ngaku. Mantan presiden sampai jadi saksi di pengadilan gara-gara urusan ijazah. Gue juga pernah jadi saksi... saksi temen nyontek pas ujian. Terus ada 120 anggota DPR tanda tangan petisi. Gue kirim lamaran kerja 120 kali... yang bales satu, itu pun penipuan. Kabarnya ada yang mau mundur. Gue juga pengen mundur... dari grup alumni. Tiap hari ditanya, "Kerja di mana sekarang?" Pelajarannya: simpen ijazah baik-baik. Soalnya di negeri ini... ngelamar satpam aja ditanya ijazah!
+Indonesia lagi heboh soal ijazah. Gue langsung panik... nyari ijazah gue di rumah. Ketemu! Di bawah kaki lemari... buat ganjel biar nggak goyang. Nyokap bilang, "Daripada nganggur, mending ijazahnya kerja." Orang penting aja ijazahnya dicek sampai heboh se-Indonesia. Gue? Dicek HRD doang udah keringetan. "Mas, ini nilai matematikanya beneran lima?" Asli, Bu. Saking aslinya... nggak ada yang mau nyontek dari gue. Terus gue sadar, ijazah gue tuh paling jujur. Fotonya aja rambut belah tengah, jerawat tiga. Kalau palsu... pasti gue edit dulu! Pelajarannya: simpen ijazah baik-baik. Soalnya di negeri ini... ngelamar satpam aja ditanya ijazah!
 
 ## Arahan gaya TTS
 
 ```
-Bacakan seperti stand-up comedian muda Indonesia yang sedang roasting berita: santai, sarkas tapi ramah, logat Jakarta ("gue", "nggak").
+Bacakan seperti stand-up comedian muda Indonesia yang curhat ke penonton: santai, ekspresif, logat Jakarta ("gue", "nggak").
 - Kalimat pertama langsung bertenaga, seperti membuka berita heboh.
 - Setiap "..." adalah jeda dramatis sekitar 1 detik sebelum punchline.
-- Kalimat HRD dalam tanda kutip: suara ibu-ibu kantoran yang curiga.
-- "Kerja di mana sekarang?" dibaca seperti tante di grup WA.
+- Kalimat Nyokap dalam tanda kutip: suara ibu-ibu yang menyindir.
+- Kalimat HRD dalam tanda kutip: suara ibu kantoran yang curiga.
+- "pasti gue edit dulu!" dibaca bangga dan yakin.
 - Kalimat terakhir dibaca keras dan gemas.
 Kecepatan bicara: sedang.
 ```
 
-## Catatan keamanan konten
-- Naskah tidak menyebut nama dan tidak menuduh ijazah siapa pun palsu; yang di-roast situasi dan nasib rakyat biasa.
-- Visual: hanya komika kartun + kartu bergaya "breaking news". Jangan gambar wajah/karikatur tokoh asli.
-- Cek berita terbaru sebelum upload; kabar pengunduran diri masih satu sumber.
-- Tulis "Konten satire/komedi" di caption.
+## Catatan
+- Ide visual: komika membongkar lemari, ijazah ternyata jadi ganjel kaki lemari, Nyokap muncul dengan sapu, HRD dengan kacamata dan kertas nilai "MATEMATIKA: 5", foto ijazah jadul (rambut belah tengah + jerawat), lalu seragam satpam di akhir.
+- Tidak ada wajah/karikatur tokoh asli.
