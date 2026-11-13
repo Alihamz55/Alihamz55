@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" font-family="'Baloo 2', sans-serif">
+  <defs><filter id="s" x="-10%" y="-10%" width="120%" height="120%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="10" result="d"/>
+    <feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/>
+    <feGaussianBlur in="d" stdDeviation="5" result="b"/><feOffset in="b" dy="5" result="o"/>
+    <feFlood flood-color="#000" flood-opacity=".28"/><feComposite in2="o" operator="in" result="sh"/>
+    <feMerge><feMergeNode in="sh"/><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <g filter="url(#s)">
+    <g transform="translate(46 8) scale(.82)">
+  
+  
+  <ellipse cx="256" cy="375" rx="105" ry="80" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  <ellipse cx="256" cy="390" rx="60" ry="50" fill="#FFE9C7"/>
+  <path d="M352 395 q70 -10 55 -80" stroke="#3B2314" stroke-width="30" stroke-linecap="round" fill="none"/>
+  <path d="M352 395 q70 -10 55 -80" stroke="#F7A440" stroke-width="16" stroke-linecap="round" fill="none"/>
+  <ellipse cx="215" cy="448" rx="30" ry="18" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  <ellipse cx="297" cy="448" rx="30" ry="18" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  
+  <path d="M150 190 L160 95 L225 150 Z" fill="#F7A440" stroke="#3B2314" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M362 190 L352 95 L287 150 Z" fill="#F7A440" stroke="#3B2314" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M165 165 L170 118 L205 148 Z" fill="#FF8FA3"/>
+  <path d="M347 165 L342 118 L307 148 Z" fill="#FF8FA3"/>
+  <ellipse cx="256" cy="225" rx="125" ry="100" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  <path d="M236 128 q20 22 40 0 M244 128 l0 28 M268 128 l0 28" stroke="#E07B1F" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <path d="M133 215 l26 6 M131 240 l26 0 M379 215 l-26 6 M381 240 l-26 0" stroke="#E07B1F" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="256" cy="262" rx="58" ry="38" fill="#FFE9C7"/>
+  <ellipse cx="180" cy="258" rx="20" ry="12" fill="#FF8FA3" opacity=".85"/><ellipse cx="332" cy="258" rx="20" ry="12" fill="#FF8FA3" opacity=".85"/>
+  <ellipse cx="208" cy="220" rx="15" ry="20" fill="#3B2314"/><ellipse cx="304" cy="220" rx="15" ry="20" fill="#3B2314"/><circle cx="213" cy="212" r="6" fill="#fff"/><circle cx="309" cy="212" r="6" fill="#fff"/><path d="M248 250 l16 0 l-8 8 z" fill="#FF8FA3" stroke="#3B2314" stroke-width="4"/><path d="M238 274 l36 0" stroke="#3B2314" stroke-width="7" stroke-linecap="round"/>
+  <g transform="translate(0 22)"><path d="M178 150 q78 -40 156 0 l-10 -58 q-68 -24 -136 0 z" fill="#1E1E24" stroke="#3B2314" stroke-width="8" stroke-linejoin="round"/><path d="M186 140 q70 -30 140 0" stroke="#3A3A46" stroke-width="5" fill="none"/></g>
+  <path d="M330 200 q60 -60 30 -110" stroke="#3B2314" stroke-width="40" stroke-linecap="round" fill="none"/><path d="M330 200 q60 -60 30 -110" stroke="#F7A440" stroke-width="24" stroke-linecap="round" fill="none"/><circle cx="170" cy="370" r="24" fill="#F7A440" stroke="#3B2314" stroke-width="8"/></g>
+    <text x="256" y="478" text-anchor="middle" font-size="72" font-weight="800" fill="#3E8FD8" stroke="#3B2314" stroke-width="12" stroke-linejoin="round" paint-order="stroke" transform="rotate(-4 256 460)">SIAP, BOS!</text>
+  </g></svg>

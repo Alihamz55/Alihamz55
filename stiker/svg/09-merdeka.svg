@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" font-family="'Baloo 2', sans-serif">
+  <defs><filter id="s" x="-10%" y="-10%" width="120%" height="120%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="10" result="d"/>
+    <feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/>
+    <feGaussianBlur in="d" stdDeviation="5" result="b"/><feOffset in="b" dy="5" result="o"/>
+    <feFlood flood-color="#000" flood-opacity=".28"/><feComposite in2="o" operator="in" result="sh"/>
+    <feMerge><feMergeNode in="sh"/><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <g filter="url(#s)">
+    <g transform="translate(46 8) scale(.82)"><g transform="translate(40 0)">
+  <g><rect x="120" y="40" width="10" height="330" rx="5" fill="#8B5A2B" stroke="#3B2314" stroke-width="5"/>
+  <path d="M130 50 q60 -20 120 0 t110 0 v50 q-55 -20 -110 0 t-120 0z" fill="#E8302F" stroke="#3B2314" stroke-width="6"/>
+  <path d="M130 100 q60 -20 120 0 t110 0 v50 q-55 -20 -110 0 t-120 0z" fill="#fff" stroke="#3B2314" stroke-width="6"/></g>
+  
+  <ellipse cx="256" cy="375" rx="105" ry="80" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  <ellipse cx="256" cy="390" rx="60" ry="50" fill="#FFE9C7"/>
+  <path d="M352 395 q70 -10 55 -80" stroke="#3B2314" stroke-width="30" stroke-linecap="round" fill="none"/>
+  <path d="M352 395 q70 -10 55 -80" stroke="#F7A440" stroke-width="16" stroke-linecap="round" fill="none"/>
+  <ellipse cx="215" cy="448" rx="30" ry="18" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  <ellipse cx="297" cy="448" rx="30" ry="18" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  
+  <path d="M150 190 L160 95 L225 150 Z" fill="#F7A440" stroke="#3B2314" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M362 190 L352 95 L287 150 Z" fill="#F7A440" stroke="#3B2314" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M165 165 L170 118 L205 148 Z" fill="#FF8FA3"/>
+  <path d="M347 165 L342 118 L307 148 Z" fill="#FF8FA3"/>
+  <ellipse cx="256" cy="225" rx="125" ry="100" fill="#F7A440" stroke="#3B2314" stroke-width="8"/>
+  <path d="M236 128 q20 22 40 0 M244 128 l0 28 M268 128 l0 28" stroke="#E07B1F" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <path d="M133 215 l26 6 M131 240 l26 0 M379 215 l-26 6 M381 240 l-26 0" stroke="#E07B1F" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="256" cy="262" rx="58" ry="38" fill="#FFE9C7"/>
+  <ellipse cx="180" cy="258" rx="20" ry="12" fill="#FF8FA3" opacity=".85"/><ellipse cx="332" cy="258" rx="20" ry="12" fill="#FF8FA3" opacity=".85"/>
+  <path d="M190 226 q18 -26 36 0 M286 226 q18 -26 36 0" stroke="#3B2314" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M248 250 l16 0 l-8 8 z" fill="#FF8FA3" stroke="#3B2314" stroke-width="4" stroke-linejoin="round"/><path d="M226 264 q30 50 60 0 z" fill="#B3263B" stroke="#3B2314" stroke-width="7" stroke-linejoin="round"/><path d="M240 284 q16 -10 32 0 q-16 14 -32 0z" fill="#FF8FA3"/>
+  
+  <circle cx="150" cy="330" r="24" fill="#F7A440" stroke="#3B2314" stroke-width="8"/></g></g>
+    <text x="256" y="478" text-anchor="middle" font-size="76" font-weight="800" fill="#E8302F" stroke="#3B2314" stroke-width="12" stroke-linejoin="round" paint-order="stroke" transform="rotate(-4 256 460)">MERDEKA!</text>
+  </g></svg>
