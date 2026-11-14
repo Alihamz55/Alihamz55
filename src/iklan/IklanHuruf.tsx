@@ -271,6 +271,8 @@ export const IklanHuruf: React.FC = () => {
       <Sequence from={D1 + D2 + D3 + D4} durationInFrames={D5}>
         <Adegan5 />
       </Sequence>
+      {/* Musik latar orisinal (ebook-huruf/jualan/buat_musik.py), dikecilkan supaya narator tetap jelas */}
+      <Audio src={staticFile("iklan-huruf/musik-latar.wav")} volume={0.32} />
       {[0, D1, D1 + D2, D1 + D2 + D3, D1 + D2 + D3 + D4].map((mulai, i) => (
         <Sequence key={`suara${i}`} from={mulai + 6}>
           <Audio src={staticFile(`iklan-huruf/suara/${i + 1}.wav`)} />

@@ -1,11 +1,11 @@
 # Iklan: Belajar Menulis Huruf A–Z
 
-Video: `iklan-huruf-9x16.mp4` (1080×1920, 25 detik). Sudah ada suara narator wanita (Speko, suara "Siti - Ad Narrator"), **belum ada musik latar**.
+Video: `iklan-huruf-9x16.mp4` (1080×1920, 25 detik). Sudah ada suara narator wanita (Speko, suara "Siti - Ad Narrator") dan musik latar.
 Satu video yang sama dipakai di TikTok, Facebook/Instagram Reels, dan YouTube Shorts.
 
-> Tambahkan musik latar langsung di aplikasi: di TikTok pilih dari
-> **Commercial Music Library** (musik yang boleh dipakai untuk jualan), di Facebook pakai
-> **Sound Collection**, di YouTube pakai **Audio Library**. Lagu viral biasa bisa membuat iklan ditolak.
+> Musik latarnya orisinal, dibuat dari kode (`buat_musik.py`), jadi aman untuk iklan berbayar.
+> **Jangan tambah lagu lain di aplikasi** saat upload, supaya suaranya tidak bertumpuk.
+> Lagu viral biasa juga bisa membuat iklan ditolak.
 
 ## Strategi (urutan yang disarankan)
 1. **Minggu 1, gratis:** unggah video sebagai postingan biasa di ketiga platform. Lihat mana yang paling banyak ditonton.
