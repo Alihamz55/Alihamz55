@@ -37,6 +37,8 @@ export const OUTFITS = {
   hrd: { tunic: "#3a3f52", skin: "#f0c49c", hair: "#2b211c", arms: "#3a3f52", dress: "#3a3f52", bun: true, glasses: true },
   genit: { tunic: "#ff7ab8", skin: "#f2c6a0", hair: "#3a2418", arms: "#f2c6a0", dress: "#ff7ab8", bun: true },
   bule: { tunic: "#3a8fd5", skin: "#f6d8c4", hair: "#f2c94c", arms: "#f6d8c4", dress: "#3a8fd5", bun: true },
+  flanel: { tunic: "#b0303a", skin: "#e8b48a", hair: "#1c1410", arms: "#b0303a", legs: "#2b3a5a", pants: "#2b3a5a", plaid: "#5a1420" },
+  sarung: { tunic: "#f4f1ea", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#d9a07a", sarung: "#2f6a8a", plaid: "#173e58", peci: true },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
 
@@ -199,6 +201,13 @@ export const romanFront = (p, key, opts = {}) => {
     p.clip(sk, () => { for (let i = 0; i < 3; i++) p.band([[tcx - 1.2 * T.a, torsoBot + (0.12 + i * 0.18) * HH], [tcx + 1.2 * T.a, torsoBot + (0.12 + i * 0.18) * HH]], "#ffffff88", 3 * u, 0);
       p.stroke([[tcx + 0.45 * T.a, torsoBot - 0.24 * HH], [tcx + 0.3 * T.a, torsoBot + 0.6 * HH]], 2 * u, mul(O.towel, [0.7, 0.7, 0.8])); });
     p.poly(sk, null, ow * 0.8);
+  } else if (O.sarung) {
+    const sk = [[tcx - 0.98 * T.a, torsoBot - 0.24 * HH], [tcx + 0.98 * T.a, torsoBot - 0.24 * HH], [tcx + 1.12 * T.a, sole - 0.3 * HH], [tcx - 1.12 * T.a, sole - 0.3 * HH]];
+    p.gradFill(sk, O.sarung, mul(O.sarung, SH_CLOTH), light);
+    p.clip(sk, () => { for (let i = -5; i <= 5; i++) p.band([[tcx + i * 0.32 * T.a, torsoBot - 0.3 * HH], [tcx + i * 0.32 * T.a, sole]], O.plaid, 4 * u, 0);
+      for (let k = 0; k < 7; k++) p.band([[tcx - 1.3 * T.a, torsoBot + (k * 0.2) * HH], [tcx + 1.3 * T.a, torsoBot + (k * 0.2) * HH]], O.plaid, 4 * u, 0);
+      p.band([[tcx - 1.3 * T.a, torsoBot - 0.12 * HH], [tcx + 1.3 * T.a, torsoBot - 0.12 * HH]], "#e2b04a", 6 * u, 0); });
+    p.poly(sk, null, ow * 0.8);
   } else if (!dress) {
     const sk = [[tcx - 0.92 * T.a, torsoBot - 0.2 * HH], [tcx + 0.92 * T.a, torsoBot - 0.2 * HH], [tcx + 1.0 * T.a, torsoBot + 0.3 * HH], [tcx - 1.0 * T.a, torsoBot + 0.3 * HH]];
     p.gradFill(sk, O.tunic, mul(O.tunic, SH_CLOTH), light); p.poly(sk, null, ow * 0.8);
@@ -229,6 +238,11 @@ export const romanFront = (p, key, opts = {}) => {
     } else if (O.kebaya) {
       for (let i = -3; i <= 3; i++) p.ell(tcx + i * 0.3 * T.a, chin + (0.3 + (i % 2) * 0.25) * HH, 6 * u, 6 * u, O.kebaya, 1.2 * u);
       p.band([[tcx - 1.4 * T.a, torsoBot - 0.24 * HH], [tcx + 1.4 * T.a, torsoBot - 0.24 * HH]], O.kebaya, 0.05 * HH, 1.2 * u);
+    } else if (O.plaid && !O.sarung) {
+      for (let i = -6; i <= 6; i++) p.band([[tcx + i * 0.34 * T.a, chin - 0.2 * HH], [tcx + i * 0.34 * T.a, torsoBot + 0.1 * HH]], O.plaid, 4 * u, 0);
+      for (let k = 0; k < 7; k++) p.band([[tcx - 1.4 * T.a, chin + (k * 0.2) * HH], [tcx + 1.4 * T.a, chin + (k * 0.2) * HH]], O.plaid, 4 * u, 0);
+      p.stroke([[tcx - 0.22 * T.a, chin + 0.02 * HH], [tcx, chin + 0.2 * HH], [tcx + 0.22 * T.a, chin + 0.02 * HH]], 2 * u);
+      for (let i = 0; i < 4; i++) p.dot(tcx, chin + (0.25 + i * 0.2) * HH, 2.4 * u, "#f4f1ea");
     } else if (O.stripes) {
       for (let i = -6; i <= 6; i++) p.band([[tcx + i * 0.3 * T.a, chin - 0.2 * HH], [tcx + i * 0.3 * T.a, torsoBot + 0.1 * HH]], O.stripes, 5 * u, 0);
       for (let i = 0; i < 3; i++) p.dot(tcx, chin + (0.2 + i * 0.22) * HH, 2.4 * u, "#f4f1ea");

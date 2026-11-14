@@ -506,3 +506,7 @@ export const fxPhoneMsg = (p, a, b, ring = 0) => { const g = p.g; g.save(); g.tr
   p.poly(rrect(-110, -110, 110, 60, 18), "#ffffff", 6); ptxt(g, a, 0, -62, 30, "#2f9a4a"); ptxt(g, b, 0, 0, 24, "#241726");
   p.dot(0, 245, 12, "#5d6470"); if (ring) for (const sd of [-1, 1]) for (let k = 1; k <= 2; k++) p.stroke([[sd * (175 + k * 26), -60 - k * 14], [sd * (190 + k * 30), 0], [sd * (175 + k * 26), 60 + k * 14]], 9, "#ffd84a");
   g.restore(); };
+export const fxRain = (p, t) => { const g = p.g; g.save(); g.lineCap = "round";
+  for (let i = 0; i < 70; i++) { const x = (i * 97 + t * 13) % 640 - 20, y = ((i * 211) % 1000 + t * 90) % 1060 - 60, l = 30 + (i % 4) * 12;
+    g.strokeStyle = i % 3 ? "rgba(200,220,255,0.38)" : "rgba(235,245,255,0.45)"; g.lineWidth = 2 + (i % 2); g.beginPath(); g.moveTo(x, y); g.lineTo(x - 6, y + l); g.stroke(); }
+  g.restore(); };
