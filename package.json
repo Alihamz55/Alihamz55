@@ -10,6 +10,7 @@
     "render:doa": "remotion render DoaPanggung out/doa-panggung.mp4 --crf=26",
     "render:doa-laki": "remotion render DoaPanggungLaki out/doa-panggung-laki.mp4 --crf=26",
     "still": "remotion still Video3D out/thumbnail.png --frame=60",
+    "render:iklan-huruf": "remotion render src/iklan/index.ts IklanHuruf out/iklan-huruf.mp4 --crf=23",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
