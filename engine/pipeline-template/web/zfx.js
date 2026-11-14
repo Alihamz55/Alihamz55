@@ -479,7 +479,10 @@ export const fxBakso = (p) => {
 
 // ---------- "Kena Prank Bule Bandung" ----------
 export const fxNoteCard = (p, text, col = "#fff8d8") => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.04);
-  p.poly(rrect(-250, -90, 250, 90, 18), col, 10); ptxt(g, text, 0, 4, 64, "#241726"); g.restore(); };
+  p.poly(rrect(-250, -90, 250, 90, 18), col, 10); g.font = `900 64px ${PF}`; let sz = Math.min(64, Math.floor(64 * 440 / g.measureText(text).width));
+  if (sz < 46 && text.includes(" ")) { const w = text.split(" "); let best = null; for (let i = 1; i < w.length; i++) { const a = w.slice(0, i).join(" "), b = w.slice(i).join(" "), m = Math.max(g.measureText(a).width, g.measureText(b).width); if (!best || m < best[2]) best = [a, b, m]; }
+    const s2 = Math.min(56, Math.floor(64 * 440 / best[2])); ptxt(g, best[0], 0, -30, s2, "#241726"); ptxt(g, best[1], 0, 36, s2, "#241726"); }
+  else ptxt(g, text, 0, 4, sz, "#241726"); g.restore(); };
 export const fxStamp = (p, a, b) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.12);
   p.poly(rrect(-260, -110, 260, 110, 16), null, 12); p.poly(rrect(-240, -90, 240, 90, 10), null, 5);
   ptxt(g, a, 0, -30, 72, "#c0302c"); ptxt(g, b, 0, 50, 54, "#c0302c"); g.restore(); };
@@ -494,4 +497,12 @@ export const fxKTP = (p) => { const g = p.g; g.save(); g.translate(300, 500); g.
   p.poly(rrect(100, -60, 220, 100, 6), "#d8453b", 5); p.ell(160, 10, 40, 46, "#f6d8c4", 4); p.ell(160, -28, 44, 22, "#f2c94c", 0);
   ptxt(g, "Nama: NENG", -230, -30, 30, "#241726", 0, INK, "left"); ptxt(g, "Asal: Bandung", -230, 20, 30, "#241726", 0, INK, "left");
   ptxt(g, "Bahasa: Sunda", -230, 70, 30, "#241726", 0, INK, "left"); ptxt(g, "Muka: BULE", -230, 120, 30, "#c0302c", 0, INK, "left");
+  g.restore(); };
+export const fxStampC = (p, a, b, col = "#2f9a4a") => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.1);
+  p.poly(rrect(-260, -110, 260, 110, 16), "#ffffffdd", 12); p.poly(rrect(-240, -90, 240, 90, 10), null, 5);
+  ptxt(g, a, 0, -30, 70, col); ptxt(g, b, 0, 50, 54, col); g.restore(); };
+export const fxPhoneMsg = (p, a, b, ring = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(0.05 * Math.sin(ring * 2.5));
+  p.poly(rrect(-150, -270, 150, 270, 36), "#2b2f3a", 12); p.poly(rrect(-125, -230, 125, 220, 16), "#bfe6ff", 0);
+  p.poly(rrect(-110, -110, 110, 60, 18), "#ffffff", 6); ptxt(g, a, 0, -62, 30, "#2f9a4a"); ptxt(g, b, 0, 0, 24, "#241726");
+  p.dot(0, 245, 12, "#5d6470"); if (ring) for (const sd of [-1, 1]) for (let k = 1; k <= 2; k++) p.stroke([[sd * (175 + k * 26), -60 - k * 14], [sd * (190 + k * 30), 0], [sd * (175 + k * 26), 60 + k * 14]], 9, "#ffd84a");
   g.restore(); };
