@@ -1,9 +1,9 @@
 # Iklan: Belajar Menulis Huruf A–Z
 
-Video: `iklan-huruf-9x16.mp4` (1080×1920, 20 detik, **tanpa musik**).
+Video: `iklan-huruf-9x16.mp4` (1080×1920, 25 detik). Sudah ada suara narator wanita (Speko, suara "Siti - Ad Narrator"), **belum ada musik latar**.
 Satu video yang sama dipakai di TikTok, Facebook/Instagram Reels, dan YouTube Shorts.
 
-> Musik sengaja dikosongkan. Tambahkan musik langsung di aplikasi: di TikTok pilih dari
+> Tambahkan musik latar langsung di aplikasi: di TikTok pilih dari
 > **Commercial Music Library** (musik yang boleh dipakai untuk jualan), di Facebook pakai
 > **Sound Collection**, di YouTube pakai **Audio Library**. Lagu viral biasa bisa membuat iklan ditolak.
 

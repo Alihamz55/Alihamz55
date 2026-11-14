@@ -1,5 +1,6 @@
 import {
   AbsoluteFill,
+  Audio,
   continueRender,
   delayRender,
   Img,
@@ -29,7 +30,10 @@ if (typeof document !== "undefined") {
 // Dipakai di TikTok, Reels/Facebook, dan YouTube Shorts.
 // Teks penting ditaruh di tengah: bagian bawah layar tertutup tombol & caption aplikasi.
 
-export const IKLAN_DETIK = 20;
+// Durasi tiap adegan (frame, 30 fps) mengikuti panjang suara narator (public/iklan-huruf/suara/*.wav).
+const D1 = 90, D2 = 156, D3 = 256, D4 = 99, D5 = 150;
+const PER_HALAMAN = D3 / 4;
+export const IKLAN_FRAME = D1 + D2 + D3 + D4 + D5;
 const NAVY = "#1E3A8A";
 const ORANYE = "#F97316";
 const KREM = "#FFF8EC";
@@ -169,7 +173,6 @@ const HALAMAN = [
   { file: "hal15.png", teks: "Lingkari hurufnya", warna: "#8B5CF6" },
   { file: "hal27.png", teks: "Lengkap A sampai Z!", warna: "#22C55E" },
 ];
-const PER_HALAMAN = 60;
 
 const Halaman: React.FC<{ file: string; teks: string; warna: string }> = ({ file, teks, warna }) => {
   const frame = useCurrentFrame();
@@ -251,23 +254,28 @@ const Adegan5: React.FC = () => {
 export const IklanHuruf: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: KREM }}>
-      <Sequence durationInFrames={90}>
+      <Sequence durationInFrames={D1}>
         <Adegan1 />
       </Sequence>
-      <Sequence from={90} durationInFrames={90}>
+      <Sequence from={D1} durationInFrames={D2}>
         <Adegan2 />
       </Sequence>
       {HALAMAN.map((h, i) => (
-        <Sequence key={h.file} from={180 + i * PER_HALAMAN} durationInFrames={PER_HALAMAN}>
+        <Sequence key={h.file} from={D1 + D2 + i * PER_HALAMAN} durationInFrames={PER_HALAMAN}>
           <Halaman {...h} />
         </Sequence>
       ))}
-      <Sequence from={420} durationInFrames={75}>
+      <Sequence from={D1 + D2 + D3} durationInFrames={D4}>
         <Adegan4 />
       </Sequence>
-      <Sequence from={495} durationInFrames={105}>
+      <Sequence from={D1 + D2 + D3 + D4} durationInFrames={D5}>
         <Adegan5 />
       </Sequence>
+      {[0, D1, D1 + D2, D1 + D2 + D3, D1 + D2 + D3 + D4].map((mulai, i) => (
+        <Sequence key={`suara${i}`} from={mulai + 6}>
+          <Audio src={staticFile(`iklan-huruf/suara/${i + 1}.wav`)} />
+        </Sequence>
+      ))}
     </AbsoluteFill>
   );
 };
