@@ -510,3 +510,15 @@ export const fxRain = (p, t) => { const g = p.g; g.save(); g.lineCap = "round";
   for (let i = 0; i < 70; i++) { const x = (i * 97 + t * 13) % 640 - 20, y = ((i * 211) % 1000 + t * 90) % 1060 - 60, l = 30 + (i % 4) * 12;
     g.strokeStyle = i % 3 ? "rgba(200,220,255,0.38)" : "rgba(235,245,255,0.45)"; g.lineWidth = 2 + (i % 2); g.beginPath(); g.moveTo(x, y); g.lineTo(x - 6, y + l); g.stroke(); }
   g.restore(); };
+/** big, high-contrast pop-up card: shadow + thick border + auto-fit title (1-2 lines) + optional ribbon */
+export const fxPop = (p, title, sub = "", bg = "#ffd84a", fg = "#1a1220", rib = "#c0302c", rot = -0.03) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(rot);
+  g.font = `900 92px ${PF}`; let lines = [title], sz = Math.min(92, Math.floor(92 * 500 / g.measureText(title).width));
+  if (sz < 62 && title.includes(" ")) { const w = title.split(" "); let best = null; for (let i = 1; i < w.length; i++) { const a = w.slice(0, i).join(" "), b = w.slice(i).join(" "), m = Math.max(g.measureText(a).width, g.measureText(b).width); if (!best || m < best[2]) best = [a, b, m]; }
+    lines = [best[0], best[1]]; sz = Math.min(84, Math.floor(92 * 500 / best[2])); }
+  const hT = lines.length * sz * 1.08 + 56, hS = sub ? 78 : 0, top = -(hT + hS) / 2;
+  p.poly(rrect(-276 + 14, top + 16, 276 + 14, top + hT + 16, 26), "#000000aa", 0);
+  p.poly(rrect(-276, top, 276, top + hT, 26), bg, 12);
+  lines.forEach((t, i) => ptxt(g, t, 0, top + 28 + sz * 0.54 + i * sz * 1.08, sz, fg, 0));
+  if (sub) { g.font = `900 46px ${PF}`; const sw = Math.min(46, Math.floor(46 * 470 / g.measureText(sub).width));
+    p.poly(rrect(-250, top + hT - 10, 250, top + hT + 64, 16), rib, 10); ptxt(g, sub, 0, top + hT + 27, sw, "#ffffff", 0); }
+  g.restore(); };

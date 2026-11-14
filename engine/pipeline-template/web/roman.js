@@ -37,6 +37,7 @@ export const OUTFITS = {
   hrd: { tunic: "#3a3f52", skin: "#f0c49c", hair: "#2b211c", arms: "#3a3f52", dress: "#3a3f52", bun: true, glasses: true },
   genit: { tunic: "#ff7ab8", skin: "#f2c6a0", hair: "#3a2418", arms: "#f2c6a0", dress: "#ff7ab8", bun: true },
   bule: { tunic: "#3a8fd5", skin: "#f6d8c4", hair: "#f2c94c", arms: "#f6d8c4", dress: "#3a8fd5", bun: true },
+  darman: { tunic: "#6a3418", skin: "#dca27a", hair: "#4e4844", arms: "#6a3418", legs: "#2b2f3a", pants: "#2b2f3a", batik: "#e2b04a", moustache: "#3a2a20" },
   flanel: { tunic: "#b0303a", skin: "#e8b48a", hair: "#1c1410", arms: "#b0303a", legs: "#2b3a5a", pants: "#2b3a5a", plaid: "#5a1420" },
   sarung: { tunic: "#f4f1ea", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#d9a07a", sarung: "#2f6a8a", plaid: "#173e58", peci: true },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
