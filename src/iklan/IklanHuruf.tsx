@@ -38,7 +38,7 @@ const NAVY = "#1E3A8A";
 const ORANYE = "#F97316";
 const KREM = "#FFF8EC";
 
-const Sinar: React.FC<{ warna?: string }> = ({ warna = "#FDE047" }) => {
+export const Sinar: React.FC<{ warna?: string }> = ({ warna = "#FDE047" }) => {
   const frame = useCurrentFrame();
   const n = 18;
   const putar = frame * 0.25;
@@ -64,7 +64,7 @@ const Sinar: React.FC<{ warna?: string }> = ({ warna = "#FDE047" }) => {
   );
 };
 
-const Teks: React.FC<{
+export const Teks: React.FC<{
   children: React.ReactNode;
   ukuran: number;
   warna?: string;
@@ -96,7 +96,7 @@ const Teks: React.FC<{
   );
 };
 
-const Pil: React.FC<{ teks: string; warna: string; mulai?: number }> = ({ teks, warna, mulai = 0 }) => {
+export const Pil: React.FC<{ teks: string; warna: string; mulai?: number }> = ({ teks, warna, mulai = 0 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const s = spring({ frame: frame - mulai, fps, config: { damping: 12 } });
