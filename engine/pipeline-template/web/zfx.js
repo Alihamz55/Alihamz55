@@ -705,3 +705,32 @@ export const fxZzz = (p, t = 0) => { const g = p.g; g.save(); g.font = '700 90px
   for (let i = 0; i < 3; i++) { const k = ((t * 0.02 + i / 3) % 1), x = 260 + i * 70 + 20 * Math.sin(t * 0.1 + i), y = 700 - k * 400, s = 0.5 + 0.7 * k;
     g.save(); g.translate(x, y); g.scale(s, s); g.globalAlpha = Math.min(1, (1 - k) * 2); g.lineWidth = 14; g.strokeStyle = "#14101a"; g.strokeText("Z", 0, 0); g.fillStyle = "#bfe3ff"; g.fillText("Z", 0, 0); g.restore(); }
   g.restore(); };
+
+/* ---- YouTube-style end-card buttons (generic: no platform logo) ---- */
+const iconBell = (g, x, y, s, ring) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = "#ffe14a"; g.strokeStyle = GINK; g.lineWidth = 6; g.lineJoin = "round";
+  g.beginPath(); g.moveTo(-26, 18); g.quadraticCurveTo(-24, -26, 0, -30); g.quadraticCurveTo(24, -26, 26, 18); g.lineTo(32, 26); g.lineTo(-32, 26); g.closePath(); g.fill(); g.stroke();
+  g.beginPath(); g.arc(0, 32, 8, 0, 7); g.fill(); g.stroke();
+  if (ring) { g.lineWidth = 6; g.strokeStyle = "#ffffff"; for (const sd of [-1, 1]) { g.beginPath(); g.arc(0, -4, 44, sd > 0 ? -0.5 : Math.PI - 0.1, sd > 0 ? 0.1 : Math.PI + 0.5); g.stroke(); } }
+  g.restore(); };
+const iconThumb = (g, x, y, s, fill) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = fill; g.strokeStyle = GINK; g.lineWidth = 6; g.lineJoin = "round";
+  g.beginPath(); g.roundRect(-34, -6, 16, 40, 4); g.fill(); g.stroke();
+  g.beginPath(); g.moveTo(-14, -4); g.lineTo(0, -30); g.quadraticCurveTo(12, -34, 10, -16); g.lineTo(6, -6); g.lineTo(28, -6); g.quadraticCurveTo(38, -4, 34, 8); g.lineTo(28, 30); g.quadraticCurveTo(26, 36, 16, 36); g.lineTo(-14, 36); g.closePath(); g.fill(); g.stroke();
+  g.restore(); };
+const iconChat = (g, x, y, s, fill, dots) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = fill; g.strokeStyle = GINK; g.lineWidth = 6; g.lineJoin = "round";
+  g.beginPath(); g.roundRect(-34, -28, 68, 48, 14); g.fill(); g.stroke(); g.beginPath(); g.moveTo(-14, 18); g.lineTo(-22, 34); g.lineTo(2, 20); g.fill(); g.stroke();
+  if (dots) { g.fillStyle = GINK; for (let i = 0; i < 3; i++) { g.beginPath(); g.arc(-16 + i * 16, -4 - (dots === i + 1 ? 6 : 0), 6, 0, 7); g.fill(); } }
+  g.restore(); };
+export const fxYtBtn = (p, kind, on = 0, t = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.02);
+  const W = 520, H = 130, x = -W / 2, y = -H / 2;
+  if (kind === "sub") { gPlate(g, x, y, W, H, 65, on ? "#3a3a44" : "#e8282e", 12, 8); iconBell(g, x + 78, 2, 1.0, on && t % 8 < 5);
+    gText(g, on ? "DISUBSCRIBE" : "SUBSCRIBE", 52, 4, on ? 48 : 56, "#ffffff", 0.05); }
+  else if (kind === "like") { gPlate(g, x, y, W, H, 65, on ? "#2f6ae8" : "#ffffff", 12, 8); iconThumb(g, x + 80, 0, 1.0, on ? "#ffe14a" : "#ffffff");
+    gText(g, on ? "LIKE +1" : "LIKE", 40, 4, 62, on ? "#ffffff" : "#ffffff", 0.05); }
+  else { gPlate(g, x, y, W, H, 65, on ? "#2f9a5a" : "#ffffff", 12, 8); iconChat(g, x + 80, 0, 1.0, "#ffffff", on ? 1 + (Math.floor(t / 4) % 3) : 0);
+    gText(g, "KOMEN", 40, 4, 62, "#ffffff", 0.05); }
+  g.restore(); };
+export const fxHand = (p, press = 0) => { const g = p.g; g.save(); g.translate(300, 500); const s = 1 - 0.15 * press; g.scale(s, s); g.lineJoin = "round";
+  g.beginPath(); g.moveTo(0, 0); g.lineTo(0, 120); g.lineTo(30, 92); g.lineTo(52, 140); g.lineTo(72, 130); g.lineTo(50, 84); g.lineTo(90, 84); g.closePath();
+  g.fillStyle = "#ffffff"; g.fill(); g.lineWidth = 9; g.strokeStyle = GINK; g.stroke();
+  if (press) { g.strokeStyle = "#ffe14a"; g.lineWidth = 7; for (let i = 0; i < 6; i++) { const a = -2.4 + i * 0.5; g.beginPath(); g.moveTo(Math.cos(a) * 30, Math.sin(a) * 30); g.lineTo(Math.cos(a) * 58, Math.sin(a) * 58); g.stroke(); } }
+  g.restore(); };
