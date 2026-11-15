@@ -555,4 +555,4 @@ window.renderFrame = (f) => {
   return true;
 };
 window.TOTAL = TOTAL;
-window.ready = true;
+Promise.all([document.fonts.load('700 80px Fredoka'), document.fonts.load('600 40px Fredoka')]).then(() => { window.ready = true; });

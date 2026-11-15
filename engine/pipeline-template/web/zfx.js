@@ -628,3 +628,59 @@ export const fxCaption = (p, words, idx) => { const g = p.g; g.save(); const siz
   words.forEach((w, i) => { const on = i === idx; g.lineWidth = 16; g.strokeStyle = "#120c10"; g.strokeText(w, x, on ? -6 : 0);
     g.fillStyle = on ? "#ffd84a" : "#ffffff"; g.fillText(w, x, on ? -6 : 0); x += ws[i] + sp; });
   g.restore(); };
+/** motion-graphic caption: rounded dark pill, pop-in, active word yellow + bump */
+export const fxCaption2 = (p, words, idx, k = 1, bump = 0) => { const g = p.g; g.save(); const size = 70; g.font = `900 ${size}px ${PF}`; g.textBaseline = "middle"; g.lineJoin = "round";
+  const sp = 22, ws = words.map((w) => g.measureText(w).width), total = ws.reduce((a, b) => a + b, 0) + sp * (words.length - 1);
+  const fit = total > 500 ? 500 / total : 1; g.translate(300, 500); g.scale(k * fit, k * fit);
+  const bw = total + 64, bh = 118, r = 30; g.fillStyle = "rgba(14,10,22,0.78)"; g.beginPath(); g.roundRect(-bw / 2, -bh / 2, bw, bh, r); g.fill();
+  g.strokeStyle = "rgba(255,216,74,0.9)"; g.lineWidth = 5; g.stroke();
+  let x = -total / 2;
+  words.forEach((w, i) => { const on = i === idx, s = on ? 1 + 0.14 * bump : 1; g.save(); g.translate(x + ws[i] / 2, 2); g.scale(s, s); g.textAlign = "center";
+    g.lineWidth = 9; g.strokeStyle = "#0c0810"; g.strokeText(w, 0, 0); g.fillStyle = on ? "#ffd84a" : "#ffffff"; g.fillText(w, 0, 0); g.restore(); x += ws[i] + sp; });
+  g.restore(); };
+
+/* ===== Telop kit (game-show style from the Lemo-Opuscar library): flat fills, one ink outline,
+   hard offset shadows, Fredoka 700, ink stroke ~14% of size under the fill, back-ease pops ===== */
+const GINK = "#14101a", GF = '"Fredoka", "DejaVu Sans", sans-serif';
+const gText = (g, t, x, y, size, fill, sh = 0.07) => { g.font = `700 ${size}px ${GF}`; g.textAlign = "center"; g.textBaseline = "middle"; g.lineJoin = "round";
+  const d = size * sh; g.lineWidth = size * 0.28; g.strokeStyle = GINK; g.strokeText(t, x + d, y + d * 1.2); g.fillStyle = GINK; g.fillText(t, x + d, y + d * 1.2);
+  g.strokeText(t, x, y); g.fillStyle = fill; g.fillText(t, x, y); };
+const gPlate = (g, x, y, w, h, r, fill, sh = 12, bw = 7) => { g.fillStyle = GINK; g.beginPath(); g.roundRect(x + sh, y + sh, w, h, r); g.fill();
+  g.fillStyle = fill; g.beginPath(); g.roundRect(x, y, w, h, r); g.fill(); g.lineWidth = bw; g.strokeStyle = GINK; g.stroke(); };
+/** dialogue telop: speaker-coloured plate, whole line in up to 2 rows, active word yellow; name sticker on the corner */
+export const fxTelop = (p, rows, active, hue, name, k = 1) => { const g = p.g; g.save(); g.translate(300, 500); g.scale(k, k); g.rotate(-0.012);
+  const size = 54, sp = 30; g.font = `700 ${size}px ${GF}`;
+  const rw = rows.map((r) => r.reduce((a, w) => a + g.measureText(w).width, 0) + sp * (r.length - 1)), W = Math.max(...rw) + 70, H = rows.length * 68 + 40;
+  const fit = W > 560 ? 560 / W : 1; g.scale(fit, fit);
+  gPlate(g, -W / 2, -H / 2, W, H, 26, hue);
+  let n = 0; rows.forEach((r, ri) => { let x = -rw[ri] / 2, y = -H / 2 + 20 + 34 + ri * 68;
+    r.forEach((w) => { const ww = g.measureText(w).width, on = n === active; g.save(); g.translate(x + ww / 2, y); if (on) g.scale(1.06, 1.06); gText(g, w, 0, 0, size, on ? "#ffe14a" : "#ffffff", 0.05); g.restore(); x += ww + sp; n++; }); });
+  if (name) { g.save(); g.translate(-W / 2 + 18, -H / 2 - 6); g.rotate(-0.07); g.font = `700 30px ${GF}`; const nw = g.measureText(name).width + 34;
+    gPlate(g, 0, -26, nw, 46, 14, "#fff4d6", 6, 5); g.fillStyle = GINK; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText(name, 17, -3); g.restore(); }
+  g.restore(); };
+/** burst: star + ring + speed lines (behind judgement words / cards) */
+const gBurst = (g, r, t, col) => { g.save(); g.rotate(t * 0.04); g.lineCap = "round";
+  g.strokeStyle = GINK; g.lineWidth = 10; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8; g.beginPath(); g.moveTo(Math.cos(a) * r * 1.05, Math.sin(a) * r * 1.05); g.lineTo(Math.cos(a) * r * 1.45, Math.sin(a) * r * 1.45); g.stroke(); }
+  const star = (rr, fill) => { g.beginPath(); for (let i = 0; i < 24; i++) { const a = i * Math.PI / 12, q_ = i % 2 ? rr * 0.72 : rr; g.lineTo(Math.cos(a) * q_, Math.sin(a) * q_); } g.closePath(); g.fillStyle = fill; g.fill(); };
+  g.save(); g.translate(10, 12); star(r, GINK); g.restore(); star(r, col); g.lineWidth = 7; g.strokeStyle = GINK; g.stroke();
+  g.beginPath(); g.arc(0, 0, r * 0.6, 0, 7); g.lineWidth = 6; g.strokeStyle = "rgba(255,255,255,0.85)"; g.stroke(); g.restore(); };
+/** judgement word: big outlined word at an angle over a burst */
+export const fxJudge = (p, text, fill = "#ff5d8f", burst = "#ffe14a", t = 0) => { const g = p.g; g.save(); g.translate(300, 500);
+  gBurst(g, 210, t, burst); g.rotate(-0.12); g.font = `700 150px ${GF}`; const w = g.measureText(text).width, fit = w > 540 ? 540 / w : 1; g.scale(fit, fit);
+  gText(g, text, 0, 0, 150, fill, 0.06); g.restore(); };
+/** corner sticker banner */
+export const fxBanner = (p, text, hue = "#ffb03a", fg = "#ffffff", dot = false, t = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.05);
+  g.font = `700 64px ${GF}`; const tw = g.measureText(text).width, W = tw + 80 + (dot ? 60 : 0), H = 112, fit = W > 580 ? 580 / W : 1; g.scale(fit, fit);
+  gPlate(g, -W / 2, -H / 2, W, H, 30, hue, 10, 7);
+  let x = 0; if (dot) { const s = 0.8 + 0.2 * Math.sin(t * 0.5); g.fillStyle = "#ffffff"; g.beginPath(); g.arc(-W / 2 + 56, 0, 20 * s, 0, 7); g.fill(); g.lineWidth = 5; g.strokeStyle = GINK; g.stroke(); x = 30; }
+  gText(g, text, x, 4, 64, fg, 0.05); g.restore(); };
+/** round card: title pops glyph by glyph, optional sub line, on a burst */
+export const fxRoundCard = (p, title, sub, hue = "#ffd23a", t = 99) => { const g = p.g; g.save(); g.translate(300, 500);
+  gBurst(g, 250, t, "#ffffff"); g.rotate(-0.04);
+  const words = title.split(" "); const rows = []; let cur = ""; words.forEach((w) => { if ((cur + " " + w).trim().length > 11 && cur) { rows.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }); rows.push(cur);
+  const size = 78; g.font = `700 ${size}px ${GF}`; const mw = Math.max(...rows.map((r) => g.measureText(r).width)); g.font = `700 36px ${GF}`; const sw0 = sub ? g.measureText(sub).width + 70 : 0;
+  const W = Math.max(mw + 80, sw0 + 40), H = rows.length * 88 + (sub ? 70 : 0) + 50, fit = W > 570 ? 570 / W : 1; g.scale(fit, fit); gPlate(g, -W / 2, -H / 2, W, H, 34, hue, 14, 8);
+  let ci = 0; rows.forEach((r, ri) => { g.font = `700 ${size}px ${GF}`; const rw = g.measureText(r).width; let x = -rw / 2; const y = -H / 2 + 25 + 44 + ri * 88;
+    for (const ch of r) { const cw = g.measureText(ch).width, k = Math.max(0, Math.min(1, (t - ci * 0.8) / 4)), s = k < 1 ? k * 1.25 : 1; if (s > 0.01) { g.save(); g.translate(x + cw / 2, y); g.scale(s, s); gText(g, ch, 0, 0, size, "#ffffff", 0.05); g.restore(); } x += cw; ci++; } });
+  if (sub) { g.font = `700 36px ${GF}`; const sw = g.measureText(sub).width + 40, y = H / 2 - 50; gPlate(g, -sw / 2, y - 22, sw, 50, 16, "#14101a", 0, 0); g.fillStyle = "#ffe14a"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(sub, 0, y + 3); }
+  g.restore(); };

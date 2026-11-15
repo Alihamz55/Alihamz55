@@ -93,29 +93,31 @@ const scaled = (k, fn) => (pp) => { pp.g.translate(300, 500); pp.g.scale(k, k); 
 const at = (x, yc, z, s) => [x, yc - 1.07 * s, z];
 const camRel = (f, dy, d, s, dx = 0) => { const C = camAt(f), v = [C.look[0] - C.pos[0], C.look[1] - C.pos[1], C.look[2] - C.pos[2]], L = Math.hypot(...v);
   return at(C.pos[0] + v[0] / L * d + dx, C.pos[1] + v[1] / L * d + dy, C.pos[2] + v[2] / L * d, s); };
-const POPS = [
-  ['doa', 178, 249, 'DOA MAU MAKAN?!', '', '#ffd84a'],
-  ['pocong', 440, 490, 'POCONG!', '', '#ffffff', '#c0302c', 1.3],
-  ['live', 540, 594, 'LIVE TIKTOK', '', '#e8344a', '#ffffff'],
-  ['fol', 690, 795, 'FOLLOWERS: 1.000.000', '', '#ffd84a'],
-  ['ratus', 798, 832, 'MALAM KOMEDI: 100', '', '#ffffff', '#c0302c'],
-  ['end', 1124, 1194, 'SUBSCRIBE!', 'BIAR NGGAK KALAH SAMA POCONG', '#ffd84a', '#1a1220', 1.15],
-];
-// per-word caption: chunk of <=3 words, current word highlighted (timing ~ word length)
-const caption = (f) => { for (let n = 0; n < LINES.length; n++) { const [, a, b] = LINES[n]; if (f < a - 1 || f > b + 3) continue;
+// ---- game-show telop kit (Lemo-Opuscar "game-show" style): judgement words, corner banners, round cards, speaker telops ----
+const JUDGE = [[440, 492, 'POCONG!', '#ff5d8f'], [798, 834, 'SERATUS?!', '#ffe14a']];
+const BANNERS = [[178, 249, 'DOA MAU MAKAN?!', '#ffb03a', '#ffffff', false], [540, 650, 'LIVE TIKTOK', '#e8344a', '#ffffff', true],
+  [690, 796, 'FOLLOWERS: 1 JUTA', '#3fbf6a', '#ffffff', false], [836, 958, 'MALAM KOMEDI: 100', '#3a5bd9', '#ffffff', false]];
+const SPK = { A: ['#2f9a5a', 'ASEP'], U: ['#ff6b3a', 'UCUP'], P: ['#8b5cf6', 'POCONG'] };
+const telop = (f) => { for (let n = LINES.length - 1; n >= 0; n--) { const [who, a, b] = LINES[n]; const nxt = n + 1 < LINES.length ? LINES[n + 1][1] - 1 : 99999;
+  if (f < a - 1 || f > Math.min(b + 18, nxt)) continue;
   const W = TXT[n].split(' '), wt = W.map((w) => w.replace(/[^A-Z0-9]/g, '').length + 2), tot = wt.reduce((x, y) => x + y, 0);
-  const u = clamp((f - a) / Math.max(1, b - a)) * tot; let acc = 0, idx = W.length - 1; for (let k = 0; k < W.length; k++) { acc += wt[k]; if (u < acc) { idx = k; break; } }
-  const ch = []; let cur = [], len = 0; W.forEach((w, k) => { if (cur.length && (len + w.length > 13 || cur.length >= 3)) { ch.push(cur); cur = []; len = 0; } cur.push(k); len += w.length + 1; }); ch.push(cur);
-  const c = ch.find((x) => x.includes(idx)); return { key: n + '_' + idx, words: c.map((k) => W[k]), idx: c.indexOf(idx) }; } return null; };
+  let acc = 0, idx = -1; W.forEach((w, k) => { if (f >= a + (b - a) * acc / tot && f <= b + 2) idx = k; acc += wt[k]; });
+  const rows = []; let cur = [], len = 0; W.forEach((w) => { if (cur.length && len + w.length > 17) { rows.push(cur); cur = []; len = 0; } cur.push(w); len += w.length + 1; }); rows.push(cur);
+  return { n, who, a, rows, idx }; } return null; };
 export const fxAt = (f, T) => {
   const out = [];
   out.push(FXC('fire' + (f % 24), (p) => T.fxFire(p, f), [MX, 0.5, -0.2], 0.42, { order: 2 }));
   { const P_ = pcPos(f); if (P_) { const sp = speaks(f, 'P'), m = sp ? +(LIPS[f] || 0) : 0, mood = f >= 650 && f < 959 ? 'smug' : f < 342 ? 'shock' : 'calm', bl = f % 100 > 95 ? 1 : 0;
     out.push(FXC('pc' + [m, mood, bl].join(), (p) => T.fxPocong(p, m, bl, mood), [q(P_[0], 3), q(P_[1], 3), P_[2]], 1.0, { order: 2 })); } }
+  if (globalThis.__CLEAN !== false && globalThis.__CLEAN !== undefined) return out;
   const card = (key, a, b_, draw, posf, s = 0.3) => { if (f < a || f >= b_) return; const k = q(Math.min(pop(f, a), out_(f, b_)), 2); if (k > 0.01) out.push(FXC(key + k, scaled(k, draw), posf(f), s, { order: 9 })); };
-  if (f < 79) { const k = q(f < 1 ? 1 : out_(f, 79), 2); out.push(FXC('hook' + k, scaled(k, (p) => T.fxPop(p, 'ASEP & UCUP NAIK GUNUNG', 'MALAM KOMEDI', '#ffd84a')), camRel(f, 0.21, 1.1, 0.3), 0.3, { order: 10 })); }
-  for (const [key, a, b_, t, sub, bg, fg = '#1a1220', big = 1] of POPS) { const s = q(0.3 * big, 3);
-    card(key, a, b_, (p) => T.fxPop(p, t, sub, bg, fg), (f_) => camRel(f_, 0.235, 1.1, s), s); }
-  const C_ = caption(f); if (C_) out.push(FXC('cap' + C_.key, (p) => T.fxCaption(p, C_.words, C_.idx), camRel(f, -0.21, 1.1, 0.3), 0.3, { order: 11 }));
+  // round cards: opening title + closing call to action (glyph-by-glyph pop)
+  if (f < 79) { const t = Math.min(40, f + 6), k = q(f < 1 ? 1 : out_(f, 79), 2); out.push(FXC('hook' + k + '_' + t + '_' + (f % 90), scaled(k, (p) => T.fxRoundCard(p, 'ASEP & UCUP NAIK GUNUNG', 'MALAM KOMEDI', '#ff6b3a', t)), camRel(f, 0.17, 1.1, 0.34), 0.34, { order: 10 })); }
+  if (f >= 1124) { const t = Math.min(40, f - 1124), k = pop(f, 1124); out.push(FXC('end' + k + '_' + t + '_' + (f % 90), scaled(k, (p) => T.fxRoundCard(p, 'SUBSCRIBE!', 'BIAR NGGAK KALAH SAMA POCONG', '#e8344a', t)), camRel(f, 0.15, 1.1, 0.34), 0.34, { order: 10 })); }
+  for (const [a, b_, t, fill] of JUDGE) card('j' + t + (f % 90), a, b_, (p) => T.fxJudge(p, t, fill, '#ffe14a', f), (f_) => camRel(f_, 0.27, 1.1, 0.27), 0.27);
+  for (const [a, b_, t, hue, fg, dot] of BANNERS) card('b' + t + (dot ? f % 13 : ''), a, b_, (p) => T.fxBanner(p, t, hue, fg, dot, f), (f_) => camRel(f_, 0.31, 1.1, 0.27), 0.27);
+  // speaker telop at the bottom (inside the Shorts safe zone)
+  const C_ = telop(f); if (C_ && f < 1124) { const [hue, nm] = SPK[C_.who], k = pop(f, C_.a - 1, 5);
+    out.push(FXC('tel' + C_.n + '_' + C_.idx + '_' + k, scaled(k, (p) => T.fxTelop(p, C_.rows, C_.idx, hue, nm, 1)), camRel(f, -0.14, 1.1, 0.3), 0.3, { order: 11 })); }
   return out;
 };
