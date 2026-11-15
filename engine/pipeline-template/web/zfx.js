@@ -734,3 +734,13 @@ export const fxHand = (p, press = 0) => { const g = p.g; g.save(); g.translate(3
   g.fillStyle = "#ffffff"; g.fill(); g.lineWidth = 9; g.strokeStyle = GINK; g.stroke();
   if (press) { g.strokeStyle = "#ffe14a"; g.lineWidth = 7; for (let i = 0; i < 6; i++) { const a = -2.4 + i * 0.5; g.beginPath(); g.moveTo(Math.cos(a) * 30, Math.sin(a) * 30); g.lineTo(Math.cos(a) * 58, Math.sin(a) * 58); g.stroke(); } }
   g.restore(); };
+/** channel banner: big name plate + "YouTube: @handle" pill (no platform logo) */
+export const fxChannel = (p, name, handle, t = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.025);
+  g.font = `700 92px ${GF}`; const tw = g.measureText(name).width, W = Math.min(580, tw + 90), H = 210, fit = tw + 90 > 580 ? 580 / (tw + 90) : 1;
+  gPlate(g, -W / 2, -H / 2, W, H, 40, "#e8282e", 14, 8);
+  g.save(); g.beginPath(); g.roundRect(-W / 2, -H / 2, W, H, 40); g.clip(); g.strokeStyle = "rgba(255,255,255,0.12)"; g.lineWidth = 22;
+  for (let x = -W; x < W; x += 60) { g.beginPath(); g.moveTo(x + (t * 1.5) % 60, -H / 2); g.lineTo(x + (t * 1.5) % 60 + 120, H / 2); g.stroke(); } g.restore();
+  g.save(); g.scale(fit, fit); gText(g, name, 0, -26, 92, "#ffffff", 0.05); g.restore();
+  g.font = `700 40px ${GF}`; const hw = g.measureText(handle).width + 60; gPlate(g, -hw / 2, 30, hw, 62, 31, "#14101a", 0, 0);
+  g.fillStyle = "#ffe14a"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(handle, 0, 63);
+  g.restore(); };
