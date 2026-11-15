@@ -762,3 +762,32 @@ export const fxTray = (p, bite = 0, hold = 1) => { const g = p.g; g.save(); g.tr
 export const fxLeak = (p, t = 0) => { const g = p.g; g.save(); g.fillStyle = "#9fd4ee"; g.strokeStyle = "#14101a"; g.lineWidth = 5;
   for (let i = 0; i < 2; i++) { const k = ((t * 0.04 + i * 0.5) % 1), y = 80 + k * 860; g.beginPath(); g.moveTo(300, y - 34); g.quadraticCurveTo(318, y, 300, y + 14); g.quadraticCurveTo(282, y, 300, y - 34); g.fill(); g.stroke(); }
   g.restore(); };
+
+/* ---- Live jualan: tripod + ring light, layar live HP ---- */
+export const fxTripod = (p, t = 0) => { const g = p.g; g.save(); g.lineCap = "round"; g.lineJoin = "round";
+  g.strokeStyle = "#2a2a30"; g.lineWidth = 12; for (const dx of [-150, 0, 150]) { g.beginPath(); g.moveTo(300, 700); g.lineTo(300 + dx, 995); g.stroke(); }
+  g.lineWidth = 16; g.beginPath(); g.moveTo(300, 700); g.lineTo(300, 330); g.stroke();
+  const gl = 0.85 + 0.15 * Math.sin(t * 0.3); g.strokeStyle = `rgba(255,248,220,${gl})`; g.lineWidth = 34; g.beginPath(); g.arc(300, 230, 150, 0, 7); g.stroke();
+  g.strokeStyle = "#14101a"; g.lineWidth = 6; g.beginPath(); g.arc(300, 230, 170, 0, 7); g.stroke(); g.beginPath(); g.arc(300, 230, 130, 0, 7); g.stroke();
+  g.fillStyle = "#1a1a20"; g.beginPath(); g.roundRect(240, 130, 120, 210, 18); g.fill(); g.lineWidth = 6; g.stroke();
+  g.fillStyle = "#3a4a6a"; g.beginPath(); g.arc(300, 160, 12, 0, 7); g.fill(); g.restore(); };
+export const fxPhoneLive = (p, mode = "live", t = 0, n = 0, hi = 0) => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.fillStyle = "#14101a"; g.beginPath(); g.roundRect(40, 20, 520, 960, 56); g.fill();
+  g.save(); g.beginPath(); g.roundRect(62, 44, 476, 912, 40); g.clip();
+  if (mode === "ceiling") { g.fillStyle = "#e8dcc4"; g.fillRect(62, 44, 476, 912); g.strokeStyle = "rgba(120,100,70,0.25)"; g.lineWidth = 3; for (let y = 120; y < 950; y += 90) { g.beginPath(); g.moveTo(62, y); g.lineTo(538, y); g.stroke(); }
+    g.fillStyle = "rgba(255,240,180,0.9)"; g.beginPath(); g.arc(300, 420, 70, 0, 7); g.fill(); g.fillStyle = "rgba(255,240,180,0.25)"; g.beginPath(); g.arc(300, 420, 160, 0, 7); g.fill();
+    g.fillStyle = "#6a7a5a"; g.save(); g.translate(400, 600 + Math.sin(t * 0.2) * 10); g.rotate(0.5); g.beginPath(); g.ellipse(0, 0, 26, 9, 0, 0, 7); g.fill(); g.fillRect(-46, -3, 24, 6); g.restore(); }
+  else { const gr = g.createLinearGradient(0, 44, 0, 956); gr.addColorStop(0, "#3a2a40"); gr.addColorStop(1, "#1a1424"); g.fillStyle = gr; g.fillRect(62, 44, 476, 912);
+    g.fillStyle = "#3f9a4a"; for (const [x, y, r] of [[230, 420, 70], [310, 380, 80], [380, 430, 66], [270, 480, 60], [350, 490, 62]]) { g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
+    g.fillStyle = "#e8742c"; g.fillRect(250, 520, 26, 120); g.fillRect(320, 530, 26, 110);
+    g.font = '700 46px "Fredoka", sans-serif'; g.textAlign = "center"; g.fillStyle = "#ffe14a"; g.fillText("SAYUR SEGAR!", 300, 700); }
+  // top bar: LIVE + viewers
+  g.fillStyle = "#e8344a"; g.beginPath(); g.roundRect(84, 70, 140, 56, 14); g.fill(); g.fillStyle = "#fff"; g.font = '700 36px "Fredoka", sans-serif'; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText("LIVE", 120, 99);
+  g.fillStyle = "#fff"; g.beginPath(); g.arc(106, 99, 7, 0, 7); g.fill();
+  g.fillStyle = "rgba(0,0,0,0.45)"; g.beginPath(); g.roundRect(236, 70, 150, 56, 14); g.fill(); g.fillStyle = "#fff"; g.fillText("1 nonton", 252, 99);
+  // comments
+  const C = mode === "ceiling" ? [["cicak_rumah", "ckck ckck"]] : [["pocong_lowbat", "halo bu"], ["pocong_lowbat", "BORONG SEMUA, BU"]].slice(0, n);
+  C.forEach(([u, m], i) => { const y = 780 + i * 82, on = hi && i === C.length - 1; g.fillStyle = on ? "rgba(255,225,74,0.95)" : "rgba(0,0,0,0.5)"; g.beginPath(); g.roundRect(84, y - 34, 430, 68, 22); g.fill();
+    g.font = '700 28px "Fredoka", sans-serif'; g.fillStyle = on ? "#14101a" : "#bfe3ff"; g.fillText(u, 104, y - 10); g.font = '700 32px "Fredoka", sans-serif'; g.fillStyle = on ? "#14101a" : "#fff"; g.fillText(m, 104, y + 18); });
+  g.restore(); g.strokeStyle = "#2a2a34"; g.lineWidth = 10; g.beginPath(); g.roundRect(40, 20, 520, 960, 56); g.stroke();
+  g.restore(); };
