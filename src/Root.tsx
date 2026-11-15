@@ -4,6 +4,7 @@ import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
+import { MotionDemo } from "./demo/MotionDemo";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
@@ -35,6 +36,14 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={{ pakaiMusik: true }}
+      />
+      <Composition
+        id="MotionDemo"
+        component={MotionDemo}
+        durationInFrames={150}
+        fps={30}
+        width={1080}
+        height={1920}
       />
       <Composition
         id="Video3D"
