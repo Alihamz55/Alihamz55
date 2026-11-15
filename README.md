@@ -112,10 +112,15 @@ Cerita disampaikan lewat simbol (tanah, cahaya, taman, pohon) dan caption yang m
 
 | Mau ganti... | Edit file |
 |---|---|
-| Teks caption & durasi tiap adegan | `src/nabi/adam/naskah.ts` |
+| Teks caption & durasi narasi tiap adegan | `src/nabi/adam/naskah.ts` |
+| Suara narasi (Speko TTS, suara wanita "Siti") | `public/nabi-adam/<adegan>.mp3` |
 | Gambar/animasi tiap adegan | `src/nabi/adam/Adegan.tsx` |
 | Gaya caption | `src/nabi/Caption.tsx` |
 | Bukit, pohon, awan, bintang (dipakai ulang) | `src/nabi/kertas.tsx` |
+
+Durasi tiap adegan otomatis mengikuti panjang narasinya. Kalau teks diubah, buat ulang
+file suaranya di Speko, simpan dengan nama adegan yang sama, lalu perbarui angka `suara` di `naskah.ts`.
+Render tanpa narasi: tambahkan `--props='{"pakaiMusik":true,"pakaiSuara":false}'`.
 
 Render: `npm run render:adam` → `out/kisah-nabi-adam.mp4`
 

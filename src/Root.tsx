@@ -19,7 +19,7 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={1920}
-        defaultProps={{ pakaiMusik: true }}
+        defaultProps={{ pakaiMusik: true, pakaiSuara: true }}
       />
       <Composition
         id="IntroNasyidMungil"

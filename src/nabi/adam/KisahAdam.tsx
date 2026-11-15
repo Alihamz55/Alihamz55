@@ -1,8 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { CaptionCerita } from "../Caption";
-import { FONT_JUDUL } from "../../shared/font";
-import { jadwal, type IdAdegan, TOTAL_FRAME } from "./naskah";
+import { JEDA_AWAL, jadwal, type IdAdegan, TOTAL_FRAME } from "./naskah";
 import { Bisikan, Diterima, Judul, Nama, Penutup, Sujud, Surga, Tanah, Taubat, Turun } from "./Adegan";
 
 const KOMPONEN: Record<IdAdegan, React.FC<{ d: number }>> = {
@@ -30,50 +29,41 @@ const Transisi: React.FC<{ d: number; children: React.ReactNode }> = ({ d, child
   );
 };
 
-export type KisahAdamProps = { pakaiMusik: boolean };
+// pakaiSuara = narasi Speko di public/nabi-adam/*.mp3
+export type KisahAdamProps = { pakaiMusik: boolean; pakaiSuara: boolean };
 
-export const KisahAdam: React.FC<KisahAdamProps> = ({ pakaiMusik }) => {
+export const KisahAdam: React.FC<KisahAdamProps> = ({ pakaiMusik, pakaiSuara }) => {
   return (
     <AbsoluteFill style={{ background: "#1a0b4d" }}>
       {jadwal.map((a) => {
         const Komponen = KOMPONEN[a.id];
+        const akhirCaption = JEDA_AWAL + Math.round((a.captionDetik ?? a.suara) * 30);
         return (
           <Sequence key={a.id} from={a.mulai} durationInFrames={a.durasi}>
             <Transisi d={a.durasi}>
               <Komponen d={a.durasi} />
-              <CaptionCerita teks={a.teks} durasi={a.durasi} />
+              <CaptionCerita teks={a.teks} awal={JEDA_AWAL} akhir={akhirCaption} />
             </Transisi>
+            {pakaiSuara && (
+              <Sequence from={JEDA_AWAL} layout="none">
+                <Audio src={staticFile(`nabi-adam/${a.id}.mp3`)} />
+              </Sequence>
+            )}
           </Sequence>
         );
       })}
-
-      {/* Label channel kecil di pojok */}
-      <div
-        style={{
-          position: "absolute",
-          top: 70,
-          left: 50,
-          padding: "6px 26px",
-          borderRadius: 40,
-          background: "rgba(26,11,77,0.55)",
-          border: "3px solid rgba(255,255,255,0.7)",
-          color: "#fff",
-          fontFamily: FONT_JUDUL,
-          fontSize: 36,
-        }}
-      >
-        🌙 Nasyid Mungil
-      </div>
 
       {pakaiMusik && (
         <Audio
           src={staticFile("musik.mp3")}
           loop
-          volume={(f) => interpolate(f, [0, 20, TOTAL_FRAME - 40, TOTAL_FRAME], [0, 0.18, 0.18, 0], { extrapolateRight: "clamp" })}
+          volume={(f) =>
+            interpolate(f, [0, 20, TOTAL_FRAME - 40, TOTAL_FRAME], [0, pakaiSuara ? 0.07 : 0.18, pakaiSuara ? 0.07 : 0.18, 0], {
+              extrapolateRight: "clamp",
+            })
+          }
         />
       )}
-      {/* Voiceover: rekam narasinya, simpan sebagai public/nabi-adam-vo.mp3, lalu buka komentar ini */}
-      {/* <Audio src={staticFile("nabi-adam-vo.mp3")} /> */}
     </AbsoluteFill>
   );
 };

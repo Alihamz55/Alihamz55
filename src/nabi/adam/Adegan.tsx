@@ -544,7 +544,8 @@ export const Taubat: React.FC<P> = ({ d }) => {
   const { fps } = useVideoConfig();
   const kartu = spring({ frame: frame - 10, fps, config: { damping: 14 } });
   const kata = DOA_ARAB.split(" ");
-  const arti = interpolate(frame, [d * 0.55, d * 0.65], [0, 1], clamp);
+  // Arti muncul saat narator mulai membacakannya (4,75 detik setelah narasi mulai)
+  const arti = interpolate(frame, [154, 166], [0, 1], clamp);
   return (
     <AbsoluteFill style={{ background: "linear-gradient(#0b1033, #2a1b5e)" }}>
       <Kamera d={d} ke={1.04}>
@@ -589,7 +590,7 @@ export const Taubat: React.FC<P> = ({ d }) => {
           }}
         >
           {kata.map((k, i) => {
-            const mulai = 20 + i * ((d * 0.45) / kata.length);
+            const mulai = 20 + i * (125 / kata.length);
             return (
               <span key={i} style={{ opacity: interpolate(frame, [mulai, mulai + 8], [0, 1], clamp) }}>
                 {k}{" "}
@@ -658,7 +659,8 @@ export const Penutup: React.FC<P> = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const kartu = spring({ frame, fps, config: { damping: 13 } });
-  const tombol = spring({ frame: frame - 70, fps, config: { damping: 10 } });
+  // Waktu muncul disesuaikan dengan narasi penutup
+  const tombol = spring({ frame: frame - 324, fps, config: { damping: 10 } });
   const denyut = 1 + Math.max(0, Math.sin(frame / 5)) * 0.05;
   return (
     <AbsoluteFill style={{ background: UNGU }}>
@@ -679,7 +681,7 @@ export const Penutup: React.FC<P> = () => {
       >
         <div style={{ fontFamily: FONT_JUDUL, fontSize: 76, color: PINK, textAlign: "center", marginBottom: 26 }}>💡 Pelajaran untuk Kita</div>
         {PELAJARAN.map((t, i) => {
-          const s = spring({ frame: frame - 15 - i * 12, fps, config: { damping: 12 } });
+          const s = spring({ frame: frame - [71, 148, 263][i], fps, config: { damping: 12 } });
           return (
             <div
               key={i}

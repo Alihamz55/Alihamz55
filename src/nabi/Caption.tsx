@@ -4,7 +4,8 @@ import { FONT_JUDUL } from "../shared/font";
 
 // Caption kertas di bawah layar. Kata yang sedang "dibaca" berwarna pink,
 // kata yang belum dibaca masih samar — membantu anak mengikuti bacaan.
-export const CaptionCerita: React.FC<{ teks: string; durasi: number }> = ({ teks, durasi }) => {
+// `awal`/`akhir` = rentang frame narasi, supaya sorotan kata ikut suara.
+export const CaptionCerita: React.FC<{ teks: string; awal: number; akhir: number }> = ({ teks, awal, akhir }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (!teks) return null;
@@ -12,8 +13,6 @@ export const CaptionCerita: React.FC<{ teks: string; durasi: number }> = ({ teks
   const kata = teks.split(" ");
   const bobot = kata.map((k) => k.length + 2);
   const total = bobot.reduce((a, b) => a + b, 0);
-  const awal = 8;
-  const akhir = durasi - 20;
   let jalan = awal;
   const mulaiKata = bobot.map((b) => {
     const m = jalan;
