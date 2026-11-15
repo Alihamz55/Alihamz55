@@ -684,3 +684,24 @@ export const fxRoundCard = (p, title, sub, hue = "#ffd23a", t = 99) => { const g
     for (const ch of r) { const cw = g.measureText(ch).width, k = Math.max(0, Math.min(1, (t - ci * 0.8) / 4)), s = k < 1 ? k * 1.25 : 1; if (s > 0.01) { g.save(); g.translate(x + cw / 2, y); g.scale(s, s); gText(g, ch, 0, 0, size, "#ffffff", 0.05); g.restore(); } x += cw; ci++; } });
   if (sub) { g.font = `700 36px ${GF}`; const sw = g.measureText(sub).width + 40, y = H / 2 - 50; gPlate(g, -sw / 2, y - 22, sw, 50, 16, "#14101a", 0, 0); g.fillStyle = "#ffe14a"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(sub, 0, y + 3); }
   g.restore(); };
+
+/* ---- TV bola + Zzz: "Adik Nggak Mau Tidur" ---- */
+export const fxTV = (p, t = 0, goal = 0, score = "0 - 0") => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.fillStyle = "#2a2a30"; g.fillRect(250, 900, 100, 70); g.fillRect(170, 960, 260, 30);                       // stand
+  g.fillStyle = "#1a1a20"; g.beginPath(); g.roundRect(20, 520, 560, 390, 26); g.fill(); g.lineWidth = 8; g.strokeStyle = "#0c0c10"; g.stroke();
+  g.save(); g.beginPath(); g.roundRect(44, 544, 512, 342, 10); g.clip();
+  for (let i = 0; i < 8; i++) { g.fillStyle = i % 2 ? "#3f9a4a" : "#46a852"; g.fillRect(44 + i * 64, 544, 64, 342); }
+  g.strokeStyle = "rgba(255,255,255,0.85)"; g.lineWidth = 4; g.strokeRect(70, 580, 460, 280); g.beginPath(); g.moveTo(300, 580); g.lineTo(300, 860); g.stroke(); g.beginPath(); g.arc(300, 720, 46, 0, 7); g.stroke();
+  g.strokeRect(470, 660, 60, 120);
+  const pl = (x, y, c) => { g.fillStyle = c; g.beginPath(); g.arc(x, y, 11, 0, 7); g.fill(); g.lineWidth = 3; g.strokeStyle = "#111"; g.stroke(); };
+  for (let i = 0; i < 5; i++) { pl(170 + i * 60 + 30 * Math.sin(t * 0.08 + i), 620 + i * 48 + 18 * Math.cos(t * 0.07 + i * 2), "#2f6ae8"); pl(230 + i * 55 + 26 * Math.cos(t * 0.09 + i), 640 + i * 45 + 16 * Math.sin(t * 0.06 + i), "#e83a3a"); }
+  const bx = goal ? 505 : 300 + 150 * Math.sin(t * 0.05), by = goal ? 720 : 720 + 80 * Math.sin(t * 0.11); g.fillStyle = "#fff"; g.beginPath(); g.arc(bx, by, 8, 0, 7); g.fill(); g.strokeStyle = "#111"; g.lineWidth = 2; g.stroke();
+  g.fillStyle = "rgba(10,10,20,0.85)"; g.fillRect(56, 556, 250, 46); g.fillStyle = "#fff"; g.font = '700 30px "Fredoka", sans-serif'; g.textBaseline = "middle"; g.textAlign = "left";
+  g.fillText("BIRU " + score + " MERAH", 68, 580);
+  if (goal && (t % 10) < 7) { g.font = '700 120px "Fredoka", sans-serif'; g.textAlign = "center"; g.lineWidth = 16; g.strokeStyle = "#14101a"; g.strokeText("GOL!", 300, 740); g.fillStyle = "#ffe14a"; g.fillText("GOL!", 300, 740); }
+  g.restore(); g.fillStyle = "rgba(255,255,255,0.08)"; g.beginPath(); g.moveTo(44, 544); g.lineTo(300, 544); g.lineTo(140, 886); g.lineTo(44, 886); g.fill();
+  g.restore(); };
+export const fxZzz = (p, t = 0) => { const g = p.g; g.save(); g.font = '700 90px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.lineJoin = "round";
+  for (let i = 0; i < 3; i++) { const k = ((t * 0.02 + i / 3) % 1), x = 260 + i * 70 + 20 * Math.sin(t * 0.1 + i), y = 700 - k * 400, s = 0.5 + 0.7 * k;
+    g.save(); g.translate(x, y); g.scale(s, s); g.globalAlpha = Math.min(1, (1 - k) * 2); g.lineWidth = 14; g.strokeStyle = "#14101a"; g.strokeText("Z", 0, 0); g.fillStyle = "#bfe3ff"; g.fillText("Z", 0, 0); g.restore(); }
+  g.restore(); };
