@@ -522,3 +522,35 @@ export const fxPop = (p, title, sub = "", bg = "#ffd84a", fg = "#1a1220", rib = 
   if (sub) { g.font = `900 46px ${PF}`; const sw = Math.min(46, Math.floor(46 * 470 / g.measureText(sub).width));
     p.poly(rrect(-250, top + hT - 10, 250, top + hT + 64, 16), rib, 10); ptxt(g, sub, 0, top + hT + 27, sw, "#ffffff", 0); }
   g.restore(); };
+
+// ---------- "Pacaran Sama AI": Vira hologram ----------
+/** mouth 0..3, mood: 'love' | 'flat' | 'error'; t = frame for flicker */
+export const fxVira = (p, mouth = 0, mood = "love", t = 0, blink = 0) => {
+  const g = p.g, err = mood === "error", C = err ? "#ff4a5a" : "#5ff2ff", C2 = err ? "#ff9a4a" : "#ff7ad9";
+  g.save(); g.globalAlpha = 0.28; g.fillStyle = C; g.beginPath(); g.moveTo(140, 800); g.lineTo(460, 800); g.lineTo(312, 990); g.lineTo(288, 990); g.closePath(); g.fill(); g.restore();
+  p.poly(rrect(78, 168, 522, 812, 40), C2 + "88", 0);
+  p.poly(rrect(92, 182, 508, 798, 34), "#141a3acc", 10);
+  g.save(); g.globalAlpha = 0.12; g.fillStyle = C; for (let y = 190 + (t * 3) % 12; y < 795; y += 12) g.fillRect(100, y, 400, 4); g.restore();
+  const cx = 300, cy = 470;
+  // hair back + face + bangs
+  p.ell(cx, cy - 10, 165, 175, "#8a5cf0", 8);
+  p.ell(cx, cy + 20, 128, 135, err ? "#ffd0d0" : "#d9f8ff", 7);
+  p.poly([[cx - 140, cy - 40], [cx - 120, cy - 130], [cx - 40, cy - 170], [cx + 60, cy - 165], [cx + 135, cy - 110], [cx + 145, cy - 40], [cx + 70, cy - 85], [cx + 10, cy - 60], [cx - 50, cy - 90]], "#8a5cf0", 6);
+  // headset
+  for (const sx of [-1, 1]) p.ell(cx + sx * 150, cy + 10, 26, 42, C, 6);
+  p.stroke([[cx + 150, cy + 40], [cx + 110, cy + 120], [cx + 55, cy + 130]], 7, C);
+  if (err) { for (const sx of [-1, 1]) { p.stroke([[cx + sx * 50 - 22, cy - 2], [cx + sx * 50 + 22, cy + 38]], 12, "#c0102c"); p.stroke([[cx + sx * 50 + 22, cy - 2], [cx + sx * 50 - 22, cy + 38]], 12, "#c0102c"); } }
+  else for (const sx of [-1, 1]) {
+    if (blink) p.stroke([[cx + sx * 50 - 26, cy + 20], [cx + sx * 50, cy + 28], [cx + sx * 50 + 26, cy + 20]], 9, "#1a1240");
+    else { p.ell(cx + sx * 50, cy + 18, 30, 40, "#1a1240", 0); p.ell(cx + sx * 50, cy + 22, 20, 28, mood === "flat" ? "#3a8ad0" : "#c03aa0", 0); p.ell(cx + sx * 50 - 8, cy + 6, 9, 11, "#ffffff", 0); p.ell(cx + sx * 50 + 9, cy + 34, 5, 5, "#ffffff", 0); }
+    p.ell(cx + sx * 85, cy + 70, 22, 12, "#ff9ac8", 0); }
+  const my = cy + 95;
+  if (err) p.stroke([[cx - 34, my + 6], [cx - 12, my - 6], [cx + 12, my + 6], [cx + 34, my - 6]], 8, "#1a1240");
+  else if (mouth > 0) p.ell(cx, my, 16 + mouth * 4, 6 + mouth * 7, "#1a1240", 0);
+  else if (mood === "flat") p.stroke([[cx - 26, my], [cx + 26, my]], 8, "#1a1240");
+  else p.stroke([[cx - 30, my - 6], [cx, my + 10], [cx + 30, my - 6]], 8, "#1a1240");
+  // name tag
+  p.poly(rrect(170, 690, 430, 770, 22), err ? "#c0102c" : "#ff4fb4", 7);
+  ptxt(g, err ? "OFFLINE" : "VIRA  AI", 300, 731, 44, "#ffffff", 0);
+  if (!err) p.poly(heartPts(470, 230, 30), "#ff4fb4", 5);
+};
