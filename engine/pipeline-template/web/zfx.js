@@ -554,3 +554,39 @@ export const fxVira = (p, mouth = 0, mood = "love", t = 0, blink = 0) => {
   ptxt(g, err ? "OFFLINE" : "VIRA  AI", 300, 731, 44, "#ffffff", 0);
   if (!err) p.poly(heartPts(470, 230, 30), "#ff4fb4", 5);
 };
+
+/* ---- Jemuran (clothesline) + tumpukan baju for "Sep, Angkat Jemuran!" ---- */
+const shade_ = (hex, k) => { const n = parseInt(hex.slice(1), 16); const c = (v) => Math.max(0, Math.min(255, Math.round(v * k))); return `rgb(${c(n >> 16)},${c((n >> 8) & 255)},${c(n & 255)})`; };
+const cloth_ = (g, kind, x, y, col, wet, s = 1) => {
+  const c = wet ? shade_(col, 0.68) : col; g.save(); g.translate(x, y); g.scale(s, s); g.lineWidth = 6; g.strokeStyle = "#2a1e1a"; g.lineJoin = "round"; g.fillStyle = c; g.beginPath();
+  if (kind === "shirt") { g.moveTo(-50, 0); g.lineTo(50, 0); g.lineTo(78, 34); g.lineTo(56, 50); g.lineTo(46, 36); g.lineTo(46, 130); g.lineTo(-46, 130); g.lineTo(-46, 36); g.lineTo(-56, 50); g.lineTo(-78, 34); g.closePath(); }
+  else if (kind === "pants") { g.moveTo(-42, 0); g.lineTo(42, 0); g.lineTo(46, 150); g.lineTo(10, 150); g.lineTo(0, 40); g.lineTo(-10, 150); g.lineTo(-46, 150); g.closePath(); }
+  else if (kind === "towel") { g.rect(-40, 0, 80, 120); }
+  else if (kind === "dress") { g.moveTo(-34, 0); g.lineTo(34, 0); g.lineTo(62, 175); g.lineTo(-62, 175); g.closePath(); }
+  else { g.rect(-52, 0, 104, 150); }
+  g.fill(); g.stroke();
+  if (kind === "sarung") { g.save(); g.clip(); g.strokeStyle = wet ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.35)"; g.lineWidth = 7; for (let k = -60; k < 60; k += 22) { g.beginPath(); g.moveTo(k, 0); g.lineTo(k, 150); g.stroke(); } for (let k = 10; k < 150; k += 22) { g.beginPath(); g.moveTo(-52, k); g.lineTo(52, k); g.stroke(); } g.restore(); }
+  if (kind === "towel") { g.fillStyle = wet ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.45)"; g.fillRect(-40, 92, 80, 10); }
+  g.fillStyle = "#e9e2d0"; g.fillRect(-6, -10, 12, 18);                       // jepitan
+  if (wet) { g.strokeStyle = "rgba(190,215,255,0.9)"; g.lineWidth = 4; for (let k = -1; k <= 1; k++) { g.beginPath(); g.moveTo(k * 26, kind === "dress" ? 182 : 158); g.lineTo(k * 26, (kind === "dress" ? 200 : 176)); g.stroke(); } }
+  g.restore(); };
+export const fxJemuran = (p, wet = 0, t = 0) => { const g = p.g; g.save();
+  g.fillStyle = "#6e5a46"; g.strokeStyle = "#2a1e1a"; g.lineWidth = 6;
+  for (const x of [40, 560]) { g.fillRect(x - 9, 330, 18, 670); g.strokeRect(x - 9, 330, 18, 670); }
+  g.strokeStyle = "#f2efe6"; g.lineWidth = 5; g.beginPath(); g.moveTo(40, 344); g.quadraticCurveTo(300, 384, 560, 344); g.stroke();
+  const sw = wet ? 0 : Math.sin(t * 0.5) * 2;
+  const Y = (x) => 344 + 40 * (1 - ((x - 300) / 260) ** 2);
+  for (const [k, x, col] of [["shirt", 108, "#d9483b"], ["sarung", 210, "#3c6fb8"], ["towel", 300, "#f2c14e"], ["pants", 384, "#3a3f55"], ["shirt", 480, "#f4f1ea"]]) {
+    g.save(); g.translate(x, Y(x)); g.rotate((sw * Math.PI) / 180); cloth_(g, k, 0, 0, col, wet); g.restore(); }
+  g.restore(); };
+export const fxPile = (p) => { const g = p.g; g.save(); g.translate(300, 540); g.scale(0.9, 1.55); g.lineWidth = 5; g.strokeStyle = "#2a1e1a"; g.lineJoin = "round";
+  const blob = (x, y, w, h, col, r = 0) => { g.save(); g.translate(x, y); g.rotate(r); g.fillStyle = col; g.beginPath(); g.ellipse(0, 0, w, h, 0, 0, 7); g.fill(); g.stroke(); g.restore(); };
+  g.fillStyle = "#3c6fb8"; g.beginPath(); g.moveTo(-170, 40); g.lineTo(-120, 40); g.lineTo(-135, 130); g.lineTo(-185, 120); g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = "#f4f1ea"; g.beginPath(); g.moveTo(150, 50); g.lineTo(190, 60); g.lineTo(175, 125); g.lineTo(140, 115); g.closePath(); g.fill(); g.stroke();
+  blob(-80, 40, 120, 60, "#3c6fb8", 0.1); blob(90, 50, 110, 55, "#f4f1ea", -0.1); blob(0, 70, 160, 60, "#d9483b"); blob(-30, 0, 120, 55, "#2f8a5a", -0.15);
+  // daster motif macan on top
+  g.save(); g.translate(30, -30); g.rotate(0.12); g.fillStyle = "#f0a23a"; g.beginPath(); g.ellipse(0, 0, 140, 62, 0, 0, 7); g.fill(); g.stroke(); g.clip();
+  g.fillStyle = "#2a1e1a"; for (let i = 0; i < 26; i++) { const x = ((i * 53) % 280) - 140, y = ((i * 37) % 120) - 60; g.beginPath(); g.ellipse(x, y, 11, 7, i, 0, 7); g.fill(); g.fillStyle = "#8a4a14"; g.beginPath(); g.ellipse(x, y, 5, 3, i, 0, 7); g.fill(); g.fillStyle = "#2a1e1a"; }
+  g.restore();
+  g.strokeStyle = "rgba(190,215,255,0.9)"; g.lineWidth = 4; for (const x of [-150, -60, 40, 140]) { g.beginPath(); g.moveTo(x, 110); g.lineTo(x, 132); g.stroke(); }
+  g.restore(); };
