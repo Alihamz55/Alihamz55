@@ -109,15 +109,17 @@ export const fxAt = (f, T) => {
   out.push(FXC('fire' + (f % 24), (p) => T.fxFire(p, f), [MX, 0.5, -0.2], 0.42, { order: 2 }));
   { const P_ = pcPos(f); if (P_) { const sp = speaks(f, 'P'), m = sp ? +(LIPS[f] || 0) : 0, mood = f >= 650 && f < 959 ? 'smug' : f < 342 ? 'shock' : 'calm', bl = f % 100 > 95 ? 1 : 0;
     out.push(FXC('pc' + [m, mood, bl].join(), (p) => T.fxPocong(p, m, bl, mood), [q(P_[0], 3), q(P_[1], 3), P_[2]], 1.0, { order: 2 })); } }
-  if (globalThis.__CLEAN !== false && globalThis.__CLEAN !== undefined) return out;
-  const card = (key, a, b_, draw, posf, s = 0.3) => { if (f < a || f >= b_) return; const k = q(Math.min(pop(f, a), out_(f, b_)), 2); if (k > 0.01) out.push(FXC(key + k, scaled(k, draw), posf(f), s, { order: 9 })); };
-  // round cards: opening title + closing call to action (glyph-by-glyph pop)
-  if (f < 79) { const t = Math.min(40, f + 6), k = q(f < 1 ? 1 : out_(f, 79), 2); out.push(FXC('hook' + k + '_' + t + '_' + (f % 90), scaled(k, (p) => T.fxRoundCard(p, 'ASEP & UCUP NAIK GUNUNG', 'MALAM KOMEDI', '#ff6b3a', t)), camRel(f, 0.17, 1.1, 0.34), 0.34, { order: 10 })); }
-  if (f >= 1124) { const t = Math.min(40, f - 1124), k = pop(f, 1124); out.push(FXC('end' + k + '_' + t + '_' + (f % 90), scaled(k, (p) => T.fxRoundCard(p, 'SUBSCRIBE!', 'BIAR NGGAK KALAH SAMA POCONG', '#e8344a', t)), camRel(f, 0.15, 1.1, 0.34), 0.34, { order: 10 })); }
-  for (const [a, b_, t, fill] of JUDGE) card('j' + t + (f % 90), a, b_, (p) => T.fxJudge(p, t, fill, '#ffe14a', f), (f_) => camRel(f_, 0.27, 1.1, 0.27), 0.27);
-  for (const [a, b_, t, hue, fg, dot] of BANNERS) card('b' + t + (dot ? f % 13 : ''), a, b_, (p) => T.fxBanner(p, t, hue, fg, dot, f), (f_) => camRel(f_, 0.31, 1.1, 0.27), 0.27);
-  // speaker telop at the bottom (inside the Shorts safe zone)
-  const C_ = telop(f); if (C_ && f < 1124) { const [hue, nm] = SPK[C_.who], k = pop(f, C_.a - 1, 5);
-    out.push(FXC('tel' + C_.n + '_' + C_.idx + '_' + k, scaled(k, (p) => T.fxTelop(p, C_.rows, C_.idx, hue, nm, 1)), camRel(f, -0.14, 1.1, 0.3), 0.3, { order: 11 })); }
   return out;
+};
+
+// ---- screen-space overlay (drawn after the lens pass at full 1080x1920 resolution: crisp text, no depth-of-field blur) ----
+const put = (g, cx, cy, sc, k, fn) => { if (k <= 0.01) return; g.save(); g.translate(cx, cy); g.scale(sc * k, sc * k); g.translate(-300, -500); fn({ g }); g.restore(); };
+const popk = (f, a, b_) => (f < a || f >= b_ ? 0 : Math.min(pop(f, a), out_(f, b_)));
+export const overlayAt = (f, g, T) => {
+  // round cards: opening title + closing call to action
+  if (f < 79) put(g, 540, 560, 1.75, f < 1 ? 1 : out_(f, 79), (p) => T.fxRoundCard(p, 'ASEP & UCUP NAIK GUNUNG', 'MALAM KOMEDI', '#ff6b3a', Math.min(40, f + 6)));
+  if (f >= 1124) put(g, 540, 600, 1.75, pop(f, 1124), (p) => T.fxRoundCard(p, 'SUBSCRIBE!', 'BIAR NGGAK KALAH SAMA POCONG', '#e8344a', Math.min(40, f - 1124)));
+  for (const [a, b_, t, fill] of JUDGE) put(g, 540, 420, 1.45, popk(f, a, b_), (p) => T.fxJudge(p, t, fill, '#ffe14a', f));
+  for (const [a, b_, t, hue, fg, dot] of BANNERS) put(g, 540, 270, 1.35, popk(f, a, b_), (p) => T.fxBanner(p, t, hue, fg, dot, f));
+  const C_ = telop(f); if (C_ && f < 1124) { const [hue, nm] = SPK[C_.who]; put(g, 540, 1300, 1.6, pop(f, C_.a - 1, 5), (p) => T.fxTelop(p, C_.rows, C_.idx, hue, nm, 1)); }
 };

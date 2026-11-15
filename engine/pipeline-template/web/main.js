@@ -1,10 +1,10 @@
 import * as THREE from './lib/three.module.js';
 import * as T from './toon.js';
 import * as P from './paint.js';
-import { SHOTS, TOTAL, shotAt, camAt, dofAt, LIGHTS, lightFor, actorsAt, worldAt, fxAt } from './story.js';
+import { SHOTS, TOTAL, shotAt, camAt, dofAt, LIGHTS, lightFor, actorsAt, worldAt, fxAt, overlayAt } from './story.js';
 
 const W = 1080, H = 1920;
-const canvas = document.getElementById('c');
+const canvas = document.getElementById('gl');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, preserveDrawingBuffer: true });
 renderer.setPixelRatio(1); renderer.setSize(W, H, false);
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -552,6 +552,9 @@ window.renderFrame = (f) => {
   // lens
   dofU.focus.value = D.focus; dofU.cinf.value = D.cinf; dofU.near.value = D.near ?? 1;
   renderer.setRenderTarget(null); renderer.render(dofScene, fsCam);
+  // screen-space overlay: crisp full-resolution telops drawn after the lens pass
+  const oc = document.getElementById('c'), og = oc.getContext('2d'); og.setTransform(1, 0, 0, 1, 0, 0); og.drawImage(renderer.domElement, 0, 0, oc.width, oc.height);
+  if (overlayAt) { og.save(); overlayAt(f, og, T); og.restore(); }
   return true;
 };
 window.TOTAL = TOTAL;
