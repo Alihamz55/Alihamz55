@@ -42,7 +42,8 @@ export const OUTFITS = {
   sarung: { tunic: "#f4f1ea", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#d9a07a", sarung: "#2f6a8a", plaid: "#173e58", peci: true },
   gunungA: { tunic: "#2f6a4a", skin: "#d9a07a", hair: "#3a2418", arms: "#2f6a4a", legs: "#3a3f52", pants: "#3a3f52", jacket: "#f2b632", peci: true },
   gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
-  ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18" },
+  ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18", apron: "#2f6a4a", neckTowel: "#f4f1ea" },
+  ibuPasar: { tunic: "#b83a7a", skin: "#f0c49c", hair: "#2b211c", arms: "#b83a7a", dress: "#b83a7a", bun: true, glasses: true, kebaya: "#f2c14e", sash: "#8a4b22" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
 
@@ -267,6 +268,13 @@ export const romanFront = (p, key, opts = {}) => {
     }
   });
   p.inkRing(tp, ow, thick);
+  if (O.sash) { // selendang batik: diagonal band shoulder -> hip with dots
+    p.band([[tcx - 1.05 * T.a, chin + 0.02 * HH], [tcx + 0.95 * T.a, torsoBot - 0.05 * HH]], O.sash, 0.22 * HH, 1.6 * u);
+    for (let i = 0; i < 7; i++) { const k = (i + 0.5) / 7; p.dot(tcx - 1.05 * T.a + k * 2.0 * T.a, chin + 0.02 * HH + k * (torsoBot - 0.07 * HH - chin), 2.6 * u, "#e2b04a"); } }
+  if (O.neckTowel) { // small striped towel over the shoulders, ends hanging on the chest
+    p.band([[tcx - 0.75 * T.a, chin + 0.06 * HH], [tcx, chin + 0.16 * HH], [tcx + 0.75 * T.a, chin + 0.06 * HH]], O.neckTowel, 0.11 * HH, 1.4 * u);
+    for (const sd of [-1, 1]) { p.band([[tcx + sd * 0.42 * T.a, chin + 0.1 * HH], [tcx + sd * 0.48 * T.a, chin + 0.62 * HH]], O.neckTowel, 0.12 * HH, 1.4 * u);
+      p.band([[tcx + sd * 0.39 * T.a, chin + 0.5 * HH], [tcx + sd * 0.54 * T.a, chin + 0.5 * HH]], "#3a6ab8", 0.025 * HH, 0); } }
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
     const sp = ellPts(tcx + s * 0.72 * T.a, chin + 0.1 * HH, 0.42 * T.a, 0.13 * HH, 180, 360, s * 8, 20);
     p.poly(sp, old ? "#9a9384" : "#c5ccd3", 1.8 * u);

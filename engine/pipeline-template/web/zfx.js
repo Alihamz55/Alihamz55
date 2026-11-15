@@ -706,41 +706,30 @@ export const fxZzz = (p, t = 0) => { const g = p.g; g.save(); g.font = '700 90px
     g.save(); g.translate(x, y); g.scale(s, s); g.globalAlpha = Math.min(1, (1 - k) * 2); g.lineWidth = 14; g.strokeStyle = "#14101a"; g.strokeText("Z", 0, 0); g.fillStyle = "#bfe3ff"; g.fillText("Z", 0, 0); g.restore(); }
   g.restore(); };
 
-/* ---- YouTube-style end-card buttons (generic: no platform logo) ---- */
-const iconBell = (g, x, y, s, ring) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = "#ffe14a"; g.strokeStyle = GINK; g.lineWidth = 6; g.lineJoin = "round";
-  g.beginPath(); g.moveTo(-26, 18); g.quadraticCurveTo(-24, -26, 0, -30); g.quadraticCurveTo(24, -26, 26, 18); g.lineTo(32, 26); g.lineTo(-32, 26); g.closePath(); g.fill(); g.stroke();
-  g.beginPath(); g.arc(0, 32, 8, 0, 7); g.fill(); g.stroke();
-  if (ring) { g.lineWidth = 6; g.strokeStyle = "#ffffff"; for (const sd of [-1, 1]) { g.beginPath(); g.arc(0, -4, 44, sd > 0 ? -0.5 : Math.PI - 0.1, sd > 0 ? 0.1 : Math.PI + 0.5); g.stroke(); } }
+/* ---- Pasar props: papan harga berkain, cabai berpita ---- */
+export const fxPriceBoard = (p, reveal = 0) => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.fillStyle = "#6a4428"; g.fillRect(270, 760, 60, 240);
+  g.fillStyle = "#2a3a30"; g.strokeStyle = "#8a5a32"; g.lineWidth = 22; g.beginPath(); g.roundRect(70, 430, 460, 340, 16); g.fill(); g.stroke();
+  g.fillStyle = "#f4f1e0"; g.textAlign = "center"; g.textBaseline = "middle"; g.font = '700 54px "Fredoka", sans-serif'; g.fillText("CABAI MERAH", 300, 520);
+  g.font = '700 92px "Fredoka", sans-serif'; g.fillStyle = "#ffe14a"; g.fillText("80.000", 300, 630); g.font = '700 40px "Fredoka", sans-serif'; g.fillStyle = "#f4f1e0"; g.fillText("/ KG", 300, 712);
+  if (reveal < 1) { const k = reveal, y = 400 - k * 520, rot = -k * 0.5; g.save(); g.translate(300 + k * 260, y + 200); g.rotate(rot);
+    g.fillStyle = "#b8282b"; g.beginPath(); g.moveTo(-250, -200); g.lineTo(250, -200); g.quadraticCurveTo(270, 40, 240, 210); g.lineTo(-240, 210); g.quadraticCurveTo(-270, 40, -250, -200); g.fill();
+    g.strokeStyle = "rgba(0,0,0,0.25)"; g.lineWidth = 6; for (let i = -3; i <= 3; i++) { g.beginPath(); g.moveTo(i * 70, -195); g.quadraticCurveTo(i * 70 + 12, 0, i * 70, 205); g.stroke(); } g.restore(); }
   g.restore(); };
-const iconThumb = (g, x, y, s, fill) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = fill; g.strokeStyle = GINK; g.lineWidth = 6; g.lineJoin = "round";
-  g.beginPath(); g.roundRect(-34, -6, 16, 40, 4); g.fill(); g.stroke();
-  g.beginPath(); g.moveTo(-14, -4); g.lineTo(0, -30); g.quadraticCurveTo(12, -34, 10, -16); g.lineTo(6, -6); g.lineTo(28, -6); g.quadraticCurveTo(38, -4, 34, 8); g.lineTo(28, 30); g.quadraticCurveTo(26, 36, 16, 36); g.lineTo(-14, 36); g.closePath(); g.fill(); g.stroke();
-  g.restore(); };
-const iconChat = (g, x, y, s, fill, dots) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = fill; g.strokeStyle = GINK; g.lineWidth = 6; g.lineJoin = "round";
-  g.beginPath(); g.roundRect(-34, -28, 68, 48, 14); g.fill(); g.stroke(); g.beginPath(); g.moveTo(-14, 18); g.lineTo(-22, 34); g.lineTo(2, 20); g.fill(); g.stroke();
-  if (dots) { g.fillStyle = GINK; for (let i = 0; i < 3; i++) { g.beginPath(); g.arc(-16 + i * 16, -4 - (dots === i + 1 ? 6 : 0), 6, 0, 7); g.fill(); } }
-  g.restore(); };
-export const fxYtBtn = (p, kind, on = 0, t = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.02);
-  const W = 520, H = 130, x = -W / 2, y = -H / 2;
-  if (kind === "sub") { gPlate(g, x, y, W, H, 65, on ? "#3a3a44" : "#e8282e", 12, 8); iconBell(g, x + 78, 2, 1.0, on && t % 8 < 5);
-    gText(g, on ? "DISUBSCRIBE" : "SUBSCRIBE", 52, 4, on ? 48 : 56, "#ffffff", 0.05); }
-  else if (kind === "like") { gPlate(g, x, y, W, H, 65, on ? "#2f6ae8" : "#ffffff", 12, 8); iconThumb(g, x + 80, 0, 1.0, on ? "#ffe14a" : "#ffffff");
-    gText(g, on ? "LIKE +1" : "LIKE", 40, 4, 62, on ? "#ffffff" : "#ffffff", 0.05); }
-  else { gPlate(g, x, y, W, H, 65, on ? "#2f9a5a" : "#ffffff", 12, 8); iconChat(g, x + 80, 0, 1.0, "#ffffff", on ? 1 + (Math.floor(t / 4) % 3) : 0);
-    gText(g, "KOMEN", 40, 4, 62, "#ffffff", 0.05); }
-  g.restore(); };
-export const fxHand = (p, press = 0) => { const g = p.g; g.save(); g.translate(300, 500); const s = 1 - 0.15 * press; g.scale(s, s); g.lineJoin = "round";
-  g.beginPath(); g.moveTo(0, 0); g.lineTo(0, 120); g.lineTo(30, 92); g.lineTo(52, 140); g.lineTo(72, 130); g.lineTo(50, 84); g.lineTo(90, 84); g.closePath();
-  g.fillStyle = "#ffffff"; g.fill(); g.lineWidth = 9; g.strokeStyle = GINK; g.stroke();
-  if (press) { g.strokeStyle = "#ffe14a"; g.lineWidth = 7; for (let i = 0; i < 6; i++) { const a = -2.4 + i * 0.5; g.beginPath(); g.moveTo(Math.cos(a) * 30, Math.sin(a) * 30); g.lineTo(Math.cos(a) * 58, Math.sin(a) * 58); g.stroke(); } }
-  g.restore(); };
-/** channel banner: big name plate + "YouTube: @handle" pill (no platform logo) */
-export const fxChannel = (p, name, handle, t = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.025);
-  g.font = `700 92px ${GF}`; const tw = g.measureText(name).width, W = Math.min(580, tw + 90), H = 210, fit = tw + 90 > 580 ? 580 / (tw + 90) : 1;
-  gPlate(g, -W / 2, -H / 2, W, H, 40, "#e8282e", 14, 8);
-  g.save(); g.beginPath(); g.roundRect(-W / 2, -H / 2, W, H, 40); g.clip(); g.strokeStyle = "rgba(255,255,255,0.12)"; g.lineWidth = 22;
-  for (let x = -W; x < W; x += 60) { g.beginPath(); g.moveTo(x + (t * 1.5) % 60, -H / 2); g.lineTo(x + (t * 1.5) % 60 + 120, H / 2); g.stroke(); } g.restore();
-  g.save(); g.scale(fit, fit); gText(g, name, 0, -26, 92, "#ffffff", 0.05); g.restore();
-  g.font = `700 40px ${GF}`; const hw = g.measureText(handle).width + 60; gPlate(g, -hw / 2, 30, hw, 62, 31, "#14101a", 0, 0);
-  g.fillStyle = "#ffe14a"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(handle, 0, 63);
+export const fxCabaiPita = (p) => { const g = p.g; g.save(); g.translate(300, 560); g.lineJoin = "round"; g.lineCap = "round";
+  g.fillStyle = "rgba(220,235,255,0.45)"; g.strokeStyle = "#14101a"; g.lineWidth = 6; g.beginPath(); g.moveTo(-90, -40); g.quadraticCurveTo(-110, 120, -60, 160); g.lineTo(60, 160); g.quadraticCurveTo(110, 120, 90, -40); g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = "#d42a1e"; g.beginPath(); g.moveTo(-40, 40); g.quadraticCurveTo(10, 30, 60, 120); g.quadraticCurveTo(0, 90, -45, 70); g.closePath(); g.fill(); g.stroke();
+  g.strokeStyle = "#3f8a2a"; g.lineWidth = 10; g.beginPath(); g.moveTo(-42, 55); g.lineTo(-62, 40); g.stroke();
+  g.fillStyle = "#ff5d8f"; g.strokeStyle = "#14101a"; g.lineWidth = 5; g.fillRect(-70, -52, 140, 20); g.strokeRect(-70, -52, 140, 20);
+  for (const sd of [-1, 1]) { g.beginPath(); g.moveTo(0, -42); g.quadraticCurveTo(sd * 60, -110, sd * 70, -50); g.quadraticCurveTo(sd * 40, -40, 0, -42); g.fill(); g.stroke(); }
+  g.beginPath(); g.arc(0, -42, 14, 0, 7); g.fill(); g.stroke(); g.restore(); };
+
+/** woven shopping basket (keranjang belanja) */
+export const fxKeranjang = (p) => { const g = p.g; g.save(); g.translate(300, 600); g.lineJoin = "round";
+  g.strokeStyle = "#14101a"; g.lineWidth = 9; g.beginPath(); g.moveTo(-110, -40); g.quadraticCurveTo(0, -230, 110, -40); g.stroke(); g.strokeStyle = "#b8864a"; g.lineWidth = 5; g.stroke();
+  g.fillStyle = "#c8945a"; g.beginPath(); g.moveTo(-150, -40); g.lineTo(150, -40); g.lineTo(115, 150); g.lineTo(-115, 150); g.closePath(); g.fill();
+  g.save(); g.clip(); g.strokeStyle = "rgba(90,50,20,0.55)"; g.lineWidth = 6; for (let y = -30; y < 160; y += 22) { g.beginPath(); g.moveTo(-160, y); g.lineTo(160, y); g.stroke(); }
+  for (let x = -150; x < 160; x += 26) { g.beginPath(); g.moveTo(x, -40); g.lineTo(x * 0.78, 150); g.stroke(); } g.restore();
+  g.strokeStyle = "#14101a"; g.lineWidth = 9; g.beginPath(); g.moveTo(-150, -40); g.lineTo(150, -40); g.lineTo(115, 150); g.lineTo(-115, 150); g.closePath(); g.stroke();
+  g.fillStyle = "#3f9a4a"; for (const [x, y, r] of [[-60, -55, 30], [-10, -70, 26], [50, -55, 30]]) { g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); g.lineWidth = 6; g.stroke(); }
   g.restore(); };

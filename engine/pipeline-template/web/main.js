@@ -351,11 +351,14 @@ for (const r of [0.5, -0.6, 1.6]) { const l_ = cyl(0.06, 0.06, 0.75, MG.log, MX,
   const hl = add(new THREE.SphereGeometry(5, 24, 16), new THREE.MeshBasicMaterial({ map: P.tex(P.radial('255,240,190', 0.3)), transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending }), MX + 9, 26, -71, world); hl.userData.ndSkip = true;
   for (let i = 0; i < 80; i++) { const a = i * 2.399, r = 25 + (i * 37) % 55; const st = add(new THREE.SphereGeometry(0.1 + (i % 4) * 0.05, 6, 4), glow(i % 5 ? '#fff6d0' : '#bfe6ff'), MX + Math.cos(a) * r, 16 + (i * 13) % 30, -75 + Math.sin(a) * 8, world); st.userData.ndSkip = true; } }
 
+const TEXQ = [];
+const texFile = (url, rx = 1, ry = 1, color = '#ffffff') => { const t = new THREE.Texture(); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  TEXQ.push(new Promise((res) => { const im = new Image(); im.onload = () => { t.image = im; t.needsUpdate = true; res(); }; im.onerror = () => res(); im.src = url; })); return toon({ map: t, color }); };
 // ===== PASAR TRADISIONAL (x=400), pagi; ground top at 0.5 =====
 const PQ = 400;
-const MPs = { floor: texM(P.stone(131, 30, 6, 58, 64, 64), 6, 6, '#b8b0a4'), wood: toon({ color: '#9a6a42' }), woodD: toon({ color: '#6a4428' }), cloth: toon({ color: '#3a8a5a' }),
+const MPs = { floor: texFile('tex/gravel.jpg', 14, 10), wood: texFile('tex/wood.jpg', 1, 0.5), woodD: texFile('tex/wood.jpg', 0.5, 1, '#8a6a52'), cloth: texFile('tex/cloth.jpg', 2, 1),
   chili: toon({ color: '#d42a1e' }), chiliD: toon({ color: '#a81a12' }), stem: toon({ color: '#3f8a2a' }), tomato: toon({ color: '#e8452c' }), onion: toon({ color: '#b84a7a' }),
-  lime: toon({ color: '#8ac43a' }), basket: toon({ color: '#c8a064' }), wall: texM(P.plaster(132, 32), 1, 1, '#e8d8b8'), pole: toon({ color: '#5a5a62' }) };
+  lime: toon({ color: '#8ac43a' }), basket: texFile('tex/wood.jpg', 2, 2, '#e8c890'), wall: texFile('tex/plaster.jpg', 4, 1), pole: toon({ color: '#5a5a62' }) };
 add(tbox(40, 1.0, 30, 1.2), MPs.floor, PQ, 0, -10, world, { cast: false });
 add(tbox(20, 5, 0.3, 1.5), MPs.wall, PQ, 2.5, -4.6, world);
 // background stalls with striped tarps
@@ -363,7 +366,7 @@ const TARP = ['#e8452c', '#2f6ae8', '#f2b632', '#3f9a4a', '#e8742c'];
 for (let i = 0; i < 7; i++) { const x = -6 + i * 2.0, c = TARP[i % TARP.length];
   add(tbox(1.8, 0.9, 1.0, 1), MPs.woodD, PQ + x, 0.95, -3.6, world);
   for (let k = 0; k < 6; k++) { const s_ = add(new THREE.SphereGeometry(0.12, 8, 6), [MPs.tomato, MPs.onion, MPs.lime, MPs.chili][(i + k) % 4], PQ + x - 0.6 + k * 0.24, 1.5, -3.5 + (k % 2) * 0.2, world); }
-  for (let k = 0; k < 4; k++) { const t_ = add(tbox(0.46, 0.06, 1.3, 1), toon({ color: k % 2 ? '#ffffff' : c }), PQ + x - 0.69 + k * 0.46, 2.85, -3.4, world); t_.rotation.x = 0.28; }
+  for (let k = 0; k < 4; k++) { const t_ = add(tbox(0.46, 0.06, 1.3, 1), texFile('tex/tarp.jpg', 0.4, 1, k % 2 ? '#ffffff' : c), PQ + x - 0.69 + k * 0.46, 2.85, -3.4, world); t_.rotation.x = 0.28; }
   cyl(0.04, 0.04, 2.4, MPs.pole, PQ + x - 0.9, 1.7, -2.9, world, 6); cyl(0.04, 0.04, 2.4, MPs.pole, PQ + x + 0.9, 1.7, -2.9, world, 6);
   const b_ = add(new THREE.SphereGeometry(0.09, 10, 8), glow('#fff2b0'), PQ + x, 2.55, -3.0, world); b_.userData.ndSkip = true; }
 // Mang Ujang's lapak: table + green cloth + chili mountain + baskets
@@ -584,4 +587,4 @@ window.renderFrame = (f) => {
   return true;
 };
 window.TOTAL = TOTAL;
-Promise.all([document.fonts.load('700 80px Fredoka'), document.fonts.load('600 40px Fredoka')]).then(() => { window.ready = true; });
+Promise.all([document.fonts.load('700 80px Fredoka'), document.fonts.load('600 40px Fredoka'), ...TEXQ]).then(() => { window.ready = true; });
