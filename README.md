@@ -103,3 +103,20 @@ lalu ubah `DURASI_DETIK` di `src/doa/lagu.ts`.
 
 Render karakter perempuan: `npm run render:doa` → `out/doa-panggung.mp4`
 Render karakter laki-laki: `npm run render:doa-laki` → `out/doa-panggung-laki.mp4`
+
+## Seri "Kisah Nabi" (gaya diorama kertas)
+
+Komposisi `KisahNabiAdam`: kisah Nabi Adam ‘alaihissalam dalam ±60 detik.
+Sesuai adab, **sosok Nabi, keluarga beliau, dan malaikat tidak digambarkan**.
+Cerita disampaikan lewat simbol (tanah, cahaya, taman, pohon) dan caption yang menyorot kata demi kata.
+
+| Mau ganti... | Edit file |
+|---|---|
+| Teks caption & durasi tiap adegan | `src/nabi/adam/naskah.ts` |
+| Gambar/animasi tiap adegan | `src/nabi/adam/Adegan.tsx` |
+| Gaya caption | `src/nabi/Caption.tsx` |
+| Bukit, pohon, awan, bintang (dipakai ulang) | `src/nabi/kertas.tsx` |
+
+Render: `npm run render:adam` → `out/kisah-nabi-adam.mp4`
+
+Kisah Nabi berikutnya: salin folder `src/nabi/adam`, ubah naskah & adegannya, lalu daftarkan di `src/Root.tsx`.

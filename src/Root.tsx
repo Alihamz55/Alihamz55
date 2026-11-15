@@ -5,11 +5,22 @@ import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
 import { Intro, INTRO_DURASI } from "./intro/Intro";
+import { KisahAdam } from "./nabi/adam/KisahAdam";
+import { TOTAL_FRAME as ADAM_FRAME } from "./nabi/adam/naskah";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="KisahNabiAdam"
+        component={KisahAdam}
+        durationInFrames={ADAM_FRAME}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ pakaiMusik: true }}
+      />
       <Composition
         id="IntroNasyidMungil"
         component={Intro}
