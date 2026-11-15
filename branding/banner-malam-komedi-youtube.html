@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+/* Banner YouTube 2560x1440 — hiasan di atas gambar dasar (banner-malam-komedi-dasar.png).
+   Area HP: 1546x423 di tengah (x 507–2053, y 508–931). Area desktop: 2560x423. */
+html,body{margin:0;width:2560px;height:1440px;overflow:hidden;background:#000}
+.dasar{position:absolute;inset:0;background:url(banner-malam-komedi-dasar.png)}
+.abs{position:absolute}
+/* Tirai panggung kiri-kanan */
+.tirai{position:absolute;top:0;width:470px;height:1010px;
+  background:repeating-linear-gradient(90deg,#7d0a1c 0,#d9152c 34px,#f0344a 52px,#b30f25 78px,#7d0a1c 104px);
+  filter:drop-shadow(0 0 40px rgba(0,0,0,.8))}
+.tirai.kiri{left:0;clip-path:polygon(0 0,100% 0,96% 22%,78% 48%,52% 63%,30% 68%,42% 76%,62% 90%,70% 100%,0 100%)}
+.tirai.kanan{right:0;clip-path:polygon(0 0,100% 0,100% 100%,30% 100%,38% 90%,58% 76%,70% 68%,48% 63%,22% 48%,4% 22%)}
+.tirai::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.45),transparent 30%,rgba(0,0,0,.35))}
+.ikat{position:absolute;top:668px;width:120px;height:40px;border-radius:20px;background:linear-gradient(#ffe48a,#d99a1c);box-shadow:0 4px 0 #7a4d00,0 0 24px rgba(255,200,80,.6)}
+/* Gorden atas (terlihat di TV) */
+.atas{position:absolute;left:0;top:0;width:2560px;height:170px;filter:drop-shadow(0 14px 18px rgba(0,0,0,.7))}
+/* Lampu-lampu papan nama */
+.bohlam{position:absolute;width:22px;height:22px;margin:-11px;border-radius:50%}
+.b1{background:#fff6c9;box-shadow:0 0 10px 4px #ffd24a,0 0 26px 10px rgba(255,190,60,.55)}
+.b2{background:#ffe9a0;box-shadow:0 0 6px 2px #ffb92e}
+/* Teks komik */
+.ha{position:absolute;font:900 86px "DejaVu Sans",Verdana,sans-serif;color:#ffe03a;white-space:nowrap;
+  -webkit-text-stroke:20px #14101f;paint-order:stroke fill;letter-spacing:-2px;text-shadow:8px 10px 0 #14101f}
+.emoji{position:absolute;font-size:104px;filter:drop-shadow(5px 7px 0 #14101f)}
+.kilau{position:absolute;color:#fff3b0;text-shadow:0 0 18px #ffd24a}
+.bokeh{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.5),rgba(190,150,255,.12) 60%,transparent 70%)}
+</style></head><body>
+<div class="dasar"></div>
+<div id="hias"></div>
+<div class="tirai kiri"></div><div class="tirai kanan"></div>
+<div class="ikat" style="left:95px;transform:rotate(-12deg)"></div>
+<div class="ikat" style="right:95px;transform:rotate(12deg)"></div>
+<svg class="atas" viewBox="0 0 2560 170"><defs>
+<linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5e0714"/><stop offset="1" stop-color="#d9152c"/></linearGradient></defs>
+<path id="val" fill="url(#g)"/><path id="emas" fill="none" stroke="#f4c542" stroke-width="9"/></svg>
+<div id="ring" class="abs" style="left:1282.3px;top:727px;width:0;height:0;transform:rotate(-2.57deg)"></div>
+<div class="ha" style="left:548px;top:524px;font-size:70px;transform:rotate(-4deg)">HA HA HA!</div>
+<div class="emoji" style="left:1700px;top:806px;transform:rotate(8deg)">😂</div>
+<div class="emoji" style="left:1836px;top:800px;transform:rotate(-6deg);font-size:96px">🎤</div>
+<svg class="abs" style="left:0;top:1180px" width="2560" height="260" id="penonton"></svg>
+<script>
+// gorden atas berlekuk
+let d="M0 0H2560V95",n=16,w=2560/n;for(let i=n;i>0;i--){d+=` Q${(i-.5)*w} 185 ${(i-1)*w} 95`}d+="Z";
+document.getElementById("val").setAttribute("d",d);
+let e="M2560 95";for(let i=n;i>0;i--){e+=` Q${(i-.5)*w} 185 ${(i-1)*w} 95`}
+document.getElementById("emas").setAttribute("d",e);
+// bohlam mengelilingi papan (persegi sudut bulat)
+const W=1512,H=298,R=62,ring=document.getElementById("ring");
+const seg=[],L=W-2*R,V=H-2*R,arc=Math.PI*R/2,total=2*L+2*V+4*arc,N=64;
+function titik(s){ // keliling searah jarum jam mulai kiri-atas
+  if(s<L)return[-W/2+R+s,-H/2];s-=L;
+  if(s<arc){const a=-Math.PI/2+s/R;return[W/2-R+Math.cos(a)*R,-H/2+R+Math.sin(a)*R]}s-=arc;
+  if(s<V)return[W/2,-H/2+R+s];s-=V;
+  if(s<arc){const a=s/R;return[W/2-R+Math.cos(a)*R,H/2-R+Math.sin(a)*R]}s-=arc;
+  if(s<L)return[W/2-R-s,H/2];s-=L;
+  if(s<arc){const a=Math.PI/2+s/R;return[-W/2+R+Math.cos(a)*R,H/2-R+Math.sin(a)*R]}s-=arc;
+  if(s<V)return[-W/2,H/2-R-s];s-=V;
+  const a=Math.PI+s/R;return[-W/2+R+Math.cos(a)*R,-H/2+R+Math.sin(a)*R]}
+for(let i=0;i<N;i++){const[x,y]=titik(i/N*total);const b=document.createElement("div");
+  b.className="bohlam "+(i%2?"b2":"b1");b.style.left=x+"px";b.style.top=y+"px";ring.appendChild(b)}
+// kilau & bokeh acak (seed tetap)
+let sd=7;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+const hias=document.getElementById("hias");
+for(let i=0;i<34;i++){const x=430+rnd()*1700,y=190+rnd()*720;
+  if(x>500&&x<2070&&y>540&&y<900)continue;
+  const k=document.createElement("div");k.className="kilau";k.textContent=i%3?"✦":"★";
+  k.style.cssText+=`left:${x}px;top:${y}px;font-size:${22+rnd()*38}px;opacity:${.45+rnd()*.5};transform:rotate(${rnd()*40-20}deg)`;hias.appendChild(k)}
+for(let i=0;i<16;i++){const s=50+rnd()*110,k=document.createElement("div");k.className="bokeh";
+  k.style.cssText+=`left:${420+rnd()*1700}px;top:${170+rnd()*330}px;width:${s}px;height:${s}px;opacity:${.25+rnd()*.4}`;hias.appendChild(k)}
+// siluet penonton (terlihat di TV)
+const p=document.getElementById("penonton");let h="";
+for(let i=0;i<23;i++){const x=40+i*112+rnd()*30,r=44+rnd()*14,y=120+rnd()*50;
+  h+=`<circle cx="${x}" cy="${y}" r="${r}" fill="#12060a"/><path d="M${x-r*1.9} 260 Q${x-r*1.8} ${y+r*.9} ${x} ${y+r*.9} Q${x+r*1.8} ${y+r*.9} ${x+r*1.9} 260Z" fill="#12060a"/>`;
+  if(i%4==1)h+=`<path d="M${x+r*1.2} ${y+r*1.4} L${x+r*2} ${y-r*1.2}" stroke="#12060a" stroke-width="26" stroke-linecap="round"/>`}
+p.innerHTML=h;
+</script></body></html>
