@@ -733,3 +733,32 @@ export const fxKeranjang = (p) => { const g = p.g; g.save(); g.translate(300, 60
   g.strokeStyle = "#14101a"; g.lineWidth = 9; g.beginPath(); g.moveTo(-150, -40); g.lineTo(150, -40); g.lineTo(115, 150); g.lineTo(-115, 150); g.closePath(); g.stroke();
   g.fillStyle = "#3f9a4a"; for (const [x, y, r] of [[-60, -55, 30], [-10, -70, 26], [50, -55, 30]]) { g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); g.lineWidth = 6; g.stroke(); }
   g.restore(); };
+
+/* ---- Dapur props: telur, tepung, kenop oven, asap, loyang brownies, tetesan ---- */
+export const fxEgg = (p, k = 1) => { const g = p.g; g.save(); g.translate(300, 820); g.lineJoin = "round";
+  g.fillStyle = "#fbfaf4"; g.strokeStyle = "#14101a"; g.lineWidth = 7; g.beginPath(); for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, r = (i % 2 ? 110 : 150) * k; g.lineTo(Math.cos(a) * r, Math.sin(a) * r * 0.45); } g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = "#ffc23a"; g.beginPath(); g.ellipse(10, -6, 50 * k, 32 * k, 0, 0, 7); g.fill(); g.stroke();
+  g.fillStyle = "#f4ecd8"; for (const [x, y, r] of [[-170, -40, 30], [180, -20, 26]]) { g.beginPath(); g.moveTo(x - r, y); g.lineTo(x, y - r * 1.4); g.lineTo(x + r, y); g.closePath(); g.fill(); g.stroke(); }
+  g.restore(); };
+export const fxFlour = (p, t = 0) => { const g = p.g; g.save(); const k = Math.min(1, t / 8), a = Math.max(0, 1 - Math.max(0, t - 14) / 14);
+  g.globalAlpha = a; for (let i = 0; i < 16; i++) { const ang = i * 2.4, r = (60 + (i * 37) % 160) * k; g.fillStyle = i % 3 ? "#ffffff" : "#efe8dc"; g.beginPath(); g.arc(300 + Math.cos(ang) * r, 420 + Math.sin(ang) * r * 0.8, (70 + (i * 13) % 60) * (0.5 + k * 0.6), 0, 7); g.fill(); }
+  g.restore(); };
+export const fxKnob = (p, ang = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.lineJoin = "round";
+  g.fillStyle = "#b8bcc4"; g.strokeStyle = "#14101a"; g.lineWidth = 10; g.beginPath(); g.roundRect(-250, -250, 500, 500, 40); g.fill(); g.stroke();
+  g.font = '700 54px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = "#14101a";
+  for (const [t, a] of [["0", -2.4], ["100", -1.2], ["200", 0], ["MAX", 1.2]]) g.fillText(t, Math.cos(a - Math.PI / 2) * 190, Math.sin(a - Math.PI / 2) * 190);
+  g.fillStyle = "#c8382c"; g.fillText("MAX", Math.cos(1.2 - Math.PI / 2) * 190, Math.sin(1.2 - Math.PI / 2) * 190);
+  g.rotate(ang); g.fillStyle = "#2a2a30"; g.beginPath(); g.arc(0, 0, 120, 0, 7); g.fill(); g.stroke(); g.fillStyle = "#f4f1ea"; g.fillRect(-14, -115, 28, 80); g.restore(); };
+export const fxSmoke = (p, t = 0) => { const g = p.g; g.save();
+  for (let i = 0; i < 12; i++) { const k = ((t * 0.025 + i / 12) % 1), x = 300 + Math.sin(i * 1.7 + t * 0.05) * 90 * k, y = 900 - k * 850, r = 50 + k * 160;
+    g.globalAlpha = Math.min(0.85, (1 - k) * 1.2); g.fillStyle = i % 2 ? "#2a2826" : "#3e3a36"; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
+  g.restore(); };
+export const fxTray = (p, bite = 0, hold = 1) => { const g = p.g; g.save(); g.translate(300, 520); g.lineJoin = "round";
+  if (hold) { g.fillStyle = "#b8bcc4"; g.strokeStyle = "#14101a"; g.lineWidth = 8; g.beginPath(); g.roundRect(-230, -40, 460, 120, 16); g.fill(); g.stroke(); }
+  g.fillStyle = "#1e1a18"; g.strokeStyle = "#14101a"; g.lineWidth = 8; g.beginPath(); g.roundRect(-200, -70, 400, 110, 10); g.fill(); g.stroke();
+  if (bite) { g.fillStyle = hold ? "#b8bcc4" : "rgba(0,0,0,0)"; g.save(); g.globalCompositeOperation = "destination-out"; for (const dx of [-30, 0, 30]) { g.beginPath(); g.arc(170 + dx * 0.2, -70 + Math.abs(dx) * 0.3, 34, 0, 7); g.fill(); } g.restore(); }
+  g.strokeStyle = "#5a4a3a"; g.lineWidth = 4; for (const [x0, y0, x1, y1] of [[-150, -50, -90, 10], [-40, -60, 10, 0], [60, -30, 130, 20], [-120, 0, -60, 30]]) { g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke(); }
+  g.restore(); };
+export const fxLeak = (p, t = 0) => { const g = p.g; g.save(); g.fillStyle = "#9fd4ee"; g.strokeStyle = "#14101a"; g.lineWidth = 5;
+  for (let i = 0; i < 2; i++) { const k = ((t * 0.04 + i * 0.5) % 1), y = 80 + k * 860; g.beginPath(); g.moveTo(300, y - 34); g.quadraticCurveTo(318, y, 300, y + 14); g.quadraticCurveTo(282, y, 300, y - 34); g.fill(); g.stroke(); }
+  g.restore(); };

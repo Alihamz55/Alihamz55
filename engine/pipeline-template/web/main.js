@@ -380,6 +380,35 @@ for (const [dx, dz] of [[-0.85, -0.38], [0.85, -0.38], [-0.85, 0.38], [0.85, 0.3
 for (const [dx, m_] of [[0.55, MPs.tomato], [0.8, MPs.lime]]) { cyl(0.2, 0.15, 0.16, MPs.basket, TXQ + dx, 1.36, TZQ - 0.05, world, 14);
   for (let k = 0; k < 7; k++) add(new THREE.SphereGeometry(0.06, 8, 6), m_, TXQ + dx - 0.12 + (k % 4) * 0.08, 1.47 + (k > 3 ? 0.05 : 0), TZQ - 0.1 + (k % 2) * 0.08, world); }
 
+// ===== DAPUR (x=480), sore hujan; floor top at 0.5 =====
+const KX = 480;
+const MK = { floor: texM(P.checker(141, '#e8e0d0', '#c8bca8'), 10, 10), tile: texM(P.checker(142, '#f4f1ea', '#e2ddd2'), 8, 4), wood: texFile('tex/wood.jpg', 1, 0.4), woodD: texFile('tex/wood.jpg', 0.6, 1, '#8a6a52'),
+  steel: toon({ color: '#b8bcc4' }), dark: toon({ color: '#2a2a30' }), glass: toon({ color: '#3a4a5a' }), red: toon({ color: '#c8382c' }), ceil: texFile('tex/plaster.jpg', 3, 2, '#f0ece4'),
+  bucket: toon({ color: '#2f6ae8' }), frame: toon({ color: '#f4f1ea' }) };
+add(tbox(14, 1.0, 12, 1.2), MK.floor, KX, 0, -2, world, { cast: false });
+add(tbox(14, 4.2, 0.3, 1.5), MK.tile, KX, 2.6, -2.4, world);
+for (const sd of [-1, 1]) add(tbox(0.3, 4.2, 6, 1.5), MK.tile, KX + sd * 3.4, 2.6, 0.4, world);
+add(tbox(7, 0.12, 6, 1.2), MK.ceil, KX, 4.0, 0.2, world, { cast: false });
+{ const st = add(new THREE.CircleGeometry(0.32, 20), new THREE.MeshBasicMaterial({ color: '#8a7a60', transparent: true, opacity: 0.6 }), KX + 1.35, 3.93, 0.15, world); st.rotation.x = Math.PI / 2; st.userData.ndSkip = true; }
+// counter + stove + oven along the back wall
+add(tbox(4.4, 0.12, 0.9, 1), MK.wood, KX - 0.2, 1.42, -1.75, world);
+add(tbox(4.4, 0.9, 0.85, 1), MK.woodD, KX - 0.2, 0.95, -1.75, world);
+add(tbox(0.9, 0.08, 0.6, 1), MK.dark, KX - 1.4, 1.52, -1.75, world);
+for (const dx of [-0.2, 0.2]) cyl(0.14, 0.14, 0.03, MK.steel, KX - 1.4 + dx, 1.57, -1.75, world, 16);
+add(tbox(0.95, 0.7, 0.7, 1), MK.steel, KX + 0.9, 1.83, -1.75, world);
+add(tbox(0.62, 0.4, 0.04, 1), MK.glass, KX + 0.82, 1.83, -1.39, world);
+add(tbox(0.7, 0.04, 0.05, 1), MK.dark, KX + 0.82, 2.08, -1.37, world);
+cyl(0.05, 0.05, 0.04, MK.dark, KX + 1.25, 1.95, -1.38, world, 12).rotation.x = Math.PI / 2;
+// bowl + flour bag on the counter
+cyl(0.24, 0.16, 0.18, toon({ color: '#e8e2d6' }), KX - 0.35, 1.57, -1.6, world, 18);
+add(tbox(0.3, 0.42, 0.2, 1), toon({ color: '#f4e8c8' }), KX - 0.8, 1.69, -1.85, world);
+// window with rain + shelf + bucket under the leak
+plane(1.3, 1.0, new THREE.MeshBasicMaterial({ color: '#5a6a80' }), KX - 0.1, 2.85, -2.23);
+for (const [w, h, x, y] of [[1.5, 0.1, -0.1, 3.37], [1.5, 0.1, -0.1, 2.33], [0.1, 1.1, -0.82, 2.85], [0.1, 1.1, 0.62, 2.85], [0.06, 1.0, -0.1, 2.85]]) add(tbox(w, h, 0.1, 1), MK.frame, KX + x, y, -2.2, world);
+add(tbox(1.6, 0.06, 0.3, 1), MK.woodD, KX + 2.2, 2.7, -2.1, world);
+for (let k = 0; k < 4; k++) cyl(0.08, 0.08, 0.24, [MK.red, MK.steel, toon({ color: '#f2b632' })][k % 3], KX + 1.6 + k * 0.38, 2.85, -2.1, world, 10);
+cyl(0.2, 0.16, 0.32, MK.bucket, KX + 1.35, 0.66, 0.15, world, 16);
+
 // ===== WEDDING HALL (x=40) =====
 const HX = 40;
 const MH = {

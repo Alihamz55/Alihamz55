@@ -44,6 +44,8 @@ export const OUTFITS = {
   gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
   ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18", apron: "#2f6a4a", neckTowel: "#f4f1ea" },
   ibuPasar: { tunic: "#b83a7a", skin: "#f0c49c", hair: "#2b211c", arms: "#b83a7a", dress: "#b83a7a", bun: true, glasses: true, kebaya: "#f2c14e", sash: "#8a4b22" },
+  asepKoki: { tunic: "#f4f1ea", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a3f52", pants: "#3a3f52", apron: "#e8742c", chefHat: true },
+  ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
 
@@ -334,6 +336,10 @@ export const romanFront = (p, key, opts = {}) => {
   if (O.bun) { p.ell(cx, hc - 1.02 * H.b, 0.42 * H.a, 0.3 * H.b, O.hair, ow * 0.7); if (O.crown) for (let i = -3; i <= 3; i++) p.dot(cx + i * 0.2 * H.a, hc - 0.92 * H.b - Math.cos(i / 3) * 0.12 * H.b, 4.5 * u, "#e2b04a"); }
   if (O.glasses) for (const sd of [-1, 1]) { p.g.save(); p.g.fillStyle = "rgba(220,240,255,.25)"; p.ell(cx + 7 * u * facing + sd * 15 * u, hc - 6 * u, 13 * u, 11 * u, "rgba(220,240,255,.25)", 2.6 * u); p.g.restore();
     if (sd < 0) p.stroke([[cx + 7 * u * facing - 2 * u, hc - 8 * u], [cx + 7 * u * facing + 2 * u, hc - 8 * u]], 2.4 * u); if (opts.glint) p.dot(cx + 7 * u * facing + sd * 15 * u, hc - 6 * u, 9 * u, "#fff6a8"); }
+  if (O.chefHat) { const top = hc - 1.05 * H.b; // tall puffy chef hat
+    p.poly(rrect(cx - 0.62 * H.a, top - 0.5 * H.b, cx + 0.62 * H.a, top + 0.12 * H.b, 6 * u), "#ffffff", 2.4 * u);
+    for (const [dx, dy, r_] of [[-0.42, -0.62, 0.36], [0, -0.78, 0.42], [0.42, -0.62, 0.36]]) p.ell(cx + dx * H.a, top + dy * H.b, r_ * H.a, r_ * 0.8 * H.b, "#ffffff", 2.4 * u);
+    p.band([[cx - 0.64 * H.a, top + 0.06 * H.b], [cx + 0.64 * H.a, top + 0.06 * H.b]], "#e6e2d8", 0.08 * H.b, 1.2 * u); }
   if (O.peci) { const top = hc - 1.2 * H.b; p.poly(rrect(cx - 0.66 * H.a, top - 0.02 * H.b, cx + 0.66 * H.a, top + 0.5 * H.b, 6 * u), "#101018", ow * 0.6); p.band([[cx - 0.64 * H.a, top + 0.4 * H.b], [cx + 0.64 * H.a, top + 0.4 * H.b]], "#e2b04a", 3 * u, 0); }
   if (O.bedhead) for (let i = 0; i < 7; i++) { const a = rad(-160 + i * 23), x0 = cx + Math.cos(a) * H.a * 0.85, y0 = hc + Math.sin(a) * H.b * 0.88, x1 = cx + Math.cos(a + (i % 2 ? 0.25 : -0.2)) * H.a * 1.28, y1 = hc + Math.sin(a + (i % 2 ? 0.25 : -0.2)) * H.b * 1.3;
     p.poly([[x0 - 9 * u, y0], [x1, y1], [x0 + 9 * u, y0]], O.hair, 2.4 * u); }
