@@ -351,6 +351,32 @@ for (const r of [0.5, -0.6, 1.6]) { const l_ = cyl(0.06, 0.06, 0.75, MG.log, MX,
   const hl = add(new THREE.SphereGeometry(5, 24, 16), new THREE.MeshBasicMaterial({ map: P.tex(P.radial('255,240,190', 0.3)), transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending }), MX + 9, 26, -71, world); hl.userData.ndSkip = true;
   for (let i = 0; i < 80; i++) { const a = i * 2.399, r = 25 + (i * 37) % 55; const st = add(new THREE.SphereGeometry(0.1 + (i % 4) * 0.05, 6, 4), glow(i % 5 ? '#fff6d0' : '#bfe6ff'), MX + Math.cos(a) * r, 16 + (i * 13) % 30, -75 + Math.sin(a) * 8, world); st.userData.ndSkip = true; } }
 
+// ===== PASAR TRADISIONAL (x=400), pagi; ground top at 0.5 =====
+const PQ = 400;
+const MPs = { floor: texM(P.stone(131, 30, 6, 58, 64, 64), 6, 6, '#b8b0a4'), wood: toon({ color: '#9a6a42' }), woodD: toon({ color: '#6a4428' }), cloth: toon({ color: '#3a8a5a' }),
+  chili: toon({ color: '#d42a1e' }), chiliD: toon({ color: '#a81a12' }), stem: toon({ color: '#3f8a2a' }), tomato: toon({ color: '#e8452c' }), onion: toon({ color: '#b84a7a' }),
+  lime: toon({ color: '#8ac43a' }), basket: toon({ color: '#c8a064' }), wall: texM(P.plaster(132, 32), 1, 1, '#e8d8b8'), pole: toon({ color: '#5a5a62' }) };
+add(tbox(40, 1.0, 30, 1.2), MPs.floor, PQ, 0, -10, world, { cast: false });
+add(tbox(20, 5, 0.3, 1.5), MPs.wall, PQ, 2.5, -4.6, world);
+// background stalls with striped tarps
+const TARP = ['#e8452c', '#2f6ae8', '#f2b632', '#3f9a4a', '#e8742c'];
+for (let i = 0; i < 7; i++) { const x = -6 + i * 2.0, c = TARP[i % TARP.length];
+  add(tbox(1.8, 0.9, 1.0, 1), MPs.woodD, PQ + x, 0.95, -3.6, world);
+  for (let k = 0; k < 6; k++) { const s_ = add(new THREE.SphereGeometry(0.12, 8, 6), [MPs.tomato, MPs.onion, MPs.lime, MPs.chili][(i + k) % 4], PQ + x - 0.6 + k * 0.24, 1.5, -3.5 + (k % 2) * 0.2, world); }
+  for (let k = 0; k < 4; k++) { const t_ = add(tbox(0.46, 0.06, 1.3, 1), toon({ color: k % 2 ? '#ffffff' : c }), PQ + x - 0.69 + k * 0.46, 2.85, -3.4, world); t_.rotation.x = 0.28; }
+  cyl(0.04, 0.04, 2.4, MPs.pole, PQ + x - 0.9, 1.7, -2.9, world, 6); cyl(0.04, 0.04, 2.4, MPs.pole, PQ + x + 0.9, 1.7, -2.9, world, 6);
+  const b_ = add(new THREE.SphereGeometry(0.09, 10, 8), glow('#fff2b0'), PQ + x, 2.55, -3.0, world); b_.userData.ndSkip = true; }
+// Mang Ujang's lapak: table + green cloth + chili mountain + baskets
+const TXQ = PQ + 0.45, TZQ = -0.15;
+add(tbox(1.9, 0.08, 0.9, 1), MPs.wood, TXQ, 1.24, TZQ, world);
+add(tbox(1.92, 0.62, 0.04, 1), MPs.cloth, TXQ, 0.93, TZQ + 0.46, world);
+for (const [dx, dz] of [[-0.85, -0.38], [0.85, -0.38], [-0.85, 0.38], [0.85, 0.38]]) add(tbox(0.07, 0.74, 0.07, 1), MPs.woodD, TXQ + dx, 0.87, TZQ + dz, world);
+{ let sd = 7; const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
+  for (let i = 0; i < 90; i++) { const a = rnd() * Math.PI * 2, rr = Math.sqrt(rnd()) * 0.42, h = 0.3 * (1 - rr / 0.45) ** 1.2;
+    const c_ = add(new THREE.ConeGeometry(0.035, 0.2, 6), rnd() < 0.3 ? MPs.chiliD : MPs.chili, TXQ - 0.25 + Math.cos(a) * rr, 1.31 + h * rnd(), TZQ + Math.sin(a) * rr * 0.6, world); c_.rotation.set(rnd() * 3, rnd() * 3, 1.3 + rnd()); } }
+for (const [dx, m_] of [[0.55, MPs.tomato], [0.8, MPs.lime]]) { cyl(0.2, 0.15, 0.16, MPs.basket, TXQ + dx, 1.36, TZQ - 0.05, world, 14);
+  for (let k = 0; k < 7; k++) add(new THREE.SphereGeometry(0.06, 8, 6), m_, TXQ + dx - 0.12 + (k % 4) * 0.08, 1.47 + (k > 3 ? 0.05 : 0), TZQ - 0.1 + (k % 2) * 0.08, world); }
+
 // ===== WEDDING HALL (x=40) =====
 const HX = 40;
 const MH = {
