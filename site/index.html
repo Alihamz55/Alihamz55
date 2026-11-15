@@ -24,8 +24,11 @@ header{text-align:center}
 h2{font-size:20px;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .card{background:var(--card);border-radius:14px;overflow:hidden}
-.poster{aspect-ratio:9/12;display:flex;align-items:flex-end;padding:12px;font-weight:900;font-size:18px;line-height:1.15;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.4)}
-.card p{padding:10px 12px 12px;font-size:13px;color:var(--mute)}
+.poster{position:relative;aspect-ratio:9/16;background:#2b2245}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.poster .new{position:absolute;top:8px;left:8px;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.card h3{padding:10px 12px 0;font-size:15px;line-height:1.25}
+.card p{padding:4px 12px 12px;font-size:13px;color:var(--mute)}
 .new{display:inline-block;background:var(--yel);color:#1b1230;font-size:11px;font-weight:900;padding:2px 7px;border-radius:6px;margin-bottom:6px}
 footer{margin-top:36px;text-align:center;font-size:13px;color:var(--mute)}
 </style>
@@ -46,14 +49,14 @@ footer{margin-top:36px;text-align:center;font-size:13px;color:var(--mute)}
 
 <h2>🎬 Video Terbaru</h2>
 <div class="grid">
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#4fe0e0,#7b3fe4 60%,#ff5d8f)"><div><span class="new">BARU</span><br>Pacaran Sama AI</div></div><p>Pacar AI nggak pernah marah... sampai kuotanya habis.</p></div>
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#ffb347,#e2553f)">Bapak Siapa Ya?</div><p>Pak Darman dan tamu misterius.</p></div>
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#ff8fb1,#9b2c5c)">Hayati Minta Balikan</div><p>Mantan datang lagi, alasannya makin aneh.</p></div>
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#8ec5ff,#3a4fb5)">Seri Mantan 3</div><p>Lanjutan drama mantan yang belum kelar.</p></div>
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#9be15d,#00a37a)">Handphone Baru</div><p>HP baru, masalah baru.</p></div>
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#ffd23f,#f08a24)">Audisi Stand-Up Absurd</div><p>Juri bingung, penonton ngakak.</p></div>
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#c084fc,#5b2a86)">Malam Minggu Kelabu</div><p>Jomblo menghadapi malam Minggu.</p></div>
-<div class="card"><div class="poster" style="background:linear-gradient(160deg,#5ee7df,#2d6a9f)">Kenalan Cewek di Facebook</div><p>Foto profil dan kenyataan beda jauh.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/pacaran-sama-ai.webp" alt="Pacaran Sama AI" loading="lazy" width="270" height="480"><span class="new">BARU</span></div><h3>Pacaran Sama AI</h3><p>Pacar AI nggak pernah marah... sampai kuotanya habis.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/bapak-siapa-ya.webp" alt="Bapak Siapa Ya?" loading="lazy" width="270" height="480"></div><h3>Bapak Siapa Ya?</h3><p>Pak Darman stand-up soal anaknya yang nggak bisa ngitung.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/hayati.webp" alt="Hayati Minta Balikan" loading="lazy" width="270" height="480"></div><h3>Hayati Minta Balikan</h3><p>Mantan minta balikan, gue jadi Zainuddin.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/seri-mantan-3.webp" alt="Seri Mantan 3" loading="lazy" width="270" height="480"></div><h3>Seri Mantan 3</h3><p>Diundang ke nikahan mantan, malah jadi fotografernya.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/handphone-baru.webp" alt="Handphone Baru" loading="lazy" width="270" height="480"></div><h3>Handphone Baru</h3><p>HP baru, tapi baterai lemah dan mode pesawat.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/audisi.webp" alt="Audisi Stand-Up Absurd" loading="lazy" width="270" height="480"></div><h3>Audisi Stand-Up Absurd</h3><p>Naik panggung audisi, malah curhat utang 50 ribu.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/malam-minggu.webp" alt="Malam Minggu Kelabu" loading="lazy" width="270" height="480"></div><h3>Malam Minggu Kelabu</h3><p>Galau, kehujanan, ujung-ujungnya ditagih utang.</p></div>
+<div class="card"><div class="poster"><img src="https://cdn.jsdelivr.net/gh/Alihamz55/Alihamz55@ab720045c59e66ba8267faf4e0d40117ae0f5523/site/img/kenalan-cewek.webp" alt="Kenalan Cewek di Facebook" loading="lazy" width="270" height="480"></div><h3>Kenalan Cewek di Facebook</h3><p>Kenalan sama Putri Manis... ternyata jualan.</p></div>
 </div>
 
 <footer>Konten komedi. Semua tokoh fiktif.<br>© 2026 Malam Komedi</footer>
