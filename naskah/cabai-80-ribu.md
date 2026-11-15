@@ -1,55 +1,74 @@
-# Cabai Rp80 Ribu (Malam Komedi)
+# Cabai Rp80 Ribu (Malam Komedi), revisi 2
 
-**Format:** YouTube Shorts dengan tempo cepat, sekitar 40 detik, dengan papan telop warna per tokoh.
+**Format:** YouTube Shorts dengan tempo cepat, sekitar 45 detik, dengan papan telop warna per tokoh.
 
-**Tren:** harga cabai di pasar naik sampai Rp80.000 per kilo (awal November 2026). Harga tepung tapioka juga naik, dan pedagang jajanan mengeluh.
+**Tren:** harga cabai di pasar naik sampai Rp80.000 per kilo (awal November 2026).
 
 **Tokoh:**
-- **Ibu:** "menteri keuangan" rumah tangga, hemat tingkat dewa. Suara Gacrux.
+- **Ibu:** jago menawar, tapi kali ini kalah telak. Suara Gacrux.
+- **Mang Ujang (pedagang cabai):** santai, jujur, dan ikut pusing. Suara Puck atau suara bapak-bapak ringan.
 - **Pak Darman:** tidak bisa makan tanpa sambal. Suara Charon.
-- **Asep:** baru pulang jajan cilok. Suara Fenrir.
+- **Asep:** pemeran pendukung di rumah. Suara Fenrir.
 
-**Latar:** dapur dan meja makan, siang hari.
+**Latar:**
+- **Babak 1:** lapak cabai di pasar tradisional, pagi hari.
+- **Babak 2:** meja makan di rumah, siang hari.
 
 ---
 
-*(Kartu pembuka: "CABAI Rp80 RIBU/KG". Keluarga duduk di meja makan. Ada nasi dan tempe, tapi tidak ada sambal.)*
+## Babak 1: Di pasar
 
-**Pak Darman:** Bu, sambalnya mana? Makan tanpa sambal itu kayak... hidup tanpa harapan.
+*(Kartu pembuka: "PASAR, JAM 6 PAGI". Ibu datang membawa tas belanja ke lapak Mang Ujang. Ada tumpukan cabai merah dengan papan harga yang ditutupi kain.)*
 
-**Ibu:** Sebentar, Pak.
+**Ibu:** Mang, cabai merah sekilo berapa?
 
-*(Ibu membuka brankas kecil. Bunyi "klik... klik... ceklek". Di dalamnya ada SATU biji cabai di atas bantal beludru. Bunyi "Aaa~" seperti paduan suara.)*
+**Mang Ujang:** *(membuka kain dari papan harga dengan dramatis)* Delapan puluh ribu, Bu.
 
-**Asep:** Bu... itu brankas buat cabai?
+*(Kartu: "Rp80.000/KG". Ibu terhuyung kaget.)*
 
-**Ibu:** Cabai sekarang delapan puluh ribu sekilo, Sep. Ini aset keluarga.
+**Ibu:** Delapan puluh?! Mang, ini cabai apa emas?!
 
-*(Ibu memotong cabai itu jadi empat bagian dengan sangat hati-hati, seperti sedang menjinakkan bom.)*
+**Mang Ujang:** Kalau emas, Bu, saya udah pensiun.
 
-**Ibu:** Satu buat Bapak. Satu buat Asep. Satu buat Ibu.
+**Ibu:** Kemarin masih tiga puluh, Mang!
 
-**Asep:** Satunya lagi, Bu?
+**Mang Ujang:** Kemarin itu kemarin, Bu. Cabai sekarang naik pangkat.
 
-**Ibu:** Buat besok.
+**Ibu:** Ya udah, saya beli seperempat.
 
-*(Asep mengeluarkan cilok dari plastik. Ciloknya sekecil kelereng.)*
+**Mang Ujang:** Dua puluh ribu, Bu.
 
-**Pak Darman:** Sep, itu cilok apa obat?
+**Ibu:** *(memegang dada)* Ya Allah... Satu ons aja deh.
 
-**Asep:** Tepung naik, Pak. Ciloknya ikut diet.
+**Mang Ujang:** Delapan ribu.
 
-*(Pak Darman memakan potongan cabainya. Hening.)*
+**Ibu:** Satu biji, Mang. Satu biji!
 
-**Pak Darman:** Bu... kok nggak pedes?
+**Mang Ujang:** *(membungkus satu biji cabai dengan plastik, lalu memberi pita)* Ini, Bu. Saya kasih pita, biar kayak kado.
 
-**Ibu:** Itu kulitnya, Pak. Bijinya Ibu tanam. Tiga bulan lagi kita panen.
+## Babak 2: Di rumah
 
-**Pak Darman:** Tiga bulan?! Bapak makan pakai apa?!
+*(Kartu: "SIANGNYA...". Meja makan berisi nasi dan tempe, tanpa sambal. Ibu membuka bungkusan berpita dengan khidmat. Terdengar paduan suara "Aaa~".)*
+
+**Pak Darman:** Bu, sambalnya mana?
+
+**Ibu:** Ini, Pak. Hasil perjuangan Ibu di pasar.
+
+**Asep:** Bu... cabainya satu? Pakai pita?
+
+**Ibu:** Delapan puluh ribu sekilo, Sep. Ini aset keluarga.
+
+*(Ibu memotong cabai itu jadi tiga, sangat hati-hati seperti menjinakkan bom.)*
+
+**Pak Darman:** *(mengunyah potongannya)* Bu... kok nggak pedes?
+
+**Ibu:** Itu kulitnya, Pak. Bijinya Ibu tanam. Tiga bulan lagi panen.
+
+**Pak Darman:** Terus sekarang Bapak makan pakai apa?!
 
 **Ibu:** Bayangin aja pedesnya.
 
-*(Pak Darman memejamkan mata, membayangkan... lalu keringatan dan kepedasan sendiri.)*
+*(Pak Darman memejamkan mata dan membayangkan... lalu keringatan dan kepedasan sendiri.)*
 
 **Pak Darman:** Hah... hah... pedes, Bu!
 
@@ -61,33 +80,37 @@
 
 | Tokoh | Arahan |
 |---|---|
-| Pak Darman | Dramatis soal sambal, lalu curiga, lalu panik, lalu kepedasan karena imajinasinya sendiri. |
-| Ibu | Tenang dan serius seperti bendahara negara. Kalimat "Ini aset keluarga" diucapkan sangat bangga, dan "Bayangin aja pedesnya" datar dan santai. |
-| Asep | Heran, lalu polos, lalu meledek kecil. |
+| Ibu | Pede di awal, lalu syok berat ("ini cabai apa emas?!"), makin memelas setiap kali turun jumlah, dan akhirnya putus asa "Satu biji, Mang!". Di rumah, bangga dan datar. |
+| Mang Ujang | Santai, tidak panik, menjawab dengan kalimat bijak tapi lucu ("cabai sekarang naik pangkat"). Jujur dan ramah, bukan pedagang jahat. |
+| Pak Darman | Dramatis soal sambal, lalu curiga, panik, dan akhirnya kepedasan karena imajinasinya sendiri. |
+| Asep | Heran dan polos. |
 
 ## Arahan visual
 
 - **Kartu pop-up:**
-  - "CABAI Rp80 RIBU/KG"
+  - "PASAR, JAM 6 PAGI"
+  - "Rp80.000/KG"
+  - "CABAI NAIK PANGKAT"
+  - "SEKILO → SEPEREMPAT → SEONS → SEBIJI" (angkanya turun terus)
   - "ASET KELUARGA"
-  - "1 CABAI = 4 ORANG"
-  - "CILOK DIET"
   - "PANEN 3 BULAN LAGI"
   - "PEDESNYA DIBAYANGIN"
 - **Properti baru:**
-  - brankas kecil yang pintunya terbuka dan bersinar
-  - satu cabai merah di atas bantal
-  - cilok sebesar kelereng di tusuk sate
+  - lapak pasar dengan tumpukan cabai
+  - papan harga yang ditutupi kain
+  - satu cabai dibungkus plastik berpita
 - **Efek suara:**
-  - kunci brankas berputar
-  - paduan suara "Aaa~" saat brankas terbuka
+  - keramaian pasar
+  - "jreng!" saat harga dibuka
+  - "teeet" setiap kali Ibu menurunkan jumlah
+  - paduan suara "Aaa~"
   - pisau "tak, tak"
-  - hening dengan bunyi jangkrik
   - rimshot dan tawa penonton
-- **Ajakan di akhir:** "Di rumah kamu, cabainya disimpan di mana? Tulis di komentar!"
+- **Ajakan di akhir:** "Kamu belanja cabai sekarang berapa biji? Tulis di komentar!"
 - **Caption:** "Konten komedi. Semua tokoh fiktif."
 
 ## Catatan aman
 
-- Leluconnya soal cara keluarga bertahan menghadapi harga naik, **bukan menyalahkan pemerintah atau pihak tertentu**. Jadi tidak masuk wilayah politik.
-- Angka Rp80.000 per kilo sesuai berita awal November 2026. Kalau harganya sudah turun saat upload, ganti dengan "CABAI MAHAL" saja.
+- Pedagang digambarkan **ramah dan ikut pusing**, bukan penjahat. Jadi tidak menyinggung pedagang pasar.
+- Tidak menyalahkan pemerintah atau pihak tertentu, sehingga bukan konten politik.
+- Kalau harga cabai sudah turun saat upload, ganti "Rp80.000" dengan "CABAI MAHAL".
