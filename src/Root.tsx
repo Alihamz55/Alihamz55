@@ -4,11 +4,21 @@ import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
+import { Intro, INTRO_DURASI } from "./intro/Intro";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="IntroNasyidMungil"
+        component={Intro}
+        durationInFrames={INTRO_DURASI}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ pakaiMusik: true }}
+      />
       <Composition
         id="DoaPanggung"
         component={Doa}
