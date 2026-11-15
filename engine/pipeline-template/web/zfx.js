@@ -590,3 +590,41 @@ export const fxPile = (p) => { const g = p.g; g.save(); g.translate(300, 540); g
   g.restore();
   g.strokeStyle = "rgba(190,215,255,0.9)"; g.lineWidth = 4; for (const x of [-150, -60, 40, 140]) { g.beginPath(); g.moveTo(x, 110); g.lineTo(x, 132); g.stroke(); }
   g.restore(); };
+
+/* ---- Pocong (cute-comedic), api unggun, subtitle per kata: "Asep & Ucup Naik Gunung" ---- */
+export const fxPocong = (p, mouth = 0, blink = 0, mood = "calm") => { const g = p.g; g.save(); g.lineJoin = "round"; g.lineCap = "round";
+  const W = "#f1ece0", S = "#d8d0bc", O = "#2a2420";
+  // body shroud
+  g.fillStyle = W; g.strokeStyle = O; g.lineWidth = 9; g.beginPath();
+  g.moveTo(300, 150); g.bezierCurveTo(410, 150, 418, 260, 410, 360); g.bezierCurveTo(404, 600, 420, 820, 392, 960); g.quadraticCurveTo(300, 1000, 208, 960);
+  g.bezierCurveTo(180, 820, 196, 600, 190, 360); g.bezierCurveTo(182, 260, 190, 150, 300, 150); g.closePath(); g.fill(); g.stroke();
+  g.strokeStyle = S; g.lineWidth = 6; for (const [x0, y0, x1, y1] of [[240, 420, 255, 900], [355, 430, 345, 900], [300, 500, 300, 940]]) { g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke(); }
+  // top knot (ikatan kepala)
+  g.fillStyle = W; g.strokeStyle = O; g.lineWidth = 8;
+  g.beginPath(); g.moveTo(300, 160); g.quadraticCurveTo(250, 70, 268, 40); g.quadraticCurveTo(300, 90, 300, 160); g.fill(); g.stroke();
+  g.beginPath(); g.moveTo(300, 160); g.quadraticCurveTo(350, 70, 334, 44); g.quadraticCurveTo(300, 92, 300, 160); g.fill(); g.stroke();
+  // rope ties: neck, knees, feet
+  g.strokeStyle = "#b8a684"; g.lineWidth = 12; for (const y of [352, 760, 935]) { g.beginPath(); g.moveTo(198, y); g.quadraticCurveTo(300, y + 14, 404, y); g.stroke(); }
+  g.fillStyle = "#b8a684"; g.beginPath(); g.ellipse(300, 366, 16, 12, 0, 0, 7); g.fill();
+  // face opening
+  g.fillStyle = "#c6d4c0"; g.strokeStyle = O; g.lineWidth = 7; g.beginPath(); g.ellipse(300, 258, 78, 86, 0, 0, 7); g.fill(); g.stroke();
+  g.fillStyle = "rgba(90,110,90,0.35)"; for (const x of [268, 332]) { g.beginPath(); g.ellipse(x, 246, 26, 22, 0, 0, 7); g.fill(); }
+  if (blink) { g.strokeStyle = O; g.lineWidth = 7; for (const x of [268, 332]) { g.beginPath(); g.moveTo(x - 14, 246); g.lineTo(x + 14, 246); g.stroke(); } }
+  else { const big = mood === "shock" ? 1.3 : 1; for (const x of [268, 332]) { g.fillStyle = "#fff"; g.beginPath(); g.ellipse(x, 244, 15 * big, 17 * big, 0, 0, 7); g.fill(); g.strokeStyle = O; g.lineWidth = 5; g.stroke();
+    g.fillStyle = O; g.beginPath(); g.ellipse(x + 3, 247, 7, 8, 0, 0, 7); g.fill(); g.fillStyle = "#fff"; g.beginPath(); g.ellipse(x + 6, 243, 2.5, 2.5, 0, 0, 7); g.fill(); } }
+  g.strokeStyle = O; g.lineWidth = 6; g.beginPath(); g.moveTo(250, 214); g.lineTo(282, 220); g.moveTo(350, 214); g.lineTo(318, 220); g.stroke();
+  if (mouth > 0) { g.fillStyle = "#5a2a2a"; g.beginPath(); g.ellipse(300, 298, 16 + mouth * 2, 5 + mouth * 7, 0, 0, 7); g.fill(); g.strokeStyle = O; g.lineWidth = 5; g.stroke(); }
+  else { g.strokeStyle = O; g.lineWidth = 6; g.beginPath(); if (mood === "smug") { g.moveTo(276, 296); g.quadraticCurveTo(300, 312, 326, 292); } else { g.moveTo(282, 300); g.quadraticCurveTo(300, 306, 318, 300); } g.stroke(); }
+  g.restore(); };
+export const fxFire = (p, t = 0) => { const g = p.g; g.save(); g.translate(300, 985);
+  const fl = (w, h, col, ph) => { const k = 1 + 0.12 * Math.sin(t * 0.9 + ph), sw = 10 * Math.sin(t * 0.7 + ph * 2); g.fillStyle = col; g.beginPath(); g.moveTo(-w, 0);
+    g.bezierCurveTo(-w * 1.05, -h * 0.45 * k, -w * 0.2 + sw, -h * 0.7 * k, sw * 1.5, -h * k); g.bezierCurveTo(w * 0.2 + sw, -h * 0.7 * k, w * 1.05, -h * 0.45 * k, w, 0); g.closePath(); g.fill(); };
+  fl(130, 330, "#e8452c", 0); fl(100, 260, "#f2862e", 1.3); fl(70, 190, "#ffc23a", 2.1); fl(38, 120, "#fff2a8", 3.0);
+  for (let i = 0; i < 5; i++) { const y = -((t * 14 + i * 70) % 420) - 120, x = 40 * Math.sin(i * 2.1 + t * 0.2); g.fillStyle = `rgba(255,${180 + i * 10},80,${0.9 - (-y) / 600})`; g.beginPath(); g.arc(x, y, 6, 0, 7); g.fill(); }
+  g.restore(); };
+export const fxCaption = (p, words, idx) => { const g = p.g; g.save(); const size = 74; g.font = `900 ${size}px ${PF}`; g.textBaseline = "middle"; g.lineJoin = "round";
+  const sp = 18, ws = words.map((w) => g.measureText(w).width); let total = ws.reduce((a, b) => a + b, 0) + sp * (words.length - 1);
+  const k = total > 560 ? 560 / total : 1; g.translate(300, 500); g.scale(k, k); let x = -total / 2;
+  words.forEach((w, i) => { const on = i === idx; g.lineWidth = 16; g.strokeStyle = "#120c10"; g.strokeText(w, x, on ? -6 : 0);
+    g.fillStyle = on ? "#ffd84a" : "#ffffff"; g.fillText(w, x, on ? -6 : 0); x += ws[i] + sp; });
+  g.restore(); };

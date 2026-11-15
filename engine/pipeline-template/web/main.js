@@ -86,7 +86,7 @@ const DECK = 0; // floor height of every set
 const world = new THREE.Group(); scene.add(world);
 const MW = {
   club: texM(P.planks(21), 1, 1, '#8a6a5a'), stageWood: texM(P.planks(22), 1, 1, '#d9a070'),
-  brick: texM(P.stone(23, 262, 26, 30, 96, 40), 1, 1), velvet: toon({ color: '#3d2a78' }), velvetDark: toon({ color: '#241650' }),
+  brick: texM(P.stone(23, 262, 26, 30, 96, 40), 1, 1), velvet: toon({ color: '#b02a35' }), velvetDark: toon({ color: '#7a1822' }),
   floorWood: texM(P.planks(24), 1, 1, '#f0c898'), wallBlue: texM(P.plaster(25, 200), 1, 1, '#cfe3f0'), wallWarm: texM(P.plaster(26, 30), 1, 1, '#f6dcb4'),
   wallDim: texM(P.plaster(27, 250), 1, 1, '#a99cc4'), checker: texM(P.checker(28), 1, 1), stripe: texM(P.stripesTex(), 1, 1),
   wood: toon({ color: '#9a6a42' }), woodDark: toon({ color: '#5e3c26' }), white: toon({ color: '#f4f1ea' }), sheet: toon({ color: '#e6eef6' }),
@@ -107,7 +107,7 @@ add(tbox(9.1, 0.08, 0.12, 1), MW.woodDark, 0, 0.5, 1.5, world);
 add(tbox(18, 9, 0.4, 1.4), MW.brick, 0, 4.5, -3.2, world);
 for (const s of [-1, 1]) for (let i = 0; i < 7; i++) cyl(0.26, 0.3, 7.2, i % 2 ? MW.velvetDark : MW.velvet, s * (3.3 + i * 0.36), 3.6, -2.55 + (i % 2) * 0.12, world, 10);
 add(tbox(10, 1.0, 0.4, 2), MW.velvet, 0, 6.6, -2.5, world);
-plane(3.2, 0.94, basic(P.sign('MALAM KOMEDI', { font: 112, fg: '#7fd0ff', glow: '#bfe6ff', border: '#ff8ac8' }), { fog: false }), 0, 3.75, -2.98);
+plane(3.2, 0.94, basic(P.sign('MALAM KOMEDI', { font: 100, fg: '#ffd84a', glow: '#fff1b0', border: '#ff5a5a' }), { fog: false }), 0, 3.75, -2.98);
 const stool = new THREE.Group(); stool.position.set(1.35, 0.5, -0.9); world.add(stool);
 cyl(0.32, 0.32, 0.09, MW.woodDark, 0, 0.95, 0, stool);
 for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2 + 0.6; const l = cyl(0.035, 0.035, 0.95, MW.metal, Math.cos(a) * 0.22, 0.47, Math.sin(a) * 0.22, stool, 6); l.rotation.set(Math.sin(a) * 0.12, 0, -Math.cos(a) * 0.12); }
@@ -118,6 +118,20 @@ const beamCone = new THREE.Mesh(new THREE.ConeGeometry(1.5, 7.5, 32, 1, true), b
 const pool = new THREE.Mesh(new THREE.CircleGeometry(1.55, 40), new THREE.MeshBasicMaterial({ map: P.tex(P.radial('226,206,255', 0.55)), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
 pool.rotation.x = -Math.PI / 2; pool.position.set(0, 0.512, 0.2); pool.userData.ndSkip = true; world.add(pool);
 for (let i = 0; i < 12; i++) { const b = add(new THREE.SphereGeometry(0.06, 8, 6), glow(i % 2 ? '#ff9ccb' : '#bfe6ff'), -4.2 + i * 0.76, 0.42, 1.56, world); b.userData.ndSkip = true; }
+// ===== PENONTON (audience silhouettes) =====
+const audG = new THREE.Group(); world.add(audG);
+{ const cols = ['#2a2233', '#33283c', '#251d2c', '#3a2c40'], chair = toon({ color: '#5a1e2a' });
+  let k = 0;
+  for (const [ri, z] of [3.0, 3.8, 4.6, 5.4, 6.2, 7.0].entries()) for (let x = -4.0 + (ri % 2) * 0.4; x <= 4.2; x += 0.8) {
+    k++; if (ri === 0 && Math.abs(x - 1.2) < 0.3) continue;
+    const g = new THREE.Group(); g.position.set(x + Math.sin(k * 3.1) * 0.08, 0, z); audG.add(g); g.userData.ph = k * 1.7;
+    const m = toon({ color: cols[k % 4] });
+    add(tbox(0.5, 0.55, 0.32, 1), m, 0, 0.72 + (k % 3) * 0.04, 0, g);
+    add(new THREE.SphereGeometry(0.17, 12, 10), m, 0, 1.2 + (k % 3) * 0.05, 0, g);
+    add(tbox(0.56, 0.5, 0.08, 1), chair, 0, 0.62, 0.22, g); }
+  // Asep's empty chair in the front row
+  add(tbox(0.56, 0.5, 0.08, 1), chair, 1.2, 0.62, 3.25, world); add(tbox(0.5, 0.06, 0.4, 1), chair, 1.2, 0.42, 3.05, world);
+}
 // front curtain (intro only): two halves of velvet folds that slide open
 const frontCurtain = [-1, 1].map((sd) => { const g = new THREE.Group(); world.add(g); g.userData.sd = sd;
   for (let i = 0; i < 12; i++) cyl(0.24, 0.27, 6.6, i % 2 ? MW.velvetDark : MW.velvet, sd * (0.2 + i * 0.4), 3.8, 1.25 + (i % 2) * 0.1, g, 10);
@@ -248,6 +262,94 @@ for (let k = 0; k < 7; k++) { const a = k * Math.PI * 2 / 7; const l_ = add(new 
 cyl(0.04, 0.04, 2.6, MB.pole, BX + 1.9, 1.8, -2.6, world, 8);
 for (let k = 0; k < 8; k++) { const seg = new THREE.Mesh(new THREE.ConeGeometry(1.4, 0.6, 16, 1, true, k * Math.PI / 4, Math.PI / 4), k % 2 ? MB.umbA : MB.umbB); seg.position.set(BX + 1.9, 3.2, -2.6); seg.castShadow = true; world.add(seg); }
 { const b_ = add(tbox(0.55, 2.2, 0.08, 1), MB.board, BX + 2.5, 1.55, -3.0, world); b_.rotation.z = 0.12; const s_ = add(tbox(0.1, 2.0, 0.09, 1), MB.board2, BX + 2.5, 1.55, -2.98, world); s_.rotation.z = 0.12; }
+
+// ===== DEPAN RUMAH + PAGAR (x=240); ground top at 0.5 =====
+const HR = 240;
+const MRm = { road: texM(P.stone(101, 12, 4, 30, 60, 60), 1, 1, '#6a6a70'), side: texM(P.stone(102, 30, 20, 50, 70, 70), 1, 1, '#cfc6b4'),
+  yard: texM(P.grass(103), 10, 10), wall: toon({ color: '#f8e2a0' }), wallB: texM(P.plaster(105, 190), 1, 1, '#bfe0d8'),
+  genteng: texM(P.roof(106), 3, 2, "#ffd8c0"), gentengD: toon({ color: '#a8492a' }), fence: toon({ color: '#2f8a5a' }), fenceD: toon({ color: '#1f5f3e' }),
+  pillar: texM(P.plaster(107, 20), 1, 1, '#f4efe2'), cap: toon({ color: '#c8643c' }), door: toon({ color: '#8a5a32' }), frame: toon({ color: '#f4f1ea' }),
+  glass: toon({ color: '#9fd4ee' }), trunk: toon({ color: '#7a5434' }), leaf: toon({ color: '#4f9a3c' }), leaf2: toon({ color: '#6cb04a' }),
+  pole: toon({ color: '#8a8478' }), wire: toon({ color: '#2b2f3a' }), pot: toon({ color: '#c8643c' }), line: toon({ color: '#f4f1ea' }),
+  hill: toon({ color: '#7aa64c' }), mango: toon({ color: '#f2b632' }) };
+add(tbox(80, 1.0, 40.1, 1.2), MRm.yard, HR, 0, -19.95, world, { cast: false });           // yard/ground behind
+add(tbox(80, 1.0, 3.2, 1.2), MRm.road, HR, -0.02, 3.6, world, { cast: false });      // asphalt road (front)
+for (let i = 0; i < 14; i++) add(tbox(1.2, 0.02, 0.12, 1), MRm.line, HR - 26 + i * 4, 0.49, 3.6, world, { cast: false });
+add(tbox(80, 1.06, 2.0, 1.2), MRm.side, HR, 0.03, 1.1, world, { cast: false });       // sidewalk in front of the fence
+// house
+add(tbox(9, 3.4, 0.3, 1.5), MRm.wall, HR, 2.2, -4.2, world).receiveShadow = false;
+for (const sd of [-1, 1]) add(tbox(0.3, 3.4, 3, 1.5), MRm.wall, HR + sd * 4.35, 2.2, -2.85, world);
+for (const sd of [-1, 1]) { const r_ = add(tbox(10.2, 0.14, 3.4, 1.2), MRm.genteng, HR, 4.55 + 0.0, -3.0 + sd * 1.45, world); r_.rotation.x = sd * 0.62; r_.position.y = 4.6; r_.position.z = -3.0 + sd * 1.32; }
+add(tbox(10.3, 0.22, 0.22, 1), MRm.gentengD, HR, 5.55, -3.0, world);
+add(tbox(10.2, 0.16, 0.3, 1), MRm.gentengD, HR, 3.92, -1.55, world);
+{ const tri = new THREE.Shape([new THREE.Vector2(-1.6, 0), new THREE.Vector2(1.6, 0), new THREE.Vector2(0, 1.6)]);
+  for (const sd of [-1, 1]) { const m_ = add(new THREE.ShapeGeometry(tri), MRm.wall, HR + sd * 4.5, 3.9, -3.0, world); m_.rotation.y = Math.PI / 2; m_.material = toon({ color: '#f6e0a0', side: THREE.DoubleSide }); } }
+add(tbox(1.1, 2.2, 0.08, 1), MRm.door, HR + 0.2, 1.6, -4.03, world);
+add(tbox(1.3, 0.12, 0.12, 1), MRm.frame, HR + 0.2, 2.75, -4.0, world);
+add(new THREE.SphereGeometry(0.05, 8, 6), toon({ color: '#ffd84a' }), HR + 0.6, 1.6, -3.97, world);
+for (const dx of [-2.6, 2.8]) { add(tbox(1.5, 1.2, 0.06, 1), MRm.glass, HR + dx, 2.2, -4.03, world);
+  for (const [w, h, x, y] of [[1.7, 0.1, 0, 0.62], [1.7, 0.1, 0, -0.62], [0.1, 1.3, -0.78, 0], [0.1, 1.3, 0.78, 0], [0.07, 1.2, 0, 0]]) add(tbox(w, h, 0.1, 1), MRm.frame, HR + dx + x, 2.2 + y, -3.98, world); }
+plane(1.2, 0.36, basic(P.sign('No. 17', { font: 120, bg: '#ffffff', fg: '#2b2f3a', glow: '#ffffff', border: '#2f8a5a' }), { fog: false }), HR - 1.0, 3.1, -4.02);
+// teras pillars + pots
+for (const dx of [-3.9, 3.9]) add(tbox(0.25, 3.0, 0.25, 1), MRm.pillar, HR + dx, 2.0, -1.6, world);
+for (const dx of [-1.4, 1.8, -3.2]) { cyl(0.22, 0.17, 0.4, MRm.pot, HR + dx, 0.7, -2.2, world, 12); const b_ = add(new THREE.SphereGeometry(0.34, 12, 10), MRm.leaf2, HR + dx, 1.15, -2.2, world); b_.scale.y = 1.2; }
+// FENCE (pagar besi hijau) along z=0.1 with brick pillars and a gate
+const FZ = 0.1;
+for (const dx of [-4.8, -1.2, 1.2, 4.8]) { add(tbox(0.42, 1.7, 0.42, 1), MRm.pillar, HR + dx, 1.35, FZ, world); add(tbox(0.52, 0.14, 0.52, 1), MRm.cap, HR + dx, 2.26, FZ, world); }
+add(tbox(9.6, 0.32, 0.3, 1), MRm.pillar, HR, 0.66, FZ, world);
+for (const [a, b_] of [[-4.6, -1.4], [-1.0, 1.0], [1.4, 4.6]]) {
+  const gate = a === -1.0, top = gate ? 1.85 : 1.65;
+  add(tbox(b_ - a, 0.07, 0.07, 1), MRm.fenceD, HR + (a + b_) / 2, top, FZ, world);
+  add(tbox(b_ - a, 0.06, 0.06, 1), MRm.fenceD, HR + (a + b_) / 2, 1.0, FZ, world);
+  for (let x = a + 0.12; x < b_ - 0.05; x += 0.2) { cyl(0.025, 0.025, top - 0.82, MRm.fence, HR + x, 0.82 + (top - 0.82) / 2, FZ, world, 6);
+    const sp = add(new THREE.ConeGeometry(0.05, 0.14, 6), MRm.fenceD, HR + x, top + 0.09, FZ, world); }
+}
+// mango tree (left, in the yard) + electric pole with wires (right, sidewalk)
+cyl(0.18, 0.24, 3.2, MRm.trunk, HR - 6.3, 2.1, -1.4, world, 10);
+for (const [x, y, z, r] of [[-6.3, 4.1, -1.4, 1.5], [-5.4, 3.7, -1.0, 1.1], [-7.1, 3.6, -1.6, 1.1], [-6.0, 4.9, -1.7, 1.0]]) { const b_ = add(new THREE.SphereGeometry(r, 14, 10), MRm.leaf, HR + x, y, z, world); b_.scale.y = 0.85; }
+for (const [x, y, z] of [[-5.3, 3.3, -0.2], [-6.6, 3.2, -0.3], [-5.9, 3.9, -0.3]]) add(new THREE.SphereGeometry(0.13, 8, 6), MRm.mango, HR + x, y, z, world);
+cyl(0.1, 0.12, 7.5, MRm.pole, HR + 6.0, 4.25, 1.6, world, 8);
+add(tbox(1.4, 0.1, 0.1, 1), MRm.pole, HR + 6.0, 7.6, 1.6, world);
+for (const dy of [0, 0.25]) { const w_ = cyl(0.012, 0.012, 30, MRm.wire, HR + 0, 7.45 - dy, 1.6, world, 4); w_.rotation.z = Math.PI / 2 + 0.01; w_.castShadow = false; }
+// far hills + neighbour houses
+for (const [x, z, r, c] of [[-14, -22, 9, MRm.hill], [6, -26, 12, MRm.hill], [22, -22, 8, MRm.hill]]) { const h_ = add(new THREE.SphereGeometry(r, 20, 12), c, HR + x, -2, z, world, { cast: false }); h_.scale.y = 0.6; }
+for (const [x, mat] of [[-11, MRm.wallB], [11, MRm.wallB]]) { add(tbox(5, 3.0, 4, 1.5), mat, HR + x, 2.0, -4.5, world); const r_ = add(tbox(5.6, 0.14, 4.6, 1.2), MRm.genteng, HR + x, 3.7, -4.5, world); r_.rotation.x = 0.1; }
+// night sky stars (flashback on the roof)
+const starsG = new THREE.Group(); world.add(starsG); starsG.visible = false;
+for (let i = 0; i < 70; i++) { const a = i * 2.399, r = 30 + (i * 37) % 60; const st = add(new THREE.SphereGeometry(0.12 + (i % 4) * 0.05, 6, 4), glow(i % 5 ? '#fff6d0' : '#bfe6ff'), HR + Math.cos(a) * r * 0.9, 12 + (i * 53) % 34, -40 - Math.sin(a) * 10, starsG); st.userData.ndSkip = true; st.castShadow = false; }
+{ const moon = add(new THREE.SphereGeometry(2.4, 24, 16), glow('#fff3c4'), HR - 1.5, 31, -60, starsG); moon.userData.ndSkip = true;
+  const halo = add(new THREE.SphereGeometry(4.5, 24, 16), new THREE.MeshBasicMaterial({ map: P.tex(P.radial('255,240,190', 0.35)), transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending }), HR - 1.5, 31, -62, starsG); halo.userData.ndSkip = true; }
+for (const dx of [-2.6, 2.8]) { const wl = plane(1.45, 1.15, glow('#ffd98a', 0.85), HR + dx, 2.2, -3.99, starsG); wl.userData.ndSkip = true; }
+{ const big = add(new THREE.OctahedronGeometry(0.9, 0), glow('#ffe066'), HR - 4, 20, -40, starsG); big.userData.ndSkip = true; big.userData.bigStar = true; starsG.userData.big = big; }
+
+// ===== PERKEMAHAN GUNUNG (x=320), malam; ground top at 0.5 =====
+const MX = 320;
+const MG = { ground: texM(P.grass(121), 12, 12, '#7a9a6a'), dirt: texM(P.dirt(122), 2, 2, '#b89a7a'), pine: toon({ color: '#2f5a3e' }), pine2: toon({ color: '#3d6e48' }),
+  trunk: toon({ color: '#5a3e2a' }), rock: toon({ color: '#7a8088' }), tent: toon({ color: '#e8742c' }), tentD: toon({ color: '#3a2418' }),
+  log: toon({ color: '#6a4428' }), mountA: toon({ color: '#2c3c5c' }), mountB: toon({ color: '#3a4c70' }), snow: toon({ color: '#dfe6f2' }) };
+add(tbox(90, 1.0, 70, 1.2), MG.ground, MX, 0, -20, world, { cast: false });
+{ const d_ = add(new THREE.CylinderGeometry(1.5, 1.5, 0.04, 24), MG.dirt, MX, 0.51, -0.2, world, { cast: false }); }
+// far mountains (night silhouettes) with snow caps
+for (const [x, z, r, h, m] of [[-26, -60, 18, 22, MG.mountA], [0, -75, 26, 30, MG.mountB], [24, -58, 16, 18, MG.mountA], [-8, -50, 12, 13, MG.mountB], [12, -46, 10, 11, MG.mountA]]) {
+  add(new THREE.ConeGeometry(r, h, 7), m, MX + x, h / 2 - 1, z, world, { cast: false });
+  add(new THREE.ConeGeometry(r * 0.28, h * 0.28, 7), MG.snow, MX + x, h - 1 - h * 0.14 + 0.05, z, world, { cast: false }); }
+// pine forest around the clearing
+const pineAt = (x, z, k = 1) => { cyl(0.12 * k, 0.16 * k, 1.2 * k, MG.trunk, MX + x, 0.5 + 0.6 * k, z, world, 8);
+  for (let i = 0; i < 3; i++) add(new THREE.ConeGeometry((1.15 - i * 0.28) * k, 1.5 * k, 9), i % 2 ? MG.pine2 : MG.pine, MX + x, 0.5 + (1.5 + i * 0.85) * k, z, world); };
+for (const [x, z, k] of [[-5.2, -3.5, 1.3], [-3.6, -5.5, 1.5], [-6.8, -1.2, 1.2], [4.6, -3.0, 1.35], [6.2, -5.8, 1.6], [3.2, -6.8, 1.2], [7.4, -1.0, 1.1], [-1.2, -8.5, 1.6], [1.6, -10, 1.8], [-8.5, -7, 1.7], [9, -8, 1.7], [-4.5, -11, 2], [5.5, -12, 2]]) pineAt(x, z, k);
+// tent (left-back) as a 4-sided pyramid
+{ const t_ = add(new THREE.ConeGeometry(1.35, 1.7, 4), MG.tent, MX - 2.3, 0.5 + 0.85, -2.0, world); t_.rotation.y = Math.PI / 4;
+  const dr = add(new THREE.ConeGeometry(0.42, 0.95, 3), MG.tentD, MX - 2.3, 0.5 + 0.47, -1.08, world); dr.scale.z = 0.05; }
+// rocks
+for (const [x, z, r] of [[2.6, -1.6, 0.45], [3.1, -1.2, 0.28], [-3.6, 0.2, 0.35], [1.9, -3.4, 0.6]]) { const r_ = add(new THREE.DodecahedronGeometry(r, 0), MG.rock, MX + x, 0.5 + r * 0.55, z, world); r_.scale.y = 0.7; }
+// campfire: logs + stone ring + warm glow
+for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; add(new THREE.DodecahedronGeometry(0.1, 0), MG.rock, MX + Math.cos(a) * 0.42, 0.56, -0.2 + Math.sin(a) * 0.42, world); }
+for (const r of [0.5, -0.6, 1.6]) { const l_ = cyl(0.06, 0.06, 0.75, MG.log, MX, 0.6, -0.2, world, 8); l_.rotation.z = Math.PI / 2; l_.rotation.y = r; }
+{ const fg = add(new THREE.SphereGeometry(0.9, 16, 12), new THREE.MeshBasicMaterial({ map: P.tex(P.radial('255,150,60', 0.22)), transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending }), MX, 1.0, -0.2, world); fg.userData.ndSkip = true; }
+// moon + stars
+{ const mn = add(new THREE.SphereGeometry(2.2, 24, 16), glow('#fff3c4'), MX + 9, 26, -70, world); mn.userData.ndSkip = true;
+  const hl = add(new THREE.SphereGeometry(5, 24, 16), new THREE.MeshBasicMaterial({ map: P.tex(P.radial('255,240,190', 0.3)), transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending }), MX + 9, 26, -71, world); hl.userData.ndSkip = true;
+  for (let i = 0; i < 80; i++) { const a = i * 2.399, r = 25 + (i * 37) % 55; const st = add(new THREE.SphereGeometry(0.1 + (i % 4) * 0.05, 6, 4), glow(i % 5 ? '#fff6d0' : '#bfe6ff'), MX + Math.cos(a) * r, 16 + (i * 13) % 30, -75 + Math.sin(a) * 8, world); st.userData.ndSkip = true; } }
 
 // ===== WEDDING HALL (x=40) =====
 const HX = 40;
@@ -392,7 +494,9 @@ function worldState(S, f) {
   seaTex.offset.set((f * 0.0004) % 1, (f * 0.0011) % 1);
   rainTex.offset.y = (f * 0.045) % 1; rainTex.offset.x = (f * 0.004) % 1;
   const cu = S.curtain ?? 1;
+  audG.children.forEach((g) => { g.position.y = (S.laugh || 0) * Math.abs(Math.sin(f * 0.45 + g.userData.ph)) * 0.07; });
   frontCurtain.forEach((g) => { g.visible = cu < 0.999; g.position.x = g.userData.sd * cu * 5.2; });
+  starsG.visible = !!S.night; starsG.userData.big.visible = !S.noBig; starsG.userData.big.rotation.y = f * 0.05; starsG.userData.big.scale.setScalar(1 + 0.15 * Math.sin(f * 0.3));
 }
 
 function drawActors(list, cam) {

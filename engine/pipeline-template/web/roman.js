@@ -40,6 +40,8 @@ export const OUTFITS = {
   darman: { tunic: "#6a3418", skin: "#dca27a", hair: "#4e4844", arms: "#6a3418", legs: "#2b2f3a", pants: "#2b2f3a", batik: "#e2b04a", moustache: "#3a2a20" },
   flanel: { tunic: "#b0303a", skin: "#e8b48a", hair: "#1c1410", arms: "#b0303a", legs: "#2b3a5a", pants: "#2b3a5a", plaid: "#5a1420" },
   sarung: { tunic: "#f4f1ea", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#d9a07a", sarung: "#2f6a8a", plaid: "#173e58", peci: true },
+  gunungA: { tunic: "#2f6a4a", skin: "#d9a07a", hair: "#3a2418", arms: "#2f6a4a", legs: "#3a3f52", pants: "#3a3f52", jacket: "#f2b632", peci: true },
+  gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
 
@@ -226,6 +228,15 @@ export const romanFront = (p, key, opts = {}) => {
       p.band([[tcx - 1.4 * T.a, torsoBot - 0.2 * HH], [tcx + 1.4 * T.a, torsoBot - 0.2 * HH]], LEATHER, 0.08 * HH, 1.5 * u);
       for (let i = -2; i <= 2; i++) p.dot(tcx + i * 0.3 * T.a, torsoBot - 0.2 * HH, 2.4 * u, BRASS);
       if (old) for (let i = 0; i < 5; i++) p.ell(tcx + Math.sin(i * 1.7) * 0.7 * T.a, top + (bot - top) * ((i * 0.31) % 1), 6 * u, 3 * u, "#8a4b22", 0);
+    } else if (O.jacket) {
+      p.band([[tcx - 1.4 * T.a, chin + 0.1 * HH], [tcx + 1.4 * T.a, chin + 0.1 * HH]], O.jacket, 0.17 * HH, 0);          // contrast shoulder yoke
+      p.band([[tcx - 1.4 * T.a, torsoBot - 0.05 * HH], [tcx + 1.4 * T.a, torsoBot - 0.05 * HH]], O.jacket, 0.07 * HH, 1.2 * u); // hem
+      p.band([[tcx, chin + 0.02 * HH], [tcx, torsoBot + 0.02 * HH]], "#1e1a18", 3.2 * u, 0);                             // zipper
+      for (let i = 0; i < 9; i++) { const y = chin + (0.08 + i * 0.1) * HH; p.band([[tcx - 4 * u, y], [tcx + 4 * u, y]], "#8a8a8a", 1.4 * u, 0); }
+      p.dot(tcx + 5 * u, chin + 0.3 * HH, 3.4 * u, "#d8d8d8");                                                          // zipper pull
+      for (const sd of [-1, 1]) p.poly([[tcx + sd * 0.04 * T.a, chin - 0.12 * HH], [tcx + sd * 0.5 * T.a, chin - 0.06 * HH], [tcx + sd * 0.42 * T.a, chin + 0.12 * HH], [tcx + sd * 0.04 * T.a, chin + 0.08 * HH]], O.tunic, 1.6 * u); // stand collar
+      p.stroke([[tcx + 0.32 * T.a, chin + 0.46 * HH], [tcx + 0.85 * T.a, chin + 0.46 * HH]], 2 * u);                     // chest pocket
+      p.stroke([[tcx - 0.85 * T.a, chin + 0.62 * HH], [tcx - 0.35 * T.a, chin + 0.62 * HH]], 2 * u);
     } else if (O.bare) {
       p.stroke(ellPts(tcx - 0.32 * T.a, chin + 0.38 * HH, 0.22 * T.a, 0.08 * HH, 20, 160, 0, 10), 1.6 * u, mul(skin, [0.7, 0.6, 0.6]));
       p.stroke(ellPts(tcx + 0.32 * T.a, chin + 0.38 * HH, 0.22 * T.a, 0.08 * HH, 20, 160, 0, 10), 1.6 * u, mul(skin, [0.7, 0.6, 0.6]));
