@@ -1,0 +1,9 @@
+<!doctype html><html><body style="margin:0;background:transparent"><canvas id="c" width="1800" height="3000"></canvas>
+<script type="module">
+import * as T from './toon.js';
+const q=new URLSearchParams(location.search);
+const c=document.getElementById('c'), g=c.getContext('2d'); g.scale(3,3);
+const p=new T.Pen(g);
+T.romanFront(p,'komik',{seed:5,expr:q.get('e')||'laugh',L:q.get('l')||'mic',R:q.get('r')||'wave',blink:0});
+window.ready=true;
+</script></body></html>
