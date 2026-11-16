@@ -1,8 +1,8 @@
-"""Synthesized music + SFX stems for the Hayati Minta Balikan short (music.wav, sfx.wav). Mix with mix.py."""
+"""Synthesized music + SFX stems for Ibu Live Jualan (music.wav, sfx.wav). Mix with mix.py."""
 import numpy as np, subprocess, wave
 
 SR = 48000
-DUR = 2110 / 30
+DUR = 1408 / 30
 N = int(DUR * SR)
 rng = np.random.default_rng(7)
 t_all = np.arange(N) / SR
@@ -228,23 +228,39 @@ def loop(t0, t1, g=1.0):
             place(music, drum("hat"), tb + beat * 0.5, 0.06 * g)
         for k, m in enumerate([ch[2] + 12, ch[1] + 12, ch[0] + 12, ch[1] + 12]): place(music, pluck(midi(m), 0.3, 0.7), tt + k * beat, 0.07 * g)
         bar += 1; tt += beat * 4
-loop(0.0, F(1285) - 0.05); loop(F(1414), F(1564) - 0.05); loop(F(1849), 2110 / 30)
-fo = int(0.5 * SR); music[-fo:] *= np.linspace(1, 0, fo)
-wd = 2110 / 30; wn = int(wd * SR); wt = np.arange(wn) / SR
-place(sfx, water(wd) * (0.6 + 0.4 * np.sin(2 * np.pi * 0.12 * wt)), 0.0, 0.18)   # ombak
-# ---- cues (frames) ----
-place(sfx, ding(1320), F(2), 0.3); place(sfx, pop(), F(98), 0.4)
-place(sfx, ting(), F(130), 0.45); place(sfx, boing(), F(165), 0.35)
-place(sfx, pop(), F(430), 0.4); place(sfx, pop(), F(700), 0.4); place(sfx, boing(), F(760), 0.35)
-place(sfx, tick(), F(840), 0.4); place(sfx, thunk(110, 0.3), F(1040), 0.5)
-place(sfx, stab(), F(1140), 0.3)
-for k in range(4): place(sfx, ding(1760 if k % 2 else 1480), F(1230) + k * 0.12, 0.15)
-place(sfx, scrape(0.5), F(1283), 0.55); place(sfx, stab(), F(1290), 0.35)
-place(sfx, pop(), F(1418), 0.4)
-place(sfx, scrape(0.4), F(1562), 0.5); place(sfx, kaching(), F(1600), 0.4)
-place(sfx, boing(), F(1750), 0.45)
-place(sfx, thunk(100, 0.3), F(1880), 0.5); place(sfx, rimshot(), F(1990), 0.5); place(sfx, applause(2.0), F(2040), 0.5)
-
+def rdw(p):
+    w = wave.open(p); x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768; sr = w.getframerate()
+    return np.interp(np.arange(int(len(x) * SR / sr)) * sr / SR, np.arange(len(x)), x).astype(np.float32)
+LCL = [rdw(f"crowd/k{i}.wav") for i in (1, 2, 3, 4)]; WOO = rdw("crowd/woo.wav")
+def crowd_laugh(d, k=1.0):
+    n = int(d * SR); out = np.zeros(n, np.float32)
+    for v in range(int(5 + 6 * k)):
+        c = LCL[v % 4]; pr = rng.uniform(0.82, 1.22); st = rng.uniform(0, max(0.01, len(c) / SR - 1.5))
+        idx = (st * SR + np.arange(n) * pr).astype(int); ok = idx < len(c); seg = np.zeros(n, np.float32); seg[ok] = c[idx[ok]]
+        off = int(rng.uniform(0, 0.35) * SR); seg = np.roll(seg, off); seg[:off] = 0
+        out += seg * rng.uniform(0.4, 1.0)
+    out = lp_fast(out, 5500)
+    out = out + 0.35 * np.roll(out, int(0.045 * SR)) + 0.2 * np.roll(out, int(0.09 * SR))  # room
+    if k >= 1.2: out += applause(d)[:n] * 0.6 * np.abs(out).max()
+    t = np.arange(n) / SR; envl = np.minimum(1, t / 0.12) * np.clip((d - t) / (0.6 * d), 0, 1) ** 1.3
+    out = out * envl; pk = np.abs(out).max() + 1e-9
+    return (np.tanh(out / pk * 2.4) / np.tanh(2.4) * pk).astype(np.float32)  # denser, louder laugh
+def notif():
+    n = int(0.35 * SR); t = np.arange(n) / SR
+    return (sum(np.sin(2 * np.pi * f * t) * np.exp(-t * k) for f, k in [(1760, 9), (2637, 12)]) * 0.35).astype(np.float32)
+loop(0, F(1045), 0.45); place(music, eerie(F(1095) - F(1045)), F(1045), 0.45); loop(F(1259), 1408 / 30, 0.45)
+fi = int(0.2 * SR); m0 = F(1045) * SR; music[int(m0 - fi):int(m0)] *= np.linspace(1, 0, fi)
+fo = int(0.4 * SR); music[-fo:] *= np.linspace(1, 0, fo)
+place(sfx, pop(), F(4), 0.35)
+place(sfx, cricket(), F(250), 0.3); place(sfx, crowd_laugh(F(45), 0.7), F(330), 0.65)
+place(sfx, cricket(), F(440), 0.3)
+place(sfx, notif(), F(660), 0.4)
+place(sfx, stab(), F(760), 0.25)
+place(sfx, notif(), F(790), 0.5); place(sfx, kaching(), F(866), 0.3)
+place(sfx, crowd_laugh(F(50), 0.8), F(1000), 0.65)
+for k in range(5): place(sfx, boing(), F(1045 + k * 10), 0.2)
+place(sfx, crowd_laugh(F(50), 0.8), F(1250), 0.65)
+place(sfx, rimshot(), F(1351), 0.45); place(sfx, crowd_laugh(F(55), 1.0), F(1353), 0.45)
 # Write STEMS only. Levels are set by mix.py (music and SFX at 50 % of the voice), never here.
 def write_stem(name, x):
     x = x / max(1e-9, np.abs(x).max()) * 0.9
