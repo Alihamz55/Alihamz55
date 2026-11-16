@@ -96,12 +96,29 @@ Folder kerja `/home/user/shorts/` ada di server sementara dan **tidak ikut tersi
 10. Tempel akhiran: `ffmpeg -i video.mp4 -i video/Akhiran-YouTube-Asep.mp4 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]" ...` ke `video/<Judul>-YT.mp4`.
 11. Commit dan push ke branch kerja, lalu kirim file ke pengguna dengan SendUserFile.
 
-## Status per 16 November 2026
+## Status per 17 November 2026
 
-- **Siap upload (7 video `*-YT.mp4`):** Cabai Rp80 Ribu, Brownies Viral, Asep & Ucup Naik Gunung v3, Ibu Live Jualan, Adik Nggak Mau Tidur, Sep Angkat Jemuran, Bahasa Gaul #1.
-- **Naskah belum dibuat videonya:**
-  - `naskah/lowongan-wakil-presiden.md` (satire fiktif, berisiko)
-  - ide "Kalau Ibu yang Nyari, Ketemu!"
-  - ide "Kuliah Kok Bayar"
-  - ide "Promo 12.12" (upload awal Desember)
-- **Langkah berikutnya:** tunggu data penonton dari pengguna (video mana yang paling ramai), lalu buat lanjutan sesuai seleranya.
+- **Data channel (28 hari):** 73,5 ribu penayangan, 73,5% penonton tetap menonton, 120 subscriber. Jam tonton video panjang masih 0.
+- **Siap upload (13 video `*-YT.mp4`):**
+  - HP Baru Gaptek 2 (lanjutan video terlaris, upload duluan)
+  - Ibu Ngambek Dibonceng
+  - Parkir Rp35 Ribu
+  - Asep Kuis Satu Miliar
+  - Asep Galau Dijogetin (lagu dengan izin, tulis kredit di deskripsi)
+  - Cabai Rp80 Ribu
+  - Brownies Viral
+  - Asep & Ucup Naik Gunung v3
+  - Ibu Live Jualan
+  - Adik Nggak Mau Tidur
+  - Sep Angkat Jemuran
+  - Bahasa Gaul #1
+- **Gaya terbaru:**
+  - **Kartu teks kecil di atas layar:** banner y≈165 dengan skala 1.3, judge y≈200 dengan skala 0.92, kartu pembuka dan penutup y≈300 dengan skala 1.2.
+  - **Subtitle:** y≈1540–1560 dengan skala 1.2, supaya wajah tokoh tidak tertutup.
+  - **Contoh terbaru:** `engine/story-ngambek.js`, `story-hpai.js`, dan `story-parkir.js`.
+- **Ide berikutnya:**
+  - "Diundang Mantan 2: Aqiqah Anaknya" (lanjutan video terlaris kedua)
+  - "Ibu Checkout Promo 12.12" (upload awal Desember)
+  - kompilasi panjang 8–10 menit untuk jam tonton (tanpa render, cukup gabungkan video yang ada)
+  - video panjang "Pak Darman vs Asisten AI", dikerjakan per babak
+- **Pengguna sedang fokus ke Shorts.** Pengguna khawatir token habis kalau render terlalu lama, jadi pekerjaan panjang dikerjakan per bagian dan setiap bagian langsung di-commit.
