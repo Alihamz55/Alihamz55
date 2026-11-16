@@ -22,7 +22,8 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
-| Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan` **baru** |
+| HP Baru Gaptek 2 (Asisten AI) | `asepHoodie` (hoodie abu) **baru** | `darmanKoko` (koko putih, kacamata di dahi) **baru** | `ibuDasterUngu` (daster ungu bunga) **baru** | |
+| Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan darmanKoko asepHoodie ibuDasterUngu` **baru** |
 | Kuis Satu Miliar | `sarung` | `darman` | `ibuDaster` | |
 | Galau Dijogetin | `sarung` | `darman` | `ibuDaster` | |
 | Ibu Live Jualan | `sarung` | | `ibuDaster` | Pocong |
@@ -33,8 +34,8 @@
 
 > `sarung` dan `darman` sudah terlalu sering dipakai. Hindari kedua kostum ini sampai 5 video ke depan.
 
-**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian).
+**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `glassesUp` (kacamata di dahi).
 
 ## Outfit yang sudah ada di `roman.js` (bisa jadi dasar varian baru)
 
-`civA civB civC workA workB komik handuk rapi batik batikRun pengantin tante istri pejuang kartini bayi galau santai zainuddin santaiSweat hrd genit bule darman flanel sarung gunungA gunungU ujang ibuPasar asepKoki ibuDaster teman asepParkir darmanMotor ujangGorengan`
+`civA civB civC workA workB komik handuk rapi batik batikRun pengantin tante istri pejuang kartini bayi galau santai zainuddin santaiSweat hrd genit bule darman flanel sarung gunungA gunungU ujang ibuPasar asepKoki ibuDaster teman asepParkir darmanMotor ujangGorengan darmanKoko asepHoodie ibuDasterUngu`

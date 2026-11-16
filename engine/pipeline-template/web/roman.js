@@ -44,6 +44,9 @@ export const OUTFITS = {
   gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
   ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18", apron: "#2f6a4a", neckTowel: "#f4f1ea" },
   ibuPasar: { tunic: "#b83a7a", skin: "#f0c49c", hair: "#2b211c", arms: "#b83a7a", dress: "#b83a7a", bun: true, glasses: true, kebaya: "#f2c14e", sash: "#8a4b22" },
+  darmanKoko: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#f4f1ea", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", koko: "#b08a3a", glassesUp: true },
+  asepHoodie: { tunic: "#8a8f98", skin: "#d9a07a", hair: "#3a2418", arms: "#8a8f98", legs: "#2b3a5a", pants: "#2b3a5a", hoodie: "#f4f1ea" },
+  ibuDasterUngu: { tunic: "#8a4fc0", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#8a4fc0", bun: true, glasses: true, kebaya: "#ffffff", floral: "#f7c6e8" },
   asepParkir: { tunic: "#3a5a8a", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a3f52", pants: "#3a3f52", cap: "#22304a", vest: "#ff7a1a", whistle: "#d8322f" },
   darmanMotor: { tunic: "#6a4128", skin: "#dca27a", hair: "#4e4844", arms: "#6a4128", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", zipJacket: true, motoHelm: "#c0302c" },
   ujangGorengan: { tunic: "#f0ece2", skin: "#c99067", hair: "#1e1714", arms: "#c99067", legs: "#3a3f52", pants: "#3a3f52", moustache: "#2a1d18", apron: "#8a5a2a", neckTowel: "#e8742c" },
@@ -291,6 +294,17 @@ export const romanFront = (p, key, opts = {}) => {
   if (O.whistle) { // peluit on a cord
     p.stroke([[tcx - 0.3 * T.a, chin + 0.02 * HH], [tcx + 0.05 * T.a, chin + 0.42 * HH], [tcx + 0.32 * T.a, chin + 0.02 * HH]], 1.6 * u, O.whistle);
     p.poly(rrect(tcx - 2 * u, chin + 0.4 * HH, tcx + 16 * u, chin + 0.4 * HH + 9 * u, 3 * u), "#d8dde4", 1.6 * u); p.dot(tcx + 3 * u, chin + 0.4 * HH + 4.5 * u, 3 * u, "#5a6070"); }
+  if (O.koko) { // baju koko: mandarin collar + placket buttons + embroidery
+    p.band([[tcx - 0.42 * T.a, chin + 0.03 * HH], [tcx + 0.42 * T.a, chin + 0.03 * HH]], O.koko, 0.06 * HH, 1.2 * u);
+    p.stroke([[tcx, chin + 0.06 * HH], [tcx, chin + 0.55 * HH]], 2 * u, O.koko);
+    for (let i = 0; i < 4; i++) p.dot(tcx, chin + (0.14 + i * 0.12) * HH, 2.4 * u, O.koko);
+    for (const sd of [-1, 1]) for (let i = 0; i < 3; i++) p.dot(tcx + sd * 0.16 * T.a, chin + (0.14 + i * 0.14) * HH, 1.6 * u, O.koko); }
+  if (O.hoodie) { // hood bunched at the neck + drawstrings + kangaroo pocket
+    p.band([[tcx - 0.62 * T.a, chin + 0.02 * HH], [tcx, chin + 0.12 * HH], [tcx + 0.62 * T.a, chin + 0.02 * HH]], mul(O.tunic, [0.82, 0.82, 0.82]), 0.12 * HH, 1.6 * u);
+    for (const sd of [-1, 1]) { p.stroke([[tcx + sd * 0.12 * T.a, chin + 0.1 * HH], [tcx + sd * 0.14 * T.a, chin + 0.42 * HH]], 1.6 * u, O.hoodie); p.dot(tcx + sd * 0.14 * T.a, chin + 0.44 * HH, 2.4 * u, O.hoodie); }
+    p.poly([[tcx - 0.5 * T.a, torsoBot - 0.36 * HH], [tcx + 0.5 * T.a, torsoBot - 0.36 * HH], [tcx + 0.62 * T.a, torsoBot - 0.08 * HH], [tcx - 0.62 * T.a, torsoBot - 0.08 * HH]], mul(O.tunic, [0.88, 0.88, 0.88]), 1.4 * u); }
+  if (O.floral) for (let i = 0; i < 14; i++) { const x = tcx + ((i * 0.37) % 1 - 0.5) * 1.7 * T.a, y = chin + (0.15 + ((i * 0.61) % 1) * 0.85) * (torsoBot - chin + 0.3 * HH);
+    for (let k = 0; k < 5; k++) { const a = k / 5 * 6.283; p.dot(x + Math.cos(a) * 3.2 * u, y + Math.sin(a) * 3.2 * u, 2.2 * u, O.floral); } p.dot(x, y, 1.6 * u, "#ffe14a"); }
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
     const sp = ellPts(tcx + s * 0.72 * T.a, chin + 0.1 * HH, 0.42 * T.a, 0.13 * HH, 180, 360, s * 8, 20);
     p.poly(sp, old ? "#9a9384" : "#c5ccd3", 1.8 * u);
@@ -354,6 +368,7 @@ export const romanFront = (p, key, opts = {}) => {
     p.poly(rrect(cx - 0.62 * H.a, top - 0.5 * H.b, cx + 0.62 * H.a, top + 0.12 * H.b, 6 * u), "#ffffff", 2.4 * u);
     for (const [dx, dy, r_] of [[-0.42, -0.62, 0.36], [0, -0.78, 0.42], [0.42, -0.62, 0.36]]) p.ell(cx + dx * H.a, top + dy * H.b, r_ * H.a, r_ * 0.8 * H.b, "#ffffff", 2.4 * u);
     p.band([[cx - 0.64 * H.a, top + 0.06 * H.b], [cx + 0.64 * H.a, top + 0.06 * H.b]], "#e6e2d8", 0.08 * H.b, 1.2 * u); }
+  if (O.glassesUp) for (const sd of [-1, 1]) { p.ell(cx + sd * 15 * u, hc - 0.62 * H.b, 12 * u, 9 * u, "rgba(220,240,255,.35)", 2.4 * u); if (sd < 0) p.stroke([[cx - 3 * u, hc - 0.64 * H.b], [cx + 3 * u, hc - 0.64 * H.b]], 2.2 * u); }
   if (O.motoHelm) { // half helmet + visor
     const hp2 = ellPts(cx, hc - 0.18 * H.b, H.a * 1.12, H.b * 1.02, 180, 360, 0, 40);
     p.shadedFill(hp2, O.motoHelm, mul(O.motoHelm, [0.62, 0.62, 0.7]), light, H.a, 0.4); p.poly(hp2, null, ow * 0.8);
