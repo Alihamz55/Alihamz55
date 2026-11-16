@@ -38,6 +38,13 @@ Setiap kali menulis naskah, ide, atau materi komedi, **ikuti `panduan/master-com
 - **Aturan konten di atas tetap berlaku.** Panduan ini tidak membolehkan humor politik nyata, lelucon soal tragedi, atau merek.
 - Durasi tetap mengikuti format video: cerita maksimal 52 detik.
 
+## Kostum baru setiap video (wajib)
+
+- Setiap video baru, buat **kostum baru yang cocok dengan cerita** untuk tokoh utama (minimal Asep) di `roman.js`, supaya penonton tidak bosan.
+- Wajah, warna kulit, dan suara tokoh tetap sama. Kostum tidak boleh memakai logo atau merek asli.
+- Jangan mengulang kostum dari 5 video terakhir. Daftar dan aturan lengkapnya ada di **`panduan/kostum.md`**, dan setiap kostum baru dicatat di sana.
+- Saat mengusulkan naskah, sebutkan juga rencana kostumnya.
+
 ## Channel dan tren
 
 - YouTube **@malamkomedi** (sekitar 100 subscriber per November 2026). Video terlaris: Handphone Baru (24 ribu) dan Diundang ke Nikahan Mantan (23 ribu). Keduanya bertema relate sehari-hari.
