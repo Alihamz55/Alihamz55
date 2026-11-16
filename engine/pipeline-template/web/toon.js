@@ -830,7 +830,7 @@ const faceFront = (p, cx, cy, W, expr, facing, look, lid, brim, skin, moustache,
         cy + (stout ? 10.5 : 15) * u
     ], stout ? 5.5 * u : 4.5 * u, 1.6 * u, moustache);
     if (expr === "nervous") p.ell(cx + 40 * u * (facing || 1), cy - 22 * u, 3 * u, 5 * u, "#9fd4ff", 2 * u);
-    if (expr === "cry" || expr === "sob") for (const side of [-1, 1]) { const x = fx + side * ex;
+    if (/^(cry|sob)/.test(expr)) for (const side of [-1, 1]) { const x = fx + side * ex;
         p.band([[x, ey + 5 * u], [x + side * 1.5 * u, ey + 30 * u]], "#8fd0ff", 4.5 * u, 1.2 * u, "round");
         p.ell(x + side * 1.5 * u, ey + 33 * u, 3.2 * u, 4.2 * u, "#8fd0ff", 1.2 * u); }
 };

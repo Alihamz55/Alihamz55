@@ -19,6 +19,25 @@ Isi repo: naskah (`naskah/`), video jadi (`video/`), kode animasi (`engine/`), d
 - **Tragedi** (kecelakaan, kematian, KDRT) tidak dijadikan bahan lelucon.
 - **Merek** (misalnya brownies tertentu, logo YouTube) jangan ditampilkan. Tombol subscribe dibuat generik.
 
+## Menulis naskah komedi (wajib)
+
+Setiap kali menulis naskah, ide, atau materi komedi, **ikuti `panduan/master-comedy-writer.md`**. Ringkasannya:
+- **Rumus:** SETUP → EXPECTATION → MISDIRECTION → PUNCHLINE → TAG.
+- **Teknik humor:** observational, misunderstanding, exaggeration, irony, analogy, wordplay, callback, rule of three.
+- **Struktur:** Hook (0–3 dtk) → Setup (3–10) → Build-up (10–20) → Punchline (20–30) → Tag/Callback (30–40) → Ending yang mudah diingat.
+- **Format output naskah:**
+  1. Judul
+  2. Hook
+  3. Naskah lengkap
+  4. Punchline utama
+  5. Tag
+  6. Callback penutup
+  7. Estimasi durasi
+  8. Arahan intonasi & jeda
+- **Gaya bahasa:** sehari-hari, santai, sedikit sarkastik, campuran gaya Jaksel dan humor lokal. Tapi **tetap pertahankan ciri tokoh tetap**: Asep logat Sunda yang polos, Pak Darman kolot, Ibu cerewet.
+- **Aturan konten di atas tetap berlaku.** Panduan ini tidak membolehkan humor politik nyata, lelucon soal tragedi, atau merek.
+- Durasi tetap mengikuti format video: cerita maksimal 52 detik.
+
 ## Channel dan tren
 
 - YouTube **@malamkomedi** (sekitar 100 subscriber per November 2026). Video terlaris: Handphone Baru (24 ribu) dan Diundang ke Nikahan Mantan (23 ribu). Keduanya bertema relate sehari-hari.
@@ -29,7 +48,7 @@ Isi repo: naskah (`naskah/`), video jadi (`video/`), kode animasi (`engine/`), d
 
 | Tokoh | Outfit | Suara | Ciri |
 |---|---|---|---|
-| Asep | `sarung` (peci); varian `asepKoki` (topi koki + celemek), `gunungA` (jaket) | Fenrir | anak muda, polos, sok pede |
+| Asep | `sarung` (peci); varian `asepKoki` (topi koki + celemek), `gunungA` (jaket) | **Achird** (mulai 16 Nov 2026; video lama pakai Fenrir). Instruksi: "Anak muda Indonesia logat Sunda, polos, sok pede, semangat, bicara cepat dan lucu" | anak muda, polos, sok pede |
 | Pak Darman | `darman` (batik) | Charon | bapak kolot, salah paham bahasa gaul |
 | Ibu (Bu Darman) | `tante` (kebaya pink); varian `ibuDaster`, `ibuPasar` (selendang batik) | Gacrux | cerewet, hemat |
 | Ucup | `gunungU` (jaket merah) / `teman` | Puck | teman Asep, penakut |
