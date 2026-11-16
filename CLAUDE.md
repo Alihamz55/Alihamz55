@@ -72,7 +72,7 @@ Folder kerja `/home/user/shorts/` ada di server sementara dan **tidak ikut tersi
 
 ## Status per 16 November 2026
 
-- **Siap upload (7 video `*-YT.mp4`):** Cabai Rp80 Ribu, Brownies Viral, Asep & Ucup Naik Gunung v3, Ibu Live Jualan, Adik Nggak Mau Tidur, Sep Angkat Jemuran, Bahasa Gaul #1.
+- **Siap upload (8 video `*-YT.mp4`):** Cabai Rp80 Ribu, Brownies Viral, Asep & Ucup Naik Gunung v3, Ibu Live Jualan, Adik Nggak Mau Tidur, Sep Angkat Jemuran, Bahasa Gaul #1, Pocong Antre Colokan (episode pertama tanpa dialog, untuk tes penonton luar negeri; kode di `engine/story-pocong-colokan.js`).
 - **Naskah belum dibuat videonya:**
   - `naskah/lowongan-wakil-presiden.md` (satire fiktif, berisiko)
   - ide "Kalau Ibu yang Nyari, Ketemu!"

@@ -42,7 +42,7 @@ bisa dimengerti tanpa bahasa, durasinya 10–30 detik, dan punya twist di akhir 
   Timeline dibuat langsung di `story_main.js` berdasarkan detik di tabel (30 fps → sekitar 615 frame).
 - **Telop**: `fxTelop` tidak dipakai. Ikon baterai bisa dibuat sebagai FX baru, misalnya `fxBaterai(x, y, persen, warna)` di `zfx.js`.
   Nama ini belum dipakai, tapi cek dulu supaya tidak bentrok.
-- **Audio**: SFX lompatan, "tit-tit" baterai, dan "jreng" dibuat di `audio.py`. Karena tidak ada suara,
-  `mix.py` perlu disesuaikan: patokan level ke musik, dan puncak SFX sekitar -3 dB dari puncak musik.
+- **Audio** (`engine/audio-pocong-colokan.py`): karena tidak ada suara, SFX dipakai sebagai stem utama:
+  `python3 mix.py sfx.wav music.wav silent.wav` (silent.wav = derau sangat kecil). Musik jadi -6 dB di bawah SFX.
 - **Loop**: frame terakhir (jangkrik, gelap) sengaja mirip dengan frame pertama supaya penonton tidak sadar videonya mengulang.
 - **Lanjutan seri** (kalau ramai): "Pocong Rebutan Wi-Fi", "Pocong Minta Pinjam Power Bank", "Pocong Nonton Bola di Pos Ronda".

@@ -3746,3 +3746,45 @@ export const fxPhoneLive = (p, mode = "live", t = 0, n = 0, hi = 0) => { const g
     g.font = '700 28px "Fredoka", sans-serif'; g.fillStyle = on ? "#14101a" : "#bfe3ff"; g.fillText(u, 104, y - 10); g.font = '700 32px "Fredoka", sans-serif'; g.fillStyle = on ? "#14101a" : "#fff"; g.fillText(m, 104, y + 18); });
   g.restore(); g.strokeStyle = "#2a2a34"; g.lineWidth = 10; g.beginPath(); g.roundRect(40, 20, 520, 960, 56); g.stroke();
   g.restore(); };
+
+/* ---- "Pocong Antre Colokan" (episode tanpa dialog) ---- */
+/** battery icon: pct 0..100; charging adds a bolt; dead = grey. Centred at 300,500 */
+export const fxBaterai = (p, pct = 100, t = 0, charging = 0, dead = 0) => { const g = p.g; g.save(); g.translate(300, 500); g.lineJoin = "round";
+  const W = 440, H = 220, col = dead ? "#6a6a72" : pct > 50 ? "#3fd46a" : pct > 20 ? "#ffd23a" : "#ff3b4a";
+  const on = pct > 10 || dead || (t % 16) < 9;
+  gPlate(g, -W / 2, -H / 2, W, H, 40, "#ffffff", 12, 9);
+  g.fillStyle = GINK; g.beginPath(); g.roundRect(W / 2 + 6, -40, 34, 80, 12); g.fill();
+  const iw = (W - 44) * Math.max(0.03, Math.min(1, pct / 100));
+  if (on) { g.fillStyle = col; g.beginPath(); g.roundRect(-W / 2 + 22, -H / 2 + 22, iw, H - 44, 22); g.fill(); }
+  if (charging) { g.fillStyle = "#ffe14a"; g.strokeStyle = GINK; g.lineWidth = 9; g.beginPath(); g.moveTo(20, -150); g.lineTo(-60, 20); g.lineTo(-5, 20); g.lineTo(-30, 150); g.lineTo(60, -20); g.lineTo(5, -20); g.closePath(); g.stroke(); g.fill(); }
+  else gText(g, dead ? "0%" : Math.round(pct) + "%", 0, 6, 110, "#ffffff", 0.06);
+  g.restore(); };
+/** wall socket (stopkontak) */
+export const fxColokan = (p) => { const g = p.g; g.save(); g.translate(300, 500);
+  gPlate(g, -170, -170, 340, 340, 46, "#f4f1ea", 10, 8);
+  g.fillStyle = "#d8d2c4"; g.beginPath(); g.arc(0, 0, 110, 0, 7); g.fill(); g.strokeStyle = GINK; g.lineWidth = 6; g.stroke();
+  g.fillStyle = GINK; for (const x of [-42, 42]) { g.beginPath(); g.arc(x, 0, 20, 0, 7); g.fill(); }
+  g.restore(); };
+/** dark shadow of a pocong behind the curtain */
+export const fxPocongSil = (p, a = 0.75) => { const g = p.g; g.save(); g.filter = "brightness(1.25) blur(3px)"; g.globalAlpha = a; fxPocong(p, 0, 0, "calm"); g.restore(); };
+/** Asep bungkus sarung (fake pocong): checked sarung + peci + Asep's face */
+export const fxPocongAsep = (p, blink = 0, mood = "nervous") => { const g = p.g; fxPocong(p, 0, blink, "calm"); g.save(); g.lineJoin = "round"; g.lineCap = "round";
+  const O = "#2a2420";
+  g.beginPath(); g.moveTo(300, 150); g.bezierCurveTo(410, 150, 418, 260, 410, 360); g.bezierCurveTo(404, 600, 420, 820, 392, 960); g.quadraticCurveTo(300, 1000, 208, 960);
+  g.bezierCurveTo(180, 820, 196, 600, 190, 360); g.bezierCurveTo(182, 260, 190, 150, 300, 150); g.closePath(); g.save(); g.clip();
+  g.fillStyle = "#2f7a5a"; g.fillRect(150, 140, 300, 880);
+  g.fillStyle = "rgba(120,40,40,0.55)"; for (let x = 160; x < 450; x += 52) g.fillRect(x, 140, 18, 880);
+  g.fillStyle = "rgba(240,220,160,0.35)"; for (let y = 170; y < 1000; y += 60) g.fillRect(150, y, 300, 14);
+  g.restore(); g.strokeStyle = O; g.lineWidth = 9; g.stroke();
+  g.strokeStyle = "#b8a684"; g.lineWidth = 12; for (const y of [352, 760, 935]) { g.beginPath(); g.moveTo(198, y); g.quadraticCurveTo(300, y + 14, 404, y); g.stroke(); }
+  // face
+  g.fillStyle = "#f2c79a"; g.strokeStyle = O; g.lineWidth = 7; g.beginPath(); g.ellipse(300, 262, 80, 86, 0, 0, 7); g.fill(); g.stroke();
+  g.fillStyle = "rgba(255,120,120,0.35)"; for (const x of [250, 350]) { g.beginPath(); g.ellipse(x, 290, 18, 10, 0, 0, 7); g.fill(); }
+  if (blink) { g.lineWidth = 7; for (const x of [270, 330]) { g.beginPath(); g.moveTo(x - 14, 250); g.lineTo(x + 14, 250); g.stroke(); } }
+  else for (const x of [270, 330]) { g.fillStyle = "#fff"; g.beginPath(); g.ellipse(x, 250, 15, 17, 0, 0, 7); g.fill(); g.lineWidth = 5; g.stroke(); g.fillStyle = O; g.beginPath(); g.ellipse(x + 2, 253, 7, 8, 0, 0, 7); g.fill(); }
+  g.lineWidth = 6; g.beginPath(); g.moveTo(250, 222); g.lineTo(284, 214); g.moveTo(350, 222); g.lineTo(316, 214); g.stroke();
+  g.beginPath(); if (mood === "sad") { g.moveTo(282, 312); g.quadraticCurveTo(300, 300, 318, 312); } else { g.moveTo(280, 306); g.lineTo(320, 306); } g.stroke();
+  // peci
+  g.fillStyle = "#1c1a1e"; g.beginPath(); g.roundRect(226, 120, 148, 70, 14); g.fill(); g.strokeStyle = O; g.lineWidth = 6; g.stroke();
+  g.fillStyle = "#3a3640"; g.fillRect(232, 128, 136, 10);
+  g.restore(); };
