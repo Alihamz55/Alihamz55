@@ -6,9 +6,9 @@ import { LIPS_SONG } from './lips_song.js';
 const LINES = [['D', 386, 503], ['A', 521, 608], ['D', 636, 735], ['I', 785, 825]];
 const TXT = ['SEP, KENAPA GALAU? DIPUTUSIN, YA?', 'IYA, PAK... HUHUHU...', 'UDAH! GALAU MAH... MENDING DIJOGETIN AJA!', 'IBU IKUUUT!'];
 // song words (s) from transcription -> karaoke + Asep singing
-const WORDS = [[2.9, 'HATIMU'], [3.8, 'LIPATKAN'], [4.4, 'YANG'], [5.5, 'LAIN'], [7.5, 'MEMBUAT'], [8.4, 'CINTAMU'], [13.0, 'TERBELAH'], [14.5, 'JADI'], [14.8, 'DUA'], [16.0, 'BATINMU'],
-  [18.6, 'LIPATKAN'], [19.3, 'YANG'], [20.5, 'LAIN'], [22.3, 'MERASAKAN'], [24.0, 'HATIMU'], [27.6, 'JIWAKU'], [29.0, 'RUSAK'], [30.0, 'KARENA'], [31.8, 'MU']];
-const LYR = [[0, 3], [4, 5], [6, 9], [10, 12], [13, 14], [15, 18]]; // phrases (word index ranges)
+const WORDS = [[2.8, 'HATIMU'], [3.0, 'ADUUHH...'], [3.8, 'LIBATKAN'], [4.6, 'YANG'], [5.4, 'LAIN'], [7.5, 'MEMBUAT'], [8.4, 'CINTAMU'], [13.0, 'TERBELAH'], [14.5, 'JADI'], [14.8, 'DUA'], [16.0, 'BATINMU'],
+  [18.5, 'LIBATKAN'], [19.3, 'YANG'], [20.5, 'LAIN'], [22.3, 'MERASAKAN'], [24.0, 'HATIMU'], [27.6, 'JIWAKU'], [29.0, 'RUSAK'], [30.0, 'KARENA'], [31.8, 'MU']];
+const LYR = [[0, 4], [5, 6], [7, 10], [11, 13], [14, 15], [16, 19]]; // phrases (word index ranges)
 const wordF = WORDS.map(([s], i) => [Math.round(s * 30), Math.round(Math.min(i + 1 < WORDS.length ? WORDS[i + 1][0] : s + 1.4, s + 1.4) * 30)]);
 const singing = (f) => (f < 372 || f >= 742) && wordF.some(([a, b]) => f >= a && f <= b);
 const speaks = (f, who) => LINES.some(([w, a, b]) => w === who && f >= a - 2 && f <= b + 2);

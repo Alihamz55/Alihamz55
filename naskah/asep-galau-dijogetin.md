@@ -3,7 +3,7 @@
 **Format:** YouTube Shorts sekitar 34 detik (ditambah akhiran Asep, total sekitar 40 detik).
 
 **Lagu:** rekaman yang dikirim pengguna (16 Nov 2026), dipakai utuh sebagai musik. Pengguna menyatakan sudah mendapat izin.
-- Lirik yang terdengar: "Hatimu... lipatkan yang lain... membuat cintamu terbelah jadi dua... jiwaku rusak karenamu".
+- Lirik yang terdengar: "Hatimu... aduuhh... libatkan yang lain... membuat cintamu terbelah jadi dua... jiwaku rusak karenamu".
 
 **Tokoh:**
 - **Asep:** pakai sarung dan memegang mic. Suara Achird.
