@@ -2559,10 +2559,19 @@ const cobweb = (p, cx, cy, r, u) => {
 };
 
 /** front-facing Roman-era character. opts: expr, blink, look, facing, seed, L/R arm poses, tilt, headTilt, bob, nohelmet, light */
+// 2.5D volume: far-side shade + warm rim light, clipped to the shape (opts.vol)
+const volume = (p, pts, light, R, k = 1) => { const g = p.g, n = pts.length; let cx = 0, cy = 0; for (const [x, y] of pts) { cx += x / n; cy += y / n; }
+  const lx = Math.cos(light), ly = Math.sin(light), [ax, ay] = p.P(cx + lx * R, cy + ly * R), [bx, by] = p.P(cx - lx * R * 1.05, cy - ly * R * 1.05);
+  p.clip(pts, () => { const sh = g.createLinearGradient(ax, ay, bx, by); sh.addColorStop(0, "rgba(40,20,60,0)"); sh.addColorStop(0.45, "rgba(40,20,60,0)"); sh.addColorStop(1, `rgba(40,20,60,${0.48 * k})`);
+    g.fillStyle = sh; g.fillRect(-2000, -2000, 5000, 5000);
+    const hl = g.createRadialGradient(ax, ay, 0, ax, ay, R * 0.9); hl.addColorStop(0, `rgba(255,250,235,${0.22 * k})`); hl.addColorStop(1, "rgba(255,250,235,0)"); g.fillStyle = hl; g.fillRect(-2000, -2000, 5000, 5000);
+    const rim = g.createLinearGradient(ax, ay, bx, by); rim.addColorStop(0, "rgba(255,236,200,0)"); rim.addColorStop(0.6, "rgba(255,236,200,0)"); rim.addColorStop(1, `rgba(255,236,200,${0.95 * k})`);
+    p.path(pts, true); g.strokeStyle = rim; g.lineWidth = R * 0.22; g.stroke(); }); };
 export const romanFront = (p, key, opts = {}) => {
   const O = typeof key === "string" ? OUTFITS[key] : key;
   const { expr = "neutral", blink = 0, look = 0, facing = 0, seed = 3, L = "hang", R = O.spear ? "spear" : "hang", tilt = 0, headTilt = 0,
-    bob = 0, nohelmet = false, light = rad(-120), web = false, step = 0 } = opts;
+    bob = 0, nohelmet = false, light = rad(-120), web = false, step = 0, walk = null, vol = 0 } = opts;
+  const WD = facing || 1;
   const lid = lidOf(blink), skin = O.skin ?? SKIN;
   const H = headBlob(seed, 118, facing), W = 2 * H.a, HH = 2 * H.b, u = W / 100;
   const torsoL = O.stout ? 1.12 : 1.08, legsL = 1.38, sole = 975;
@@ -2579,6 +2588,18 @@ export const romanFront = (p, key, opts = {}) => {
   // ---- legs ----
   const dress = !!O.dress;
   for (const side of [-1, 1]) {
+    if (walk !== null) { // real walk cycle: planted stance, lifted swing, 2-bone IK knee bending forward
+      const ph = (walk + (side > 0 ? 0.5 : 0)) % 1, S = 40 * u, Lh = 30 * u;
+      let fo, lift; if (ph < 0.5) { const t = ph / 0.5, e = t * t * (3 - 2 * t); fo = -S + 2 * S * e; lift = Math.sin(Math.PI * t) * Lh; } else { fo = S - 2 * S * ((ph - 0.5) / 0.5); lift = 0; }
+      const hip = [cx + side * 12 * u, hipY], ft = [cx + side * 8 * u + WD * fo, sole - 4 * u - lift];
+      const l = (sole - hipY) * 0.52, dx = ft[0] - hip[0], dy = ft[1] - hip[1], d = Math.hypot(dx, dy), m = [(hip[0] + ft[0]) / 2, (hip[1] + ft[1]) / 2];
+      const h = d < 2 * l ? Math.sqrt(l * l - (d / 2) * (d / 2)) : 0; let nx = -dy / d, ny = dx / d; if (nx * WD < 0) { nx = -nx; ny = -ny; }
+      const kn = [m[0] + nx * h, m[1] + ny * h];
+      p.stroke([hip, kn, ft], 5.8 * u, legCol);
+      const toe = lift > 0 ? 0.25 : 0, sandal = O.helmet ? LEATHER : "#5a3b2a";
+      p.stroke([[ft[0] - WD * 4 * u, ft[1]], [ft[0] + WD * 14 * u, ft[1] + toe * 6 * u]], 7.5 * u + 3, INK);
+      p.stroke([[ft[0] - WD * 4 * u, ft[1]], [ft[0] + WD * 14 * u, ft[1] + toe * 6 * u]], 7.5 * u, sandal);
+      continue; }
     const up = Math.max(0, Math.sin(Math.PI * 2 * (step + (side > 0 ? 0.5 : 0)))) * 30 * (step ? 1 : 0);
     const hx = cx + side * 16 * u, fx = cx + side * 22 * u, fy = sole - 4 * u - up;
     p.stroke(curve([hx, hipY], [(hx + fx) / 2 + side * 2 * u, (hipY + fy) / 2], [fx, fy]), 5.8 * u, legCol);
@@ -2596,6 +2617,8 @@ export const romanFront = (p, key, opts = {}) => {
     const s = S(side), X = (k) => tcx + side * (T.a * 1.1 + k * u);
     switch (pose) {
       case "spear": return { pts: [s, [X(6), s[1] + 0.42 * HH], [X(10), s[1] + 0.2 * HH]], front: false };
+      case "swing": { const ph = ((walk ?? 0) + (side > 0 ? 0.5 : 0)) % 1, sw = Math.cos(2 * Math.PI * ph);
+        const fw = sw * (side === WD ? 0.6 : 1); return { pts: [s, [X(10) + WD * fw * 10 * u, s[1] + 0.46 * HH], [X(14) + WD * fw * 24 * u, chin + 1.0 * HH - Math.max(0, fw) * 0.14 * HH]], front: false }; }
       case "point": return { pts: [s, [X(28), s[1] - 0.02 * HH], [X(62), s[1] - 0.1 * HH]], front: false, finger: true };
       case "up": return { pts: [s, [X(14), s[1] - 0.3 * HH], [X(22), s[1] - 0.75 * HH]], front: false };
       case "wave": return { pts: [s, [X(16), s[1] - 0.2 * HH], [X(30 + 10 * Math.sin(opts.wv || 0)), s[1] - 0.62 * HH]], front: false };
@@ -2663,7 +2686,7 @@ export const romanFront = (p, key, opts = {}) => {
   if (dress) {
     const D = { a: 0.5 * W * 0.98, b: 0.5 * ((sole - 0.35 * HH) - (chin - 0.2 * HH)), nTop: 2.0, nBot: 3.0, egg: 0.35, asym: 0, rot: 0, noise: 0.006, seed: seed + 9 };
     const dp = blobPts(cx, sole - 0.35 * HH - D.b, D);
-    p.gradFill(dp, O.dress, mul(O.dress, SH_CLOTH), light); p.inkRing(dp, ow, thick);
+    p.gradFill(dp, O.dress, mul(O.dress, SH_CLOTH), light); if (vol) volume(p, dp, light, D.a * 1.1, vol); p.inkRing(dp, ow, thick);
   }
   // skirt / pteruges below the torso
   if (O.pants) { // shorts / trousers top part
@@ -2736,6 +2759,7 @@ export const romanFront = (p, key, opts = {}) => {
       p.stroke([[tcx - 0.2 * T.a, chin + 0.02 * HH], [tcx, chin + 0.16 * HH], [tcx + 0.2 * T.a, chin + 0.02 * HH]], 2 * u);
     }
   });
+  if (vol) volume(p, tp, light, T.a * 1.1, vol);
   p.inkRing(tp, ow, thick);
   if (O.sash) { // selendang batik: diagonal band shoulder -> hip with dots
     p.band([[tcx - 1.05 * T.a, chin + 0.02 * HH], [tcx + 0.95 * T.a, torsoBot - 0.05 * HH]], O.sash, 0.22 * HH, 1.6 * u);
@@ -2798,6 +2822,7 @@ export const romanFront = (p, key, opts = {}) => {
   const hp = blobPts(cx, hc, H);
   if (O.hair && !helmet) { const hb = blobPts(cx, hc - 0.03 * HH, { ...H, a: H.a * 1.04, b: H.b * 1.05 }); p.poly(hb, O.hair, 0); }
   p.shadedFill(hp, skin, mul(skin, SH_SKIN), light, H.a);
+  if (vol) volume(p, hp, light, H.a * 1.05, vol * 0.8);
   p.inkRing(hp, ow, thick);
   if (helmet) {
     const bandY = hc - H.b * 0.42, bp = ellPts(cx, bandY, H.a * 1.05, H.b * 0.66, 180, 360, 0, 48);
