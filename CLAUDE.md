@@ -29,7 +29,7 @@ Isi repo: naskah (`naskah/`), video jadi (`video/`), kode animasi (`engine/`), d
 
 | Tokoh | Outfit | Suara | Ciri |
 |---|---|---|---|
-| Asep | `sarung` (peci); varian `asepKoki` (topi koki + celemek), `gunungA` (jaket) | Fenrir | anak muda, polos, sok pede |
+| Asep | `sarung` (peci); varian `asepKoki` (topi koki + celemek), `gunungA` (jaket) | **Achird** (mulai 16 Nov 2026; video lama pakai Fenrir). Instruksi: "Anak muda Indonesia logat Sunda, polos, sok pede, semangat, bicara cepat dan lucu" | anak muda, polos, sok pede |
 | Pak Darman | `darman` (batik) | Charon | bapak kolot, salah paham bahasa gaul |
 | Ibu (Bu Darman) | `tante` (kebaya pink); varian `ibuDaster`, `ibuPasar` (selendang batik) | Gacrux | cerewet, hemat |
 | Ucup | `gunungU` (jaket merah) / `teman` | Puck | teman Asep, penakut |
