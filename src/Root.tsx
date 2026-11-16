@@ -1,4 +1,7 @@
-import { Composition } from "remotion";
+import { Composition, Still } from "remotion";
+import { NinoClip } from "./nino/NinoClip";
+import { Cover } from "./nino/Cover";
+import { CLIP, FPS as FPS_NINO } from "./nino/data";
 import { Video3D } from "./Video3D";
 import { Episode12 } from "./ep12/Episode12";
 import { TOTAL_FRAME, FPS } from "./ep12/naskah";
@@ -9,6 +12,28 @@ import { DURASI_DETIK } from "./doa/lagu";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {CLIP.map((clip) => (
+        <Composition
+          key={`clip${clip.nomor}`}
+          id={`NinoClip${clip.nomor}`}
+          component={NinoClip}
+          durationInFrames={Math.floor(clip.durasiDetik * FPS_NINO)}
+          fps={FPS_NINO}
+          width={1080}
+          height={1920}
+          defaultProps={{ nomor: clip.nomor }}
+        />
+      ))}
+      {CLIP.map((clip) => (
+        <Still
+          key={`cover${clip.nomor}`}
+          id={`NinoCover${clip.nomor}`}
+          component={Cover}
+          width={1080}
+          height={1920}
+          defaultProps={{ clip }}
+        />
+      ))}
       <Composition
         id="DoaPanggung"
         component={Doa}
