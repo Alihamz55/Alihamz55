@@ -791,3 +791,31 @@ export const fxPhoneLive = (p, mode = "live", t = 0, n = 0, hi = 0) => { const g
     g.font = '700 28px "Fredoka", sans-serif'; g.fillStyle = on ? "#14101a" : "#bfe3ff"; g.fillText(u, 104, y - 10); g.font = '700 32px "Fredoka", sans-serif'; g.fillStyle = on ? "#14101a" : "#fff"; g.fillText(m, 104, y + 18); });
   g.restore(); g.strokeStyle = "#2a2a34"; g.lineWidth = 10; g.beginPath(); g.roundRect(40, 20, 520, 960, 56); g.stroke();
   g.restore(); };
+
+/** scooter, side view (facing right). wheels sit on y~960 */
+export const fxSkuter = (p, col = "#2f7ac8") => {
+  for (const x of [150, 450]) { p.ell(x, 900, 62, 62, "#22201e", 10); p.ell(x, 900, 26, 26, "#c9cfd6", 6); }
+  p.poly([[120, 860], [130, 760], [250, 730], [380, 760], [470, 700], [500, 760], [520, 860], [400, 870], [360, 820], [220, 820], [200, 870]], col, 9);
+  p.poly([[150, 735], [330, 735], [340, 700], [160, 690]], "#2a2a32", 8);        // seat
+  p.stroke([[470, 700], [430, 560]], 16, "#3a3a44"); p.stroke([[390, 560], [470, 560]], 14, "#2a2a32"); // stem + handlebar
+  p.ell(500, 640, 26, 20, "#ffe08a", 6); p.poly([[60, 790], [130, 790], [130, 820], [60, 830]], "#d8322f", 6); // lamp + tail
+  p.stroke([[240, 780], [360, 790]], 6, "#ffffff88");
+};
+/** tiang listrik + kabel */
+export const fxTiang = (p) => {
+  p.poly([[275, 990], [285, 20], [315, 20], [325, 990]], "#9aa2aa", 9);
+  p.poly([[170, 120], [430, 120], [430, 150], [170, 150]], "#7a828a", 8);
+  for (const x of [190, 300, 410]) p.ell(x, 112, 12, 16, "#f4f1ea", 5);
+  p.stroke([[0, 160], [190, 118]], 4, "#2a2a32"); p.stroke([[410, 118], [600, 170]], 4, "#2a2a32");
+  p.poly([[262, 560], [338, 560], [338, 640], [262, 640]], "#e8e2d0", 6); p.stroke([[270, 590], [330, 590]], 6, "#c0302c");
+};
+/** gerobak gorengan */
+export const fxGerobak = (p) => {
+  for (const x of [140, 460]) p.ell(x, 930, 48, 48, "#3a2a20", 9);
+  p.poly([[60, 560], [540, 560], [540, 900], [60, 900]], "#c86a2a", 10);
+  p.poly([[80, 380], [520, 380], [520, 560], [80, 560]], "#d8eef4", 8);
+  const gx = [[130, 520], [200, 525], [270, 518], [340, 524], [410, 520], [470, 526], [170, 480], [250, 485], [330, 480], [410, 486]];
+  for (const [x, y] of gx) p.ell(x, y, 36, 22, x % 3 ? "#e0a040" : "#c8862a", 4);
+  p.poly([[40, 340], [560, 340], [560, 380], [40, 380]], "#3a8f6a", 8);
+  ptxt(p.g, "GORENGAN", 300, 740, 64, "#ffe14a", 10);
+};
