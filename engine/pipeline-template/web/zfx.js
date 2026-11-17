@@ -835,3 +835,16 @@ export const fxKardus = (p, label = "", big = 0) => {
   p.band([[300, 420 - h], [300, 900]], "#e8d4a0", 44, 0);
   if (label) { p.poly(rrect(150, 600, 450, 720, 14), "#ffffff", 6); ptxt(p.g, label, 300, 662, label.length > 6 ? 46 : 60, "#c0302c"); }
 };
+
+/** koper beroda */
+export const fxKoper = (p, col = "#c0302c") => {
+  p.poly(rrect(150, 300, 450, 900, 30), col, 10); for (const x of [230, 300, 370]) p.stroke([[x, 330], [x, 870]], 6, "#00000033");
+  p.poly(rrect(250, 220, 350, 300, 14), null, 10); p.stroke([[262, 300], [262, 232], [338, 232], [338, 300]], 12, "#2a2e36");
+  for (const x of [200, 400]) p.ell(x, 925, 26, 26, "#22201e", 6);
+};
+/** nampan pemeriksaan berisi tumpukan jaket (n = 0..7) */
+export const fxNampan = (p, n = 0) => {
+  const C = ["#d8322f", "#f4f1ea", "#e8742c", "#8b5cf6", "#2f9a5a", "#f2c14e", "#3a7ad8"];
+  for (let i = 0; i < n; i++) { const y = 820 - i * 46, w = 190 - (i % 2) * 18; p.poly([[300 - w, y + 30], [300 - w + 20, y - 18], [300 + w - 20, y - 22], [300 + w, y + 26]], C[i % 7], 7); p.stroke([[300 - w + 40, y], [300 + w - 50, y + 4]], 4, "#00000033"); }
+  p.poly([[60, 830], [540, 830], [510, 900], [90, 900]], "#6a7480", 9);
+};

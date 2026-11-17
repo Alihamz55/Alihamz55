@@ -44,6 +44,10 @@ export const OUTFITS = {
   gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
   ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18", apron: "#2f6a4a", neckTowel: "#f4f1ea" },
   ibuPasar: { tunic: "#b83a7a", skin: "#f0c49c", hair: "#2b211c", arms: "#b83a7a", dress: "#b83a7a", bun: true, glasses: true, kebaya: "#f2c14e", sash: "#8a4b22" },
+  asepMudik: { tunic: "#3a7ad8", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a3f52", pants: "#3a3f52" },
+  asepLapis: { tunic: "#d8322f", skin: "#d9a07a", hair: "#3a2418", arms: "#d8322f", legs: "#3a3f52", pants: "#3a3f52", stout: true, layers: ["#3a7ad8", "#f2c14e", "#2f9a5a", "#8b5cf6", "#e8742c", "#f4f1ea", "#d8322f"], cap: "#2f9a5a" },
+  darmanPetugas: { tunic: "#bfdcf4", skin: "#dca27a", hair: "#4e4844", arms: "#bfdcf4", legs: "#22304a", pants: "#22304a", moustache: "#3a2a20", tie: "#22304a", cap: "#22304a" },
+  ibuKardigan: { tunic: "#e8d8b8", skin: "#f0c49c", hair: "#2b211c", arms: "#e8d8b8", dress: "#8a2a3a", bun: true, glasses: true, kebaya: "#e8d8b8" },
   ibuMasker: { tunic: "#e8742c", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#e8742c", bun: true, glasses: true, kebaya: "#ffffff", floral: "#ffe0a0", faceMask: "#7cc46a" },
   darmanSantai: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", pants: "#2f5a7a", moustache: "#3a2a20" },
   asepKurir: { tunic: "#2f4a3a", skin: "#d9a07a", hair: "#3a2418", arms: "#2f4a3a", legs: "#3a3f52", pants: "#3a3f52", cap: "#f2c14e", zipJacket: true, sash: "#3a2a20" },
@@ -343,6 +347,10 @@ export const romanFront = (p, key, opts = {}) => {
     p.poly([[tcx - 3 * u, chin + 0.12 * HH], [tcx + 3 * u, chin + 0.12 * HH], [tcx + 7 * u, chin + 0.62 * HH], [tcx, chin + 0.72 * HH], [tcx - 7 * u, chin + 0.62 * HH]], O.tie, 1.4 * u);
     for (const sd of [-1, 1]) p.stroke([[tcx + sd * 0.1 * T.a, chin + 0.04 * HH], [tcx + sd * 0.42 * T.a, chin + 0.62 * HH]], 2 * u, mul(O.tunic, [0.7, 0.7, 0.75]));
     for (let i = 0; i < 2; i++) p.dot(tcx + 0.25 * T.a, chin + (0.7 + i * 0.16) * HH, 3 * u, "#e2b04a"); }
+  if (O.layers) { // 7 lapis jaket: kerah bertumpuk + ujung jaket berlapis di bawah
+    O.layers.forEach((c, i) => { const k = O.layers.length - 1 - i;
+      p.band([[tcx - (0.5 + k * 0.06) * T.a, chin + (0.02 + k * 0.035) * HH], [tcx, chin + (0.14 + k * 0.035) * HH], [tcx + (0.5 + k * 0.06) * T.a, chin + (0.02 + k * 0.035) * HH]], c, 0.06 * HH, 1.2 * u);
+      p.band([[tcx - 1.3 * T.a, torsoBot - (0.02 + k * 0.05) * HH], [tcx + 1.3 * T.a, torsoBot - (0.02 + k * 0.05) * HH]], c, 0.05 * HH, 1 * u); }); }
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
     const sp = ellPts(tcx + s * 0.72 * T.a, chin + 0.1 * HH, 0.42 * T.a, 0.13 * HH, 180, 360, s * 8, 20);
     p.poly(sp, old ? "#9a9384" : "#c5ccd3", 1.8 * u);

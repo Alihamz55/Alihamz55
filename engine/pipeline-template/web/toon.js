@@ -2509,6 +2509,10 @@ export const OUTFITS = {
   gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
   ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18", apron: "#2f6a4a", neckTowel: "#f4f1ea" },
   ibuPasar: { tunic: "#b83a7a", skin: "#f0c49c", hair: "#2b211c", arms: "#b83a7a", dress: "#b83a7a", bun: true, glasses: true, kebaya: "#f2c14e", sash: "#8a4b22" },
+  asepMudik: { tunic: "#3a7ad8", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a3f52", pants: "#3a3f52" },
+  asepLapis: { tunic: "#d8322f", skin: "#d9a07a", hair: "#3a2418", arms: "#d8322f", legs: "#3a3f52", pants: "#3a3f52", stout: true, layers: ["#3a7ad8", "#f2c14e", "#2f9a5a", "#8b5cf6", "#e8742c", "#f4f1ea", "#d8322f"], cap: "#2f9a5a" },
+  darmanPetugas: { tunic: "#bfdcf4", skin: "#dca27a", hair: "#4e4844", arms: "#bfdcf4", legs: "#22304a", pants: "#22304a", moustache: "#3a2a20", tie: "#22304a", cap: "#22304a" },
+  ibuKardigan: { tunic: "#e8d8b8", skin: "#f0c49c", hair: "#2b211c", arms: "#e8d8b8", dress: "#8a2a3a", bun: true, glasses: true, kebaya: "#e8d8b8" },
   ibuMasker: { tunic: "#e8742c", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#e8742c", bun: true, glasses: true, kebaya: "#ffffff", floral: "#ffe0a0", faceMask: "#7cc46a" },
   darmanSantai: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", pants: "#2f5a7a", moustache: "#3a2a20" },
   asepKurir: { tunic: "#2f4a3a", skin: "#d9a07a", hair: "#3a2418", arms: "#2f4a3a", legs: "#3a3f52", pants: "#3a3f52", cap: "#f2c14e", zipJacket: true, sash: "#3a2a20" },
@@ -2808,6 +2812,10 @@ export const romanFront = (p, key, opts = {}) => {
     p.poly([[tcx - 3 * u, chin + 0.12 * HH], [tcx + 3 * u, chin + 0.12 * HH], [tcx + 7 * u, chin + 0.62 * HH], [tcx, chin + 0.72 * HH], [tcx - 7 * u, chin + 0.62 * HH]], O.tie, 1.4 * u);
     for (const sd of [-1, 1]) p.stroke([[tcx + sd * 0.1 * T.a, chin + 0.04 * HH], [tcx + sd * 0.42 * T.a, chin + 0.62 * HH]], 2 * u, mul(O.tunic, [0.7, 0.7, 0.75]));
     for (let i = 0; i < 2; i++) p.dot(tcx + 0.25 * T.a, chin + (0.7 + i * 0.16) * HH, 3 * u, "#e2b04a"); }
+  if (O.layers) { // 7 lapis jaket: kerah bertumpuk + ujung jaket berlapis di bawah
+    O.layers.forEach((c, i) => { const k = O.layers.length - 1 - i;
+      p.band([[tcx - (0.5 + k * 0.06) * T.a, chin + (0.02 + k * 0.035) * HH], [tcx, chin + (0.14 + k * 0.035) * HH], [tcx + (0.5 + k * 0.06) * T.a, chin + (0.02 + k * 0.035) * HH]], c, 0.06 * HH, 1.2 * u);
+      p.band([[tcx - 1.3 * T.a, torsoBot - (0.02 + k * 0.05) * HH], [tcx + 1.3 * T.a, torsoBot - (0.02 + k * 0.05) * HH]], c, 0.05 * HH, 1 * u); }); }
   if (O.armor) for (const s of [-1, 1]) { // shoulder plates
     const sp = ellPts(tcx + s * 0.72 * T.a, chin + 0.1 * HH, 0.42 * T.a, 0.13 * HH, 180, 360, s * 8, 20);
     p.poly(sp, old ? "#9a9384" : "#c5ccd3", 1.8 * u);
@@ -3872,4 +3880,17 @@ export const fxKardus = (p, label = "", big = 0) => {
   p.poly([[110, 420 - h], [190, 340 - h], [570, 340 - h], [490, 420 - h]], "#d9a46a", 10); p.poly([[490, 420 - h], [570, 340 - h], [570, 820], [490, 900]], "#b07a48", 10);
   p.band([[300, 420 - h], [300, 900]], "#e8d4a0", 44, 0);
   if (label) { p.poly(rrect(150, 600, 450, 720, 14), "#ffffff", 6); ptxt(p.g, label, 300, 662, label.length > 6 ? 46 : 60, "#c0302c"); }
+};
+
+/** koper beroda */
+export const fxKoper = (p, col = "#c0302c") => {
+  p.poly(rrect(150, 300, 450, 900, 30), col, 10); for (const x of [230, 300, 370]) p.stroke([[x, 330], [x, 870]], 6, "#00000033");
+  p.poly(rrect(250, 220, 350, 300, 14), null, 10); p.stroke([[262, 300], [262, 232], [338, 232], [338, 300]], 12, "#2a2e36");
+  for (const x of [200, 400]) p.ell(x, 925, 26, 26, "#22201e", 6);
+};
+/** nampan pemeriksaan berisi tumpukan jaket (n = 0..7) */
+export const fxNampan = (p, n = 0) => {
+  const C = ["#d8322f", "#f4f1ea", "#e8742c", "#8b5cf6", "#2f9a5a", "#f2c14e", "#3a7ad8"];
+  for (let i = 0; i < n; i++) { const y = 820 - i * 46, w = 190 - (i % 2) * 18; p.poly([[300 - w, y + 30], [300 - w + 20, y - 18], [300 + w - 20, y - 22], [300 + w, y + 26]], C[i % 7], 7); p.stroke([[300 - w + 40, y], [300 + w - 50, y + 4]], 4, "#00000033"); }
+  p.poly([[60, 830], [540, 830], [510, 900], [90, 900]], "#6a7480", 9);
 };

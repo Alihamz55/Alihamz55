@@ -96,7 +96,7 @@ Folder kerja `/home/user/shorts/` ada di server sementara dan **tidak ikut tersi
 3. Edit `assemble.py` (`spk`, `gap_after`, jumlah kalimat), lalu `python3 assemble.py`. Hasilnya `orig.wav` dan daftar `LINES` (frame mulai dan akhir tiap kalimat).
 4. `ffmpeg -i orig.wav -ar 48000 voice_full.wav` lalu `python3 tools/lips.py voice_full.wav TOTAL > web/lips.js`.
 5. Tulis `web/story_main.js`. Contoh terbaru ada di `engine/story-live.js`, `story-brownies.js`, dan `story-cabai.js`.
-   - Latar yang tersedia di `main.js` (posisi x): panggung 0, kamar/ruang tengah -40, rumah No. 17 240, pos ronda 120, pantai 200, gunung 320, pasar 400, dapur 480, gedung pernikahan 40.
+   - Latar yang tersedia di `main.js` (posisi x): panggung 0, kamar/ruang tengah -40, rumah No. 17 240, pos ronda 120, pantai 200, gunung 320, pasar 400, dapur 480, gedung pernikahan 40, terminal bandara 560 (baru).
 6. Setiap kali mengubah `toonbase.js`, `roman.js`, atau `zfx.js`, jalankan `cat toonbase.js roman.js zfx.js > toon.js` di `web/`. Nama fungsi FX tidak boleh bentrok dengan yang sudah ada.
 7. Tes beberapa gambar dulu: `node render.mjs test "60,300,..."`, lalu buat tile dengan ffmpeg dan lihat hasilnya.
 8. Render penuh di latar belakang (3 proses): `node render.mjs frames "0-N"`. Waktunya sekitar 4 detik per gambar, jadi 50 detik video ±35 menit.

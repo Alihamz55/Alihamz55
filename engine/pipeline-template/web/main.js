@@ -409,6 +409,26 @@ add(tbox(1.6, 0.06, 0.3, 1), MK.woodD, KX + 2.2, 2.7, -2.1, world);
 for (let k = 0; k < 4; k++) cyl(0.08, 0.08, 0.24, [MK.red, MK.steel, toon({ color: '#f2b632' })][k % 3], KX + 1.6 + k * 0.38, 2.85, -2.1, world, 10);
 cyl(0.2, 0.16, 0.32, MK.bucket, KX + 1.35, 0.66, 0.15, world, 16);
 
+// ===== TERMINAL BANDARA (x=560), siang; lantai atas di y=0.5 =====
+const AX = 560;
+const MA = { floor: texM(P.checker(71, '#e8ecf0', '#cfd6de'), 1, 1), wall: texM(P.plaster(72, 30), 1, 1, '#eef3f8'), desk: toon({ color: '#3a5f95' }), deskTop: toon({ color: '#f4f1ea' }),
+  metal: toon({ color: '#9aa4ae' }), seat: toon({ color: '#2f7ac8' }), glass: toon({ color: '#bfe2ff', transparent: true, opacity: 0.55 }), belt: toon({ color: '#2a2e36' }), sky: toon({ color: '#9fd0ff' }) };
+add(tbox(24, 1.0, 16, 1.0), MA.floor, AX, 0, 0, world, { cast: false });
+add(tbox(24, 6, 0.3, 2), MA.wall, AX, 3, -3.4, world);
+// jendela kaca besar + langit di belakang
+plane(10, 2.6, MA.sky, AX + 3.5, 2.9, -3.23); for (let i = 0; i < 6; i++) add(tbox(0.08, 2.7, 0.08, 1), MA.metal, AX - 1.5 + i * 2.0, 2.9, -3.2, world);
+add(tbox(10.2, 0.1, 0.12, 1), MA.metal, AX + 3.5, 4.25, -3.2, world); add(tbox(10.2, 0.1, 0.12, 1), MA.metal, AX + 3.5, 1.6, -3.2, world);
+plane(3.4, 0.6, basic(P.sign('KEBERANGKATAN', { font: 96, bg: '#1d3a6a', fg: '#ffffff', border: '#ffd84a' }), { fog: false }), AX - 2.6, 4.2, -3.2);
+// meja check-in + timbangan bagasi
+add(tbox(2.4, 1.0, 0.7, 1), MA.desk, AX - 1.6, 1.0, -1.4, world); add(tbox(2.5, 0.08, 0.8, 1), MA.deskTop, AX - 1.6, 1.54, -1.4, world);
+plane(1.4, 0.32, basic(P.sign('CHECK-IN', { font: 90, bg: '#ffd84a', fg: '#1d3a6a' }), { fog: false }), AX - 1.6, 1.25, -1.04);
+add(tbox(0.9, 0.12, 0.7, 1), MA.metal, AX - 0.1, 0.56, -1.3, world); add(tbox(0.5, 0.35, 0.08, 1), MA.belt, AX - 0.1, 0.8, -1.66, world);
+// meja pemeriksaan (x-ray) dengan ban berjalan
+add(tbox(2.2, 0.7, 0.8, 1), MA.belt, AX + 3.2, 0.85, -1.2, world); add(tbox(1.0, 1.1, 0.9, 1), MA.metal, AX + 3.2, 1.6, -1.2, world);
+for (const dx of [-0.55, 0.55]) add(tbox(0.12, 2.3, 0.12, 1), MA.metal, AX + 5.0 + dx, 1.65, -0.6, world); add(tbox(1.25, 0.14, 0.14, 1), MA.metal, AX + 5.0, 2.8, -0.6, world);
+// kursi tunggu
+for (let i = 0; i < 5; i++) { add(tbox(0.5, 0.08, 0.5, 1), MA.seat, AX - 6 + i * 0.6, 0.95, -2.4, world); add(tbox(0.5, 0.5, 0.08, 1), MA.seat, AX - 6 + i * 0.6, 1.25, -2.62, world); }
+add(tbox(3.0, 0.08, 0.1, 1), MA.metal, AX - 4.8, 0.75, -2.4, world);
 // ===== WEDDING HALL (x=40) =====
 const HX = 40;
 const MH = {
