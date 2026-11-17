@@ -83,6 +83,8 @@ Hasilnya tersimpan di file tool-result. Ambil audionya dengan `json.loads(json.l
   - **Hasilnya:** kaki yang menapak lurus, kaki yang terangkat menekuk ke luar, kaki tidak menyilang, dan tangan berayun.
   - **Contoh:** `engine/story-tes-jalan.js`.
   - **Efek volume 2.5D (`vol: 1`) tidak dipakai.** Pengguna memilih tampilan lama.
+- **Bayangan tegas (gaya Sci-Fi Sitcom, mulai 17 Nov 2026):** bayangan pada tokoh dibuat tegas, tanpa gradasi. Fitur ini **aktif otomatis** di `roman.js` (`opts.flat` bawaan 1; isi `flat: 0` kalau ingin gradasi lama).
+  - **Garis bergetar (`boil`) tidak dipakai**, karena menurut pengguna terasa aneh.
 - **Audio:** musik dan SFX sintetis di `audio.py`. `mix.py` menjaga musik di -6 dB terhadap suara, dan puncak SFX ≤ 0,7× puncak suara. Kalau SFX terlalu pelan, cari puncaknya lalu kecilkan bunyi yang paling keras.
 
 ## Cara membuat video (pipeline)

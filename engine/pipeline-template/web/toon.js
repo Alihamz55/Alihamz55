@@ -2590,7 +2590,7 @@ export const romanFront = (p, key, opts = {}) => {
   const thick = thickAngle(light), ow = 5 * u, cx = 300;
   const legCol = O.legs ?? mix(O.tunic, INK, 0.62), armCol = O.arms ?? mix(O.tunic, INK, 0.5);
   const helmet = !!O.helmet && !nohelmet, old = O.helmet === "old";
-  p.rot = null; p.boil = opts.boil ? [opts.boil, opts.boilSeed || 0] : null; p.flatShade = !!opts.flat;
+  p.rot = null; p.boil = opts.boil ? [opts.boil, opts.boilSeed || 0] : null; p.flatShade = (opts.flat ?? 1) ? true : false;
   // ---- cape behind everything ----
   if (O.cape) {
     const cp = [[cx - 0.48 * W, chin + 0.08 * HH], [cx + 0.48 * W, chin + 0.08 * HH], [cx + 0.62 * W, sole - 0.55 * HH], [cx + 0.2 * W, sole - 0.45 * HH], [cx - 0.2 * W, sole - 0.5 * HH], [cx - 0.62 * W, sole - 0.55 * HH]];
