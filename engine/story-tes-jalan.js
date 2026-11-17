@@ -13,11 +13,11 @@ export const dofAt = () => ({ focus: 4.0, cinf: 3 });
 export const worldAt = () => ({ curtain: 1, night: false, noBig: true, laugh: 0 });
 export const actorsAt = (f, T) => {
   let o;
-  if (NEW) { const w = (f / C) % 1; o = { seed: 5, blink: f % 70 < 3 ? 1 : 0, expr: 'grin', L: 'swing', R: 'swing', walk: q(w, 3), vol: 1, facing: 1, look: 1,
+  if (NEW) { const w = (f / C) % 1; o = { seed: 5, blink: f % 70 < 3 ? 1 : 0, expr: 'grin', L: 'swing', R: 'swing', walk: q(w, 3), vol: 0, facing: 1, look: 1,
     bob: q(0.022 * (0.5 - 0.5 * Math.cos(4 * Math.PI * w)), 4), tilt: q(1.5 * Math.sin(2 * Math.PI * w), 2), headTilt: q(-1.8 * Math.sin(4 * Math.PI * w + 0.6), 2) }; }
   else o = { seed: 5, blink: f % 70 < 3 ? 1 : 0, expr: 'grin', L: 'hang', R: 'hang', step: q((f / 12) % 1, 2), facing: 1, look: 1, bob: 0, tilt: 0, headTilt: 0 };
   return [{ key: 'as' + JSON.stringify(o), draw: (p) => T.romanFront(p, 'asepHoodie', o), x: q(X(f), 4), y: 0.5, z: 0.4, ground: 0.5 }];
 };
 export const fxAt = (f, T) => { const out = []; for (let x = 150; x < 170; x += 2.2) out.push({ key: 'lj' + x, draw: (p) => T.fxLampuJalan(p), x, y: 0.5, z: -0.8, s: 2.6, blob: false, shadow: false, order: 1 }); return out; };
 export const overlayAt = (f, g) => { g.save(); g.font = '700 64px Fredoka, sans-serif'; g.textAlign = 'center'; g.lineWidth = 12; g.strokeStyle = '#1a1220'; g.fillStyle = NEW ? '#5ad16a' : '#ff5d8f';
-  const t = NEW ? 'BARU (2.5D)' : 'LAMA'; g.strokeText(t, 540, 260); g.fillText(t, 540, 260); g.restore(); };
+  const t = NEW ? 'LAMA (DIPERBAIKI)' : 'LAMA'; g.strokeText(t, 540, 260); g.fillText(t, 540, 260); g.restore(); };

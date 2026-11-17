@@ -77,6 +77,12 @@ Hasilnya tersimpan di file tool-result. Ambil audionya dengan `json.loads(json.l
   - kartu pembuka dan penutup (`fxRoundCard`)
   - font Fredoka (`web/fonts`)
 - **Sinematik:** kamera rendah, close-up, *over-the-shoulder*, DOF kuat (`cinf` 8 di close-up), cahaya hangat, tekstur dari `web/tex` (dibuat oleh `scripts/buat-tekstur.py`).
+- **Cara berjalan (standar baru, mulai 17 Nov 2026):** kalau tokoh berjalan, jangan pakai `step` lagi, karena tokoh jadi terlihat meluncur. Pakai siklus jalan baru:
+  - **Opsi tokoh:** `walk: (f / C) % 1` (C sekitar 24–32 frame per siklus; Asep cepat sekitar 24, Pak Darman lambat sekitar 34), `L: 'swing', R: 'swing'`, `facing` sesuai arah jalan.
+  - **Gerak badan:** `bob: 0.022 * (0.5 - 0.5 * cos(4π·walk))`, dan `headTilt` sedikit terlambat dari badan.
+  - **Hasilnya:** kaki yang menapak lurus, kaki yang terangkat menekuk ke luar, kaki tidak menyilang, dan tangan berayun.
+  - **Contoh:** `engine/story-tes-jalan.js`.
+  - **Efek volume 2.5D (`vol: 1`) tidak dipakai.** Pengguna memilih tampilan lama.
 - **Audio:** musik dan SFX sintetis di `audio.py`. `mix.py` menjaga musik di -6 dB terhadap suara, dan puncak SFX ≤ 0,7× puncak suara. Kalau SFX terlalu pelan, cari puncaknya lalu kecilkan bunyi yang paling keras.
 
 ## Cara membuat video (pipeline)

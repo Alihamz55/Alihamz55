@@ -2589,11 +2589,11 @@ export const romanFront = (p, key, opts = {}) => {
   const dress = !!O.dress;
   for (const side of [-1, 1]) {
     if (walk !== null) { // real walk cycle: planted stance, lifted swing, 2-bone IK knee bending forward
-      const ph = (walk + (side > 0 ? 0.5 : 0)) % 1, S = 40 * u, Lh = 30 * u;
+      const ph = (walk + (side > 0 ? 0.5 : 0)) % 1, S = (opts.stride ?? (opts.vol ? 30 : 14)) * u, Lh = (opts.lift ?? 34) * u;
       let fo, lift; if (ph < 0.5) { const t = ph / 0.5, e = t * t * (3 - 2 * t); fo = -S + 2 * S * e; lift = Math.sin(Math.PI * t) * Lh; } else { fo = S - 2 * S * ((ph - 0.5) / 0.5); lift = 0; }
-      const hip = [cx + side * 12 * u, hipY], ft = [cx + side * 8 * u + WD * fo, sole - 4 * u - lift];
-      const l = (sole - hipY) * 0.52, dx = ft[0] - hip[0], dy = ft[1] - hip[1], d = Math.hypot(dx, dy), m = [(hip[0] + ft[0]) / 2, (hip[1] + ft[1]) / 2];
-      const h = d < 2 * l ? Math.sqrt(l * l - (d / 2) * (d / 2)) : 0; let nx = -dy / d, ny = dx / d; if (nx * WD < 0) { nx = -nx; ny = -ny; }
+      const hip = [cx + side * 14 * u, hipY], ft = [cx + side * 17 * u + WD * fo, sole - 4 * u - lift];
+      const l = Math.hypot(side * 3 * u + WD * S, sole - 4 * u - hipY) * 0.505, dx = ft[0] - hip[0], dy = ft[1] - hip[1], d = Math.hypot(dx, dy), m = [(hip[0] + ft[0]) / 2, (hip[1] + ft[1]) / 2];
+      const h = d < 2 * l ? Math.sqrt(l * l - (d / 2) * (d / 2)) : 0; let nx = -dy / d, ny = dx / d; const kd = opts.vol ? WD : side; if (nx * kd < 0) { nx = -nx; ny = -ny; }
       const kn = [m[0] + nx * h, m[1] + ny * h];
       p.stroke([hip, kn, ft], 5.8 * u, legCol);
       const toe = lift > 0 ? 0.25 : 0, sandal = O.helmet ? LEATHER : "#5a3b2a";
