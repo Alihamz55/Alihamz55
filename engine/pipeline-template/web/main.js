@@ -233,7 +233,7 @@ const MWg = { ground: texM(P.stone(91, 28, 20, 62, 80, 80), 1, 1, '#d8c0a0'), wa
   glass: toon({ color: '#cfe8f0', transparent: true, opacity: 0.55 }), wood: toon({ color: '#9a6a42' }), woodD: toon({ color: '#5e3c26' }),
   awnA: toon({ color: '#3a8f6a' }), awnB: toon({ color: '#f4f1ea' }), pot: toon({ color: '#c8643c' }), leaf: toon({ color: '#5aa04a' }),
   jar: toon({ color: '#f7f2e6', transparent: true, opacity: 0.8 }), snack: toon({ color: '#e8a040' }), snack2: toon({ color: '#d8453b' }) };
-add(tbox(60, 1.0, 40, 1.2), MWg.ground, WX, 0, -5, world, { cast: false });
+add(tbox(54, 1.0, 40, 1.2), MWg.ground, WX - 3, 0, -5, world, { cast: false }); // x 130..184
 add(tbox(9, 4.2, 0.3, 1.5), MWg.wall, WX, 2.6, -3.4, world);
 // counter + glass display + jars
 add(tbox(3.6, 1.0, 0.8, 1), MWg.counter, WX + 0.2, 1.0, -2.6, world);
@@ -253,7 +253,7 @@ for (const dx of [-3.6, 3.4]) { cyl(0.28, 0.22, 0.5, MWg.pot, WX + dx, 0.75, -2.
 const BX = 200;
 const MB = { sand: texM(P.plaster(95, 40), 1, 1, '#f2d8a0'), trunk: toon({ color: '#9a6a42' }), leaf: toon({ color: '#3a9a4a' }),
   umbA: toon({ color: '#e0352b' }), umbB: toon({ color: '#f4f1ea' }), pole: toon({ color: '#d8d0c0' }), board: toon({ color: '#3ab0c8' }), board2: toon({ color: '#ffd84a' }) };
-add(tbox(60, 1.0, 44, 1.2), MB.sand, BX, 0, -16.0, world, { cast: false }); // pasir sampai ke laut (tanpa celah hijau)
+add(tbox(34, 1.0, 44, 1.2), MB.sand, BX + 3, 0, -16.0, world, { cast: false }); // x 186..220: pasir sampai ke laut, tidak bertumpuk dengan warung/rumah
 { const sea2 = new THREE.Mesh(new THREE.PlaneGeometry(400, 200), new THREE.MeshBasicMaterial({ map: P.tex(seaC, 40, 20) })); sea2.rotation.x = -Math.PI / 2; sea2.position.set(BX, 0.42, -108); sea2.userData.ndSkip = true; world.add(sea2); }
 // palm tree (left)
 for (let i = 0; i < 8; i++) { const c_ = cyl(0.16 - i * 0.008, 0.18 - i * 0.008, 0.6, MB.trunk, BX - 2.0 + i * 0.06, 0.8 + i * 0.58, -3.2, world, 10); c_.rotation.z = -0.08; }
@@ -272,10 +272,10 @@ const MRm = { road: texM(P.stone(101, 12, 4, 30, 60, 60), 1, 1, '#6a6a70'), side
   glass: toon({ color: '#9fd4ee' }), trunk: toon({ color: '#7a5434' }), leaf: toon({ color: '#4f9a3c' }), leaf2: toon({ color: '#6cb04a' }),
   pole: toon({ color: '#8a8478' }), wire: toon({ color: '#2b2f3a' }), pot: toon({ color: '#c8643c' }), line: toon({ color: '#f4f1ea' }),
   hill: toon({ color: '#7aa64c' }), mango: toon({ color: '#f2b632' }) };
-add(tbox(80, 1.0, 40.1, 1.2), MRm.yard, HR, 0, -19.95, world, { cast: false });           // yard/ground behind
-add(tbox(80, 1.0, 3.2, 1.2), MRm.road, HR, -0.02, 3.6, world, { cast: false });      // asphalt road (front)
+add(tbox(60, 1.0, 40.1, 1.2), MRm.yard, HR + 10, 0, -19.95, world, { cast: false }); // x 220..280 (tidak bertumpuk dengan pantai)           // yard/ground behind
+add(tbox(60, 1.0, 3.2, 1.2), MRm.road, HR + 10, -0.02, 3.6, world, { cast: false });      // asphalt road (front)
 for (let i = 0; i < 14; i++) add(tbox(1.2, 0.02, 0.12, 1), MRm.line, HR - 26 + i * 4, 0.49, 3.6, world, { cast: false });
-add(tbox(80, 1.06, 2.0, 1.2), MRm.side, HR, 0.03, 1.1, world, { cast: false });       // sidewalk in front of the fence
+add(tbox(60, 1.06, 2.0, 1.2), MRm.side, HR + 10, 0.03, 1.1, world, { cast: false });       // sidewalk in front of the fence
 // house
 add(tbox(9, 3.4, 0.3, 1.5), MRm.wall, HR, 2.2, -4.2, world).receiveShadow = false;
 for (const sd of [-1, 1]) add(tbox(0.3, 3.4, 3, 1.5), MRm.wall, HR + sd * 4.35, 2.2, -2.85, world);
