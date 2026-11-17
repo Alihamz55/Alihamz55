@@ -253,7 +253,7 @@ for (const dx of [-3.6, 3.4]) { cyl(0.28, 0.22, 0.5, MWg.pot, WX + dx, 0.75, -2.
 const BX = 200;
 const MB = { sand: texM(P.plaster(95, 40), 1, 1, '#f2d8a0'), trunk: toon({ color: '#9a6a42' }), leaf: toon({ color: '#3a9a4a' }),
   umbA: toon({ color: '#e0352b' }), umbB: toon({ color: '#f4f1ea' }), pole: toon({ color: '#d8d0c0' }), board: toon({ color: '#3ab0c8' }), board2: toon({ color: '#ffd84a' }) };
-add(tbox(60, 1.0, 14, 1.2), MB.sand, BX, 0, -1.0, world, { cast: false });
+add(tbox(60, 1.0, 44, 1.2), MB.sand, BX, 0, -16.0, world, { cast: false }); // pasir sampai ke laut (tanpa celah hijau)
 { const sea2 = new THREE.Mesh(new THREE.PlaneGeometry(400, 200), new THREE.MeshBasicMaterial({ map: P.tex(seaC, 40, 20) })); sea2.rotation.x = -Math.PI / 2; sea2.position.set(BX, 0.42, -108); sea2.userData.ndSkip = true; world.add(sea2); }
 // palm tree (left)
 for (let i = 0; i < 8; i++) { const c_ = cyl(0.16 - i * 0.008, 0.18 - i * 0.008, 0.6, MB.trunk, BX - 2.0 + i * 0.06, 0.8 + i * 0.58, -3.2, world, 10); c_.rotation.z = -0.08; }
