@@ -826,3 +826,12 @@ export const fxLampuJalan = (p) => {
   p.stroke([[300, 130], [420, 100]], 14, "#5a626a"); p.poly([[380, 90], [470, 90], [455, 125], [395, 125]], "#3a3f48", 6);
   p.ell(425, 128, 30, 10, "#fff2b0", 0);
 };
+
+/** kardus paket polos dengan label (tanpa merek) */
+export const fxKardus = (p, label = "", big = 0) => {
+  const h = big ? 120 : 0;
+  p.poly([[110, 420 - h], [490, 420 - h], [490, 900], [110, 900]], "#c8925a", 10);
+  p.poly([[110, 420 - h], [190, 340 - h], [570, 340 - h], [490, 420 - h]], "#d9a46a", 10); p.poly([[490, 420 - h], [570, 340 - h], [570, 820], [490, 900]], "#b07a48", 10);
+  p.band([[300, 420 - h], [300, 900]], "#e8d4a0", 44, 0);
+  if (label) { p.poly(rrect(150, 600, 450, 720, 14), "#ffffff", 6); ptxt(p.g, label, 300, 662, label.length > 6 ? 46 : 60, "#c0302c"); }
+};

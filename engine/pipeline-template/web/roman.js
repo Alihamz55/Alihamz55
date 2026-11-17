@@ -44,6 +44,9 @@ export const OUTFITS = {
   gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
   ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18", apron: "#2f6a4a", neckTowel: "#f4f1ea" },
   ibuPasar: { tunic: "#b83a7a", skin: "#f0c49c", hair: "#2b211c", arms: "#b83a7a", dress: "#b83a7a", bun: true, glasses: true, kebaya: "#f2c14e", sash: "#8a4b22" },
+  ibuMasker: { tunic: "#e8742c", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#e8742c", bun: true, glasses: true, kebaya: "#ffffff", floral: "#ffe0a0", faceMask: "#7cc46a" },
+  darmanSantai: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", pants: "#2f5a7a", moustache: "#3a2a20" },
+  asepKurir: { tunic: "#2f4a3a", skin: "#d9a07a", hair: "#3a2418", arms: "#2f4a3a", legs: "#3a3f52", pants: "#3a3f52", cap: "#f2c14e", zipJacket: true, sash: "#3a2a20" },
   asepJas: { tunic: "#22304a", skin: "#d9a07a", hair: "#2a1a10", arms: "#22304a", legs: "#22304a", pants: "#22304a", tie: "#d8322f" },
   darmanBatikUngu: { tunic: "#5a2a6a", skin: "#dca27a", hair: "#4e4844", arms: "#5a2a6a", legs: "#2b2f3a", pants: "#2b2f3a", batik: "#e2b04a", moustache: "#3a2a20" },
   ibuKebayaHijau: { tunic: "#2f8a5a", skin: "#f0c49c", hair: "#2b211c", arms: "#2f8a5a", dress: "#2f8a5a", bun: true, glasses: true, kebaya: "#f2c14e" },
@@ -394,6 +397,7 @@ export const romanFront = (p, key, opts = {}) => {
     p.clip(bd, () => { for (let i = -3; i <= 3; i++) p.stroke([[cx + i * 9 * u, hc + 0.45 * H.b], [cx + i * 7 * u, hc + 1.35 * H.b]], 1.2 * u, "#c9c4bb"); });
     p.inkRing(bd, ow * 0.8, thick);
   }
+  if (O.faceMask) { const mp = blobPts(cx + 3 * u * facing, hc + 0.08 * H.b, { ...H, a: H.a * 0.8, b: H.b * 0.74, seed: seed + 3 }); p.poly(mp, O.faceMask, 0); for (const [dx, dy] of [[-0.35, 0.1], [0.4, 0.25], [0.05, 0.5]]) p.dot(cx + dx * H.a, hc + dy * H.b, 3 * u, "#a8d890"); }
   faceFront(p, cx, hc, W, expr, facing, look, lid, helmet, skin, O.beard ? O.beard : O.moustache, !!O.stout);
   if (O.ikat) { p.band([[cx - 1.0 * H.a, hc - 0.55 * H.b], [cx + 1.0 * H.a, hc - 0.55 * H.b]], "#d8322f", 7 * u, 1.4 * u); p.band([[cx - 1.0 * H.a, hc - 0.42 * H.b], [cx + 1.0 * H.a, hc - 0.42 * H.b]], "#f4f1ea", 6 * u, 1.4 * u); }
   if (opts.medal) { p.stroke([[cx - 14 * u, chin + 4 * u], [cx, chin + 40 * u], [cx + 14 * u, chin + 4 * u]], 3 * u, "#d8322f"); p.ell(cx, chin + 50 * u, 12 * u, 12 * u, "#b8bec6", 2.4 * u); for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; p.dot(cx + Math.cos(a) * 12 * u, chin + 50 * u + Math.sin(a) * 12 * u, 2.2 * u, "#8a9098"); } }
