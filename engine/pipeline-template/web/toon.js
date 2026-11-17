@@ -2509,6 +2509,10 @@ export const OUTFITS = {
   gunungU: { tunic: "#d8453b", skin: "#d9a07a", hair: "#3a2418", arms: "#d8453b", legs: "#7a6040", pants: "#7a6040", jacket: "#2b2f3a", bedhead: true },
   ujang: { tunic: "#d8743a", skin: "#c99067", hair: "#1e1714", arms: "#d8743a", legs: "#3a3f52", pants: "#3a3f52", cap: "#2f6a8a", moustache: "#2a1d18", apron: "#2f6a4a", neckTowel: "#f4f1ea" },
   ibuPasar: { tunic: "#b83a7a", skin: "#f0c49c", hair: "#2b211c", arms: "#b83a7a", dress: "#b83a7a", bun: true, glasses: true, kebaya: "#f2c14e", sash: "#8a4b22" },
+  asepPemandu: { tunic: "#f4f1ea", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#6a5a3a", pants: "#6a5a3a", vest: "#c8b080", cap: "#8a7a4a" },
+  buleTuris: { tunic: "#ff8a3a", skin: "#f2a888", hair: "#e8c870", arms: "#f2a888", legs: "#f2a888", pants: "#c8b080" },
+  darmanPantai: { tunic: "#2f7ac8", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", pants: "#f4f1ea", moustache: "#3a2a20", floral: "#ffffff" },
+  ibuPantai: { tunic: "#f2c14e", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#f2c14e", bun: true, glasses: true, kebaya: "#ffffff", floral: "#e8742c" },
   asepMudik: { tunic: "#3a7ad8", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a3f52", pants: "#3a3f52" },
   asepLapis: { tunic: "#d8322f", skin: "#d9a07a", hair: "#3a2418", arms: "#d8322f", legs: "#3a3f52", pants: "#3a3f52", stout: true, layers: ["#3a7ad8", "#f2c14e", "#2f9a5a", "#8b5cf6", "#e8742c", "#f4f1ea", "#d8322f"], cap: "#2f9a5a" },
   darmanPetugas: { tunic: "#bfdcf4", skin: "#dca27a", hair: "#4e4844", arms: "#bfdcf4", legs: "#22304a", pants: "#22304a", moustache: "#3a2a20", tie: "#22304a", cap: "#22304a" },
@@ -3893,4 +3897,12 @@ export const fxNampan = (p, n = 0) => {
   const C = ["#d8322f", "#f4f1ea", "#e8742c", "#8b5cf6", "#2f9a5a", "#f2c14e", "#3a7ad8"];
   for (let i = 0; i < n; i++) { const y = 820 - i * 46, w = 190 - (i % 2) * 18; p.poly([[300 - w, y + 30], [300 - w + 20, y - 18], [300 + w - 20, y - 22], [300 + w, y + 26]], C[i % 7], 7); p.stroke([[300 - w + 40, y], [300 + w - 50, y + 4]], 4, "#00000033"); }
   p.poly([[60, 830], [540, 830], [510, 900], [90, 900]], "#6a7480", 9);
+};
+
+/** meja kelapa muda */
+export const fxKelapa = (p) => {
+  p.poly([[60, 600], [540, 600], [540, 640], [60, 640]], "#9a6a42", 9);
+  for (const x of [100, 500]) p.poly([[x - 12, 640], [x + 12, 640], [x + 12, 960], [x - 12, 960]], "#7a5434", 7);
+  for (const [x, y, r] of [[150, 545, 62], [260, 540, 66], [370, 545, 62], [470, 548, 58], [210, 470, 58], [320, 468, 60], [420, 475, 56]]) { p.ell(x, y, r, r * 0.92, "#5aa04a", 7); p.ell(x - r * 0.3, y - r * 0.35, r * 0.25, r * 0.15, "#9ad070", 0); }
+  p.poly(rrect(170, 300, 430, 390, 14), "#ffffff", 6); ptxt(p.g, "ES KELAPA", 300, 345, 46, "#2f9a5a");
 };

@@ -22,12 +22,13 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
-| Akali Bagasi | `asepMudik` lalu `asepLapis` (7 lapis jaket, gemuk) **baru** | `darmanPetugas` (petugas bandara) **baru** | `ibuKardigan` (gamis marun, kardigan krem) **baru** | |
-| Promo 12.12 | `asepKurir asepMudik asepLapis darmanPetugas ibuKardigan` (jaket hijau tua, topi kuning, tas selempang) **baru** | `darmanSantai` (singlet, celana pendek) **baru** | `ibuMasker` (daster oranye, masker wajah hijau) **baru** | |
+| Bule Belajar Bahasa Gaul | `asepPemandu` (rompi pemandu, topi rimba) **baru** | `darmanPantai` (kemeja bunga biru) **baru** | `ibuPantai` (daster kuning bunga) **baru** | Mister Mike `buleTuris` **tokoh baru**, suara Iapetus logat Inggris |
+| Akali Bagasi | `asepMudik` lalu `asepLapis` (7 lapis jaket, gemuk) **baru** | `darmanPetugas` (petugas bandara) **baru** | `ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` (gamis marun, kardigan krem) **baru** | |
+| Promo 12.12 | `asepKurir asepMudik asepLapis darmanPetugas ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` (jaket hijau tua, topi kuning, tas selempang) **baru** | `darmanSantai` (singlet, celana pendek) **baru** | `ibuMasker` (daster oranye, masker wajah hijau) **baru** | |
 | Diundang Mantan 2 (Aqiqah) | `asepJas` (jas biru tua, dasi merah, tanpa peci) **baru** | `darmanBatikUngu` **baru** | `ibuKebayaHijau` **baru** | Rina (mantan) `rina` **tokoh baru**, suara Aoede |
-| Ibu Ngambek Dibonceng | `asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan` (kaos merah, celemek, ikat kepala) **baru** | `darmanJeans` (jaket jeans, helm putih) **baru** | `ibuGamis` (gamis hijau, helm pink) **baru** | |
-| HP Baru Gaptek 2 (Asisten AI) | `asepHoodie` (hoodie abu) **baru** | `darmanKoko` (koko putih, kacamata di dahi) **baru** | `ibuDasterUngu darmanJeans ibuGamis asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan` (daster ungu bunga) **baru** | |
-| Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan` **baru** |
+| Ibu Ngambek Dibonceng | `asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` (kaos merah, celemek, ikat kepala) **baru** | `darmanJeans` (jaket jeans, helm putih) **baru** | `ibuGamis` (gamis hijau, helm pink) **baru** | |
+| HP Baru Gaptek 2 (Asisten AI) | `asepHoodie` (hoodie abu) **baru** | `darmanKoko` (koko putih, kacamata di dahi) **baru** | `ibuDasterUngu darmanJeans ibuGamis asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` (daster ungu bunga) **baru** | |
+| Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` **baru** |
 | Kuis Satu Miliar | `sarung` | `darman` | `ibuDaster` | |
 | Galau Dijogetin | `sarung` | `darman` | `ibuDaster` | |
 | Ibu Live Jualan | `sarung` | | `ibuDaster` | Pocong |
@@ -40,7 +41,7 @@
 
 **Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `glassesUp` (kacamata di dahi), `headband` (ikat kepala satu warna), `tie` (dasi dan kerah jas), `faceMask` (masker wajah), `layers` (daftar warna jaket berlapis; gabungkan dengan `stout`).
 
-**Properti tambahan:** `fxKardus(p, label, big)` (kardus paket polos dengan label tanpa merek), `fxKoper`, `fxNampan(p, n)`.
+**Properti tambahan:** `fxKardus(p, label, big)` (kardus paket polos dengan label tanpa merek), `fxKoper`, `fxNampan(p, n)`, `fxKelapa` (meja es kelapa).
 
 **Latar baru:** terminal bandara di `main.js` (x=560), berisi meja check-in, timbangan, mesin pemeriksaan, gerbang detektor, dan kursi tunggu.
 
@@ -48,4 +49,4 @@
 
 ## Outfit yang sudah ada di `roman.js` (bisa jadi dasar varian baru)
 
-`civA civB civC workA workB komik handuk rapi batik batikRun pengantin tante istri pejuang kartini bayi galau santai zainuddin santaiSweat hrd genit bule darman flanel sarung gunungA gunungU ujang ibuPasar asepKoki ibuDaster teman asepParkir darmanMotor ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan`
+`civA civB civC workA workB komik handuk rapi batik batikRun pengantin tante istri pejuang kartini bayi galau santai zainuddin santaiSweat hrd genit bule darman flanel sarung gunungA gunungU ujang ibuPasar asepKoki ibuDaster teman asepParkir darmanMotor ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak asepJas darmanBatikUngu ibuKebayaHijau rina ibuMasker darmanSantai asepKurir asepMudik asepLapis darmanPetugas ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai`
