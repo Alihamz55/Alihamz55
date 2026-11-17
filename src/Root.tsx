@@ -5,6 +5,10 @@ import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
 import { Intro, INTRO_DURASI } from "./intro/Intro";
+import { EpisodeTanyaNana } from "./tanyanana/Episode";
+import { totalFrame } from "./tanyanana/tipe";
+import { ep001 } from "./tanyanana/episode/001";
+import durasi001 from "./tanyanana/episode/001-durasi.json";
 import { KisahAdam } from "./nabi/adam/KisahAdam";
 import { TOTAL_FRAME as ADAM_FRAME } from "./nabi/adam/naskah";
 
@@ -12,6 +16,16 @@ import { TOTAL_FRAME as ADAM_FRAME } from "./nabi/adam/naskah";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* ===== TANYA NANA — satu Composition per episode ===== */}
+      <Composition
+        id="TanyaNana-001"
+        component={EpisodeTanyaNana}
+        durationInFrames={totalFrame(ep001, durasi001)}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ data: ep001, durasi: durasi001 as Record<string, number>, pakaiSuara: true }}
+      />
       <Composition
         id="KisahNabiAdam"
         component={KisahAdam}

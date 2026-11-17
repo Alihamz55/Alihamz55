@@ -125,3 +125,17 @@ Render tanpa narasi: tambahkan `--props='{"pakaiMusik":true,"pakaiSuara":false}'
 Render: `npm run render:adam` → `out/kisah-nabi-adam.mp4`
 
 Kisah Nabi berikutnya: salin folder `src/nabi/adam`, ubah naskah & adegannya, lalu daftarkan di `src/Root.tsx`.
+
+## Channel "Tanya Nana" (konsep utama)
+
+Konsep, rencana 30 hari, dan cara produksi lengkap ada di [`konsep/TANYA-NANA.md`](konsep/TANYA-NANA.md).
+
+| Mau ganti... | Edit file |
+|---|---|
+| Naskah episode | `src/tanyanana/episode/<nomor>.ts` |
+| Karakter Nana (wajah, ekspresi, warna) | `src/tanyanana/Nana.tsx` |
+| Tampilan tiap jenis segmen | `src/tanyanana/Segmen.tsx` |
+| Warna & font channel | `src/tanyanana/tema.ts` |
+| Suara | `public/tanyanana/<nomor>/<urutan segmen>.mp3` |
+
+Render episode 1: `npx remotion render TanyaNana-001 out/tanya-nana-001.mp4 --crf=26`
