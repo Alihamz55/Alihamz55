@@ -1,0 +1,25 @@
+Tanya Nana #002 — Kenapa Sholat Menghadap Kiblat?
+Dibuat dengan kode (gaya: 3D Map Explainer dari pustaka Lemo-Opuscar). Semua aset pihak ketiga:
+
+PETA
+- Elevasi & batimetri: AWS Terrain Tiles / Mapzen Terrarium (s3.amazonaws.com/elevation-tiles-prod), zoom 5 & 7.
+  Sumber data: SRTM, GMTED2010, ETOPO1, GEBCO, dll. Bebas dipakai dengan atribusi (lihat
+  https://github.com/tilezen/joerd/blob/master/docs/attribution.md). Diunduh 2026-11-17 (log: data/DOWNLOADS.log).
+- Garis pantai: Natural Earth 1:50m land (domain publik), naturalearthdata.com via github.com/nvkelso/natural-earth-vector.
+- Batas negara TIDAK digambar. Data negara Natural Earth 1:50m hanya dipakai untuk memeriksa bahwa wilayah Tiongkok tidak masuk frame.
+- Relief dibesarkan ×10. Garis = lintasan great-circle (skematis). Tanpa citra satelit (host citra tidak dapat diakses dari lingkungan produksi).
+
+SUARA
+- Narasi: Speko TTS. Nana: suara "Nina" (Soniox). Kakak: suara "Siti – Ad Narrator" (Cartesia sonic-3.5).
+  Penggunaan tunduk pada ketentuan Speko & penyedia suaranya.
+- Efek suara: disintesis secara prosedural (core/audio/sfx.py, Lemo-Opuscar, MIT). Tanpa musik.
+
+FONT (SIL Open Font License 1.1)
+- Barlow Condensed — The Barlow Project Authors (github.com/google/fonts/ofl/barlowcondensed)
+- Lilita One — Juan Montoreano (github.com/google/fonts/ofl/lilitaone)
+
+KARAKTER
+- Nana: karakter orisinal channel Tanya Nana (src/tanyanana/Nana.tsx di repositori ini).
+
+KODE
+- three.js (MIT). Alat render Lemo-Opuscar core/ (MIT) oleh Lemomo (LemoLab).

@@ -1,0 +1,437 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Tanya Nana #002 — Kenapa Sholat Menghadap Kiblat?</title>
+<style>
+@font-face { font-family: "BarlowC"; src: url(fonts/BarlowCondensed-SemiBold.ttf); font-weight: 600; }
+@font-face { font-family: "BarlowC"; src: url(fonts/BarlowCondensed-Medium.ttf); font-weight: 500; }
+@font-face { font-family: "Lilita"; src: url(fonts/LilitaOne-Regular.ttf); }
+html, body { margin: 0; background: #0e2230; overflow: hidden; }
+canvas { position: absolute; left: 0; top: 0; }
+</style>
+<script type="importmap">{ "imports": { "three": "/node_modules/three/build/three.module.js" } }</script>
+</head><body>
+<canvas id="gl"></canvas><canvas id="ui"></canvas>
+<script type="module">
+import * as THREE from 'three';
+
+const W = innerWidth, H = innerHeight;               // 1080 × 1920 (--size 1080x1920)
+const S = W / 1080;                                  // skala tata letak
+const glc = document.getElementById('gl'), uic = document.getElementById('ui');
+glc.width = uic.width = W; glc.height = uic.height = H;
+const ctx = uic.getContext('2d');
+
+// ───────── data ─────────
+const j = (u) => fetch(u).then(r => r.json());
+const bin = (u) => fetch(u).then(r => r.arrayBuffer()).then(b => new Float32Array(b));
+const img = (u) => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = u; });
+const [TL, META, HW, HN, CN, NANA] = await Promise.all([
+  j('timeline.json'), j('data/meta.json'), bin('data/height_wide.bin'), bin('data/height_near.bin'), j('data/china_check.json'),
+  Promise.all(['tutup', 'buka', 'senang'].map(n => img(`data/nana_${n}.png`))),
+]);
+window.DUR = TL.dur;
+window.EV = TL.ev;
+
+// ───────── dunia: x = bujur, z = −mercator(lintang), y = tinggi (derajat ≈ 111.32 km) ─────────
+const merc = (lat) => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360)) * 180 / Math.PI;
+const KM = 111.32;
+const world = (lon, lat, h = 0) => new THREE.Vector3(lon, h, -merc(lat));
+function heightAt(lon, lat) {                         // tinggi (unit dunia) dari grid lebar
+  const m = META.wide, u = (lon - m.lon0) / (m.lon1 - m.lon0) * (m.gw - 1);
+  const v = (merc(lat) - merc(m.lat0)) / (merc(m.lat1) - merc(m.lat0)) * (m.gh - 1);
+  const i = Math.max(0, Math.min(m.gw - 2, Math.floor(u))), k = Math.max(0, Math.min(m.gh - 2, Math.floor(v)));
+  const fu = u - i, fv = v - k, g = (a, b) => HW[b * m.gw + a];
+  return ((g(i, k) * (1 - fu) + g(i + 1, k) * fu) * (1 - fv) + (g(i, k + 1) * (1 - fu) + g(i + 1, k + 1) * fu) * fv) / KM;
+}
+
+const renderer = new THREE.WebGLRenderer({ canvas: glc, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+const scene = new THREE.Scene();
+const HAZE = new THREE.Color('#9fb2ba');
+scene.background = HAZE; scene.fog = new THREE.Fog(HAZE, 10, 100);
+const cam = new THREE.PerspectiveCamera(50, W / H, 0.05, 2000);
+
+const loader = new THREE.TextureLoader();
+const tex = (u) => new Promise(ok => loader.load(u, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); ok(t); }));
+function terrain(m, hgt, map, yoff) {
+  const { gw, gh } = m, pos = new Float32Array(gw * gh * 3), uv = new Float32Array(gw * gh * 2), idx = new Uint32Array((gw - 1) * (gh - 1) * 6);
+  const m0 = merc(m.lat0), m1 = merc(m.lat1);
+  for (let r = 0; r < gh; r++) for (let c = 0; c < gw; c++) {
+    const n = r * gw + c;
+    pos[n * 3] = m.lon0 + (m.lon1 - m.lon0) * c / (gw - 1);
+    pos[n * 3 + 1] = hgt[n] / KM + yoff;
+    pos[n * 3 + 2] = -(m0 + (m1 - m0) * r / (gh - 1));
+    uv[n * 2] = c / (gw - 1); uv[n * 2 + 1] = 1 - r / (gh - 1);
+  }
+  let q = 0;
+  for (let r = 0; r < gh - 1; r++) for (let c = 0; c < gw - 1; c++) {
+    const a = r * gw + c, b = a + 1, d = a + gw, e = d + 1;
+    idx[q++] = a; idx[q++] = d; idx[q++] = b; idx[q++] = b; idx[q++] = d; idx[q++] = e;
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  g.setIndex(new THREE.BufferAttribute(idx, 1));
+  return new THREE.Mesh(g, new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide }));
+}
+const [TW, TN] = await Promise.all([tex('data/albedo_wide.jpg'), tex('data/albedo_near.jpg')]);
+scene.add(terrain(META.wide, HW, TW, -0.004));
+scene.add(terrain(META.near, HN, TN, 0.0));
+
+// ───────── tempat ─────────
+const P = {
+  jkt: [106.8272, -6.1754], kabah: [39.8262, 21.4225],
+  kualalumpur: [101.6869, 3.139], karachi: [67.01, 24.86], kairo: [31.2357, 30.0444],
+  istanbul: [28.9784, 41.0082], nairobi: [36.8219, -1.2921], dakar: [-17.4677, 14.7167],
+};
+const NAMA = { kualalumpur: 'KUALA LUMPUR', karachi: 'KARACHI', kairo: 'KAIRO', istanbul: 'ISTANBUL', nairobi: 'NAIROBI', dakar: 'DAKAR' };
+function greatCircle(a, b, n = 160) {               // titik-titik lintasan great-circle [lon, lat]
+  const r = Math.PI / 180, v = ([lo, la]) => [Math.cos(la * r) * Math.cos(lo * r), Math.cos(la * r) * Math.sin(lo * r), Math.sin(la * r)];
+  const A = v(a), B = v(b), d = Math.acos(A[0] * B[0] + A[1] * B[1] + A[2] * B[2]), out = [];
+  for (let i = 0; i <= n; i++) {
+    const f = i / n, s1 = Math.sin((1 - f) * d) / Math.sin(d), s2 = Math.sin(f * d) / Math.sin(d);
+    const x = s1 * A[0] + s2 * B[0], y = s1 * A[1] + s2 * B[1], z = s1 * A[2] + s2 * B[2];
+    out.push([Math.atan2(y, x) / r, Math.atan2(z, Math.hypot(x, y)) / r]);
+  }
+  return out;
+}
+const ROUTE = greatCircle(P.jkt, P.kabah);
+const CITY = Object.fromEntries(Object.keys(NAMA).map(k => [k, greatCircle(P[k], P.kabah)]));
+const evT = (type, id) => TL.ev.find(e => e.type === type && (id === undefined || e.id === id)).t;
+
+// ───────── kamera: kunci (t, lon, lat, jarak, pitch, heading); jarak di ruang log, kubik monoton ─────────
+const KEYS = [
+  [0.0, 106.45, -6.05, 4.4, 36, 291],
+  [4.5, 106.40, -6.10, 3.8, 39, 292],
+  [8.0, 97.0, -1.0, 26, 50, 292],
+  [11.5, 81, -6, 118, 64, 293],
+  [13.3, 81.5, -6.2, 116, 64, 293],
+  [19.0, 80, -5.6, 112, 65, 293],
+  [21.8, 79.5, -5.4, 110, 65, 294],
+  [25.5, 41.5, 23.0, 72, 70, 300],
+  [29.6, 41.0, 23.5, 70, 68, 312],
+  [32.8, 39.6, 22.4, 24, 55, 318],
+  [TL.dur, 39.4, 23.6, 36, 62, 326],
+];
+function mono(xs, ys) {                              // Fritsch–Carlson
+  const n = xs.length, d = [], m = new Array(n);
+  for (let i = 0; i < n - 1; i++) d.push((ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]));
+  m[0] = d[0]; m[n - 1] = d[n - 2];
+  for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
+  for (let i = 0; i < n - 1; i++) {
+    if (d[i] === 0) { m[i] = m[i + 1] = 0; continue; }
+    const a = m[i] / d[i], b = m[i + 1] / d[i], s = a * a + b * b;
+    if (s > 9) { const t = 3 / Math.sqrt(s); m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
+  }
+  return (x) => {
+    let i = 0; while (i < n - 2 && x > xs[i + 1]) i++;
+    x = Math.max(xs[0], Math.min(xs[n - 1], x));
+    const h = xs[i + 1] - xs[i], t = (x - xs[i]) / h, t2 = t * t, t3 = t2 * t;
+    return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * h * m[i] + (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * h * m[i + 1];
+  };
+}
+const KT = KEYS.map(k => k[0]);
+const CH = [1, 2, 3, 4, 5].map(c => mono(KT, KEYS.map(k => c === 3 ? Math.log(k[c]) : k[c])));
+function camAt(t) {
+  const lon = CH[0](t), lat = CH[1](t), D = Math.exp(CH[2](t)), p = CH[3](t) * Math.PI / 180, hd = CH[4](t) * Math.PI / 180;
+  const T = world(lon, lat, 0);
+  const f = new THREE.Vector3(Math.sin(hd) * Math.cos(p), -Math.sin(p), -Math.cos(hd) * Math.cos(p));
+  cam.position.copy(T).addScaledVector(f, -D); cam.lookAt(T);
+  cam.near = D * 0.02; cam.far = D * 30; cam.updateProjectionMatrix(); cam.updateMatrixWorld();
+  scene.fog.near = D * 1.25; scene.fog.far = D * 5.5;
+  return D;
+}
+const tmp = new THREE.Vector3();
+function proj(lon, lat, h) {                         // satu fungsi dunia → layar
+  tmp.copy(world(lon, lat, h === undefined ? heightAt(lon, lat) + 0.01 : h)).project(cam);
+  return { x: (tmp.x + 1) / 2 * W, y: (1 - tmp.y) / 2 * H, ok: tmp.z < 1 && tmp.z > -1 };
+}
+
+// ───────── utilitas 2D ─────────
+const cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = (x) => { x = cl(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const ramp = (t, a, b) => cl((t - a) / (b - a));
+const back = (x) => { x = cl(x); const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const AMBER = '#FFA63D', CORE = '#FFC36B', WARM = '#F6EEE0', BOUND = '#D9E6EE', SEA = '#BCDBE6', INK = '#2B2119';
+let TEXTS_NOW = [];
+function text(s, x, y, { font = '600 34px BarlowC', color = WARM, align = 'left', spacing = '0px', alpha = 1, id, pass } = {}) {
+  if (alpha <= 0.01) return;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.font = font; ctx.letterSpacing = spacing; ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle';
+  ctx.fillText(s, x, y);
+  const w = ctx.measureText(s).width, x0 = align === 'center' ? x - w / 2 : align === 'right' ? x - w : x;
+  if (id && alpha > 0.95) TEXTS_NOW.push({ id, text: s, x0, y0: y - 20, x1: x0 + w, y1: y + 20, pass });
+  ctx.restore();
+}
+function polyline(pts, { upto = 1, glow = 1, width = 4 * S, core = CORE, halo = AMBER, alpha = 1 } = {}) {
+  const n = Math.max(2, Math.floor((pts.length - 1) * upto) + 1), sp = [];
+  for (let i = 0; i < n; i++) { const p = proj(pts[i][0], pts[i][1], 0.012); if (p.ok) sp.push(p); }
+  if (sp.length < 2) return null;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.globalCompositeOperation = 'lighter';
+  for (const [lw, a, c] of [[width * 4.5, 0.18 * glow, halo], [width * 2.2, 0.35 * glow, halo], [width, 1, core]]) {
+    ctx.strokeStyle = c; ctx.globalAlpha = alpha * a; ctx.lineWidth = lw; ctx.beginPath();
+    sp.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)); ctx.stroke();
+  }
+  ctx.restore();
+  return sp[sp.length - 1];
+}
+function dot(x, y, r, color, a = 1) {
+  ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = a;
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r * 4); g.addColorStop(0, color); g.addColorStop(0.25, color + 'aa'); g.addColorStop(1, color + '00');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * 4, 0, 7); ctx.fill();
+  ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = '#FFF4DE'; ctx.beginPath(); ctx.arc(x, y, r * 0.55, 0, 7); ctx.fill();
+  ctx.restore();
+}
+function ring(x, y, r, a, color = CORE, lw = 3 * S) {
+  if (a <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.stroke(); ctx.restore();
+}
+function pill(x, y, s, { bg = '#FF8A3D', fg = '#fff', font = '58px Lilita', rot = 0, alpha = 1, scale = 1, border = '#fff', pad = 34 } = {}) {
+  if (alpha <= 0.01 || scale <= 0.01) return;
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(scale, scale); ctx.globalAlpha = alpha; ctx.font = font;
+  const w = ctx.measureText(s).width + pad * 2 * S, h = parseInt(font) * 1.35;
+  ctx.fillStyle = 'rgba(0,0,0,0.22)'; rr(-w / 2 + 6 * S, -h / 2 + 8 * S, w, h, h / 2); ctx.fill();
+  ctx.fillStyle = bg; rr(-w / 2, -h / 2, w, h, h / 2); ctx.fill();
+  ctx.lineWidth = 6 * S; ctx.strokeStyle = border; ctx.stroke();
+  ctx.fillStyle = fg; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(s, 0, h * 0.04);
+  ctx.restore();
+}
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function wrapText(s, maxW) { const out = []; let cur = ''; for (const w of s.split(' ')) { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > maxW && cur) { out.push(cur); cur = w; } else cur = t; } out.push(cur); return out; }
+
+// ───────── label peta: set jauh & set dekat, memudar menurut tinggi kamera ─────────
+const LABELS = [
+  // [teks, lon, lat, jenis, set]
+  ['JAWA', 109.6, -7.25, 'land', 'near'], ['SUMATRA', 103.2, -3.2, 'land', 'near'], ['LAUT JAWA', 108.6, -4.6, 'sea', 'near'],
+  ['SAMUDRA HINDIA', 104.0, -9.6, 'sea', 'near'],
+  ['SAMUDRA HINDIA', 76.0, -6.0, 'sea', 'far'], ['LAUT ARAB', 63.5, 14.0, 'sea', 'far'], ['JAZIRAH ARAB', 46.5, 23.8, 'land', 'far'],
+  ['INDONESIA', 113.5, -1.2, 'land', 'far'], ['AFRIKA', 33.0, 6.0, 'land', 'far'], ['LAUT MERAH', 38.0, 18.6, 'sea', 'mid'],
+];
+function drawLabels(D) {
+  for (const [s, lon, lat, kind, set] of LABELS) {
+    const a = set === 'near' ? 1 - ramp(D, 6, 12) : set === 'far' ? ramp(D, 18, 40) : ramp(D, 14, 26) * (1 - ramp(D, 60, 80));
+    if (a <= 0.01) continue;
+    const p = proj(lon, lat); if (!p.ok) continue;
+    const edge = Math.min(p.x, W - p.x, p.y - 200 * S, H - 420 * S - p.y);
+    const ae = a * cl(edge / (120 * S));
+    if (kind === 'sea') text(s, p.x, p.y, { font: `500 ${26 * S}px BarlowC`, color: SEA, align: 'center', spacing: '0.3em', alpha: ae * 0.9, id: 'lbl' + s, pass: true });
+    else text(s, p.x, p.y, { font: `600 ${32 * S}px BarlowC`, color: INK, align: 'center', spacing: '0.3em', alpha: ae * 0.85, id: 'lbl' + s, pass: true });
+  }
+}
+
+// ───────── subtitle, lencana Nana, merek ─────────
+function cueAt(t) { return TL.cues.find(c => t >= c.t0 - 0.05 && t < c.t1); }
+function lineAt(t) { return TL.lines.find(l => t >= l.t && t < l.t + l.dur); }
+function drawFloor() {
+  const g = ctx.createLinearGradient(0, H - 560 * S, 0, H);
+  g.addColorStop(0, 'rgba(8,18,26,0)'); g.addColorStop(0.55, 'rgba(8,18,26,0.55)'); g.addColorStop(1, 'rgba(8,18,26,0.82)');
+  ctx.fillStyle = g; ctx.fillRect(0, H - 560 * S, W, 560 * S);
+}
+function drawSubtitle(t) {
+  const c = cueAt(t); if (!c) return;
+  const a = cl((t - c.t0 + 0.05) / 0.12) * cl((c.t1 - t) / 0.12);
+  const x = 64 * S, y = H - 300 * S;
+  ctx.save(); ctx.globalAlpha = a;
+  ctx.fillStyle = c.who === 'nana' ? '#1FAB89' : AMBER; ctx.fillRect(x, y - 62 * S, 7 * S, 120 * S);
+  text(c.who === 'nana' ? 'NANA' : 'KAKAK', x + 28 * S, y - 36 * S, { font: `600 ${26 * S}px BarlowC`, color: c.who === 'nana' ? '#7EE0C6' : CORE, spacing: '0.25em', alpha: a });
+  text(c.text, x + 28 * S, y + 18 * S, { font: `600 ${54 * S}px BarlowC`, color: WARM, alpha: a });
+  ctx.restore();
+}
+function drawNana(t) {
+  const l = lineAt(t + 0.15);
+  const shows = TL.lines.filter(l => l.who === 'nana');
+  let a = 0, line = null;
+  for (const L of shows) { const v = ramp(t, L.t - 0.35, L.t) * (1 - ramp(t, L.t + L.dur + 0.3, L.t + L.dur + 0.65)); if (v > a) { a = v; line = L; } }
+  if (a <= 0.01) return;
+  const k = Math.floor((t - line.t) * TL.fps), env = line.env[Math.max(0, Math.min(line.env.length - 1, k))] || 0;
+  const talking = t >= line.t && t < line.t + line.dur;
+  const im = talking && env > 0.32 ? NANA[1] : (line.id === 'L5' ? NANA[2] : NANA[0]);
+  const r = 128 * S, cx = 64 * S + r, cy = H - 300 * S - 96 * S - r - 20 * S, sc = back(a);
+  ctx.save(); ctx.translate(cx, cy); ctx.scale(sc, sc);
+  ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.arc(6 * S, 10 * S, r, 0, 7); ctx.fill();
+  ctx.fillStyle = '#FFF4D6'; ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, r - 4 * S, 0, 7); ctx.clip();
+  const iw = r * 2.15, ih = iw * 520 / 400; ctx.drawImage(im, -iw / 2, -r * 0.92, iw, ih); ctx.restore();
+  ctx.lineWidth = 12 * S; ctx.strokeStyle = '#1FAB89'; ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); ctx.stroke();
+  ctx.restore();
+}
+function drawBrand(t) {
+  pill(250 * S, 120 * S, 'KENAPA YA?', { rot: -0.05, font: `${58 * S}px Lilita` });
+  pill(W - 118 * S, 120 * S, '#002', { bg: '#2D2A32', fg: '#FFC93C', font: `${44 * S}px Lilita`, border: '#2D2A32', pad: 26 });
+}
+function drawHook(t) {                               // judul besar 3 detik pertama
+  const a = (1 - ramp(t, 4.4, 5.0));
+  if (a <= 0) return;
+  const lines = [['Kenapa sholat', '#FFFFFF'], ['menghadap KIBLAT?', '#FFC93C']];
+  lines.forEach(([s, c], i) => {
+    const pop = back(ramp(t, 0.05 + i * 0.25, 0.5 + i * 0.25));
+    ctx.save(); ctx.translate(W / 2, (300 + i * 112) * S); ctx.scale(pop, pop); ctx.globalAlpha = a;
+    ctx.font = `${104 * S}px Lilita`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round'; ctx.lineWidth = 22 * S; ctx.strokeStyle = '#2D2A32'; ctx.strokeText(s, 0, 0);
+    ctx.fillStyle = c; ctx.fillText(s, 0, 0); ctx.restore();
+    if (a > 0.95 && pop > 0.98) TEXTS_NOW.push({ id: 'hook' + i, text: s, x0: 60, y0: (250 + i * 112) * S, x1: W - 60, y1: (350 + i * 112) * S });
+  });
+}
+function drawCards(t) {
+  const tm = evT('card', 'misi'), tb = evT('card', 'besok');
+  const a1 = back(ramp(t, tm, tm + 0.45));
+  if (a1 > 0.01) {
+    ctx.save(); ctx.translate(W / 2, 470 * S); ctx.scale(a1, a1); ctx.rotate((1 - a1) * 0.08);
+    const w = 900 * S, h = 300 * S;
+    ctx.fillStyle = 'rgba(0,0,0,0.22)'; rr(-w / 2 + 8 * S, -h / 2 + 12 * S, w, h, 46 * S); ctx.fill();
+    ctx.fillStyle = '#fff'; rr(-w / 2, -h / 2, w, h, 46 * S); ctx.fill(); ctx.lineWidth = 12 * S; ctx.strokeStyle = '#FF6F91'; ctx.stroke();
+    ctx.font = `${64 * S}px Lilita`; ctx.fillStyle = '#FF6F91'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('🎯 MISI HARI INI', 0, -82 * S);
+    ctx.font = `${56 * S}px Lilita`; ctx.fillStyle = '#2D2A32';
+    ['Cari tahu arah kiblat', 'di rumahmu!'].forEach((s, i) => ctx.fillText(s, 0, (8 + i * 66) * S));
+    ctx.restore();
+    if (a1 > 0.98) TEXTS_NOW.push({ id: 'misi', text: 'MISI HARI INI Cari tahu arah kiblat di rumahmu!', x0: 90 * S, y0: 320 * S, x1: 990 * S, y1: 620 * S });
+  }
+  const a2 = back(ramp(t, tb, tb + 0.45));
+  if (a2 > 0.01) {
+    ctx.save(); ctx.translate(W / 2, (760 + (1 - a2) * 60) * S); ctx.globalAlpha = cl(a2);
+    const w = 820 * S, h = 190 * S;
+    ctx.fillStyle = '#6C5CE7'; rr(-w / 2, -h / 2, w, h, 40 * S); ctx.fill(); ctx.lineWidth = 8 * S; ctx.strokeStyle = '#fff'; ctx.stroke();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = `${40 * S}px Lilita`; ctx.fillStyle = '#FFC93C'; ctx.fillText('⏭️ BESOK:', 0, -46 * S);
+    ctx.font = `${46 * S}px Lilita`; ctx.fillStyle = '#fff'; ctx.fillText('Kenapa baca bismillah', 0, 6 * S); ctx.fillText('sebelum makan?', 0, 58 * S);
+    ctx.restore();
+    if (a2 > 0.98) TEXTS_NOW.push({ id: 'besok', text: 'BESOK: Kenapa baca bismillah sebelum makan?', x0: 130 * S, y0: 665 * S, x1: 950 * S, y1: 855 * S });
+  }
+}
+
+// ───────── lapisan data ─────────
+function drawPins(t, D) {
+  // Jakarta
+  const pj = proj(...P.jkt);
+  const aj = ramp(t, 0.15, 0.5);
+  if (pj.ok && aj > 0) {
+    dot(pj.x, pj.y, 9 * S, AMBER, aj);
+    const ph = ((t - 0.25) % 1.6) / 1.6; if (t > 0.25 && t < 13) ring(pj.x, pj.y, (12 + ph * 46) * S, (1 - ph) * aj * 0.9);
+    const la = aj * (1 - ramp(D, 30, 45));
+    // garis penunjuk ke label
+    ctx.save(); ctx.globalAlpha = la; ctx.strokeStyle = WARM; ctx.lineWidth = 2 * S; ctx.beginPath(); ctx.moveTo(pj.x + 12 * S, pj.y - 6 * S); ctx.lineTo(pj.x + 70 * S, pj.y - 64 * S); ctx.lineTo(pj.x + 110 * S, pj.y - 64 * S); ctx.stroke(); ctx.restore();
+    text('JAKARTA', pj.x + 120 * S, pj.y - 78 * S, { font: `600 ${40 * S}px BarlowC`, color: WARM, spacing: '0.12em', alpha: la, id: 'jkt' });
+    text('dari sini kita sholat', pj.x + 120 * S, pj.y - 40 * S, { font: `500 ${28 * S}px BarlowC`, color: WARM, alpha: la * (1 - ramp(t, 11, 12)), id: 'jkt2', pass: true });
+  }
+  // Ka'bah
+  const tk = evT('pin', 'kabah'), ak = ramp(t, tk - 0.2, tk + 0.3);
+  const pk = proj(...P.kabah);
+  if (pk.ok && ak > 0) {
+    const tc = evT('converge'), boost = 1 + 1.4 * Math.exp(-Math.max(0, t - tc) * 2.2) * (t > tc ? 1 : 0);
+    dot(pk.x, pk.y, 11 * S * boost, AMBER, ak);
+    const ph = ((t - tk) % 1.4) / 1.4; ring(pk.x, pk.y, (14 + ph * 56) * S, (1 - ph) * ak);
+    if (t > tc) for (let k = 0; k < 3; k++) { const q = ramp(t, tc + k * 0.18, tc + 1.4 + k * 0.18); ring(pk.x, pk.y, (20 + q * 260) * S, (1 - q) * 0.9, CORE, 5 * S * (1 - q) + 1); }
+    const la = ak;
+    ctx.save(); ctx.globalAlpha = la; ctx.strokeStyle = WARM; ctx.lineWidth = 2 * S; ctx.beginPath(); ctx.moveTo(pk.x - 12 * S, pk.y - 8 * S); ctx.lineTo(pk.x - 70 * S, pk.y - 80 * S); ctx.lineTo(pk.x - 110 * S, pk.y - 80 * S); ctx.stroke(); ctx.restore();
+    text("KA'BAH", pk.x - 120 * S, pk.y - 96 * S, { font: `600 ${44 * S}px BarlowC`, color: '#FFF4DE', align: 'right', spacing: '0.12em', alpha: la, id: 'kabah' });
+    text('Makkah', pk.x - 120 * S, pk.y - 56 * S, { font: `500 ${30 * S}px BarlowC`, color: '#FFF4DE', align: 'right', alpha: la, id: 'makkah' });
+  }
+}
+function drawRoute(t) {
+  const ti = evT('ignite'), p = ease(ramp(t, ti, ti + 6.0));
+  if (p <= 0) return;
+  const head = polyline(ROUTE, { upto: p, width: 4.5 * S });
+  if (head && p < 1) dot(head.x, head.y, 10 * S, '#FFE2A8', 1);
+  if (p >= 1) for (let k = 0; k < 4; k++) {          // denyut mengalir ke Ka'bah
+    const f = ((t - ti - 6) * 0.16 + k / 4) % 1, i = Math.floor(f * (ROUTE.length - 1)), q = proj(...ROUTE[i], 0.012);
+    if (q.ok) dot(q.x, q.y, 5 * S, '#FFE2A8', Math.sin(f * Math.PI));
+  }
+}
+function drawMeasure(t, D) {
+  const tr = evT('ruler'), a = ramp(t, tr, tr + 0.6) * (1 - ramp(t, 22.0, 22.6));
+  if (a <= 0) return;
+  // penggaris sejajar rute (offset di layar), tumbuh dari tengah
+  const sp = ROUTE.map(([lo, la]) => proj(lo, la, 0.012)).filter(p => p.ok);
+  if (sp.length < 2) return;
+  const A = sp[0], B = sp[sp.length - 1], dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
+  const off = 44 * S, mx = (A.x + B.x) / 2 + nx * off, my = (A.y + B.y) / 2 + ny * off, g = ease(ramp(t, tr, tr + 0.6)) / 2;
+  const x0 = mx - dx * g, y0 = my - dy * g, x1 = mx + dx * g, y1 = my + dy * g;
+  ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = WARM; ctx.lineWidth = 2.5 * S; ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+  const tick = ramp(t, tr + 0.55, tr + 0.7) * 16 * S;
+  for (const [x, y] of [[x0, y0], [x1, y1]]) { ctx.beginPath(); ctx.moveTo(x - nx * tick, y - ny * tick); ctx.lineTo(x + nx * tick, y + ny * tick); ctx.stroke(); }
+  ctx.restore();
+  const la = ramp(t, tr + 0.65, tr + 0.95) * a;
+  const side = mx > W / 2 ? -1 : 1, al = side > 0 ? 'left' : 'right';   // label di sisi yang lebih lapang
+  const lx = mx + side * 60 * S, ly = my - 40 * S;
+  text('7.917 km', lx, ly, { font: `600 ${92 * S}px BarlowC`, color: WARM, align: al, alpha: la, id: 'jarak' });
+  text('jarak lurus Jakarta → Ka’bah', lx, ly + 58 * S, { font: `500 ${30 * S}px BarlowC`, color: WARM, align: al, alpha: la * 0.85, id: 'jarak2' });
+  // kompas di Jakarta: lingkaran di tanah + panah 295°
+  const tc = evT('compass'), ca = ramp(t, tc, tc + 0.5) * a;
+  if (ca > 0) {
+    const c0 = P.jkt, rad = 3.2, pts = [];
+    for (let k = 0; k <= 72; k++) { const th = k / 72 * Math.PI * 2; const q = proj(c0[0] + Math.sin(th) * rad / Math.cos(c0[1] * Math.PI / 180), c0[1] + Math.cos(th) * rad, 0.012); if (q.ok) pts.push(q); }
+    ctx.save(); ctx.globalAlpha = ca; ctx.strokeStyle = BOUND; ctx.lineWidth = 2.5 * S; ctx.beginPath(); pts.forEach((q, i) => i ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y)); ctx.stroke();
+    const n0 = proj(c0[0], c0[1] + rad, 0.012), n1 = proj(c0[0], c0[1] + rad + 1.0, 0.012);
+    ctx.lineWidth = 4 * S; ctx.beginPath(); ctx.moveTo(n0.x, n0.y); ctx.lineTo(n1.x, n1.y); ctx.stroke(); ctx.restore();
+    text('U', n1.x, n1.y - 22 * S, { font: `600 ${30 * S}px BarlowC`, color: BOUND, align: 'center', alpha: ca, id: 'utara', pass: true });
+    const pj = proj(...c0);
+    const kiri = pj.x > W / 2;
+    text('295° · BARAT LAUT', pj.x + (kiri ? -70 : 70) * S, pj.y - 10 * S, { font: `600 ${44 * S}px BarlowC`, color: '#FFF4DE', spacing: '0.06em', align: kiri ? 'right' : 'left', alpha: ca, id: 'arah' });
+  }
+}
+function drawCities(t) {
+  const tc = evT('converge');
+  for (const k of Object.keys(NAMA)) {
+    const ts = evT('city', k), p = ease(ramp(t, ts, ts + 1.3));
+    if (p <= 0) continue;
+    const boost = t > tc ? 1 + 0.8 * Math.exp(-(t - tc) * 2) : 1;
+    const head = polyline(CITY[k], { upto: p, width: 3.2 * S, glow: boost });
+    if (head && p < 1) dot(head.x, head.y, 8 * S, '#FFE2A8', 1);
+    const c = proj(...P[k]);
+    if (c.ok) {
+      dot(c.x, c.y, 7 * S, AMBER, ramp(t, ts, ts + 0.3));
+      const a = ramp(t, ts + 0.1, ts + 0.5) * (1 - ramp(t, 32.2, 32.8));
+      const edge = Math.min(c.x - 20 * S, W - c.x - 20 * S, c.y - 200 * S, H - 470 * S - c.y);
+      text(NAMA[k], c.x, c.y - 34 * S, { font: `600 ${30 * S}px BarlowC`, color: '#FFF4DE', align: 'center', spacing: '0.1em', alpha: a * cl(edge / (60 * S)), id: 'c' + k, pass: true });
+    }
+    if (p >= 1) for (let q = 0; q < 2; q++) {
+      const f = ((t - ts - 1.3) * 0.22 + q / 2) % 1, i = Math.floor(f * (CITY[k].length - 1)), pp = proj(...CITY[k][i], 0.012);
+      if (pp.ok) dot(pp.x, pp.y, 4 * S, '#FFE2A8', Math.sin(f * Math.PI) * 0.9);
+    }
+  }
+}
+function drawSource(t) {
+  const a = 0.75 * (1 - ramp(t, 32.6, 33.2) * 0.0);
+  text('Elevasi: AWS Terrain Tiles · Pantai: Natural Earth · Relief ×10 · Garis: lintasan great-circle', W - 30 * S, H - 34 * S,
+    { font: `500 ${20 * S}px BarlowC`, color: '#cfd9de', align: 'right', alpha: a, id: 'src', pass: true });
+}
+function drawSumber(t) {
+  const ts = evT('tick', 'sumber'), a = ramp(t, ts, ts + 0.3) * (1 - ramp(t, 13.0, 13.4));
+  pill(W / 2, 260 * S, '📖 QS. Al-Baqarah: 144', { bg: '#2D2A32', fg: '#FFF4DE', font: `${44 * S}px Lilita`, alpha: a, scale: back(ramp(t, ts, ts + 0.35)), border: '#FFC93C' });
+  if (a > 0.98) TEXTS_NOW.push({ id: 'qs', text: 'QS. Al-Baqarah: 144', x0: 280 * S, y0: 225 * S, x1: 800 * S, y1: 295 * S });
+}
+function grade() {
+  const g = ctx.createRadialGradient(W / 2, H * 0.45, H * 0.25, W / 2, H * 0.5, H * 0.75);
+  g.addColorStop(0, 'rgba(40,20,0,0)'); g.addColorStop(1, 'rgba(25,12,0,0.38)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = 'rgba(255,190,120,0.18)'; ctx.fillRect(0, 0, W, H); ctx.restore();
+}
+
+window.render = (t) => {
+  TEXTS_NOW = [];
+  const D = camAt(t);
+  renderer.render(scene, cam);
+  ctx.clearRect(0, 0, W, H);
+  grade();
+  drawLabels(D);
+  drawRoute(t);
+  drawCities(t);
+  drawPins(t, D);
+  drawMeasure(t, D);
+  drawFloor();
+  drawSource(t);
+  drawSubtitle(t);
+  drawNana(t);
+  drawBrand(t);
+  drawSumber(t);
+  drawHook(t);
+  drawCards(t);
+};
+window.TEXTS = (t) => { window.render(t); return TEXTS_NOW; };
+// Pemeriksaan aturan peta: berapa titik daratan Tiongkok yang masuk frame pada waktu t
+window.probe = (t) => { camAt(t); const a = proj(...P.jkt), b = proj(...P.kabah); const e = []; for (const [x, y] of [[0, 0], [W, 0], [0, H * 0.75], [W, H * 0.75]]) { const r = new THREE.Raycaster(); r.setFromCamera(new THREE.Vector2(x / W * 2 - 1, 1 - y / H * 2), cam); const k = -r.ray.origin.y / r.ray.direction.y; const q = r.ray.origin.clone().addScaledVector(r.ray.direction, k); e.push(k > 0 ? [+q.x.toFixed(1), +q.z.toFixed(1)] : null); } return { jkt: [a.x | 0, a.y | 0, a.ok], kabah: [b.x | 0, b.y | 0, b.ok], cn: window.chinaInFrame(t), corners: e }; };
+window.chinaInFrame = (t) => { camAt(t); let n = 0; for (const [lo, la] of CN) { const p = proj(lo, la, 0); if (p.ok && p.x > -20 && p.x < W + 20 && p.y > -20 && p.y < H + 20) n++; } return n; };
+await document.fonts.load(`600 40px BarlowC`); await document.fonts.load(`500 40px BarlowC`); await document.fonts.load(`40px Lilita`);
+window.render(0);
+window.READY = true;
+</script>
+</body></html>

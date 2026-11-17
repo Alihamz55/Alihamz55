@@ -1,0 +1,9 @@
+# hasil yang bisa dibuat ulang (build.sh / tools/prep.py)
+out/
+stills/
+data/cache/
+data/albedo_*.jpg
+data/height_*.bin
+data/china_check.json
+data/meta.json
+*.mp4

@@ -7,6 +7,7 @@ import { DURASI_DETIK } from "./doa/lagu";
 import { Intro, INTRO_DURASI } from "./intro/Intro";
 import { EpisodeTanyaNana } from "./tanyanana/Episode";
 import { totalFrame } from "./tanyanana/tipe";
+import { NanaPose } from "./tanyanana/NanaPose";
 import { ep001 } from "./tanyanana/episode/001";
 import durasi001 from "./tanyanana/episode/001-durasi.json";
 import { KisahAdam } from "./nabi/adam/KisahAdam";
@@ -17,6 +18,15 @@ export const RemotionRoot: React.FC = () => {
   return (
     <>
       {/* ===== TANYA NANA — satu Composition per episode ===== */}
+      <Composition
+        id="NanaPose"
+        component={NanaPose}
+        durationInFrames={30}
+        fps={30}
+        width={400}
+        height={520}
+        defaultProps={{ ekspresi: "dengar" as const, bicara: false }}
+      />
       <Composition
         id="TanyaNana-001"
         component={EpisodeTanyaNana}
