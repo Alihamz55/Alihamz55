@@ -139,3 +139,8 @@ Konsep, rencana 30 hari, dan cara produksi lengkap ada di [`konsep/TANYA-NANA.md
 | Suara | `public/tanyanana/<nomor>/<urutan segmen>.mp3` |
 
 Render episode 1: `npx remotion render TanyaNana-001 out/tanya-nana-001.mp4 --crf=26`
+
+### Episode spesial dengan Lemo-Opuscar
+`lemo/tanya-nana-002/`: "Kenapa Sholat Menghadap Kiblat?" dalam gaya **3D Map Explainer** (peta 3D dari data ketinggian asli).
+Bangun ulang: `LIB=~/lemo-opuscar sh lemo/tanya-nana-002/build.sh` (butuh pustaka Lemo-Opuscar di `~/lemo-opuscar`).
+Lihat `TREATMENT.md`, `FACTS.md` dan `CREDITS` di folder itu.
