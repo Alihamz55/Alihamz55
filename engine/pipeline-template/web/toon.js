@@ -153,6 +153,11 @@ export class Pen {
         this.g = g;
     }
     P(x, y) {
+        if (this.boil) { const [px, py] = this.P0(x, y), A = this.boil[0], k = this.boil[1];
+            return [px + A * Math.sin(x * 0.053 + y * 0.031 + k * 1.7), py + A * Math.sin(y * 0.049 - x * 0.027 + k * 2.3)]; }
+        return this.P0(x, y);
+    }
+    P0(x, y) {
         if (!this.rot) return [
             x,
             y
@@ -248,6 +253,7 @@ export class Pen {
         const gr = g.createRadialGradient(gx, gy, 0, gx, gy, r1 * R);
         gr.addColorStop(0, base);
         gr.addColorStop(r0 / r1, base);
+        if (this.flatShade) { gr.addColorStop(Math.min(0.999, r0 / r1 + 0.001), shadow); }
         gr.addColorStop(1, shadow);
         this.path(pts, true);
         g.fillStyle = gr;
@@ -267,7 +273,8 @@ export class Pen {
         const [ax, ay] = this.P(cx + dx * (hi - dc), cy + dy * (hi - dc)), [bx, by] = this.P(cx + dx * (lo - dc), cy + dy * (lo - dc));
         const gr = g.createLinearGradient(ax, ay, bx, by);
         gr.addColorStop(0, base);
-        gr.addColorStop(flat, base);
+        gr.addColorStop(this.flatShade ? 0.58 : flat, base);
+        if (this.flatShade) gr.addColorStop(0.581, shadow);
         gr.addColorStop(1, shadow);
         this.path(pts, true);
         g.fillStyle = gr;
@@ -2583,7 +2590,7 @@ export const romanFront = (p, key, opts = {}) => {
   const thick = thickAngle(light), ow = 5 * u, cx = 300;
   const legCol = O.legs ?? mix(O.tunic, INK, 0.62), armCol = O.arms ?? mix(O.tunic, INK, 0.5);
   const helmet = !!O.helmet && !nohelmet, old = O.helmet === "old";
-  p.rot = null;
+  p.rot = null; p.boil = opts.boil ? [opts.boil, opts.boilSeed || 0] : null; p.flatShade = !!opts.flat;
   // ---- cape behind everything ----
   if (O.cape) {
     const cp = [[cx - 0.48 * W, chin + 0.08 * HH], [cx + 0.48 * W, chin + 0.08 * HH], [cx + 0.62 * W, sole - 0.55 * HH], [cx + 0.2 * W, sole - 0.45 * HH], [cx - 0.2 * W, sole - 0.5 * HH], [cx - 0.62 * W, sole - 0.55 * HH]];

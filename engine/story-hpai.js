@@ -11,6 +11,7 @@ const HPTXT = { 64: ['MEMESAN:', 'IBU-IBU ARISAN', '30 PORSI'], 285: ['MEMBATALK
 const speaks = (f, who) => LINES.some(([w, a, b]) => w === who && f >= a - 2 && f <= b + 2);
 const talk = (f, who, expr) => { if (!speaks(f, who)) return expr; const lv = +(LIPS[f] || 0); return lv ? expr + '_t' + lv : expr; };
 export const TOTAL = 1533;
+const SCIFI = typeof location !== 'undefined' && location.hash === '#scifi';
 const OFF = 693, ON = 921; // lampu mati / nyala
 const SH = [['wide', 0, 63], ['hp', 64, 217], ['darman', 218, 284], ['hp', 285, 374], ['ibuDoor', 375, 394], ['asep', 395, 483], ['darmanECU', 484, 596], ['hp', 597, 692], ['dark', 693, 895], ['hp', 896, 934],
   ['darman', 935, 989], ['hp', 990, 1091], ['asep', 1092, 1218], ['darman', 1219, 1289], ['hp', 1290, 1370], ['two', 1371, 1411], ['darmanECU', 1412, 1532]];
@@ -78,7 +79,7 @@ export const actorsAt = (f, T) => {
   const out = [];
   const add = (who, pose, seed, pos, spk) => { const { shake, walking, ...o } = pose(f), i = idle(f, seed), tilt = shake ? sway(f, 6, 0.6) : 0;
     if (walking) o.step = q((f / 12) % 1, 2);
-    out.push(R(T, who, { seed, blink: o.blink ?? blinkAt(f, seed), ...o, expr: talk(f, spk, o.expr), bob: q(i.bob, 3), tilt: q(i.tilt + tilt, 1), headTilt: q((o.headTilt || 0) + i.headTilt, 1) }, pos, { ground: 0.5 })); };
+    out.push(R(T, who, { seed, blink: o.blink ?? blinkAt(f, seed), ...(SCIFI ? { boil: 2.4, boilSeed: Math.floor(f / 3) % 7, flat: 1 } : {}), ...o, expr: talk(f, spk, o.expr), bob: q(i.bob, 3), tilt: q(i.tilt + tilt, 1), headTilt: q((o.headTilt || 0) + i.headTilt, 1) }, pos, { ground: 0.5 })); };
   add('darmanKoko', dmPose, 2, DM, 'D'); add('asepHoodie', asPose, 5, AS, 'A'); add('ibuDasterUngu', ibPose, 3, ibPos(f), 'I');
   return out;
 };
