@@ -32,7 +32,8 @@ export const camFromKeys = (K, f, { creep = 0.0012, kicks = [] } = {}) => {
     } else c = { pos: lerp3(a.pos, b.pos, t), look: lerp3(a.look, b.look, t), fov: lerp(a.fov, b.fov, t), roll: lerp(a.roll || 0, b.roll || 0, t) };
   }
   c.fov *= 1 - creep * Math.max(0, f - K[0].f) * 0.15; // gentle push-in during holds
-  for (const k of kicks) { const d = f - k.f; if (d >= 0 && d < 7) { const s = (d % 2 ? -1 : 1) * k.a * (1 - d / 7); c.look = [c.look[0], c.look[1] + s * 3, c.look[2] + s * 2]; c.roll = (c.roll || 0) + s * 20; } }
+  // kick = smooth punch-in zoom (no shake, no roll): quick in, ease back out over 12 frames
+  for (const k of kicks) { const d = f - k.f; if (d >= 0 && d < 12) { const s = k.a * (d < 3 ? d / 3 : 1 - (d - 3) / 9); c.fov *= 1 - 1.8 * s; } }
   return c;
 };
 /** Idle life for a card: breathing bob + small sway, deterministic per seed. Use on EVERY on-screen character. */

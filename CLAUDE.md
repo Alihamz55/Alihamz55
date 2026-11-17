@@ -85,6 +85,7 @@ Hasilnya tersimpan di file tool-result. Ambil audionya dengan `json.loads(json.l
   - **Efek volume 2.5D (`vol: 1`) tidak dipakai.** Pengguna memilih tampilan lama.
 - **Bayangan tegas (gaya Sci-Fi Sitcom, mulai 17 Nov 2026):** bayangan pada tokoh dibuat tegas, tanpa gradasi. Fitur ini **aktif otomatis** di `roman.js` (`opts.flat` bawaan 1; isi `flat: 0` kalau ingin gradasi lama).
   - **Garis bergetar (`boil`) tidak dipakai**, karena menurut pengguna terasa aneh.
+- **Kick kamera = zoom halus (mulai 17 Nov 2026):** di punchline kamera mendekat sebentar lalu kembali selama 12 frame, tanpa getar dan tanpa miring (`motion.js`). Getaran dan kemiringan lama membuat layar terlihat goyang dan tidak seimbang.
 - **Audio:** musik dan SFX sintetis di `audio.py`. `mix.py` menjaga musik di -6 dB terhadap suara, dan puncak SFX ≤ 0,7× puncak suara. Kalau SFX terlalu pelan, cari puncaknya lalu kecilkan bunyi yang paling keras.
 
 ## Cara membuat video (pipeline)
