@@ -1,3 +1,5 @@
 node_modules
 out
 .DS_Store
+graphify-out/*
+!graphify-out/GRAPH_REPORT.md
