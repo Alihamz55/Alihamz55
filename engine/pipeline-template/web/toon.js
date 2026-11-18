@@ -2539,6 +2539,9 @@ export const OUTFITS = {
   ibuJoget: { tunic: "#efe6d2", skin: "#f0c49c", hair: "#2b211c", arms: "#efe6d2", legs: "#6f8fb5", pants: "#6f8fb5", bun: true, glasses: true },
   nengJoget: { tunic: "#26232b", skin: "#f2c6a0", hair: "#2a1a14", arms: "#f2c6a0", legs: "#f4f1ea", pants: "#f4f1ea", bun: true, headband: "#ff8ac0" },
   asepHost: { tunic: "#6a3fb5", skin: "#d9a07a", hair: "#2a1a10", arms: "#6a3fb5", legs: "#2a2440", pants: "#2a2440", tie: "#e8344a", peci: true },
+  asepGamer: { tunic: "#1a1d22", skin: "#d9a07a", hair: "#2a1a10", arms: "#1a1d22", legs: "#2b3a5a", pants: "#2b3a5a", neon: "#39ff6a", headset: "#2b2f3a" },
+  darmanSarung: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", sarung: "#7a4a2a", plaid: "#4a2a18", peci: true, moustache: "#3a2a20" },
+  ibuRoll: { tunic: "#f08a2a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#f08a2a", bun: true, glasses: true, floral: "#fff3e0", rollers: "#ff8ac0" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -2812,6 +2815,7 @@ export const romanFront = (p, key, opts = {}) => {
     p.stroke([[tcx, chin + 0.06 * HH], [tcx, chin + 0.55 * HH]], 2 * u, O.koko);
     for (let i = 0; i < 4; i++) p.dot(tcx, chin + (0.14 + i * 0.12) * HH, 2.4 * u, O.koko);
     for (const sd of [-1, 1]) for (let i = 0; i < 3; i++) p.dot(tcx + sd * 0.16 * T.a, chin + (0.14 + i * 0.14) * HH, 1.6 * u, O.koko); }
+  if (O.neon) for (const yy of [0.32, 0.5]) p.band([[tcx - 0.92 * T.a, chin + yy * HH], [tcx + 0.92 * T.a, chin + (yy + 0.06) * HH]], O.neon, 5 * u, 0);
   if (O.hoodie) { // hood bunched at the neck + drawstrings + kangaroo pocket
     p.band([[tcx - 0.62 * T.a, chin + 0.02 * HH], [tcx, chin + 0.12 * HH], [tcx + 0.62 * T.a, chin + 0.02 * HH]], mul(O.tunic, [0.82, 0.82, 0.82]), 0.12 * HH, 1.6 * u);
     for (const sd of [-1, 1]) { p.stroke([[tcx + sd * 0.12 * T.a, chin + 0.1 * HH], [tcx + sd * 0.14 * T.a, chin + 0.42 * HH]], 1.6 * u, O.hoodie); p.dot(tcx + sd * 0.14 * T.a, chin + 0.44 * HH, 2.4 * u, O.hoodie); }
@@ -2901,7 +2905,15 @@ export const romanFront = (p, key, opts = {}) => {
     p.band([[cx - H.a * 1.1, hc - 0.2 * H.b], [cx + H.a * 1.1, hc - 0.2 * H.b]], "#1a1a22", 7 * u, 1.4 * u, "round");
     p.stroke(ellPts(cx - 18 * u, hc - 0.75 * H.b, 0.3 * H.a, 0.15 * H.b, 200, 300, 0, 12), 5 * u, "#ffffff77");
     for (const sd of [-1, 1]) p.stroke([[cx + sd * H.a * 0.98, hc - 0.15 * H.b], [cx + sd * H.a * 0.7, hc + 0.75 * H.b]], 1.8 * u, "#1a1a22"); }
-  if (O.peci) { const top = hc - 1.2 * H.b; p.poly(rrect(cx - 0.66 * H.a, top - 0.02 * H.b, cx + 0.66 * H.a, top + 0.5 * H.b, 6 * u), "#101018", ow * 0.6); p.band([[cx - 0.64 * H.a, top + 0.4 * H.b], [cx + 0.64 * H.a, top + 0.4 * H.b]], "#e2b04a", 3 * u, 0); }
+  if (opts.soot) { const g = p.g; g.save(); g.globalAlpha = 0.55; for (const [dx, dy, r] of [[-0.45, 0.2, 16], [0.4, 0.35, 13], [0.1, -0.3, 11], [-0.15, 0.55, 10], [0.55, -0.1, 9]]) p.ell(cx + dx * H.a, hc + dy * H.b, r * u, r * 0.8 * u, "#2a2622", 0); g.restore(); }
+  if (opts.afro) { const col = O.hair || "#2a1a10"; for (let i = 0; i < 11; i++) { const a = Math.PI * (1.05 + 0.9 * i / 10), r = 0.42 * H.a;
+      p.ell(cx + Math.cos(a) * 0.95 * H.a, hc - 0.35 * H.b + Math.sin(a) * 1.0 * H.b, r, r, col, ow * 0.6); }
+    p.ell(cx, hc - 1.05 * H.b, 0.95 * H.a, 0.55 * H.b, col, 0);
+    for (let i = 0; i < 6; i++) p.dot(cx + (i - 2.5) * 0.3 * H.a, hc - 1.2 * H.b + (i % 2) * 0.2 * H.b, 3 * u, "#5a5048"); }
+  if (O.headset) { p.stroke(curve([cx - 0.8 * H.a, chin + 0.02 * HH], [cx, chin + 0.16 * HH], [cx + 0.8 * H.a, chin + 0.02 * HH]), 5 * u, O.headset);
+    for (const sd of [-1, 1]) p.ell(cx + sd * 0.82 * H.a, chin + 0.01 * HH, 16 * u, 19 * u, O.headset, 2.4 * u); }
+  if (O.rollers) for (let i = -2; i <= 2; i++) p.ell(cx + i * 0.32 * H.a, hc - 0.98 * H.b + Math.abs(i) * 0.12 * H.b, 13 * u, 9 * u, O.rollers, 2.2 * u);
+  if (O.peci && !opts.afro) { const top = hc - 1.2 * H.b; p.poly(rrect(cx - 0.66 * H.a, top - 0.02 * H.b, cx + 0.66 * H.a, top + 0.5 * H.b, 6 * u), "#101018", ow * 0.6); p.band([[cx - 0.64 * H.a, top + 0.4 * H.b], [cx + 0.64 * H.a, top + 0.4 * H.b]], "#e2b04a", 3 * u, 0); }
   if (O.bedhead) for (let i = 0; i < 7; i++) { const a = rad(-160 + i * 23), x0 = cx + Math.cos(a) * H.a * 0.85, y0 = hc + Math.sin(a) * H.b * 0.88, x1 = cx + Math.cos(a + (i % 2 ? 0.25 : -0.2)) * H.a * 1.28, y1 = hc + Math.sin(a + (i % 2 ? 0.25 : -0.2)) * H.b * 1.3;
     p.poly([[x0 - 9 * u, y0], [x1, y1], [x0 + 9 * u, y0]], O.hair, 2.4 * u); }
   if (O.wet) for (let i = 0; i < 4; i++) p.ell(cx + (i - 1.5) * 26 * u, hc - 0.7 * H.b + (i % 2) * 12 * u, 3.5 * u, 6 * u, "#9fd4ff", 1.6 * u);
@@ -3952,4 +3964,42 @@ const iconChat = (g, x, y, s, fill, dots) => { g.save(); g.translate(x, y); g.sc
 const iconThumb = (g, x, y, s, fill) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = fill; g.strokeStyle = GINK; g.lineWidth = 6; g.lineJoin = "round";
   g.beginPath(); g.roundRect(-34, -6, 16, 40, 4); g.fill(); g.stroke();
   g.beginPath(); g.moveTo(-14, -4); g.lineTo(0, -30); g.quadraticCurveTo(12, -34, 10, -16); g.lineTo(6, -6); g.lineTo(28, -6); g.quadraticCurveTo(38, -4, 34, 8); g.lineTo(28, 30); g.quadraticCurveTo(26, 36, 16, 36); g.lineTo(-14, 36); g.closePath(); g.fill(); g.stroke();
+  g.restore(); };
+// ---- HP gamer (layar penuh) & kulkas: Asep Maksain Game Berat ----
+export const fxGameHP = (p, mode = "load", t = 0, k = 0) => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.fillStyle = "#14101a"; g.beginPath(); g.roundRect(40, 20, 520, 960, 56); g.fill();
+  g.save(); g.beginPath(); g.roundRect(62, 44, 476, 912, 40); g.clip();
+  const txt = (s, x, y, size, col, al = "center") => { g.font = `700 ${size}px "Fredoka", "DejaVu Sans", sans-serif`; g.textAlign = al; g.textBaseline = "middle"; g.lineWidth = size * 0.16; g.strokeStyle = "#14101a"; g.strokeText(s, x, y); g.fillStyle = col; g.fillText(s, x, y); };
+  if (mode === "load" || mode === "dl" || mode === "lag") {
+    const gr = g.createLinearGradient(0, 44, 0, 956); gr.addColorStop(0, "#ff8a3a"); gr.addColorStop(0.55, "#c0306a"); gr.addColorStop(1, "#2a1440"); g.fillStyle = gr; g.fillRect(62, 44, 476, 912);
+    g.fillStyle = "#1a1030"; for (let i = 0; i < 8; i++) { const h = 180 + (i * 97) % 260; g.fillRect(62 + i * 62, 760 - h, 54, h + 200); }
+    g.fillStyle = "#ffe14a"; for (let i = 0; i < 8; i++) for (let j = 0; j < 5; j++) if ((i * 7 + j * 3) % 4) g.fillRect(74 + i * 62 + (j % 2) * 22, 620 - j * 34 - (i * 97) % 100, 12, 14);
+    g.fillStyle = "#2a2430"; g.fillRect(62, 790, 476, 170); g.fillStyle = "#f4f1ea"; for (let x = 70; x < 540; x += 90) g.fillRect(x, 868, 50, 10);
+    if (mode === "lag") { const step = Math.floor(t / 28), cx = 120 + (step * 70) % 360; g.fillStyle = "#e8344a"; g.beginPath(); g.roundRect(cx - 60, 820, 120, 50, 12); g.fill(); g.fillStyle = "#14101a"; g.beginPath(); g.arc(cx - 32, 872, 14, 0, 7); g.arc(cx + 32, 872, 14, 0, 7); g.fill();
+      txt("FPS: 1", 90, 90, 40, "#39ff6a", "left"); if (Math.floor(t / 14) % 2) txt("MEMUAT...", 300, 400, 54, "#ffffff"); }
+    else { txt("GTB 6", 300, 230, 150, "#ffe14a"); txt("GAME TERGEDE BANGET", 300, 330, 34, "#ffffff");
+      const prog = mode === "load" ? 0.01 : k; g.fillStyle = "#14101a"; g.beginPath(); g.roundRect(100, 700, 400, 54, 27); g.fill(); g.fillStyle = mode === "dl" ? "#ff5d3a" : "#39ff6a"; g.beginPath(); g.roundRect(106, 706, Math.max(40, 388 * prog), 42, 21); g.fill();
+      txt(mode === "load" ? "LOADING 1%" : `DOWNLOAD ${Math.round(150 * prog)} / 150 GB`, 300, 650, 40, "#ffffff"); }
+    if (mode === "dl" || mode === "lag") { g.fillStyle = `rgba(255,60,20,${0.12 + 0.12 * Math.sin(t * 0.3)})`; g.fillRect(62, 44, 476, 912); }
+  } else if (mode === "full") {
+    g.fillStyle = "#eef1f6"; g.fillRect(62, 44, 476, 912); txt("MEMORI PENUH!", 300, 140, 56, "#e8344a");
+    const items = ["foto_mantan.jpg", "aplikasi diet", "foto_nikahan_bapak_ibu.jpg"];
+    items.forEach((s, i) => { const y = 300 + i * 170, del = k > i; g.fillStyle = del ? "#ffd6dc" : "#ffffff"; g.strokeStyle = "#14101a"; g.lineWidth = 5; g.beginPath(); g.roundRect(90, y - 60, 420, 120, 20); g.fill(); g.stroke();
+      g.font = `700 ${i === 2 ? 26 : 34}px "Fredoka", "DejaVu Sans", sans-serif`; g.textAlign = "left"; g.fillStyle = "#14101a"; g.fillText(s, 120, y + 10);
+      if (del) { g.strokeStyle = "#e8344a"; g.lineWidth = 8; g.beginPath(); g.moveTo(110, y); g.lineTo(490, y); g.stroke(); txt("DIHAPUS", 420, y - 40, 26, "#e8344a"); } });
+  } else if (mode === "snake") {
+    g.fillStyle = "#9bbc0f"; g.fillRect(62, 44, 476, 912); g.fillStyle = "#306230"; const cell = 36, n = 6 + Math.floor(t / 12) % 5;
+    for (let i = 0; i < n; i++) { const s = (Math.floor(t / 4) - i), x = 120 + ((s * cell) % 360 + 360) % 360, y = 420 + Math.floor(((s * cell) / 360)) % 3 * cell; g.fillRect(x, y, cell - 4, cell - 4); }
+    g.fillRect(400, 300, cell - 4, cell - 4); g.font = '700 44px "DejaVu Sans Mono", monospace'; g.textAlign = "center"; g.fillText("SKOR: 0" + Math.floor(t / 30), 300, 140);
+  }
+  g.restore(); g.restore(); };
+export const fxKulkas = (p, open = 0, smell = 0, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; g.strokeStyle = "#14101a"; g.lineWidth = 9;
+  g.fillStyle = "#e8eef2"; g.beginPath(); g.roundRect(160, 140, 280, 845, 30); g.fill(); g.stroke();
+  if (open) { g.fillStyle = "#cfe8f6"; g.beginPath(); g.roundRect(176, 400, 248, 570, 14); g.fill(); g.stroke(); g.lineWidth = 6; for (const y of [560, 720, 870]) { g.beginPath(); g.moveTo(176, y); g.lineTo(424, y); g.stroke(); }
+    g.fillStyle = "#c8a070"; for (const [x, y] of [[230, 540], [330, 540], [260, 700]]) { g.beginPath(); g.ellipse(x, y, 42, 14, 0, 0, 7); g.fill(); g.stroke(); g.beginPath(); g.moveTo(x + 40, y); g.lineTo(x + 62, y - 14); g.lineTo(x + 62, y + 14); g.closePath(); g.fill(); g.stroke(); }
+    g.fillStyle = "#2b2f3a"; g.beginPath(); g.roundRect(330, 650, 40, 66, 8); g.fill(); g.stroke();
+    g.fillStyle = "#dfe6ea"; g.lineWidth = 9; g.beginPath(); g.moveTo(160, 400); g.lineTo(70, 430); g.lineTo(70, 960); g.lineTo(160, 985); g.closePath(); g.fill(); g.stroke(); }
+  else { g.beginPath(); g.moveTo(160, 400); g.lineTo(440, 400); g.stroke(); g.fillStyle = "#9aa4ae"; g.beginPath(); g.roundRect(392, 450, 18, 140, 8); g.fill(); g.stroke(); }
+  g.fillStyle = "#9aa4ae"; g.beginPath(); g.roundRect(392, 220, 18, 120, 8); g.fill(); g.stroke();
+  if (smell) { g.strokeStyle = "#7ac43a"; g.lineWidth = 8; g.lineCap = "round"; for (let i = 0; i < 3; i++) { g.beginPath(); for (let y = 0; y < 220; y += 10) { const x = 230 + i * 70 + Math.sin(y * 0.06 + t * 0.3 + i) * 16; y ? g.lineTo(x, 120 - y) : g.moveTo(x, 120 - y); } g.stroke(); } }
   g.restore(); };

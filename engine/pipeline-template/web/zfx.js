@@ -895,3 +895,41 @@ const iconThumb = (g, x, y, s, fill) => { g.save(); g.translate(x, y); g.scale(s
   g.beginPath(); g.roundRect(-34, -6, 16, 40, 4); g.fill(); g.stroke();
   g.beginPath(); g.moveTo(-14, -4); g.lineTo(0, -30); g.quadraticCurveTo(12, -34, 10, -16); g.lineTo(6, -6); g.lineTo(28, -6); g.quadraticCurveTo(38, -4, 34, 8); g.lineTo(28, 30); g.quadraticCurveTo(26, 36, 16, 36); g.lineTo(-14, 36); g.closePath(); g.fill(); g.stroke();
   g.restore(); };
+// ---- HP gamer (layar penuh) & kulkas: Asep Maksain Game Berat ----
+export const fxGameHP = (p, mode = "load", t = 0, k = 0) => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.fillStyle = "#14101a"; g.beginPath(); g.roundRect(40, 20, 520, 960, 56); g.fill();
+  g.save(); g.beginPath(); g.roundRect(62, 44, 476, 912, 40); g.clip();
+  const txt = (s, x, y, size, col, al = "center") => { g.font = `700 ${size}px "Fredoka", "DejaVu Sans", sans-serif`; g.textAlign = al; g.textBaseline = "middle"; g.lineWidth = size * 0.16; g.strokeStyle = "#14101a"; g.strokeText(s, x, y); g.fillStyle = col; g.fillText(s, x, y); };
+  if (mode === "load" || mode === "dl" || mode === "lag") {
+    const gr = g.createLinearGradient(0, 44, 0, 956); gr.addColorStop(0, "#ff8a3a"); gr.addColorStop(0.55, "#c0306a"); gr.addColorStop(1, "#2a1440"); g.fillStyle = gr; g.fillRect(62, 44, 476, 912);
+    g.fillStyle = "#1a1030"; for (let i = 0; i < 8; i++) { const h = 180 + (i * 97) % 260; g.fillRect(62 + i * 62, 760 - h, 54, h + 200); }
+    g.fillStyle = "#ffe14a"; for (let i = 0; i < 8; i++) for (let j = 0; j < 5; j++) if ((i * 7 + j * 3) % 4) g.fillRect(74 + i * 62 + (j % 2) * 22, 620 - j * 34 - (i * 97) % 100, 12, 14);
+    g.fillStyle = "#2a2430"; g.fillRect(62, 790, 476, 170); g.fillStyle = "#f4f1ea"; for (let x = 70; x < 540; x += 90) g.fillRect(x, 868, 50, 10);
+    if (mode === "lag") { const step = Math.floor(t / 28), cx = 120 + (step * 70) % 360; g.fillStyle = "#e8344a"; g.beginPath(); g.roundRect(cx - 60, 820, 120, 50, 12); g.fill(); g.fillStyle = "#14101a"; g.beginPath(); g.arc(cx - 32, 872, 14, 0, 7); g.arc(cx + 32, 872, 14, 0, 7); g.fill();
+      txt("FPS: 1", 90, 90, 40, "#39ff6a", "left"); if (Math.floor(t / 14) % 2) txt("MEMUAT...", 300, 400, 54, "#ffffff"); }
+    else { txt("GTB 6", 300, 230, 150, "#ffe14a"); txt("GAME TERGEDE BANGET", 300, 330, 34, "#ffffff");
+      const prog = mode === "load" ? 0.01 : k; g.fillStyle = "#14101a"; g.beginPath(); g.roundRect(100, 700, 400, 54, 27); g.fill(); g.fillStyle = mode === "dl" ? "#ff5d3a" : "#39ff6a"; g.beginPath(); g.roundRect(106, 706, Math.max(40, 388 * prog), 42, 21); g.fill();
+      txt(mode === "load" ? "LOADING 1%" : `DOWNLOAD ${Math.round(150 * prog)} / 150 GB`, 300, 650, 40, "#ffffff"); }
+    if (mode === "dl" || mode === "lag") { g.fillStyle = `rgba(255,60,20,${0.12 + 0.12 * Math.sin(t * 0.3)})`; g.fillRect(62, 44, 476, 912); }
+  } else if (mode === "full") {
+    g.fillStyle = "#eef1f6"; g.fillRect(62, 44, 476, 912); txt("MEMORI PENUH!", 300, 140, 56, "#e8344a");
+    const items = ["foto_mantan.jpg", "aplikasi diet", "foto_nikahan_bapak_ibu.jpg"];
+    items.forEach((s, i) => { const y = 300 + i * 170, del = k > i; g.fillStyle = del ? "#ffd6dc" : "#ffffff"; g.strokeStyle = "#14101a"; g.lineWidth = 5; g.beginPath(); g.roundRect(90, y - 60, 420, 120, 20); g.fill(); g.stroke();
+      g.font = `700 ${i === 2 ? 26 : 34}px "Fredoka", "DejaVu Sans", sans-serif`; g.textAlign = "left"; g.fillStyle = "#14101a"; g.fillText(s, 120, y + 10);
+      if (del) { g.strokeStyle = "#e8344a"; g.lineWidth = 8; g.beginPath(); g.moveTo(110, y); g.lineTo(490, y); g.stroke(); txt("DIHAPUS", 420, y - 40, 26, "#e8344a"); } });
+  } else if (mode === "snake") {
+    g.fillStyle = "#9bbc0f"; g.fillRect(62, 44, 476, 912); g.fillStyle = "#306230"; const cell = 36, n = 6 + Math.floor(t / 12) % 5;
+    for (let i = 0; i < n; i++) { const s = (Math.floor(t / 4) - i), x = 120 + ((s * cell) % 360 + 360) % 360, y = 420 + Math.floor(((s * cell) / 360)) % 3 * cell; g.fillRect(x, y, cell - 4, cell - 4); }
+    g.fillRect(400, 300, cell - 4, cell - 4); g.font = '700 44px "DejaVu Sans Mono", monospace'; g.textAlign = "center"; g.fillText("SKOR: 0" + Math.floor(t / 30), 300, 140);
+  }
+  g.restore(); g.restore(); };
+export const fxKulkas = (p, open = 0, smell = 0, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; g.strokeStyle = "#14101a"; g.lineWidth = 9;
+  g.fillStyle = "#e8eef2"; g.beginPath(); g.roundRect(160, 140, 280, 845, 30); g.fill(); g.stroke();
+  if (open) { g.fillStyle = "#cfe8f6"; g.beginPath(); g.roundRect(176, 400, 248, 570, 14); g.fill(); g.stroke(); g.lineWidth = 6; for (const y of [560, 720, 870]) { g.beginPath(); g.moveTo(176, y); g.lineTo(424, y); g.stroke(); }
+    g.fillStyle = "#c8a070"; for (const [x, y] of [[230, 540], [330, 540], [260, 700]]) { g.beginPath(); g.ellipse(x, y, 42, 14, 0, 0, 7); g.fill(); g.stroke(); g.beginPath(); g.moveTo(x + 40, y); g.lineTo(x + 62, y - 14); g.lineTo(x + 62, y + 14); g.closePath(); g.fill(); g.stroke(); }
+    g.fillStyle = "#2b2f3a"; g.beginPath(); g.roundRect(330, 650, 40, 66, 8); g.fill(); g.stroke();
+    g.fillStyle = "#dfe6ea"; g.lineWidth = 9; g.beginPath(); g.moveTo(160, 400); g.lineTo(70, 430); g.lineTo(70, 960); g.lineTo(160, 985); g.closePath(); g.fill(); g.stroke(); }
+  else { g.beginPath(); g.moveTo(160, 400); g.lineTo(440, 400); g.stroke(); g.fillStyle = "#9aa4ae"; g.beginPath(); g.roundRect(392, 450, 18, 140, 8); g.fill(); g.stroke(); }
+  g.fillStyle = "#9aa4ae"; g.beginPath(); g.roundRect(392, 220, 18, 120, 8); g.fill(); g.stroke();
+  if (smell) { g.strokeStyle = "#7ac43a"; g.lineWidth = 8; g.lineCap = "round"; for (let i = 0; i < 3; i++) { g.beginPath(); for (let y = 0; y < 220; y += 10) { const x = 230 + i * 70 + Math.sin(y * 0.06 + t * 0.3 + i) * 16; y ? g.lineTo(x, 120 - y) : g.moveTo(x, 120 - y); } g.stroke(); } }
+  g.restore(); };
