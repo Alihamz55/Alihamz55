@@ -22,7 +22,7 @@ const K = (pos, look, fov) => ({ pos, look, fov });
 const cu = (P, dx, h, d, fov = 38, side = 0.3) => [{ f: 0, ...K([P[0] + side, h, P[2] + d], [P[0] + dx, h + 0.12, P[2]], fov) }, { f: 200, ...K([P[0] + side * 0.85, h, P[2] + d * 0.86], [P[0] + dx, h + 0.13, P[2]], fov) }];
 const CAMS = {
   neng: cu(P1[1], 0, 2.0, 2.6, 38, -0.2), darman: cu(P1[2], 0, 1.75, 2.6, 38, -0.35), asep: cu(P1[0], 0, 2.0, 2.4, 38, 0.35), ibu: cu(P1[3], 0, 2.0, 2.4, 38, -0.35),
-  ibuHP: cu(P2[3], 0, 2.0, 2.5, 38, -0.3), dSit: cu(P2[2], 0, 1.7, 2.4, 38, 0.3), dSit2: cu(P2[2], 0, 1.75, 2.0, 36, 0.25), asep2: cu(P2[0], 0.15, 2.0, 2.5, 38, 0.35),
+  ibuHP: cu(P2[3], 0.08, 2.0, 2.7, 38, 0.2), dSit: cu(P2[2], 0, 1.7, 2.4, 38, 0.3), dSit2: cu(P2[2], 0, 1.75, 2.0, 36, 0.25), asep2: cu(P2[0], 0.15, 2.0, 2.5, 38, 0.35),
 };
 const KICKS = [{ f: 73, a: 0.04 }, { f: 440, a: 0.05 }, { f: 700, a: 0.08 }, { f: 897, a: 0.06 }];
 export const camAt = (f) => { const S = shotAt(f), keys = CAMS[S.id].map((k) => ({ ...k, f: S.a + k.f }));
