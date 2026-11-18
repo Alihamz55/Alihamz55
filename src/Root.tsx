@@ -5,11 +5,20 @@ import { TOTAL_FRAME, FPS } from "./ep12/naskah";
 import { Doa } from "./doa/Doa";
 import { DURASI_DETIK } from "./doa/lagu";
 import { MotionDemo } from "./demo/MotionDemo";
+import { Puisi, DURASI_PUISI } from "./puisi/Puisi";
 
 // Ukuran vertikal 9:16 → pas untuk YouTube Shorts, TikTok, Reels/Facebook
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="PuisiAkuIngin"
+        component={Puisi}
+        durationInFrames={Math.ceil(DURASI_PUISI * 30)}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
       <Composition
         id="DoaPanggung"
         component={Doa}
