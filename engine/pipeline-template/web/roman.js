@@ -73,6 +73,7 @@ export const OUTFITS = {
   darmanJoget: { tunic: "#1f1d24", skin: "#dca27a", hair: "#4e4844", arms: "#1f1d24", legs: "#ecebe4", pants: "#ecebe4", moustache: "#3a2a20", shades: true },
   ibuJoget: { tunic: "#efe6d2", skin: "#f0c49c", hair: "#2b211c", arms: "#efe6d2", legs: "#6f8fb5", pants: "#6f8fb5", bun: true, glasses: true },
   nengJoget: { tunic: "#26232b", skin: "#f2c6a0", hair: "#2a1a14", arms: "#f2c6a0", legs: "#f4f1ea", pants: "#f4f1ea", bun: true, headband: "#ff8ac0" },
+  asepHost: { tunic: "#6a3fb5", skin: "#d9a07a", hair: "#2a1a10", arms: "#6a3fb5", legs: "#2a2440", pants: "#2a2440", tie: "#e8344a", peci: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };

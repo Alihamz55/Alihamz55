@@ -22,6 +22,7 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
+| Akhiran YouTube baru (`Akhiran-YouTube-Asep-Host.mp4`) | `asepHost` (jas ungu, dasi merah, peci) **baru**, khusus akhiran | | | |
 | Keluarga Joget (tren dansa) | `asepJoget` (jaket cokelat, celana olive, kacamata hitam) **baru** | `darmanJoget` (kaos hitam, celana putih, kacamata hitam) **baru** | `ibuJoget` (sweater krem, celana jeans) **baru** | Neng (pacar Asep) `nengJoget` **tokoh baru** (kaos hitam, celana putih, bando pink), tidak bicara |
 | Bule Belajar Bahasa Gaul | `asepPemandu` (rompi pemandu, topi rimba) **baru** | `darmanPantai` (kemeja bunga biru) **baru** | `ibuPantai` (daster kuning bunga) **baru** | Mister Mike `buleTuris` **tokoh baru**, suara Iapetus logat Inggris |
 | Akali Bagasi | `asepMudik` lalu `asepLapis` (7 lapis jaket, gemuk) **baru** | `darmanPetugas` (petugas bandara) **baru** | `ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` (gamis marun, kardigan krem) **baru** | |
