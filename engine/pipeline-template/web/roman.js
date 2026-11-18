@@ -69,6 +69,10 @@ export const OUTFITS = {
   darmanMotor: { tunic: "#6a4128", skin: "#dca27a", hair: "#4e4844", arms: "#6a4128", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", zipJacket: true, motoHelm: "#c0302c" },
   ujangGorengan: { tunic: "#f0ece2", skin: "#c99067", hair: "#1e1714", arms: "#c99067", legs: "#3a3f52", pants: "#3a3f52", moustache: "#2a1d18", apron: "#8a5a2a", neckTowel: "#e8742c" },
   asepKoki: { tunic: "#f4f1ea", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a3f52", pants: "#3a3f52", apron: "#e8742c", chefHat: true },
+  asepJoget: { tunic: "#5a3424", skin: "#d9a07a", hair: "#2a1a10", arms: "#5a3424", legs: "#6b6a45", pants: "#6b6a45", shades: true },
+  darmanJoget: { tunic: "#1f1d24", skin: "#dca27a", hair: "#4e4844", arms: "#1f1d24", legs: "#ecebe4", pants: "#ecebe4", moustache: "#3a2a20", shades: true },
+  ibuJoget: { tunic: "#efe6d2", skin: "#f0c49c", hair: "#2b211c", arms: "#efe6d2", legs: "#6f8fb5", pants: "#6f8fb5", bun: true, glasses: true },
+  nengJoget: { tunic: "#26232b", skin: "#f2c6a0", hair: "#2a1a14", arms: "#f2c6a0", legs: "#f4f1ea", pants: "#f4f1ea", bun: true, headband: "#ff8ac0" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -172,6 +176,7 @@ export const romanFront = (p, key, opts = {}) => {
   const S = (side) => [tcx + side * 0.85 * T.a, chin + 0.12 * HH];
   const arm = (side, pose) => {
     const s = S(side), X = (k) => tcx + side * (T.a * 1.1 + k * u);
+    if (Array.isArray(pose)) return { pts: [s, [X(pose[0]), s[1] + pose[1] * HH], [X(pose[2]), s[1] + pose[3] * HH]], front: !!pose[4], finger: pose[5] === "f" };
     switch (pose) {
       case "spear": return { pts: [s, [X(6), s[1] + 0.42 * HH], [X(10), s[1] + 0.2 * HH]], front: false };
       case "swing": { const ph = ((walk ?? 0) + (side > 0 ? 0.5 : 0)) % 1, sw = Math.cos(2 * Math.PI * ph);
@@ -416,6 +421,8 @@ export const romanFront = (p, key, opts = {}) => {
   if (O.bun) { p.ell(cx, hc - 1.02 * H.b, 0.42 * H.a, 0.3 * H.b, O.hair, ow * 0.7); if (O.crown) for (let i = -3; i <= 3; i++) p.dot(cx + i * 0.2 * H.a, hc - 0.92 * H.b - Math.cos(i / 3) * 0.12 * H.b, 4.5 * u, "#e2b04a"); }
   if (O.glasses) for (const sd of [-1, 1]) { p.g.save(); p.g.fillStyle = "rgba(220,240,255,.25)"; p.ell(cx + 7 * u * facing + sd * 15 * u, hc - 6 * u, 13 * u, 11 * u, "rgba(220,240,255,.25)", 2.6 * u); p.g.restore();
     if (sd < 0) p.stroke([[cx + 7 * u * facing - 2 * u, hc - 8 * u], [cx + 7 * u * facing + 2 * u, hc - 8 * u]], 2.4 * u); if (opts.glint) p.dot(cx + 7 * u * facing + sd * 15 * u, hc - 6 * u, 9 * u, "#fff6a8"); }
+  if (O.shades) { for (const sd of [-1, 1]) p.ell(cx + 7 * u * facing + sd * 15 * u, hc - 6 * u, 14 * u, 10 * u, "#141218", 2.6 * u);
+    p.stroke([[cx + 7 * u * facing - 3 * u, hc - 8 * u], [cx + 7 * u * facing + 3 * u, hc - 8 * u]], 2.6 * u); p.dot(cx + 7 * u * facing - 19 * u, hc - 10 * u, 3 * u, "#ffffff"); }
   if (O.chefHat) { const top = hc - 1.05 * H.b; // tall puffy chef hat
     p.poly(rrect(cx - 0.62 * H.a, top - 0.5 * H.b, cx + 0.62 * H.a, top + 0.12 * H.b, 6 * u), "#ffffff", 2.4 * u);
     for (const [dx, dy, r_] of [[-0.42, -0.62, 0.36], [0, -0.78, 0.42], [0.42, -0.62, 0.36]]) p.ell(cx + dx * H.a, top + dy * H.b, r_ * H.a, r_ * 0.8 * H.b, "#ffffff", 2.4 * u);

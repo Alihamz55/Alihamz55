@@ -22,6 +22,7 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
+| Keluarga Joget (tren dansa) | `asepJoget` (jaket cokelat, celana olive, kacamata hitam) **baru** | `darmanJoget` (kaos hitam, celana putih, kacamata hitam) **baru** | `ibuJoget` (sweater krem, celana jeans) **baru** | Neng (pacar Asep) `nengJoget` **tokoh baru** (kaos hitam, celana putih, bando pink), tidak bicara |
 | Bule Belajar Bahasa Gaul | `asepPemandu` (rompi pemandu, topi rimba) **baru** | `darmanPantai` (kemeja bunga biru) **baru** | `ibuPantai` (daster kuning bunga) **baru** | Mister Mike `buleTuris` **tokoh baru**, suara Iapetus logat Inggris |
 | Akali Bagasi | `asepMudik` lalu `asepLapis` (7 lapis jaket, gemuk) **baru** | `darmanPetugas` (petugas bandara) **baru** | `ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` (gamis marun, kardigan krem) **baru** | |
 | Promo 12.12 | `asepKurir asepMudik asepLapis darmanPetugas ibuKardigan asepPemandu buleTuris darmanPantai ibuPantai` (jaket hijau tua, topi kuning, tas selempang) **baru** | `darmanSantai` (singlet, celana pendek) **baru** | `ibuMasker` (daster oranye, masker wajah hijau) **baru** | |
@@ -39,7 +40,9 @@
 
 > `sarung` dan `darman` sudah terlalu sering dipakai. Hindari kedua kostum ini sampai 5 video ke depan.
 
-**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `glassesUp` (kacamata di dahi), `headband` (ikat kepala satu warna), `tie` (dasi dan kerah jas), `faceMask` (masker wajah), `layers` (daftar warna jaket berlapis; gabungkan dengan `stout`).
+**Pose tangan bebas:** `L`/`R` boleh berupa array `[sikuX, sikuY, tanganX, tanganY, depan?, 'f']` untuk gerakan joget (contoh `engine/story-joget.js`).
+
+**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `shades` (kacamata hitam), `glassesUp` (kacamata di dahi), `headband` (ikat kepala satu warna), `tie` (dasi dan kerah jas), `faceMask` (masker wajah), `layers` (daftar warna jaket berlapis; gabungkan dengan `stout`).
 
 **Properti tambahan:** `fxKardus(p, label, big)` (kardus paket polos dengan label tanpa merek), `fxKoper`, `fxNampan(p, n)`, `fxKelapa` (meja es kelapa).
 
