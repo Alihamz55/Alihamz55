@@ -1012,7 +1012,14 @@ const hatOn = (p, o, hp, H, cx, hc, light, seed, facing, side)=>{
         const col = o.hat === "cap" ? o.cap : o.hair;
         p.shadedFill(arc, col, mul(col, SH_FELT), light, H.a, 0.35);
         p.poly(arc, null, ow);
-        if (o.hat === "hair") {
+        if (o.hat === "hair") { // rambut mengkilap: kilau terang melengkung + helai rambut
+            const q2 = (a0, c0, b0, n = 10) => Array.from({ length: n + 1 }, (_, i) => { const t = i / n; return [(1 - t) * (1 - t) * a0[0] + 2 * t * (1 - t) * c0[0] + t * t * b0[0], (1 - t) * (1 - t) * a0[1] + 2 * t * (1 - t) * c0[1] + t * t * b0[1]]; });
+            const top = crown, mid = (top + cut) / 2, dk = mix(col, "#000000", 0.35), hi = mix(col, "#ffffff", 0.38), dir = side ? -1 : facing || 1;
+            p.clip(arc, () => {
+                p.stroke(q2([cx - dir * 0.85 * H.a, mid + 0.06 * HH], [cx - dir * 0.2 * H.a, top + 0.02 * HH], [cx + dir * 0.55 * H.a, mid - 0.02 * HH]), 0.07 * HH, hi);
+                p.stroke(q2([cx - dir * 0.7 * H.a, mid + 0.1 * HH], [cx - dir * 0.15 * H.a, top + 0.07 * HH], [cx + dir * 0.35 * H.a, mid + 0.03 * HH]), 0.025 * HH, mix(hi, "#ffffff", 0.4));
+                for (let i = -3; i <= 3; i++) { const x0 = cx + i * 0.26 * H.a; p.stroke(q2([x0 + dir * 0.1 * H.a, top + 0.01 * HH], [x0 - dir * 0.12 * H.a, mid], [x0 - dir * 0.05 * H.a, cut + 0.02 * HH]), 1.6 * u, dk); }
+            });
             const s = side ? -1 : facing || 1;
             p.stroke([
                 [
