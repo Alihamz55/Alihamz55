@@ -830,10 +830,10 @@ const faceFront = (p, cx, cy, W, expr, facing, look, lid, brim, skin, moustache,
         const x = fx + side * ex;
         const kind = eyeKind(F.eye[(facing ? side === facing : side > 0) ? 1 : 0], lid);
         eye(p, kind, x, ey, u, side, look, skin);
-        const [dI, dO] = F.brow, by = ey - (brim ? 9 : 9.5) * u, BK = 1.6; // alis ekspresif: lebih tebal, lebih rendah, sudut 1.9x
+        const [dI, dO] = F.brow, by = ey - (brim ? 9 : 9.5) * u, BK = 1.5; // alis ekspresif: lebih tebal, lebih rendah, sudut 1.9x
         if (kind === "shock" || kind === "shockHalf") p.arc(x, by - 7 * u, 10 * u, 4 * u, 200, 340, 6.5 * u);
         else { const A_ = [x - side * 10.5 * u, by + dI * BK * u], B_ = [x + side * 10.5 * u, by + dO * BK * u];
-            taper(p, A_, B_, 9.5 * u, 6 * u, skin); taper(p, A_, B_, 7 * u, 3.5 * u); } // tepi warna kulit supaya alis tetap kelihatan di atas poni
+            taper(p, A_, B_, 6.5 * u, 4 * u, skin); taper(p, A_, B_, 4.5 * u, 2.2 * u); } // tepi warna kulit supaya alis tetap kelihatan di atas poni
     }
     const mx = cx + 8 * u * facing, my = cy + 20 * u;
     mouth(p, F.mouth, mx, my, u);
