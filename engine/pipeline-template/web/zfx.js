@@ -933,3 +933,13 @@ export const fxKulkas = (p, open = 0, smell = 0, t = 0) => { const g = p.g; g.sa
   g.fillStyle = "#9aa4ae"; g.beginPath(); g.roundRect(392, 220, 18, 120, 8); g.fill(); g.stroke();
   if (smell) { g.strokeStyle = "#7ac43a"; g.lineWidth = 8; g.lineCap = "round"; for (let i = 0; i < 3; i++) { g.beginPath(); for (let y = 0; y < 220; y += 10) { const x = 230 + i * 70 + Math.sin(y * 0.06 + t * 0.3 + i) * 16; y ? g.lineTo(x, 120 - y) : g.moveTo(x, 120 - y); } g.stroke(); } }
   g.restore(); };
+
+// ---- caption tengah gaya Shorts: 1-3 kata besar, tanpa kotak, kata aktif berwarna, label nama kecil ----
+export const fxBigCap = (p, words, idx, hue = "#ffd84a", name = "", k = 1) => { const g = p.g; g.save(); const size = 92; g.font = `700 ${size}px ${GF}`; g.textBaseline = "middle"; g.lineJoin = "round";
+  const sp = 24, ws = words.map((w) => g.measureText(w).width), total = ws.reduce((a, b) => a + b, 0) + sp * (words.length - 1);
+  const fit = total > 540 ? 540 / total : 1; g.translate(300, 500); g.scale(k * fit, k * fit);
+  if (name) { g.font = `700 34px ${GF}`; const nw = g.measureText(name).width + 34; gPlate(g, -nw / 2, -size * 0.95 - 30, nw, 46, 23, hue, 5, 4); g.fillStyle = "#ffffff"; g.textAlign = "center"; g.fillText(name, 0, -size * 0.95 - 6); g.font = `700 ${size}px ${GF}`; }
+  let x = -total / 2;
+  words.forEach((w, i) => { const on = i === idx; g.save(); g.translate(x + ws[i] / 2, 0); g.textAlign = "center";
+    g.lineWidth = 20; g.strokeStyle = GINK; g.strokeText(w, 5, 7); g.strokeText(w, 0, 0); g.fillStyle = on ? hue : "#ffffff"; g.fillText(w, 0, 0); g.restore(); x += ws[i] + sp; });
+  g.restore(); };

@@ -467,7 +467,11 @@ export const romanFront = (p, key, opts = {}) => {
   if (O.earbuds && !opts.noEar) { for (const sd of [-1, 1]) { p.ell(cx + sd * 1.0 * H.a, hc + 0.12 * H.b, 7 * u, 9 * u, "#ffffff", 2 * u); }
     p.stroke(curve([cx - 1.0 * H.a, hc + 0.25 * H.b], [cx - 0.5 * H.a, chin + 0.12 * HH], [cx, chin + 0.3 * HH]), 1.6 * u, "#f4f1ea"); p.stroke(curve([cx + 1.0 * H.a, hc + 0.25 * H.b], [cx + 0.5 * H.a, chin + 0.12 * HH], [cx, chin + 0.3 * HH]), 1.6 * u, "#f4f1ea"); }
   if (O.slick) { p.band([[cx - 0.85 * H.a, hc - 0.72 * H.b], [cx + 0.2 * H.a, hc - 0.95 * H.b]], "rgba(255,255,255,0.55)", 4 * u, 0); }
-  if (O.scarf) p.band([[cx - 0.75 * H.a, chin + 0.03 * HH], [cx + 0.75 * H.a, chin + 0.03 * HH]], O.scarf, 0.11 * HH, ow * 0.6);
+  if (O.scarf) { const sc = O.scarf, sd = mix(sc, INK, 0.25); // syal melingkar + ujung menjuntai (bukan kotak lurus)
+    p.stroke(curve([cx - 0.62 * H.a, chin + 0.02 * HH], [cx, chin + 0.13 * HH], [cx + 0.62 * H.a, chin + 0.02 * HH]), 0.085 * HH + ow, INK);
+    p.stroke(curve([cx - 0.62 * H.a, chin + 0.02 * HH], [cx, chin + 0.13 * HH], [cx + 0.62 * H.a, chin + 0.02 * HH]), 0.085 * HH, sc);
+    const tx = cx + 0.3 * H.a; p.poly([[tx - 9 * u, chin + 0.1 * HH], [tx + 9 * u, chin + 0.1 * HH], [tx + 12 * u, chin + 0.42 * HH], [tx - 4 * u, chin + 0.44 * HH]], sc, ow * 0.6);
+    for (const yy of [0.36, 0.4]) p.stroke([[tx - 3 * u, chin + yy * HH], [tx + 10 * u, chin + (yy - 0.01) * HH]], 1.6 * u, sd); }
   if (O.peci && !opts.afro) { const top = hc - 1.2 * H.b; p.poly(rrect(cx - 0.66 * H.a, top - 0.02 * H.b, cx + 0.66 * H.a, top + 0.5 * H.b, 6 * u), "#101018", ow * 0.6); p.band([[cx - 0.64 * H.a, top + 0.4 * H.b], [cx + 0.64 * H.a, top + 0.4 * H.b]], "#e2b04a", 3 * u, 0); }
   if (O.bedhead) for (let i = 0; i < 7; i++) { const a = rad(-160 + i * 23), x0 = cx + Math.cos(a) * H.a * 0.85, y0 = hc + Math.sin(a) * H.b * 0.88, x1 = cx + Math.cos(a + (i % 2 ? 0.25 : -0.2)) * H.a * 1.28, y1 = hc + Math.sin(a + (i % 2 ? 0.25 : -0.2)) * H.b * 1.3;
     p.poly([[x0 - 9 * u, y0], [x1, y1], [x0 + 9 * u, y0]], O.hair, 2.4 * u); }

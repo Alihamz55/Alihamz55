@@ -814,15 +814,10 @@ const faceFront = (p, cx, cy, W, expr, facing, look, lid, brim, skin, moustache,
         const x = fx + side * ex;
         const kind = eyeKind(F.eye[(facing ? side === facing : side > 0) ? 1 : 0], lid);
         eye(p, kind, x, ey, u, side, look, skin);
-        const [dI, dO] = F.brow, by = ey - (brim ? 17 : 20) * u;
-        if (kind === "shock" || kind === "shockHalf") p.arc(x, by - 6 * u, 9 * u, 3 * u, 200, 340, 4 * u);
-        else taper(p, [
-            x - side * 8.5 * u,
-            by + dI * u
-        ], [
-            x + side * 8.5 * u,
-            by + dO * u
-        ], 5 * u, 2.5 * u);
+        const [dI, dO] = F.brow, by = ey - (brim ? 9 : 9.5) * u, BK = 1.6; // alis ekspresif: lebih tebal, lebih rendah, sudut 1.9x
+        if (kind === "shock" || kind === "shockHalf") p.arc(x, by - 7 * u, 10 * u, 4 * u, 200, 340, 6.5 * u);
+        else { const A_ = [x - side * 10.5 * u, by + dI * BK * u], B_ = [x + side * 10.5 * u, by + dO * BK * u];
+            taper(p, A_, B_, 9.5 * u, 6 * u, skin); taper(p, A_, B_, 7 * u, 3.5 * u); } // tepi warna kulit supaya alis tetap kelihatan di atas poni
     }
     const mx = cx + 8 * u * facing, my = cy + 20 * u;
     mouth(p, F.mouth, mx, my, u);
@@ -2932,7 +2927,11 @@ export const romanFront = (p, key, opts = {}) => {
   if (O.earbuds && !opts.noEar) { for (const sd of [-1, 1]) { p.ell(cx + sd * 1.0 * H.a, hc + 0.12 * H.b, 7 * u, 9 * u, "#ffffff", 2 * u); }
     p.stroke(curve([cx - 1.0 * H.a, hc + 0.25 * H.b], [cx - 0.5 * H.a, chin + 0.12 * HH], [cx, chin + 0.3 * HH]), 1.6 * u, "#f4f1ea"); p.stroke(curve([cx + 1.0 * H.a, hc + 0.25 * H.b], [cx + 0.5 * H.a, chin + 0.12 * HH], [cx, chin + 0.3 * HH]), 1.6 * u, "#f4f1ea"); }
   if (O.slick) { p.band([[cx - 0.85 * H.a, hc - 0.72 * H.b], [cx + 0.2 * H.a, hc - 0.95 * H.b]], "rgba(255,255,255,0.55)", 4 * u, 0); }
-  if (O.scarf) p.band([[cx - 0.75 * H.a, chin + 0.03 * HH], [cx + 0.75 * H.a, chin + 0.03 * HH]], O.scarf, 0.11 * HH, ow * 0.6);
+  if (O.scarf) { const sc = O.scarf, sd = mix(sc, INK, 0.25); // syal melingkar + ujung menjuntai (bukan kotak lurus)
+    p.stroke(curve([cx - 0.62 * H.a, chin + 0.02 * HH], [cx, chin + 0.13 * HH], [cx + 0.62 * H.a, chin + 0.02 * HH]), 0.085 * HH + ow, INK);
+    p.stroke(curve([cx - 0.62 * H.a, chin + 0.02 * HH], [cx, chin + 0.13 * HH], [cx + 0.62 * H.a, chin + 0.02 * HH]), 0.085 * HH, sc);
+    const tx = cx + 0.3 * H.a; p.poly([[tx - 9 * u, chin + 0.1 * HH], [tx + 9 * u, chin + 0.1 * HH], [tx + 12 * u, chin + 0.42 * HH], [tx - 4 * u, chin + 0.44 * HH]], sc, ow * 0.6);
+    for (const yy of [0.36, 0.4]) p.stroke([[tx - 3 * u, chin + yy * HH], [tx + 10 * u, chin + (yy - 0.01) * HH]], 1.6 * u, sd); }
   if (O.peci && !opts.afro) { const top = hc - 1.2 * H.b; p.poly(rrect(cx - 0.66 * H.a, top - 0.02 * H.b, cx + 0.66 * H.a, top + 0.5 * H.b, 6 * u), "#101018", ow * 0.6); p.band([[cx - 0.64 * H.a, top + 0.4 * H.b], [cx + 0.64 * H.a, top + 0.4 * H.b]], "#e2b04a", 3 * u, 0); }
   if (O.bedhead) for (let i = 0; i < 7; i++) { const a = rad(-160 + i * 23), x0 = cx + Math.cos(a) * H.a * 0.85, y0 = hc + Math.sin(a) * H.b * 0.88, x1 = cx + Math.cos(a + (i % 2 ? 0.25 : -0.2)) * H.a * 1.28, y1 = hc + Math.sin(a + (i % 2 ? 0.25 : -0.2)) * H.b * 1.3;
     p.poly([[x0 - 9 * u, y0], [x1, y1], [x0 + 9 * u, y0]], O.hair, 2.4 * u); }
@@ -4022,4 +4021,14 @@ export const fxKulkas = (p, open = 0, smell = 0, t = 0) => { const g = p.g; g.sa
   else { g.beginPath(); g.moveTo(160, 400); g.lineTo(440, 400); g.stroke(); g.fillStyle = "#9aa4ae"; g.beginPath(); g.roundRect(392, 450, 18, 140, 8); g.fill(); g.stroke(); }
   g.fillStyle = "#9aa4ae"; g.beginPath(); g.roundRect(392, 220, 18, 120, 8); g.fill(); g.stroke();
   if (smell) { g.strokeStyle = "#7ac43a"; g.lineWidth = 8; g.lineCap = "round"; for (let i = 0; i < 3; i++) { g.beginPath(); for (let y = 0; y < 220; y += 10) { const x = 230 + i * 70 + Math.sin(y * 0.06 + t * 0.3 + i) * 16; y ? g.lineTo(x, 120 - y) : g.moveTo(x, 120 - y); } g.stroke(); } }
+  g.restore(); };
+
+// ---- caption tengah gaya Shorts: 1-3 kata besar, tanpa kotak, kata aktif berwarna, label nama kecil ----
+export const fxBigCap = (p, words, idx, hue = "#ffd84a", name = "", k = 1) => { const g = p.g; g.save(); const size = 92; g.font = `700 ${size}px ${GF}`; g.textBaseline = "middle"; g.lineJoin = "round";
+  const sp = 24, ws = words.map((w) => g.measureText(w).width), total = ws.reduce((a, b) => a + b, 0) + sp * (words.length - 1);
+  const fit = total > 540 ? 540 / total : 1; g.translate(300, 500); g.scale(k * fit, k * fit);
+  if (name) { g.font = `700 34px ${GF}`; const nw = g.measureText(name).width + 34; gPlate(g, -nw / 2, -size * 0.95 - 30, nw, 46, 23, hue, 5, 4); g.fillStyle = "#ffffff"; g.textAlign = "center"; g.fillText(name, 0, -size * 0.95 - 6); g.font = `700 ${size}px ${GF}`; }
+  let x = -total / 2;
+  words.forEach((w, i) => { const on = i === idx; g.save(); g.translate(x + ws[i] / 2, 0); g.textAlign = "center";
+    g.lineWidth = 20; g.strokeStyle = GINK; g.strokeText(w, 5, 7); g.strokeText(w, 0, 0); g.fillStyle = on ? hue : "#ffffff"; g.fillText(w, 0, 0); g.restore(); x += ws[i] + sp; });
   g.restore(); };
