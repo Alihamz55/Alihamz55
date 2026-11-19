@@ -943,3 +943,18 @@ export const fxBigCap = (p, words, idx, hue = "#ffd84a", name = "", k = 1) => { 
   words.forEach((w, i) => { const on = i === idx; g.save(); g.translate(x + ws[i] / 2, 0); g.textAlign = "center";
     g.lineWidth = 20; g.strokeStyle = GINK; g.strokeText(w, 5, 7); g.strokeText(w, 0, 0); g.fillStyle = on ? hue : "#ffffff"; g.fillText(w, 0, 0); g.restore(); x += ws[i] + sp; });
   g.restore(); };
+
+// ---- Jumat Berkah: meja lipat + tumpukan nasi kotak + spanduk; tumpukan kotak di tangan ----
+const nasiBox = (g, x, y, w, h) => { g.fillStyle = "#f6efe0"; g.strokeStyle = "#14101a"; g.lineWidth = 6; g.beginPath(); g.roundRect(x - w / 2, y - h, w, h, 8); g.fill(); g.stroke();
+  g.fillStyle = "#e8dcc4"; g.fillRect(x - w / 2 + 3, y - h + 3, w - 6, h * 0.28); g.strokeStyle = "#14101a"; g.lineWidth = 4; g.beginPath(); g.moveTo(x - w / 2, y - h * 0.68); g.lineTo(x + w / 2, y - h * 0.68); g.stroke();
+  g.fillStyle = "#2f9a5a"; g.beginPath(); g.roundRect(x - w * 0.3, y - h * 0.52, w * 0.6, h * 0.3, 5); g.fill(); g.fillStyle = "#ffffff"; g.font = `700 ${Math.round(h * 0.17)}px "Fredoka", sans-serif`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("JUMAT BERKAH", x, y - h * 0.37); };
+export const fxMejaJB = (p, n = 12) => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.strokeStyle = "#14101a"; g.lineWidth = 9; for (const x of [130, 470]) { g.beginPath(); g.moveTo(x, 640); g.lineTo(x + (x < 300 ? -20 : 20), 985); g.stroke(); }
+  g.fillStyle = "#c8925a"; g.beginPath(); g.roundRect(80, 600, 440, 50, 10); g.fill(); g.stroke(); g.fillStyle = "#f4f1ea"; g.beginPath(); g.moveTo(90, 650); g.lineTo(510, 650); g.lineTo(500, 760); g.lineTo(100, 760); g.closePath(); g.fill(); g.stroke();
+  let k = 0; for (let row = 0; row < 2; row++) for (let i = 0; i < 5 - row; i++) { if (k++ >= n) break; nasiBox(g, 125 + i * 88 + row * 44, 600 - row * 60, 82, 58); }
+  g.restore(); };
+export const fxSpanduk = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g.fillStyle = "#2f8a4a"; g.strokeStyle = "#14101a"; g.lineWidth = 9;
+  g.beginPath(); g.moveTo(20, 380); g.quadraticCurveTo(300, 420, 580, 380); g.lineTo(580, 560); g.quadraticCurveTo(300, 600, 20, 560); g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = "#ffd84a"; g.font = '700 92px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.lineWidth = 14; g.strokeText("JUMAT BERKAH", 300, 478); g.fillText("JUMAT BERKAH", 300, 478);
+  g.restore(); };
+export const fxKotakTangan = (p, n = 1) => { const g = p.g; g.save(); g.lineJoin = "round"; for (let i = 0; i < n; i++) nasiBox(g, 300 + (i % 2 ? 10 : -10), 985 - i * 120, 300, 130); g.restore(); };
