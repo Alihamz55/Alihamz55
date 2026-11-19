@@ -6,6 +6,7 @@ FACE.stubborn = { eye: ["lid", "lid"], brow: [4, -3], mouth: "frown" };
 FACE.squint = { eye: ["slit", "slit"], brow: [3, -2], mouth: "dash" };
 // lip-sync variants: expr_t1..expr_t3 keep eyes/brows, replace the mouth
 for (const k of Object.keys(FACE)) for (const lv of [1, 2, 3]) FACE[k + "_t" + lv] = { ...FACE[k], mouth: "talk" + lv };
+for (const k of Object.keys(FACE)) if (!k.includes("_t")) for (const v of "ABCDEFGH") FACE[k + "_v" + v] = { ...FACE[k], mouth: "vis" + v }; // lip sync bentuk mulut
 
 // ---------------- Roman-era cast (our own designs), built on the Pen / blob / face helpers above ----------------
 const STEEL = "#aeb6bf", BRASS = "#d9a845", LEATHER = "#7a4a2a";

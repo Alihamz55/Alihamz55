@@ -710,6 +710,22 @@ const dmouth = (p, mx, y, rx, ry, u, tongue = false)=>{
 };
 const mouth = (p, kind, mx, my, u, k = 1)=>{
     const mw = 4 * u;
+    if (kind.startsWith("vis")) { const v = kind[3], tw = (y0, rx_) => p.clip(ellPts(mx, y0, rx_, 30 * u, 0, 360, 0, 24), () => 0);
+        const om = (rx, ry, teeth = 0, tongue = 0, dy = 0) => { const cy_ = my + ry * 0.35 + dy; p.ell(mx, cy_, rx, ry, MOUTH, 3 * u);
+            if (teeth) p.clip(ellPts(mx, cy_, rx, ry, 0, 360, 0, 32), () => p.ell(mx, cy_ - ry * 0.95, rx * 0.85, ry * teeth, WHITE, 0));
+            if (tongue) p.clip(ellPts(mx, cy_, rx, ry, 0, 360, 0, 32), () => p.ell(mx + 0.5 * u, cy_ + ry * (tongue > 0 ? 0.7 : -0.1), rx * 0.55, ry * 0.45, TONGUE, 0)); };
+        switch (v) {
+            case "A": p.stroke([[mx - 6.5 * u * k, my + u], [mx, my + 1.6 * u], [mx + 6.5 * u * k, my + u]], 4.6 * u); break;               // m b p: mingkem
+            case "B": om(7.5 * u * k, 3.2 * u, 0.55); break;                                                                                // konsonan: sedikit buka, gigi
+            case "C": om(11 * u * k, 4.2 * u, 0.5, 0, -u); break;                                                                          // e i: lebar
+            case "D": om(9.5 * u * k, 9.5 * u, 0.32, 1); break;                                                                            // a: mangap
+            case "E": om(6.5 * u * k, 7.5 * u, 0, 1); break;                                                                               // o: bulat
+            case "F": p.ell(mx, my + 2 * u, 4.2 * u * k, 4.6 * u, MOUTH, 4.5 * u); break;                                                   // u w: monyong
+            case "G": om(8 * u * k, 3.4 * u, 0.7); p.stroke([[mx - 6 * u, my + 3.6 * u], [mx + 6 * u, my + 3.6 * u]], 2.4 * u, "#c8606a"); break; // f v
+            case "H": om(8.5 * u * k, 6 * u, 0.3, -1); break;                                                                              // l r: lidah naik
+        }
+        return;
+    }
     if (kind.startsWith("talk")) { // lip-sync: talk1 (slightly open) .. talk3 (wide open)
         const lv = +kind.slice(4), rx = (7 + lv * 1.2) * u * k, ry = (1.6 + lv * 2.6) * u;
         p.ell(mx, my + ry * 0.4, rx, ry, MOUTH, 3 * u);
@@ -2466,6 +2482,7 @@ FACE.stubborn = { eye: ["lid", "lid"], brow: [4, -3], mouth: "frown" };
 FACE.squint = { eye: ["slit", "slit"], brow: [3, -2], mouth: "dash" };
 // lip-sync variants: expr_t1..expr_t3 keep eyes/brows, replace the mouth
 for (const k of Object.keys(FACE)) for (const lv of [1, 2, 3]) FACE[k + "_t" + lv] = { ...FACE[k], mouth: "talk" + lv };
+for (const k of Object.keys(FACE)) if (!k.includes("_t")) for (const v of "ABCDEFGH") FACE[k + "_v" + v] = { ...FACE[k], mouth: "vis" + v }; // lip sync bentuk mulut
 
 // ---------------- Roman-era cast (our own designs), built on the Pen / blob / face helpers above ----------------
 const STEEL = "#aeb6bf", BRASS = "#d9a845", LEATHER = "#7a4a2a";

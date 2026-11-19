@@ -1,12 +1,13 @@
 // "Asep Minta Wish Hujan Meteor" -- halaman rumah No.17 (x=240) malam. Kostum baru: asepKupluk, nengBomber, darmanPiyama, ibuMukena.
 import { M, camFromKeys, idle, blinkAt, q, clamp, lerp, ramp } from './motion.js';
 import { LIPS } from './lips.js';
+import { VIS } from './visemes.js';
 export const TOTAL = 1277;
 const LINES = [['A', 18, 126], ['N', 134, 199], ['A', 226, 403], ['N', 409, 436], ['A', 463, 547], ['D', 554, 664], ['A', 694, 922], ['N', 928, 982], ['D', 1024, 1138], ['I', 1147, 1228]];
 const TXT = ['MALAM INI HUJAN METEOR, NENG! KATANYA WISH-NYA PASTI TERKABUL!', 'AKU MAU WISH YANG ROMANTIS, A.', 'PENGEN HP BARU! PENGEN PS LIMA! PENGEN... NENG JADI ISTRI ASEP!', 'AA...',
   'WAH, METEORNYA KEDIP-KEDIP! BERARTI DI-APPROVE!', 'SEP! ITU PESAWAT! KAMU DARI TADI MINTA KE PILOT!', 'PAK PILOT, YANG HP SAMA PS BATALIN AJA. YANG NENG... TOLONG DIKABULIN.', 'PESAWATNYA UDAH LEWAT, A.', 'PENGEN... ASEP CEPET KERJA.', 'PAK... ITU JUGA PESAWAT.'];
 const speaks = (f, who) => LINES.some(([w, a, b]) => w === who && f >= a - 2 && f <= b + 2);
-const talk = (f, who, expr) => { if (!speaks(f, who)) return expr; const lv = +(LIPS[f] || 0); return lv ? expr + '_t' + lv : expr; };
+const talk = (f, who, expr) => { if (!speaks(f, who)) return expr; const v = VIS[f] || 'X'; return v !== 'X' ? expr + '_v' + v : expr; };
 const SH = [['sky', 0, 60], ['two', 61, 133], ['neng', 134, 199], ['sky', 200, 225], ['asep', 226, 403], ['neng', 404, 436], ['sky', 437, 462], ['asep', 463, 553], ['window', 554, 664],
   ['two', 665, 693], ['asepUp', 694, 922], ['neng', 923, 982], ['sky', 983, 1005], ['two', 1006, 1023], ['window', 1024, 1146], ['window2', 1147, 1276]];
 export const SHOTS = SH.map(([id, a, b]) => ({ id, a, b, light: 'night' }));
