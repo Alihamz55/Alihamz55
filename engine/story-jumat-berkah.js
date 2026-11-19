@@ -21,7 +21,7 @@ const K = (pos, look, fov) => ({ pos, look, fov });
 const cu = (P, h, d, side, fov = 38, dx = 0) => [{ f: 0, ...K([P[0] + side, h, P[2] + d], [P[0] + dx, h + 0.12, P[2]], fov) }, { f: 150, ...K([P[0] + side * 0.85, h, P[2] + d * 0.85], [P[0] + dx, h + 0.13, P[2]], fov) }];
 const CAMS = {
   wide: [{ f: 0, ...K([HR, 1.95, 5.6], [HR, 2.0, 1.2], 44) }, { f: 83, ...K([HR, 1.95, 5.2], [HR, 2.02, 1.2], 44) }],
-  wide2: [{ f: 0, ...K([HR + 0.3, 1.95, 5.6], [HR + 0.3, 2.0, 1.2], 44) }, { f: 118, ...K([HR + 0.3, 1.95, 5.2], [HR + 0.3, 2.02, 1.2], 44) }],
+  wide2: [{ f: 0, ...K([HR + 0.25, 1.95, 6.4], [HR + 0.25, 2.0, 1.2], 44) }, { f: 118, ...K([HR + 0.25, 1.95, 6.0], [HR + 0.25, 2.02, 1.2], 44) }],
   two: [{ f: 0, ...K([HR, 2.0, 4.4], [HR, 2.05, 1.2], 42) }, { f: 50, ...K([HR, 2.0, 4.2], [HR, 2.07, 1.2], 42) }],
   darman: cu(DM, 2.0, 2.5, 0.35, 40), asep: cu(AS, 2.0, 2.3, -0.35, 40), asepCU: cu(AS, 2.05, 1.9, -0.25, 38), ibu: cu([(AS[0] + IB[0]) / 2, 0.5, AS[2] + 0.1], 2.0, 3.0, 0.15, 44),
 };
@@ -61,7 +61,7 @@ const ibPose = (f) => {
   if (f < 845) return null;
   const dx = lerp(1.6, 0, M.smooth(ramp(f, 845, 870)));
   if (f < 1001) return { L: 'hip', R: 'point', expr: 'squint', facing: -1, look: -1, dx, shake: f > 875 && f < 960 };
-  return { L: 'hip', R: 'hip', expr: 'squint', facing: -1, look: -1 };
+  return { L: 'hip', R: 'hip', expr: 'squint', facing: -1, look: -1, dx: lerp(0, 0.75, M.smooth(ramp(f, 1001, 1020))) }; // geser ke samping supaya Pak Darman tidak tertutup
 };
 export const actorsAt = (f, T) => {
   const out = [];
