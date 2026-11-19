@@ -22,6 +22,7 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
+| Battle Gombal Asep vs Ucup | `asepKlimis` (kemeja batik biru, rambut klimis) **baru** | `darmanHansip` (jaket hansip hijau, peci) **baru** | | Ucup `ucupRonda` (flanel hijau, sarung selempang) **baru**; Neng `nengDress` (dress kuning, bando, earphone) **baru** |
 | Asep Minta Wish Hujan Meteor | `asepKupluk` (kaos abu, sarung diselempangkan, kupluk rajut merah) **baru** | `darmanPiyama` (piyama garis biru, rambut berantakan) **baru** | `ibuMukena` (mukena putih) **baru** | Neng `nengBomber` (jaket bomber pink, syal putih) **baru** |
 | Asep Maksain Game Berat (GTB 6) | `asepGamer` (kaos hitam garis hijau neon, headset di leher), lalu kribo + cemong (`afro`, `soot`) **baru** | `darmanSarung` (kaos oblong putih, sarung kotak cokelat, peci) **baru** | `ibuRoll` (daster oranye, roll rambut pink) **baru** | |
 | Akhiran YouTube baru (`Akhiran-YouTube-Asep-Host.mp4`) | `asepHost` (jas ungu, dasi merah, peci) **baru**, khusus akhiran | | | |
@@ -45,7 +46,7 @@
 
 **Pose tangan bebas:** `L`/`R` boleh berupa array `[sikuX, sikuY, tanganX, tanganY, depan?, 'f']` untuk gerakan joget (contoh `engine/story-joget.js`).
 
-**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `shades` (kacamata hitam), `neon` (garis neon di kaos), `headset`, `rollers` (roll rambut), `beanie` (kupluk rajut + pompom), `scarf` (syal), `mukena` (kerudung mukena di sekeliling wajah); opsi tokoh `afro: 1` (rambut kribo habis ledakan) dan `soot: 1` (muka cemong), `glassesUp` (kacamata di dahi), `headband` (ikat kepala satu warna), `tie` (dasi dan kerah jas), `faceMask` (masker wajah), `layers` (daftar warna jaket berlapis; gabungkan dengan `stout`).
+**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `shades` (kacamata hitam), `neon` (garis neon di kaos), `headset`, `rollers` (roll rambut), `beanie` (kupluk rajut + pompom), `scarf` (syal), `mukena` (kerudung mukena di sekeliling wajah), `earbuds` (earphone putih; opsi `noEar: 1` saat dilepas), `slick` (rambut klimis mengilap); opsi tokoh `afro: 1` (rambut kribo habis ledakan) dan `soot: 1` (muka cemong), `glassesUp` (kacamata di dahi), `headband` (ikat kepala satu warna), `tie` (dasi dan kerah jas), `faceMask` (masker wajah), `layers` (daftar warna jaket berlapis; gabungkan dengan `stout`).
 
 **Properti tambahan:** `fxGameHP(p, mode, t, k)` (layar HP penuh: load/full/dl/lag/snake), `fxKulkas(p, open, smell, t)`, `fxKardus(p, label, big)` (kardus paket polos dengan label tanpa merek), `fxKoper`, `fxNampan(p, n)`, `fxKelapa` (meja es kelapa).
 
