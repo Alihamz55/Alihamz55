@@ -991,7 +991,7 @@ const hatOn = (p, o, hp, H, cx, hc, light, seed, facing, side)=>{
             p.ell(tx, ty, 7 * u, 7 * u, "#2b7a4b", 2.5 * u);
         }
     } else if (o.hat === "cap" || o.hat === "hair") {
-        const cut = crown + (o.hat === "cap" ? 0.3 : 0.42) * HH;
+        const cut = crown + (o.hat === "cap" ? 0.3 : 0.33) * HH; // poni dinaikkan (0.42 -> 0.33) supaya dahi dan alis kelihatan
         const keep = (x, y)=>y < cut || side && o.hat === "hair" && x < cx - 6 * u && y < hc + 0.42 * H.b;
         const n = hp.length, startIdx = Math.max(0, hp.findIndex(([x, y], i)=>keep(x, y) && !keep(hp[(i + n - 1) % n][0], hp[(i + n - 1) % n][1])));
         const arc = [
