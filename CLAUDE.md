@@ -131,3 +131,9 @@ Folder kerja `/home/user/shorts/` ada di server sementara dan **tidak ikut tersi
   - kompilasi panjang 8–10 menit untuk jam tonton (tanpa render, cukup gabungkan video yang ada)
   - video panjang "Pak Darman vs Asisten AI", dikerjakan per babak
 - **Pengguna sedang fokus ke Shorts.** Pengguna khawatir token habis kalau render terlalu lama, jadi pekerjaan panjang dikerjakan per bagian dan setiap bagian langsung di-commit.
+
+## Catatan lanjutan (19 Nov 2026)
+- **Gaya baru (dipakai mulai video Jumat Berkah):** alis tipis ekspresif, poni naik, rambut mengkilap (`toonbase.js`), lip sync bentuk mulut `tools/visemes.py` (pakai `VIS` di story, bukan `LIPS`), caption tengah `fxBigCap` (y 1430, skala 1.75), kamera dekat (langit maks ±20% layar). Contoh: `engine/story-jumat-berkah.js`.
+- **Video baru siap upload:** Asep Maksain Game Berat, Hujan Meteor, Battle Gombal, Antre Jumat Berkah (semua ada versi `-YT.mp4`).
+- **Antrean berikutnya:** (1) produksi naskah EN `naskah/en/potato-phone-game-too-big.md` untuk channel bahasa Inggris (suara sama, arahan bahasa Inggris, teks layar Inggris, akhiran versi Inggris); (2) naskah `asep-nabung-ps5.md`.
+- Program unduhan dari internet (mis. Rhubarb) tidak boleh dijalankan di server ini; pakai `tools/visemes.py`.
