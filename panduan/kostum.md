@@ -22,9 +22,10 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
+| Dad Frank vs Gen Z Slang #1 (versi Amerika) | `codyCowboy` (topi koboi, kemeja denim, bandana merah) **baru** | `frankLawn` / `frankLawnBare` (polo hijau, celana pendek krem, topi baseball merah polos yang bisa dilepas) **baru** | `lindaRobe` (jubah mandi biru muda, rol rambut pink) **baru** | |
 | Ibu Ngambek Dibonceng | `asepMartabak` (kaos merah, celemek, ikat kepala) **baru** | `darmanJeans` (jaket jeans, helm putih) **baru** | `ibuGamis` (gamis hijau, helm pink) **baru** | |
-| HP Baru Gaptek 2 (Asisten AI) | `asepHoodie` (hoodie abu) **baru** | `darmanKoko` (koko putih, kacamata di dahi) **baru** | `ibuDasterUngu darmanJeans ibuGamis asepMartabak` (daster ungu bunga) **baru** | |
-| Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak` **baru** |
+| HP Baru Gaptek 2 (Asisten AI) | `asepHoodie` (hoodie abu) **baru** | `darmanKoko` (koko putih, kacamata di dahi) **baru** | `ibuDasterUngu` (daster ungu bunga) **baru** | |
+| Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan` **baru** |
 | Kuis Satu Miliar | `sarung` | `darman` | `ibuDaster` | |
 | Galau Dijogetin | `sarung` | `darman` | `ibuDaster` | |
 | Ibu Live Jualan | `sarung` | | `ibuDaster` | Pocong |
@@ -35,10 +36,10 @@
 
 > `sarung` dan `darman` sudah terlalu sering dipakai. Hindari kedua kostum ini sampai 5 video ke depan.
 
-**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `glassesUp` (kacamata di dahi), `headband` (ikat kepala satu warna).
+**Fitur aksesori baru di `roman.js`** (bisa dipakai di outfit lain): `cowboy` (topi koboi dengan warna sesuai isian), `curlers` (rol rambut), `vest` (rompi dengan garis reflektor), `zipJacket` (kerah dan resleting), `whistle` (peluit dengan tali), `motoHelm` (helm motor dengan warna sesuai isian), `koko` (kerah dan kancing koko), `hoodie` (tudung, tali, dan kantong), `floral` (motif bunga di baju), `glassesUp` (kacamata di dahi), `headband` (ikat kepala satu warna).
 
 **Properti baru di `zfx.js`:** `fxSkuter(p, warna)`, `fxTiang`, `fxGerobak(p, label)`, `fxLampuJalan`. Contoh adegan naik motor ada di `engine/story-ngambek.js`: pengendara diletakkan di belakang skuter dengan skala 1.9, kamera ikut bergerak.
 
 ## Outfit yang sudah ada di `roman.js` (bisa jadi dasar varian baru)
 
-`civA civB civC workA workB komik handuk rapi batik batikRun pengantin tante istri pejuang kartini bayi galau santai zainuddin santaiSweat hrd genit bule darman flanel sarung gunungA gunungU ujang ibuPasar asepKoki ibuDaster teman asepParkir darmanMotor ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak`
+`civA civB civC workA workB komik handuk rapi batik batikRun pengantin tante istri pejuang kartini bayi galau santai zainuddin santaiSweat hrd genit bule darman flanel sarung gunungA gunungU ujang ibuPasar asepKoki ibuDaster teman asepParkir darmanMotor ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak codyCowboy frankLawn frankLawnBare lindaRobe`
