@@ -36,3 +36,10 @@ Speko TTS: sama seperti versi Indonesia, tapi `intent:{language:'en', optimizeFo
 | Parkir Rp35 ribu | Tilang parkir $85 |
 | Ibu Live Jualan | Mom Linda jualan di garage sale |
 | Diundang Nikahan Mantan | tetap (universal) |
+
+## Video dan aset
+
+- Video #1: `video/Dad-Frank-vs-Gen-Z-Slang.mp4`. Versi siap upload yang sudah pakai akhiran: `video/Dad-Frank-vs-Gen-Z-Slang-YT.mp4` (57,8 detik).
+- **Akhiran bahasa Inggris:** `video/Akhiran-YouTube-DadFrank.mp4` (5,9 detik). Isinya Cody di depan rumah, tombol SUBSCRIBE/LIKE/COMMENT, dan @dadfranktoons. Kodenya: `engine/story-ytdadfrank.js` dan `engine/audio-frank-akhiran.py`.
+  Tombol akhiran memakai `fxYtBtn(p, kind, on, t, true)`. Argumen `true` membuat label berbahasa Inggris.
+- Branding channel (logo, banner, deskripsi, hashtag): `branding/dadfrank/`.

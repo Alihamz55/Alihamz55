@@ -96,6 +96,11 @@ Folder kerja `/home/user/shorts/` ada di server sementara dan **tidak ikut tersi
 10. Tempel akhiran: `ffmpeg -i video.mp4 -i video/Akhiran-YouTube-Asep.mp4 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]" ...` ke `video/<Judul>-YT.mp4`.
 11. Commit dan push ke branch kerja, lalu kirim file ke pengguna dengan SendUserFile.
 
+## Versi Amerika (Dad Frank Toons)
+
+- Seri bahasa Inggris untuk channel terpisah @dadfranktoons. Tokoh, suara, dan aturannya ada di `panduan/versi-amerika.md`. Naskahnya di `naskah/amerika/`.
+- Tempel akhiran `video/Akhiran-YouTube-DadFrank.mp4` (bukan akhiran Asep). Caption: "Comedy content. All characters are fictional."
+
 ## Status per 17 November 2026
 
 - **Data channel (28 hari):** 73,5 ribu penayangan, 73,5% penonton tetap menonton, 120 subscriber. Jam tonton video panjang masih 0.
