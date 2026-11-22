@@ -90,6 +90,10 @@ export const OUTFITS = {
   asepKoko: { tunic: "#bfe3b0", skin: "#d9a07a", hair: "#2a1a10", arms: "#bfe3b0", legs: "#d9a07a", sarung: "#7a4a2a", plaid: "#4a2a18", peci: true, koko: true },
   darmanPanitia: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#f4f1ea", legs: "#2b2f3a", pants: "#2b2f3a", vest: "#f08a2a", peci: true, peciCol: "#f4f1ea", moustache: "#3a2a20" },
   ibuCelemek: { tunic: "#3a6fd0", skin: "#f0c49c", hair: "#2b211c", arms: "#3a6fd0", dress: "#3a6fd0", glasses: true, mukena: "#e8d8b0", bib: "#fff3e0" },
+  asepKaosCula: { tunic: "#8a8f98", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#2b4a8a", pants: "#2b4a8a", horn: "#f4f1ea" },
+  darmanKoran: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", sarung: "#2f6a4a", plaid: "#1f4a32", glasses: true, moustache: "#3a2a20" },
+  ibuHanduk: { tunic: "#3ab0a8", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3ab0a8", glasses: true, turban: "#ffffff" },
+  juragan: { tunic: "#f4f1ea", skin: "#e8b48a", hair: "#2a1d18", arms: "#f4f1ea", legs: "#2b2f3a", pants: "#2b2f3a", vest: "#f08a2a", hardhat: "#ffd84a", chain: "#f2c94c" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -367,6 +371,9 @@ export const romanFront = (p, key, opts = {}) => {
   if (O.bib) { const bp = [[tcx - 0.5 * T.a, chin + 0.2 * HH], [tcx + 0.5 * T.a, chin + 0.2 * HH], [tcx + 0.62 * T.a, torsoBot + 0.05 * HH], [tcx - 0.62 * T.a, torsoBot + 0.05 * HH]]; // celemek bunga
     p.poly(bp, O.bib, 1.8 * u); for (let i = 0; i < 9; i++) { const x = tcx + ((i * 0.41) % 1 - 0.5) * 0.9 * T.a, y = chin + (0.3 + ((i * 0.67) % 1) * 0.6) * (torsoBot - chin);
       for (let k = 0; k < 5; k++) { const a = k / 5 * 6.283; p.dot(x + Math.cos(a) * 3 * u, y + Math.sin(a) * 3 * u, 2 * u, "#ff8ac0"); } p.dot(x, y, 1.5 * u, "#ffd84a"); } }
+  if (O.horn) { const hx = tcx, hy = chin + 0.38 * HH; // sablon siluet cula badak di kaos
+    p.poly([[hx - 22 * u, hy + 14 * u], [hx + 20 * u, hy + 14 * u], [hx + 6 * u, hy - 4 * u], [hx + 14 * u, hy - 26 * u], [hx - 4 * u, hy - 6 * u]], O.horn, 2 * u); }
+  if (O.chain) for (let i = 0; i <= 12; i++) { const a = Math.PI * (0.12 + 0.76 * i / 12); p.ell(tcx + Math.cos(a) * 0.55 * T.a, chin + 0.04 * HH + Math.sin(a) * 0.2 * HH, 3.4 * u, 2.6 * u, O.chain, 1.2 * u); }
   if (O.hoodie) { // hood bunched at the neck + drawstrings + kangaroo pocket
     p.band([[tcx - 0.62 * T.a, chin + 0.02 * HH], [tcx, chin + 0.12 * HH], [tcx + 0.62 * T.a, chin + 0.02 * HH]], mul(O.tunic, [0.82, 0.82, 0.82]), 0.12 * HH, 1.6 * u);
     for (const sd of [-1, 1]) { p.stroke([[tcx + sd * 0.12 * T.a, chin + 0.1 * HH], [tcx + sd * 0.14 * T.a, chin + 0.42 * HH]], 1.6 * u, O.hoodie); p.dot(tcx + sd * 0.14 * T.a, chin + 0.44 * HH, 2.4 * u, O.hoodie); }
@@ -480,6 +487,10 @@ export const romanFront = (p, key, opts = {}) => {
     p.stroke(curve([cx - 0.62 * H.a, chin + 0.02 * HH], [cx, chin + 0.13 * HH], [cx + 0.62 * H.a, chin + 0.02 * HH]), 0.085 * HH, sc);
     const tx = cx + 0.3 * H.a; p.poly([[tx - 9 * u, chin + 0.1 * HH], [tx + 9 * u, chin + 0.1 * HH], [tx + 12 * u, chin + 0.42 * HH], [tx - 4 * u, chin + 0.44 * HH]], sc, ow * 0.6);
     for (const yy of [0.36, 0.4]) p.stroke([[tx - 3 * u, chin + yy * HH], [tx + 10 * u, chin + (yy - 0.01) * HH]], 1.6 * u, sd); }
+  if (O.turban) { const top = hc - 0.85 * H.b; p.ell(cx, top, 1.08 * H.a, 0.62 * H.b, O.turban, ow * 0.7); p.ell(cx + 0.15 * H.a, top - 0.45 * H.b, 0.62 * H.a, 0.42 * H.b, O.turban, ow * 0.7);
+    for (const k of [-0.5, 0, 0.5]) p.stroke([[cx + k * H.a - 10 * u, top - 0.1 * H.b], [cx + k * H.a + 10 * u, top + 0.2 * H.b]], 1.6 * u, "#d8dde4"); }
+  if (O.hardhat) { const top = hc - 0.75 * H.b; p.ell(cx, top, 0.98 * H.a, 0.62 * H.b, O.hardhat, ow * 0.7); p.band([[cx - 1.18 * H.a, top + 0.42 * H.b], [cx + 1.18 * H.a, top + 0.42 * H.b]], O.hardhat, 0.14 * H.b, ow * 0.6);
+    p.band([[cx, top - 0.55 * H.b], [cx, top + 0.3 * H.b]], mix(O.hardhat, INK, 0.2), 6 * u, 0); }
   if (O.peci && !opts.afro && !O.motoHelm) { const top = hc - 1.2 * H.b; p.poly(rrect(cx - 0.66 * H.a, top - 0.02 * H.b, cx + 0.66 * H.a, top + 0.5 * H.b, 6 * u), O.peciCol || "#101018", ow * 0.6); p.band([[cx - 0.64 * H.a, top + 0.4 * H.b], [cx + 0.64 * H.a, top + 0.4 * H.b]], "#e2b04a", 3 * u, 0); }
   if (O.bedhead) for (let i = 0; i < 7; i++) { const a = rad(-160 + i * 23), x0 = cx + Math.cos(a) * H.a * 0.85, y0 = hc + Math.sin(a) * H.b * 0.88, x1 = cx + Math.cos(a + (i % 2 ? 0.25 : -0.2)) * H.a * 1.28, y1 = hc + Math.sin(a + (i % 2 ? 0.25 : -0.2)) * H.b * 1.3;
     p.poly([[x0 - 9 * u, y0], [x1, y1], [x0 + 9 * u, y0]], O.hair, 2.4 * u); }

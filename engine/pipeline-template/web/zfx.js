@@ -958,3 +958,27 @@ export const fxSpanduk = (p) => { const g = p.g; g.save(); g.lineJoin = "round";
   g.fillStyle = "#ffd84a"; g.font = '700 92px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.lineWidth = 14; g.strokeText("JUMAT BERKAH", 300, 478); g.fillText("JUMAT BERKAH", 300, 478);
   g.restore(); };
 export const fxKotakTangan = (p, n = 1) => { const g = p.g; g.save(); g.lineJoin = "round"; for (let i = 0; i < n; i++) nasiBox(g, 300 + (i % 2 ? 10 : -10), 985 - i * 120, 300, 130); g.restore(); };
+
+// ---- Kamar Ujung: layar berita HP, kasur (tegak / gulung), detektor logam ----
+export const fxBerita = (p) => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.fillStyle = "#14101a"; g.beginPath(); g.roundRect(40, 20, 520, 960, 56); g.fill(); g.save(); g.beginPath(); g.roundRect(62, 44, 476, 912, 40); g.clip();
+  g.fillStyle = "#f4f1ea"; g.fillRect(62, 44, 476, 912); g.fillStyle = "#c0303a"; g.fillRect(62, 44, 476, 110);
+  g.fillStyle = "#ffffff"; g.font = '700 54px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("BERITA HARI INI", 300, 100);
+  g.fillStyle = "#3a6a3a"; g.beginPath(); g.roundRect(100, 200, 400, 300, 20); g.fill();
+  g.fillStyle = "#5a5a62"; g.beginPath(); g.ellipse(300, 380, 130, 70, 0, 0, 7); g.fill(); g.beginPath(); g.ellipse(190, 360, 55, 45, 0, 0, 7); g.fill();
+  g.beginPath(); g.moveTo(150, 340); g.lineTo(130, 290); g.lineTo(170, 330); g.closePath(); g.fill(); for (const x of [220, 270, 340, 390]) { g.fillRect(x, 420, 26, 60); }
+  g.fillStyle = "#14101a"; g.font = '700 52px "Fredoka", sans-serif'; ["BADAK MAU", "DIPINDAH DARI", "UJUNG KULON"].forEach((t, i) => g.fillText(t, 300, 590 + i * 70));
+  g.fillStyle = "#8a8f98"; for (let i = 0; i < 4; i++) g.fillRect(100, 820 + i * 34, 400 - (i % 2) * 120, 14);
+  g.restore(); g.restore(); };
+export const fxKasur = (p, rolled = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; g.strokeStyle = "#14101a"; g.lineWidth = 9;
+  if (rolled) { g.fillStyle = "#e8e2f2"; g.beginPath(); g.roundRect(120, 760, 360, 200, 90); g.fill(); g.stroke(); g.fillStyle = "#c8bfe0"; g.beginPath(); g.ellipse(140, 860, 40, 90, 0, 0, 7); g.fill(); g.stroke();
+    g.strokeStyle = "#8a6a4a"; g.lineWidth = 12; for (const x of [230, 380]) { g.beginPath(); g.moveTo(x, 765); g.lineTo(x, 955); g.stroke(); } }
+  else { g.fillStyle = "#e8e2f2"; g.beginPath(); g.roundRect(170, 160, 260, 820, 40); g.fill(); g.stroke(); g.fillStyle = "#b8a8e0";
+    for (let y = 220; y < 960; y += 90) for (let x = 210; x < 420; x += 70) { g.beginPath(); g.arc(x, y, 9, 0, 7); g.fill(); } }
+  g.restore(); };
+export const fxDetektor = (p, t = 0, on = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; g.strokeStyle = "#14101a"; g.lineWidth = 9;
+  g.fillStyle = "#3a3f4a"; g.beginPath(); g.moveTo(300, 200); g.lineTo(300, 820); g.stroke(); g.fillStyle = "#2b2f3a"; g.beginPath(); g.roundRect(250, 180, 100, 120, 20); g.fill(); g.stroke();
+  g.fillStyle = on && Math.floor(t / 3) % 2 ? "#ff3b3b" : "#5a1e28"; g.beginPath(); g.arc(300, 230, 22, 0, 7); g.fill(); g.stroke();
+  g.fillStyle = "#ffd84a"; g.beginPath(); g.ellipse(300, 860, 120, 46, 0, 0, 7); g.fill(); g.stroke();
+  if (on) { g.strokeStyle = "#ff3b3b"; g.lineWidth = 7; for (let k = 1; k <= 3; k++) { const r = 40 + k * 30 + (t * 3) % 30; g.globalAlpha = 0.8 - k * 0.2; g.beginPath(); g.arc(300, 230, r, -2.4, -0.7); g.stroke(); } }
+  g.restore(); };
