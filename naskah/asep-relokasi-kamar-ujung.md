@@ -1,23 +1,25 @@
 # Asep Mau Dipindah dari Kamar Ujung (Malam Komedi)
 
 **Tren:** wacana pemindahan badak Jawa dari Ujung Kulon (ramai pertengahan November 2026). Yang dipakai hanya **plesetan kata**: "Ujung Kulon" jadi "kamar ujung", "kulit badak" jadi tebal muka, dan "habitat kedua".
+**Revisi 22 Nov:** penyewa kamar bukan lagi Pocong, tapi **Juragan Tambang fiktif** (permintaan pengguna).
+
 **Catatan aman (wajib):**
-- **Tanpa politik:** tidak menyebut pejabat, partai, atau isu tambang.
-- **Tanpa tragedi:** tidak menyinggung badak yang mati setelah dipindah.
-- **Badak tidak diejek.** Fakta populasi sekitar 50 ekor disebut dengan nada sayang, sekaligus jadi pesan positif.
-- **Caption:** "Konten komedi. Semua tokoh fiktif. Lindungi badak Jawa 🦏"
+- **Satire fiktif.** "Juragan Kilau" adalah tokoh rekaan: tanpa nama asli, tanpa jabatan, tanpa nama perusahaan, tanpa lokasi tambang asli, dan **tidak dibuat mirip siapa pun** (bukan karikatur). Penampilannya generik: helm proyek, rompi, kalung rantai kuning mainan, detektor logam.
+- **Tidak menuduh siapa pun.** Leluconnya soal sikap "semua diukur dari untung", bukan soal kasus nyata.
+- **Tanpa tragedi:** tidak menyinggung badak yang mati setelah dipindah. Badak tidak diejek.
+- **Caption:** "Konten satire/komedi. Semua tokoh fiktif. Lindungi badak Jawa 🦏"
+- ⚠️ Karena menyentuh isu yang ramai diperdebatkan, versi ini lebih "politis" daripada versi Pocong. Risikonya: komentar bisa memanas dan jangkauan bisa lebih kecil (data channel: video politik sepi).
 
 **Tokoh, suara, dan kostum baru (gaya baru: alis, poni naik, rambut mengkilap, lip sync bentuk mulut, caption tengah):**
 
 | Tokoh | Kostum (baru) | Suara |
 |---|---|---|
-| Asep | `asepKaosCula`: kaos abu bergambar siluet cula (sablon polos, tanpa merek), celana training biru, sandal jepit | Achird |
+| Asep | `asepKaosCula`: kaos abu bergambar siluet cula (sablon polos, tanpa merek), celana training biru | Achird |
 | Pak Darman | `darmanKoran`: singlet putih, sarung hijau kotak, kacamata baca di hidung, memegang HP | Charon |
 | Ibu | `ibuHanduk`: daster hijau toska, handuk melilit di kepala (habis keramas) | Gacrux |
-| Pocong | FX `fxPocong` | Algenib + gema |
-| Ucup | `teman` (kaos garis) | Puck |
+| Juragan Kilau (tokoh baru, fiktif) | `juragan`: helm proyek kuning, rompi oranye, kemeja putih, kalung rantai kuning (mainan), detektor logam | Algieba (usulan; bapak-bapak sok sukses, bicara pelan dan licin) |
 
-**Latar:** kamar dan ruang tengah (x=-40) untuk adegan utama, lalu pos ronda (x=120) untuk penutup.
+**Latar:** kamar dan ruang tengah (x=-40). Properti: kasur, kaleng bekas berisi koin gopek (tanpa merek), detektor logam.
 
 ---
 
@@ -34,48 +36,52 @@
 
 **Asep:** Lho, kenapa Asep, Pak?!
 
-**Pak Darman:** Kulitmu kayak badak. Tebel.
-
-**Asep:** Pak, Asep bukan badak!
-
-**Ibu:** *(handuk di kepala)* Tebel, Sep. Utang gorengan Mang Ujang tiga bulan, masih berani lewat depan warungnya.
-
-**Asep:** Itu bukan tebel, Bu. Itu... percaya diri.
-
-**Pak Darman:** Udah. Kamarmu Bapak sewain. Lumayan buat bayar listrik.
+**Pak Darman:** Kulitmu kayak badak. Tebel. Kamarmu mau Bapak sewain.
 
 *(Asep memeluk kasur seperti aktivis yang memeluk pohon.)*
 
 **Asep:** Tolak relokasi! Biarkan Asep hidup di kamarnya sendiri!
 
-**Ibu:** Sep, badak aja tinggal lima puluh, tenang. Kamu cuma satu, berisiknya kayak seratus.
+**Ibu:** *(handuk di kepala)* Sep, badak aja tinggal lima puluh, tenang. Kamu cuma satu, berisiknya kayak seratus.
 
-*(Tok tok tok. Pintu terbuka. Pocong melompat masuk.)*
+*(Tok tok. Juragan Kilau masuk: helm proyek, kalung rantai kuning, detektor logam.)*
 
-**Pocong:** Permisi... kamar ujung yang disewain? Ada colokannya?
+**Juragan:** Permisi. Kamar ujung disewain? Saya bayar pakai emas.
 
-**Pak Darman:** Nah, ini penyewanya. Bayar di muka.
+**Pak Darman:** Kamar sekecil ini, buat apa, Juragan?
 
-*(Banner: "MALAMNYA". Pos ronda. Asep tidur di bangku sambil memeluk kasur gulung. Ucup datang membawa senter.)*
+*(Detektor diarahkan ke kasur Asep: bip... bip... bipbipbip makin cepat.)*
 
-**Ucup:** Sep? Ngapain tidur di sini?
+**Juragan:** Di bawah kasur ini... ada tambang!
 
-**Asep:** *(menatap langit)* Lagi relokasi, Cup. Ini... habitat kedua.
+**Asep:** Jangan, Pak! Itu habitat Asep!
+
+*(Kasur diangkat. Di bawahnya ada kaleng bekas penuh koin kuning.)*
+
+**Juragan:** ...Ini tambangnya?
+
+**Asep:** Itu tabungan PS lima, Pak! Isinya gopek semua!
+
+**Juragan:** *(kecewa, pergi)* Nggak jadi. Kurang cuan.
+
+**Pak Darman:** *(menepuk bahu Asep)* Selamat, Sep. Kamu dilindungi... soalnya nggak ada untungnya.
+
+**Asep:** *(pelan)* ...Pak, kok Asep sedih ya.
 
 *(Kartu penutup: "LINDUNGI BADAK JAWA. ASEP JUGA BOLEH")*
 
 ## 4. Punchline utama
-**"Sep, badak aja tinggal lima puluh, tenang. Kamu cuma satu, berisiknya kayak seratus."** Ibu membalik protes Asep dengan perbandingan yang tak terduga. **Kick kamera** dan bintang `fxJudge` "KAYAK SERATUS".
+**"...Ini tambangnya?" / "Itu tabungan PS lima, Pak! Isinya gopek semua!"** Detektor berbunyi makin kencang dan penonton mengira ada harta karun, ternyata cuma koin gopek tabungan Asep. **Kick kamera** dan bintang `fxJudge` "GOPEK SEMUA!".
 
 ## 5. Tag
-- **"Itu bukan tebel, Bu. Itu... percaya diri."** Asep ngeles soal "kulit badak".
-- **Pocong datang sebagai penyewa** yang langsung menanyakan colokan (callback tokoh tetap). Pak Darman: "Bayar di muka."
+- **"Nggak jadi. Kurang cuan."** Juragan langsung pergi begitu tahu tidak ada untungnya.
+- **"Badak aja tinggal lima puluh... kamu berisiknya kayak seratus."** Sindiran Ibu ditaruh di awal sebagai lelucon pembuka.
 
 ## 6. Callback penutup
-Di pos ronda, Asep memakai istilah dari berita: **"Lagi relokasi, Cup. Ini... habitat kedua."** Kata yang tadi dipakai untuk badak, sekarang dipakai untuk Asep sendiri.
+**"Selamat, Sep. Kamu dilindungi... soalnya nggak ada untungnya."** Ini mengikat cerita ke tema "dilindungi" (badak), dengan sindiran halus bahwa yang dijaga cuma kalau tidak bisa diambil untungnya. Asep menutup dengan polos: "...Pak, kok Asep sedih ya." Tabungan PS lima juga callback ke naskah "Asep Nabung Beli PS".
 
 ## 7. Estimasi durasi
-Sekitar 46–50 detik setelah `atempo=1.12` dengan jeda 0,15–0,3 detik, lalu ditambah akhiran. Totalnya di bawah 57 detik. Kalau kepanjangan, kalimat "Itu bukan tebel... percaya diri" bisa dibuang.
+Sekitar 46–50 detik setelah `atempo=1.12` dengan jeda 0,15–0,3 detik, lalu ditambah akhiran. Totalnya di bawah 57 detik.
 
 ## 8. Arahan intonasi & jeda
 
@@ -84,12 +90,16 @@ Sekitar 46–50 detik setelah `atempo=1.12` dengan jeda 0,15–0,3 detik, lalu d
 | Hook Darman | Membaca berita datar. Jeda 0,5 detik dan melirik sebelum "Sep." |
 | Asep "kenapa Asep, Pak?!" | Kaget dan cepat |
 | Darman "Kulitmu kayak badak. Tebel." | Datar dan serius, seperti fakta ilmiah |
-| Ibu "Utang gorengan..." | Cerewet dan cepat, sambil mengeringkan rambut dengan handuk |
-| "Itu... percaya diri." | Jeda 0,4 detik, lalu bangga |
 | "Tolak relokasi!" | Seperti orasi demo, lantang, memeluk kasur |
-| Ibu "berisiknya kayak seratus." | Datar dan tajam. **Kick kamera** |
-| Pocong | Sopan dan pelan, dengan gema |
-| Darman "Bayar di muka." | Cepat dan senang |
-| Asep "Ini... habitat kedua." | Pelan dan pasrah sambil menatap langit. Langsung potong ke kartu penutup |
+| Ibu "berisiknya kayak seratus." | Datar dan tajam |
+| Juragan "Saya bayar pakai emas." | Pelan, licin, sok sukses |
+| Bunyi detektor | Bip... bip... makin cepat selama 1,5 detik, membangun ketegangan |
+| "Di bawah kasur ini... ada tambang!" | Berbisik, mata berbinar |
+| Asep "Itu habitat Asep!" | Panik |
+| "...Ini tambangnya?" | Jeda 0,6 detik, lalu datar dan kecewa |
+| "Isinya gopek semua!" | Asep bangga sekaligus sedih. **Kick kamera** |
+| "Kurang cuan." | Dingin, langsung balik badan |
+| Darman "...nggak ada untungnya." | Bijak, menepuk bahu, jeda sebelum "soalnya" |
+| Asep "kok Asep sedih ya." | Pelan dan polos. Langsung potong ke kartu penutup |
 
-**Kata kunci `fxJudge`:** "KULIT BADAK", "PERCAYA DIRI", "TOLAK RELOKASI!", "KAYAK SERATUS", "HABITAT KEDUA".
+**Kata kunci `fxJudge`:** "KULIT BADAK", "TOLAK RELOKASI!", "KAYAK SERATUS", "ADA TAMBANG!", "GOPEK SEMUA!", "KURANG CUAN".
