@@ -94,6 +94,9 @@ export const OUTFITS = {
   darmanKoran: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", sarung: "#2f6a4a", plaid: "#1f4a32", glasses: true, moustache: "#3a2a20" },
   ibuHanduk: { tunic: "#3ab0a8", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3ab0a8", glasses: true, turban: "#ffffff" },
   juragan: { tunic: "#f4f1ea", skin: "#e8b48a", hair: "#2a1d18", arms: "#f4f1ea", legs: "#2b2f3a", pants: "#2b2f3a", vest: "#f08a2a", hardhat: "#ffd84a", chain: "#f2c94c" },
+  asepOpenWorld: { tunic: "#d8453b", skin: "#d9a07a", hair: "#2a1a10", arms: "#d8453b", legs: "#d9a07a", pants: "#e8d8b0", floral: "#fff3e0", glassesUp: true },
+  darmanPolo: { tunic: "#f2c14e", skin: "#dca27a", hair: "#4e4844", arms: "#f2c14e", legs: "#5a5048", pants: "#5a5048", moustache: "#3a2a20", koko: true, cap: "#3a6a3a" },
+  ibuSapu: { tunic: "#6a3fb5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#6a3fb5", bun: true, glasses: true, floral: "#f2c94c" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };

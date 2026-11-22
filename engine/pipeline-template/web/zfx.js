@@ -982,3 +982,27 @@ export const fxDetektor = (p, t = 0, on = 0) => { const g = p.g; g.save(); g.lin
   g.fillStyle = "#ffd84a"; g.beginPath(); g.ellipse(300, 860, 120, 46, 0, 0, 7); g.fill(); g.stroke();
   if (on) { g.strokeStyle = "#ff3b3b"; g.lineWidth = 7; for (let k = 1; k <= 3; k++) { const r = 40 + k * 30 + (t * 3) % 30; g.globalAlpha = 0.8 - k * 0.2; g.beginPath(); g.arc(300, 230, r, -2.4, -0.7); g.stroke(); } }
   g.restore(); };
+
+// ---- Parodi game open world (tanpa merek): HUD, sapu, tumpukan piring ----
+export const fxHUD = (p, stars = 0, money = "Rp2.000", hp = 1, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round";
+  const W = 1080, H = 1920; // overlay langsung di koordinat layar
+  g.fillStyle = "rgba(20,30,24,0.75)"; g.strokeStyle = "#14101a"; g.lineWidth = 8; g.beginPath(); g.arc(150, 1760, 110, 0, 7); g.fill(); g.stroke();
+  g.save(); g.beginPath(); g.arc(150, 1760, 104, 0, 7); g.clip(); g.fillStyle = "#4a8a5a"; g.fillRect(40, 1650, 220, 220);
+  g.fillStyle = "#c8c0b0"; g.fillRect(40, 1740, 220, 26); g.fillRect(130, 1650, 26, 220); g.fillStyle = "#3a6ab0"; g.fillRect(180, 1660, 70, 60);
+  g.restore(); g.fillStyle = "#ffffff"; g.beginPath(); g.moveTo(150, 1740); g.lineTo(165, 1775); g.lineTo(150, 1767); g.lineTo(135, 1775); g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = "#ffd84a"; g.beginPath(); g.arc(205, 1700, 11, 0, 7); g.fill(); g.lineWidth = 4; g.stroke();
+  g.fillStyle = "#14101a"; g.fillRect(40, 1885, 220, 22); g.fillStyle = hp > 0.3 ? "#5dff8a" : "#ff3b3b"; g.fillRect(44, 1889, 212 * hp, 14);
+  g.font = '700 70px "Fredoka", sans-serif'; g.textAlign = "right"; g.textBaseline = "middle"; g.lineWidth = 12; g.strokeStyle = "#14101a"; g.strokeText(money, W - 40, 110); g.fillStyle = "#5dff8a"; g.fillText(money, W - 40, 110);
+  for (let i = 0; i < 5; i++) { const x = W - 70 - i * 78, y = 200, on = i < stars, r = 30;
+    g.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r * 0.45 : r; g.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } g.closePath();
+    g.fillStyle = on ? (Math.floor(t / 8) % 2 && stars >= 3 ? "#ffffff" : "#ffd84a") : "rgba(255,255,255,0.15)"; g.fill(); g.lineWidth = 6; g.strokeStyle = "#14101a"; g.stroke(); }
+  g.restore(); };
+export const fxGagal = (p, t = 0) => { const g = p.g; g.save(); g.fillStyle = "rgba(40,40,48,0.55)"; g.fillRect(-2000, -2000, 5000, 5000);
+  g.font = '700 120px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.lineWidth = 22; g.strokeStyle = "#14101a"; g.strokeText("MISI GAGAL", 300, 470); g.fillStyle = "#ff3b3b"; g.fillText("MISI GAGAL", 300, 470);
+  g.font = '700 52px "Fredoka", sans-serif'; g.lineWidth = 12; g.strokeText("UANG KURANG", 300, 570); g.fillStyle = "#ffffff"; g.fillText("UANG KURANG", 300, 570); g.restore(); };
+export const fxSapu = (p) => { const g = p.g; g.save(); g.lineCap = "round"; g.strokeStyle = "#8a6a3a"; g.lineWidth = 16; g.beginPath(); g.moveTo(300, 120); g.lineTo(300, 700); g.stroke();
+  g.strokeStyle = "#c8a050"; g.lineWidth = 5; for (let i = -10; i <= 10; i++) { g.beginPath(); g.moveTo(300 + i * 3, 680); g.lineTo(300 + i * 14, 980); g.stroke(); }
+  g.strokeStyle = "#d8322f"; g.lineWidth = 14; g.beginPath(); g.moveTo(280, 690); g.lineTo(320, 690); g.stroke(); g.restore(); };
+export const fxPiring = (p, n = 9) => { const g = p.g; g.save(); g.lineJoin = "round"; for (let i = 0; i < n; i++) { const y = 960 - i * 46, x = 300 + Math.sin(i * 1.7) * 14;
+  g.fillStyle = "#f4f1ea"; g.strokeStyle = "#14101a"; g.lineWidth = 7; g.beginPath(); g.ellipse(x, y, 170, 34, 0, 0, 7); g.fill(); g.stroke(); g.fillStyle = "#c8a070"; g.beginPath(); g.ellipse(x + 30, y - 6, 40, 9, 0, 0, 7); g.fill(); }
+  g.restore(); };
