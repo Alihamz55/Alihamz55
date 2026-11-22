@@ -429,6 +429,21 @@ for (const dx of [-0.55, 0.55]) add(tbox(0.12, 2.3, 0.12, 1), MA.metal, AX + 5.0
 // kursi tunggu
 for (let i = 0; i < 5; i++) { add(tbox(0.5, 0.08, 0.5, 1), MA.seat, AX - 6 + i * 0.6, 0.95, -2.4, world); add(tbox(0.5, 0.5, 0.08, 1), MA.seat, AX - 6 + i * 0.6, 1.25, -2.62, world); }
 add(tbox(3.0, 0.08, 0.1, 1), MA.metal, AX - 4.8, 0.75, -2.4, world);
+// ===== KABIN PESAWAT (x=660) + KOKPIT (x=680) =====
+const CXP = 660;
+const MPS = { carpet: toon({ color: '#3a4a6a' }), wall: toon({ color: '#eef1f4' }), seat: toon({ color: '#2f5fa8' }), head: toon({ color: '#f4f1ea' }), bin: toon({ color: '#dfe4ea' }), sky: glow('#bfe2ff'), stripe: toon({ color: '#d8322f' }), dark: toon({ color: '#5a6470' }) };
+add(tbox(5.4, 1.0, 14, 1.0), MPS.carpet, CXP, 0, -1, world, { cast: false });
+for (const sx of [-1, 1]) { add(tbox(0.25, 4.2, 14, 2), MPS.wall, CXP + sx * 2.5, 2.1, -1, world); add(tbox(1.1, 0.55, 14, 1), MPS.bin, CXP + sx * 1.85, 3.25, -1, world);
+  add(tbox(0.05, 0.06, 14, 1), MPS.stripe, CXP + sx * 2.36, 1.55, -1, world);
+  for (let r = 0; r < 7; r++) { const z = 2.9 - r * 1.05; add(tbox(0.04, 0.42, 0.3, 1), MPS.sky, CXP + sx * 2.37, 2.1, z - 0.2, world);
+    for (const k of [0.75, 1.4]) { const x = CXP + sx * k; add(tbox(0.56, 0.16, 0.55, 1), MPS.seat, x, 0.95, z, world); add(tbox(0.56, 1.0, 0.14, 1), MPS.seat, x, 1.45, z + 0.3, world); add(tbox(0.46, 0.22, 0.16, 1), MPS.head, x, 1.85, z + 0.3, world);
+      add(tbox(0.1, 0.4, 0.5, 1), MPS.dark, x + 0.3, 0.75, z, world); } } }
+add(tbox(5.4, 0.2, 14, 1), MPS.bin, CXP, 3.95, -1, world);
+for (let r = 0; r < 7; r++) { const b = add(tbox(0.5, 0.04, 0.12, 1), glow('#fff6d8'), CXP, 3.84, 2.9 - r * 1.05, world); b.userData.ndSkip = true; }
+add(tbox(5.4, 4.2, 0.2, 1), MPS.wall, CXP, 2.1, -4.6, world); add(tbox(0.95, 2.2, 0.1, 1), MPS.dark, CXP, 1.6, -4.45, world);
+plane(1.0, 0.25, basic(P.sign('KOKPIT', { font: 90, bg: '#1d3a6a', fg: '#ffffff' }), { fog: false }), CXP, 2.95, -4.4);
+{ const s17 = plane(0.42, 0.2, basic(P.sign('17A', { font: 110, bg: '#ffd84a', fg: '#1d3a6a' }), { fog: false }), CXP - 1.4, 2.85, 0.8 - 0.3); s17.rotation.y = Math.PI; }
+add(tbox(6, 1.0, 8, 1.0), MPS.carpet, 680, 0, -1, world, { cast: false }); add(tbox(6, 5, 0.2, 1), MPS.dark, 680, 2.5, -2.6, world);
 // ===== WEDDING HALL (x=40) =====
 const HX = 40;
 const MH = {

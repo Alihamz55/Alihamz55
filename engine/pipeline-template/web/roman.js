@@ -97,6 +97,11 @@ export const OUTFITS = {
   asepOpenWorld: { tunic: "#d8453b", skin: "#d9a07a", hair: "#2a1a10", arms: "#d8453b", legs: "#d9a07a", pants: "#e8d8b0", floral: "#fff3e0", glassesUp: true },
   darmanPolo: { tunic: "#f2c14e", skin: "#dca27a", hair: "#4e4844", arms: "#f2c14e", legs: "#5a5048", pants: "#5a5048", moustache: "#3a2a20", koko: true, cap: "#3a6a3a" },
   ibuSapu: { tunic: "#6a3fb5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#6a3fb5", bun: true, glasses: true, floral: "#f2c94c" },
+  asepTerbang: { tunic: "#4a7a3a", skin: "#d9a07a", hair: "#2a1a10", arms: "#4a7a3a", legs: "#2b3a5a", pants: "#2b3a5a", zipJacket: true, scarf: "#5ab0ff" },
+  ibuMudik: { tunic: "#c0392b", skin: "#f0c49c", hair: "#2b211c", arms: "#c0392b", dress: "#c0392b", glasses: true, mukena: "#f2c94c", floral: "#ffe0a0" },
+  darmanMudik: { tunic: "#2a5a8a", skin: "#dca27a", hair: "#4e4844", arms: "#2a5a8a", legs: "#2b2f3a", pants: "#2b2f3a", batik: "#e2b04a", moustache: "#3a2a20", glassesUp: true },
+  pramugari: { tunic: "#1d3a6a", skin: "#f2c6a0", hair: "#2a1a14", arms: "#1d3a6a", dress: "#1d3a6a", bun: true, scarf: "#d8322f" },
+  pilot: { tunic: "#f4f1ea", skin: "#e0aa82", hair: "#2a1d18", arms: "#f4f1ea", legs: "#22304a", pants: "#22304a", tie: "#22304a", cap: "#22304a" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };

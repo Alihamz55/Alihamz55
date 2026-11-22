@@ -1006,3 +1006,61 @@ export const fxSapu = (p) => { const g = p.g; g.save(); g.lineCap = "round"; g.s
 export const fxPiring = (p, n = 9) => { const g = p.g; g.save(); g.lineJoin = "round"; for (let i = 0; i < n; i++) { const y = 960 - i * 46, x = 300 + Math.sin(i * 1.7) * 14;
   g.fillStyle = "#f4f1ea"; g.strokeStyle = "#14101a"; g.lineWidth = 7; g.beginPath(); g.ellipse(x, y, 170, 34, 0, 0, 7); g.fill(); g.stroke(); g.fillStyle = "#c8a070"; g.beginPath(); g.ellipse(x + 30, y - 6, 40, 9, 0, 0, 7); g.fill(); }
   g.restore(); };
+
+// ===== Oyen: kucing oren gendut berkalung lonceng. pose 'sit' | 'run' | 'cap' (topi pilot) | 'smug' =====
+export const fxOyen = (p, pose = "sit", t = 0, dir = 1) => { const g = p.g; g.save(); g.lineJoin = "round"; g.lineCap = "round";
+  const INKC = "#14101a", OR = "#f28a2e", ORD = "#c8601a", WH = "#fff1dc";
+  if (dir < 0) { g.translate(600, 0); g.scale(-1, 1); }
+  const ell = (x, y, rx, ry, fill, lw = 9, rot = 0) => { g.beginPath(); g.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2); g.fillStyle = fill; g.fill(); if (lw) { g.strokeStyle = INKC; g.lineWidth = lw; g.stroke(); } };
+  const stroke = (pts, col, lw) => { g.beginPath(); g.moveTo(...pts[0]); for (const q of pts.slice(1)) g.lineTo(...q); g.strokeStyle = col; g.lineWidth = lw; g.stroke(); };
+  const tw = Math.sin(t * 0.25) * 18;
+  let hx = 300, hy = 690;
+  if (pose === "run") {
+    g.beginPath(); g.moveTo(150, 850); g.quadraticCurveTo(60, 760 + tw, 40, 700); g.strokeStyle = INKC; g.lineWidth = 44; g.stroke(); g.strokeStyle = OR; g.lineWidth = 28; g.stroke();
+    const ph = t * 0.6; for (const [x, o] of [[200, 0], [250, Math.PI], [380, Math.PI / 2], [430, Math.PI * 1.5]]) { const a = Math.sin(ph + o) * 40; stroke([[x, 880], [x + a, 965]], INKC, 34); stroke([[x, 880], [x + a, 960]], OR, 20); }
+    ell(310, 860, 175, 85, OR); for (const x of [250, 310, 370]) stroke([[x, 785], [x - 10, 830]], ORD, 12);
+    hx = 470; hy = 770;
+  } else {
+    g.beginPath(); g.moveTo(390, 950); g.quadraticCurveTo(520, 930, 480 + tw * 0.5, 800); g.strokeStyle = INKC; g.lineWidth = 46; g.stroke(); g.strokeStyle = OR; g.lineWidth = 30; g.stroke();
+    ell(300, 850, 125, 125, OR); ell(300, 880, 62, 82, WH, 0); for (const x of [200, 400]) stroke([[x, 830], [x + (x < 300 ? 22 : -22), 850]], ORD, 12);
+    ell(255, 965, 34, 18, WH, 8); ell(345, 965, 34, 18, WH, 8);
+  }
+  const s = pose === "run" ? 0.85 : 1; g.save(); g.translate(hx, hy); g.scale(s, s); g.translate(-300, -690);
+  for (const sx of [-1, 1]) { g.beginPath(); g.moveTo(300 + sx * 95, 650); g.lineTo(300 + sx * 85, 555); g.lineTo(300 + sx * 35, 615); g.closePath(); g.fillStyle = OR; g.fill(); g.strokeStyle = INKC; g.lineWidth = 9; g.stroke();
+    g.beginPath(); g.moveTo(300 + sx * 80, 635); g.lineTo(300 + sx * 78, 585); g.lineTo(300 + sx * 50, 618); g.closePath(); g.fillStyle = "#ff9fb0"; g.fill(); }
+  ell(300, 690, 118, 96, OR); for (const dx of [-30, 0, 30]) stroke([[300 + dx, 600], [300 + dx * 0.8, 632]], ORD, 12);
+  ell(300, 728, 48, 32, WH, 0);
+  if (pose === "smug" || pose === "cap") { for (const sx of [-1, 1]) { stroke([[300 + sx * 70, 682], [300 + sx * 30, 682]], INKC, 9); g.beginPath(); g.arc(300 + sx * 50, 682, 20, 0, Math.PI); g.fillStyle = "#9be36a"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 7; g.stroke(); } }
+  else for (const sx of [-1, 1]) { ell(300 + sx * 48, 678, 22, 27, "#9be36a", 7); ell(300 + sx * 48, 680, 6, 18, INKC, 0); ell(300 + sx * 42, 670, 6, 6, "#ffffff", 0); }
+  g.beginPath(); g.moveTo(288, 708); g.lineTo(312, 708); g.lineTo(300, 720); g.closePath(); g.fillStyle = "#ff7b9a"; g.fill();
+  g.beginPath(); g.moveTo(276, 730); g.quadraticCurveTo(288, 745, 300, 724); g.quadraticCurveTo(312, 745, 324, 730); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke();
+  for (const sx of [-1, 1]) for (const dy of [-8, 8]) stroke([[300 + sx * 52, 728 + dy], [300 + sx * 118, 720 + dy * 2.2]], INKC, 4);
+  if (pose === "cap") { ell(300, 612, 115, 22, "#1a2440", 8); g.beginPath(); g.moveTo(205, 610); g.quadraticCurveTo(210, 540, 300, 535); g.quadraticCurveTo(390, 540, 395, 610); g.closePath(); g.fillStyle = "#22304a"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 8; g.stroke();
+    stroke([[215, 598], [385, 598]], "#f2c94c", 8); ell(300, 568, 18, 14, "#f2c94c", 5); }
+  g.restore();
+  if (pose !== "run") { g.beginPath(); g.ellipse(300, 785, 92, 22, 0, 0, Math.PI); g.strokeStyle = "#d8322f"; g.lineWidth = 16; g.stroke(); ell(300, 812, 17, 17, "#f2c94c", 6); stroke([[290, 818], [310, 818]], INKC, 4); }
+  g.restore(); };
+
+// kokpit pesawat (kartu latar portrait): kaca depan, langit + landasan, panel, dua kursi
+export const fxKokpit = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.fillStyle = "#3a404a"; g.fillRect(0, 40, 600, 960);
+  const win = [[40, 120], [560, 120], [580, 470], [20, 470]]; const gr = g.createLinearGradient(0, 120, 0, 470); gr.addColorStop(0, "#5aa0f0"); gr.addColorStop(0.7, "#cfe8ff"); gr.addColorStop(0.72, "#8a9aa8"); gr.addColorStop(1, "#5a6470");
+  g.beginPath(); win.forEach((q, i) => i ? g.lineTo(...q) : g.moveTo(...q)); g.closePath(); g.fillStyle = gr; g.fill(); g.strokeStyle = INKC; g.lineWidth = 12; g.stroke();
+  g.strokeStyle = "#ffffff"; g.lineWidth = 6; for (let k = 0; k < 4; k++) { g.beginPath(); g.moveTo(300, 380 + k * 22); g.lineTo(300, 392 + k * 22); g.stroke(); }
+  g.fillStyle = "#ffffff"; for (const [x, y, r] of [[130, 200, 30], [165, 190, 38], [200, 205, 28], [430, 240, 24], [460, 232, 32]]) { g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill(); }
+  g.fillStyle = "#22262e"; g.fillRect(290, 120, 20, 350);
+  g.fillStyle = "#2a2e36"; g.beginPath(); g.moveTo(0, 470); g.lineTo(600, 470); g.lineTo(600, 640); g.lineTo(0, 640); g.closePath(); g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  for (let i = 0; i < 6; i++) { const x = 70 + i * 92, y = 520; g.beginPath(); g.arc(x, y, 28, 0, Math.PI * 2); g.fillStyle = "#101318"; g.fill(); g.strokeStyle = "#c9cfd6"; g.lineWidth = 5; g.stroke(); g.beginPath(); g.moveTo(x, y); g.lineTo(x + 18 * Math.cos(i * 1.7), y + 18 * Math.sin(i * 1.7)); g.strokeStyle = "#ffd84a"; g.stroke(); }
+  for (const x of [150, 450]) { g.fillStyle = "#1a3a5a"; g.fillRect(x - 70, 565, 140, 60); g.strokeStyle = "#5dff8a"; g.lineWidth = 4; g.beginPath(); g.moveTo(x - 60, 600); g.lineTo(x - 20, 585); g.lineTo(x + 20, 605); g.lineTo(x + 60, 580); g.stroke(); }
+  for (let i = 0; i < 10; i++) { g.fillStyle = ["#d8322f", "#5dff8a", "#ffd84a"][i % 3]; g.fillRect(200 + i * 20, 615, 10, 10); }
+  for (const x of [150, 450]) { g.beginPath(); g.roundRect(x - 115, 660, 230, 330, 40); g.fillStyle = "#6a5a4a"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke(); g.beginPath(); g.roundRect(x - 85, 690, 170, 120, 24); g.fillStyle = "#7d6b58"; g.fill(); }
+  g.restore(); };
+
+// kandang kucing jumbo (digambar di depan Asep): rangka abu + jeruji pintu
+export const fxKandang = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a", C = "#c9cfd6", CD = "#9aa4ae";
+  g.beginPath(); g.roundRect(150, 250, 300, 60, 30); g.strokeStyle = INKC; g.lineWidth = 30; g.stroke(); g.strokeStyle = CD; g.lineWidth = 16; g.stroke();
+  const fr = (x, y, w, h) => { g.beginPath(); g.roundRect(x, y, w, h, 18); g.fillStyle = C; g.fill(); g.strokeStyle = INKC; g.lineWidth = 9; g.stroke(); };
+  fr(40, 300, 520, 90); fr(40, 890, 520, 90); fr(40, 300, 60, 680); fr(500, 300, 60, 680);
+  for (let x = 140; x <= 460; x += 64) { g.fillStyle = INKC; g.fillRect(x - 9, 386, 18, 508); g.fillStyle = "#e8ecf0"; g.fillRect(x - 5, 386, 10, 508); }
+  g.fillStyle = INKC; g.fillRect(100, 610, 400, 16); g.fillStyle = "#e8ecf0"; g.fillRect(100, 613, 400, 10);
+  g.restore(); };
