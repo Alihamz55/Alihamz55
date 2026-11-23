@@ -1,0 +1,186 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../engine/pipeline-template/web/fonts/fonts.css">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Template "Rekap 2026" — 16 slot, ±18 detik, 120 BPM (1 ketukan = 0,5 dtk).
+// window.drawFrame(t, mode): mode 'contoh' = foto contoh, 'slot' = papan nomor slot.
+const W = 1080, H = 1920;
+const c = document.getElementById('c'), g = c.getContext('2d');
+const STIKER = ['01-2026', '02-tahun-ini-aku', '03-bye-2026', '04-hello-2027', '05-kilau', '08-bingkai-film'];
+const img = {};
+
+// ---------- Susunan waktu (detik) ----------
+const SLOTS = [];
+SLOTS.push({ n: 1, a: 2.0, b: 3.0, bag: 'cepat' });
+for (let i = 0; i < 8; i++) SLOTS.push({ n: 2 + i, a: 3.0 + i * 0.5, b: 3.5 + i * 0.5, bag: 'cepat' });
+SLOTS.push({ n: 10, a: 7.0, b: 8.5, bag: 'build' });
+for (let i = 0; i < 3; i++) SLOTS.push({ n: 11 + i, a: 9.0 + i * 5 / 3, b: 9.0 + (i + 1) * 5 / 3, bag: 'drop' });
+SLOTS.push({ n: 14, a: 14.0, b: 15.0, bag: 'film' });
+SLOTS.push({ n: 15, a: 15.0, b: 16.0, bag: 'film' });
+SLOTS.push({ n: 16, a: 16.0, b: 18.0, bag: 'tutup' });
+const TOTAL = 18.0;
+window.SLOTS = SLOTS; window.TOTAL = TOTAL;
+
+// ---------- Acak deterministik ----------
+const rng = s => () => (s = (s * 16807) % 2147483647) / 2147483647;
+const ease = x => 1 - Math.pow(1 - x, 3);
+const back = x => { const k = 1.70158; x -= 1; return 1 + (k + 1) * x * x * x + k * x * x; };
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+
+// ---------- 16 foto contoh (digambar, bebas hak cipta) ----------
+const PAL = [
+  ['#ff9a5a', '#ff5e7e', '#5b2a86'], ['#7fd4ff', '#2f80ed', '#0b2a5b'], ['#ffd66b', '#ff8a3d', '#a4243b'],
+  ['#b5f2c8', '#38b26b', '#0f4d3a'], ['#f8c3ff', '#b86bff', '#3b1d6e'], ['#ffe2b8', '#f2994a', '#5b3a1e'],
+  ['#9be7ff', '#56ccf2', '#1b4965'], ['#ffd1dc', '#ff7aa2', '#6a1b4d'],
+];
+function scene(k) {
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const x = cv.getContext('2d');
+  const r = rng(1000 + k * 77), p = PAL[k % PAL.length], type = k % 6;
+  const gr = x.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, p[0]); gr.addColorStop(.55, p[1]); gr.addColorStop(1, p[2]);
+  x.fillStyle = gr; x.fillRect(0, 0, W, H);
+  if (type === 0) { // matahari terbenam + laut
+    x.fillStyle = 'rgba(255,250,220,.9)'; x.beginPath(); x.arc(540, 980, 200, 0, 7); x.fill();
+    x.fillStyle = p[2]; x.fillRect(0, 1060, W, 860);
+    for (let i = 0; i < 26; i++) { x.fillStyle = `rgba(255,240,200,${.15 + r() * .35})`; x.fillRect(540 - 30 - r() * 260 + i * 0, 1080 + i * 30, 60 + r() * 460, 8); }
+  } else if (type === 1) { // gunung berlapis
+    for (let l = 0; l < 4; l++) {
+      x.fillStyle = `rgba(${10 + l * 10},${30 + l * 15},${60 + l * 10},${.35 + l * .18})`; x.beginPath(); x.moveTo(0, H);
+      for (let i = 0; i <= 12; i++) x.lineTo(i * 90, 900 + l * 220 - r() * 260); x.lineTo(W, H); x.fill();
+    }
+    x.fillStyle = '#fff8'; x.beginPath(); x.arc(780, 520, 90, 0, 7); x.fill();
+  } else if (type === 2) { // lampu kota bokeh
+    x.fillStyle = 'rgba(0,0,0,.45)'; x.fillRect(0, 0, W, H);
+    for (let i = 0; i < 60; i++) { const R = 30 + r() * 110; x.fillStyle = `hsla(${30 + r() * 320},90%,70%,${.15 + r() * .35})`; x.beginPath(); x.arc(r() * W, r() * H, R, 0, 7); x.fill(); }
+  } else if (type === 3) { // konfeti pesta
+    for (let i = 0; i < 220; i++) { x.save(); x.translate(r() * W, r() * H); x.rotate(r() * 6); x.fillStyle = `hsl(${r() * 360},90%,65%)`; x.fillRect(-14, -6, 28, 12); x.restore(); }
+  } else if (type === 4) { // bunga
+    for (let i = 0; i < 14; i++) {
+      const cx = r() * W, cy = 700 + r() * 1200, R = 50 + r() * 90, hue = r() * 360;
+      for (let j = 0; j < 6; j++) { x.fillStyle = `hsla(${hue},85%,75%,.9)`; x.beginPath(); x.ellipse(cx + Math.cos(j) * R * .7, cy + Math.sin(j) * R * .7, R * .55, R * .35, j, 0, 7); x.fill(); }
+      x.fillStyle = '#ffd84a'; x.beginPath(); x.arc(cx, cy, R * .3, 0, 7); x.fill();
+    }
+  } else { // jendela hujan / kafe
+    x.fillStyle = 'rgba(30,20,10,.35)'; x.fillRect(0, 0, W, H);
+    x.fillStyle = '#f4e3c8'; x.beginPath(); x.ellipse(540, 1350, 230, 70, 0, 0, 7); x.fill();
+    x.fillStyle = '#6b3e1e'; x.beginPath(); x.ellipse(540, 1350, 190, 52, 0, 0, 7); x.fill();
+    x.strokeStyle = 'rgba(255,255,255,.4)'; x.lineWidth = 3;
+    for (let i = 0; i < 90; i++) { const sx = r() * W, sy = r() * H; x.beginPath(); x.moveTo(sx, sy); x.lineTo(sx - 6, sy + 40 + r() * 60); x.stroke(); }
+  }
+  // butiran halus supaya terasa seperti foto
+  const d = x.getImageData(0, 0, W, H), a = d.data;
+  for (let i = 0; i < a.length; i += 4) { const n = (r() - .5) * 18; a[i] += n; a[i + 1] += n; a[i + 2] += n; }
+  x.putImageData(d, 0, 0);
+  return cv;
+}
+function slotCard(s) {
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const x = cv.getContext('2d');
+  const hue = (s.n * 47) % 360;
+  x.fillStyle = `hsl(${hue},45%,22%)`; x.fillRect(0, 0, W, H);
+  x.strokeStyle = `hsl(${hue},80%,65%)`; x.lineWidth = 16; x.setLineDash([40, 26]); x.strokeRect(60, 60, W - 120, H - 120);
+  x.textAlign = 'center'; x.fillStyle = '#fff'; x.font = '700 120px Fredoka'; x.fillText('SLOT', 540, 820);
+  x.font = '700 420px Fredoka'; x.fillStyle = `hsl(${hue},90%,72%)`; x.fillText(s.n, 540, 1180);
+  x.font = '500 64px Fredoka'; x.fillStyle = '#fff';
+  x.fillText(`${s.a.toFixed(1).replace('.', ',')} – ${s.b.toFixed(1).replace('.', ',')} dtk`, 540, 1340);
+  x.font = '500 52px Fredoka'; x.fillStyle = '#ffffffaa';
+  x.fillText({ cepat: 'babak cepat', build: 'build-up', drop: 'DROP (lambat)', film: 'kenangan (film)', tutup: 'penutup' }[s.bag], 540, 1430);
+  return cv;
+}
+const media = { contoh: [], slot: [] };
+
+// ---------- Gambar per frame ----------
+function cover(src, t0, scale, ox = 0, oy = 0, rot = 0) {
+  g.save(); g.translate(W / 2 + ox, H / 2 + oy); g.rotate(rot); g.scale(scale, scale); g.drawImage(src, -W / 2, -H / 2); g.restore();
+}
+function sticker(name, cx, cy, w, alpha = 1, sc = 1, rot = 0) {
+  const im = img[name]; if (!im || alpha <= 0) return; const h = w * im.height / im.width;
+  g.save(); g.globalAlpha = alpha; g.translate(cx, cy); g.rotate(rot); g.scale(sc, sc); g.drawImage(im, -w / 2, -h / 2, w, h); g.restore();
+}
+function flash(a, col = '255,255,255') { if (a > 0) { g.fillStyle = `rgba(${col},${clamp(a)})`; g.fillRect(0, 0, W, H); } }
+function grain(t, amt) {
+  const r = rng(1 + Math.floor(t * 30) * 13);
+  g.fillStyle = 'rgba(255,255,255,.05)';
+  for (let i = 0; i < 1600 * amt; i++) g.fillRect(r() * W, r() * H, 2, 2);
+  g.fillStyle = 'rgba(0,0,0,.08)';
+  for (let i = 0; i < 1600 * amt; i++) g.fillRect(r() * W, r() * H, 2, 2);
+}
+function sparkles(t, n, seed) {
+  const r = rng(seed);
+  for (let i = 0; i < n; i++) {
+    const x = r() * W, y0 = r() * H, sp = 40 + r() * 80, ph = r() * 6, sz = 14 + r() * 30;
+    const y = (y0 - t * sp) % H, a = .5 + .5 * Math.sin(t * 6 + ph);
+    sticker('05-kilau', x, (y + H) % H, sz * 4, a * .7);
+  }
+}
+
+window.drawFrame = (t, mode) => {
+  const M = media[mode];
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+
+  // INTRO 0–2 dtk: "2026" muncul besar
+  if (t < 2.0) {
+    const gr = g.createRadialGradient(540, 960, 50, 540, 960, 1100); gr.addColorStop(0, '#2a1d08'); gr.addColorStop(1, '#000'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    sparkles(t, 14, 7);
+    const p = clamp((t - 0.15) / 0.45), sc = p <= 0 ? 0 : back(p);
+    const beat = Math.max(0, 1 - ((t % 0.5) / 0.18)) * 0.06; // denyut tiap ketukan
+    sticker('01-2026', 540, 940, 980, clamp(p * 2), sc * (1 + beat));
+    flash(t > 1.5 ? 1 - (t - 1.5) / 0.35 : 0);
+    return;
+  }
+  const s = SLOTS.find(s => t >= s.a && t < s.b) || SLOTS[SLOTS.length - 1];
+  const u = t - s.a, d = s.b - s.a, src = M[s.n - 1];
+
+  if (s.bag === 'cepat') {
+    let sc = 1 + 0.08 * (1 - ease(clamp(u / 0.3))); // pukulan zoom di setiap ketukan
+    let ox = 0, oy = 0;
+    if ([1, 4, 7].includes(s.n) && u < 0.2) { const r = rng(s.n * 99 + Math.floor(u * 60)); ox = (r() - .5) * 40; oy = (r() - .5) * 40; }
+    cover(src, s.a, sc, ox, oy);
+    if (s.n === 1) { // teks ketik "tahun ini aku…"
+      const im = img['02-tahun-ini-aku'], w = 920, h = w * im.height / im.width, k = clamp(u / 0.6);
+      g.save(); g.beginPath(); g.rect(540 - w / 2, 1500 - h / 2, w * k, h); g.clip(); g.drawImage(im, 540 - w / 2, 1500 - h / 2, w, h); g.restore();
+    }
+    flash(u < 0.06 ? 0.35 : 0);
+  } else if (s.bag === 'build') {
+    const p = u / d, sc = 1 + 0.35 * p * p; // zoom makin cepat
+    const r = rng(Math.floor(t * 30)), sh = p * p * 26;
+    cover(src, s.a, sc, (r() - .5) * sh, (r() - .5) * sh);
+    flash(p > 0.8 ? (p - 0.8) * 2.5 : 0);
+  } else if (s.bag === 'drop') {
+    const sc = 1.0 + 0.12 * (u / d); // gerak lambat
+    cover(src, s.a, sc);
+    g.fillStyle = 'rgba(255,190,90,.10)'; g.fillRect(0, 0, W, H); // nuansa hangat
+    sparkles(t, 22, s.n * 5);
+    // transisi zoom-in di awal slot
+    if (u < 0.2) { const prev = M[s.n - 2]; if (s.n > 11 && prev) { g.globalAlpha = 1 - u / 0.2; cover(prev, 0, 1.12 + 0.6 * (u / 0.2)); g.globalAlpha = 1; } }
+    flash(u < 0.12 ? 0.8 * (1 - u / 0.12) : 0);
+  } else if (s.bag === 'film') {
+    cover(src, s.a, 0.86 + 0.02 * (u / d), 0, (u < 0.12 ? (1 - u / 0.12) * -200 : 0));
+    g.fillStyle = 'rgba(255,170,80,.16)'; g.fillRect(0, 0, W, H);
+    grain(t, 1);
+    sticker('08-bingkai-film', 540, 960, 1080);
+  } else { // penutup
+    const sc = 1.0 + 0.1 * (u / d);
+    cover(src, s.a, sc);
+    g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(0, 0, W, H);
+    sparkles(t, 16, 99);
+    const a1 = clamp((u - 0.25) / 0.35), a1o = 1 - clamp((u - 0.95) / 0.2);
+    sticker('03-bye-2026', 540, 900, 1000, a1 * a1o, 0.9 + 0.1 * ease(a1));
+    const a2 = clamp((u - 1.05) / 0.3);
+    sticker('04-hello-2027', 540, 900, 1040, a2, 0.85 + 0.15 * back(a2));
+    if (u > 1.55) { g.fillStyle = `rgba(0,0,0,${clamp((u - 1.55) / 0.45)})`; g.fillRect(0, 0, W, H); }
+  }
+  if (mode === 'slot') { // tanda waktu di pojok supaya mudah dicocokkan
+    g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(40, 40, 300, 90);
+    g.fillStyle = '#fff'; g.font = '700 56px Fredoka'; g.textAlign = 'left'; g.fillText(t.toFixed(1).replace('.', ',') + ' dtk', 64, 106);
+  }
+};
+
+window.ready = (async () => {
+  await document.fonts.load('700 100px Fredoka'); await document.fonts.load('500 100px Fredoka');
+  await Promise.all(STIKER.map(n => new Promise(res => { const i = new Image(); i.onload = () => { img[n] = i; res(); }; i.src = 'stiker/' + n + '.png'; })));
+  for (let k = 0; k < 16; k++) { media.contoh.push(scene(k)); media.slot.push(slotCard(SLOTS[k])); }
+  return true;
+})();
+window.exportPhoto = k => media.contoh[k].toDataURL('image/jpeg', 0.92);
+</script>
