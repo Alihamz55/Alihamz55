@@ -1099,3 +1099,26 @@ export const fxSofa = (p, col = "#b0503a") => { const g = p.g; g.save(); g.lineJ
 export const fxRemote = (p) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.35); g.beginPath(); g.roundRect(-60, -230, 120, 460, 50); g.fillStyle = "#2b2f3a"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 12; g.stroke();
   g.beginPath(); g.arc(0, -160, 26, 0, 7); g.fillStyle = "#e8344a"; g.fill(); for (let r = 0; r < 4; r++) for (let c = 0; c < 3; c++) { g.beginPath(); g.roundRect(-42 + c * 32, -90 + r * 52, 22, 30, 6); g.fillStyle = "#c9cfd6"; g.fill(); }
   g.restore(); };
+
+// ===== Pelantikan fiktif: spanduk 2 baris, podium, galon, centong =====
+export const fxSpandukTeks = (p, l1, l2, bg = "#7a1a1a", fg = "#ffd84a") => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.beginPath(); g.roundRect(10, 380, 580, 240, 14); g.fillStyle = bg; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 9; g.stroke();
+  g.strokeStyle = "#e2b04a"; g.lineWidth = 5; g.beginPath(); g.roundRect(26, 396, 548, 208, 10); g.stroke();
+  g.textAlign = "center"; g.textBaseline = "middle"; const fit = (t, sz) => { g.font = `700 ${sz}px ${GF}`; const w = g.measureText(t).width; if (w > 520) g.font = `700 ${Math.floor(sz * 520 / w)}px ${GF}`; };
+  fit(l1, 46); g.fillStyle = "#ffffff"; g.fillText(l1, 300, 455);
+  fit(l2, 64); g.fillStyle = fg; g.strokeStyle = "#14101a"; g.lineWidth = 8; g.strokeText(l2, 300, 545); g.fillText(l2, 300, 545);
+  for (const x of [40, 560]) { g.fillStyle = "#3a2418"; g.fillRect(x - 6, 300, 12, 90); } g.restore(); };
+export const fxPodium = (p, label = "SUKAMAJU") => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.moveTo(140, 560); g.lineTo(460, 560); g.lineTo(430, 975); g.lineTo(170, 975); g.closePath(); g.fillStyle = "#6a3a22"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  g.beginPath(); g.roundRect(110, 520, 380, 60, 12); g.fillStyle = "#8a5a32"; g.fill(); g.stroke();
+  g.beginPath(); g.arc(300, 720, 62, 0, 7); g.fillStyle = "#e2b04a"; g.fill(); g.stroke(); g.beginPath(); g.arc(300, 720, 42, 0, 7); g.fillStyle = "#2f8a4a"; g.fill();
+  g.fillStyle = "#ffd84a"; g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? 14 : 32; g.lineTo(300 + r * Math.cos(a), 720 + r * Math.sin(a)); } g.closePath(); g.fill();
+  g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 34px ${GF}`; g.fillStyle = "#ffd84a"; g.fillText(label, 300, 850);
+  g.strokeStyle = "#2b2f3a"; g.lineWidth = 8; g.beginPath(); g.moveTo(300, 520); g.quadraticCurveTo(300, 470, 340, 440); g.stroke(); g.beginPath(); g.ellipse(348, 432, 14, 20, 0.6, 0, 7); g.fillStyle = "#3a3f4a"; g.fill();
+  g.restore(); };
+export const fxGalon = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g.beginPath(); g.roundRect(170, 420, 260, 400, 60); g.fillStyle = "rgba(120,190,255,0.75)"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 10; g.stroke();
+  g.fillStyle = "#2f6ad0"; g.fillRect(260, 360, 80, 64); g.strokeRect(260, 360, 80, 64); for (const y of [540, 700]) { g.strokeStyle = "rgba(255,255,255,0.7)"; g.lineWidth = 6; g.beginPath(); g.moveTo(180, y); g.lineTo(420, y); g.stroke(); }
+  g.fillStyle = "rgba(255,255,255,0.45)"; g.fillRect(200, 460, 26, 300); g.restore(); };
+export const fxCentong = (p) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(0.35); g.lineJoin = "round";
+  g.beginPath(); g.roundRect(-18, -60, 36, 320, 16); g.fillStyle = "#e8d8b0"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 9; g.stroke();
+  g.beginPath(); g.ellipse(0, -150, 80, 105, 0, 0, 7); g.fill(); g.stroke(); g.restore(); };

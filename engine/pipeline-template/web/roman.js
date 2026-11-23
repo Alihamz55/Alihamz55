@@ -105,6 +105,10 @@ export const OUTFITS = {
   ibuSinetron: { tunic: "#4a2a6a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#4a2a6a", bun: true, glasses: true, batik: "#d8a84a" },
   asepKaosMi: { tunic: "#f2c14e", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#d9a07a", pants: "#3a5a8a" },
   darmanSarungBiru: { tunic: "#dfe6ee", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", sarung: "#2a5a8a", plaid: "#1a3a6a", peci: true, moustache: "#3a2a20" },
+  asepWapres: { tunic: "#1a1d22", skin: "#d9a07a", hair: "#2a1a10", arms: "#1a1d22", legs: "#1a1d22", pants: "#1a1d22", tie: "#d8322f", peci: true, sash: "#d8322f" },
+  asepPiyama: { tunic: "#9ad0f0", skin: "#d9a07a", hair: "#2a1a10", arms: "#9ad0f0", legs: "#9ad0f0", pants: "#9ad0f0", stripes: "#3a6fd0", bedhead: true },
+  ibuPresiden: { tunic: "#1f5a3a", skin: "#f0c49c", hair: "#2b211c", arms: "#1f5a3a", dress: "#1f5a3a", bun: true, glasses: true, kebaya: "#e2c27a", sash: "#f4f1ea" },
+  darmanAjudan: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#f4f1ea", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", cap: "#2b2f3a", sash: "#e2b04a" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
