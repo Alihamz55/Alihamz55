@@ -2585,6 +2585,9 @@ export const OUTFITS = {
   darmanMudik: { tunic: "#2a5a8a", skin: "#dca27a", hair: "#4e4844", arms: "#2a5a8a", legs: "#2b2f3a", pants: "#2b2f3a", batik: "#e2b04a", moustache: "#3a2a20", glassesUp: true },
   pramugari: { tunic: "#1d3a6a", skin: "#f2c6a0", hair: "#2a1a14", arms: "#1d3a6a", dress: "#1d3a6a", bun: true, scarf: "#d8322f" },
   pilot: { tunic: "#f4f1ea", skin: "#e0aa82", hair: "#2a1d18", arms: "#f4f1ea", legs: "#22304a", pants: "#22304a", tie: "#22304a", cap: "#22304a" },
+  ibuSinetron: { tunic: "#4a2a6a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#4a2a6a", bun: true, glasses: true, batik: "#d8a84a" },
+  asepKaosMi: { tunic: "#f2c14e", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#d9a07a", pants: "#3a5a8a" },
+  darmanSarungBiru: { tunic: "#dfe6ee", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", sarung: "#2a5a8a", plaid: "#1a3a6a", peci: true, moustache: "#3a2a20" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -4202,4 +4205,39 @@ export const fxKandang = (p) => { const g = p.g; g.save(); g.lineJoin = "round";
   fr(40, 300, 520, 90); fr(40, 890, 520, 90); fr(40, 300, 60, 680); fr(500, 300, 60, 680);
   for (let x = 140; x <= 460; x += 64) { g.fillStyle = INKC; g.fillRect(x - 9, 386, 18, 508); g.fillStyle = "#e8ecf0"; g.fillRect(x - 5, 386, 10, 508); }
   g.fillStyle = INKC; g.fillRect(100, 610, 400, 16); g.fillStyle = "#e8ecf0"; g.fillRect(100, 613, 400, 10);
+  g.restore(); };
+
+// ===== TV di atas bufet: mode 'drama' (sinetron fiktif "TERIKAT CICILAN"), 'off', 'news' =====
+export const fxTVSinetron = (p, mode = "drama", t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(60, 720, 480, 255, 16); g.fillStyle = "#8a5a32"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 9; g.stroke();
+  for (const x of [180, 420]) { g.beginPath(); g.arc(x, 850, 10, 0, 7); g.fillStyle = "#e2b04a"; g.fill(); } g.strokeStyle = INKC; g.lineWidth = 5; g.beginPath(); g.moveTo(300, 730); g.lineTo(300, 965); g.stroke();
+  g.fillStyle = "#22262e"; g.fillRect(270, 690, 60, 32);
+  g.beginPath(); g.roundRect(20, 330, 560, 370, 18); g.fillStyle = "#1a1d22"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  const X = 44, Y = 352, W = 512, H = 326; g.save(); g.beginPath(); g.rect(X, Y, W, H); g.clip();
+  if (mode === "off") { g.fillStyle = "#0a0c10"; g.fillRect(X, Y, W, H); g.fillStyle = "rgba(255,255,255,0.06)"; g.fillRect(X + 30, Y + 20, 80, 200); }
+  else { const gr = g.createLinearGradient(0, Y, 0, Y + H); gr.addColorStop(0, "#6a2a5a"); gr.addColorStop(1, "#2a1a3a"); g.fillStyle = gr; g.fillRect(X, Y, W, H);
+    const z = 1 + 0.04 * Math.sin(t * 0.2); g.save(); g.translate(300, Y + H); g.scale(z, z); g.translate(-300, -(Y + H));
+    // dua siluet pemeran (generik, bukan tokoh asli): wanita kiri menangis, pria kanan membelakangi
+    g.fillStyle = "#14101a"; g.beginPath(); g.arc(200, Y + 120, 46, 0, 7); g.fill(); g.beginPath(); g.ellipse(200, Y + 300, 90, 140, 0, 0, 7); g.fill();
+    g.beginPath(); g.arc(200, Y + 92, 40, Math.PI, 0); g.fill(); g.beginPath(); g.moveTo(160, Y + 110); g.quadraticCurveTo(140, Y + 200, 150, Y + 240); g.lineTo(175, Y + 160); g.fill();
+    g.beginPath(); g.arc(400, Y + 110, 48, 0, 7); g.fill(); g.beginPath(); g.ellipse(400, Y + 300, 100, 150, 0, 0, 7); g.fill();
+    g.fillStyle = "#7ac8ff"; for (const k of [0, 1]) { const ty = Y + 130 + ((t * 2 + k * 30) % 60); g.beginPath(); g.ellipse(215, ty, 6, 10, 0, 0, 7); g.fill(); }
+    g.restore();
+    g.fillStyle = "rgba(0,0,0,0.55)"; g.fillRect(X, Y + H - 62, W, 62); g.font = `700 40px ${GF}`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = "#ffd84a"; g.fillText("TERIKAT CICILAN", 300, Y + H - 31);
+    g.font = `700 22px ${GF}`; g.fillStyle = "#ffffff"; g.textAlign = "left"; g.fillText("EPS 2.231", X + 14, Y + 24); g.fillStyle = "#ff4a4a"; g.beginPath(); g.arc(X + W - 40, Y + 24, 9, 0, 7); g.fill(); }
+  g.restore();
+  g.fillStyle = "rgba(255,255,255,0.08)"; g.beginPath(); g.moveTo(X, Y); g.lineTo(X + 160, Y); g.lineTo(X + 60, Y + H); g.lineTo(X, Y + H); g.fill();
+  g.restore(); };
+
+// sofa tiga dudukan (kartu latar di belakang keluarga)
+export const fxSofa = (p, col = "#b0503a") => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  const dk = "#7a3424"; const rr = (x, y, w, h, r, c) => { g.beginPath(); g.roundRect(x, y, w, h, r); g.fillStyle = c; g.fill(); g.strokeStyle = INKC; g.lineWidth = 9; g.stroke(); };
+  rr(30, 560, 540, 260, 40, col); for (const x of [120, 300, 480]) rr(x - 82, 600, 164, 200, 30, "#c8664e");
+  rr(10, 700, 90, 230, 36, dk); rr(500, 700, 90, 230, 36, dk); rr(60, 790, 480, 130, 24, col);
+  for (const x of [70, 530]) { g.fillStyle = "#3a2418"; g.fillRect(x - 12, 925, 24, 50); }
+  g.restore(); };
+
+// remote TV (dipeluk Ibu)
+export const fxRemote = (p) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(-0.35); g.beginPath(); g.roundRect(-60, -230, 120, 460, 50); g.fillStyle = "#2b2f3a"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 12; g.stroke();
+  g.beginPath(); g.arc(0, -160, 26, 0, 7); g.fillStyle = "#e8344a"; g.fill(); for (let r = 0; r < 4; r++) for (let c = 0; c < 3; c++) { g.beginPath(); g.roundRect(-42 + c * 32, -90 + r * 52, 22, 30, 6); g.fillStyle = "#c9cfd6"; g.fill(); }
   g.restore(); };
