@@ -1,0 +1,82 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../engine/pipeline-template/web/fonts/fonts.css">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Template "Lirik Simple" — 1 slot, 15 dtk, lirik muncul kata per kata.
+// drawFrame(t, mode): 'contoh' = video contoh lengkap, 'progres' = garis progres saja di atas hitam (untuk mode campuran "Layar/Screen" di CapCut).
+const W = 1080, H = 1920, TOTAL = 15; window.TOTAL = TOTAL;
+const c = document.getElementById('c'), g = c.getContext('2d');
+// Lirik contoh — ditulis sendiri (bukan lirik lagu orang lain)
+const LIRIK = [
+  { a: 0.6, b: 4.0, kata: ['kalau', 'senja', 'bisa', 'bicara'] },
+  { a: 4.1, b: 7.5, kata: ['mungkin', 'dia', 'juga', 'rindu'] },
+  { a: 7.6, b: 11.0, kata: ['pada', 'cerita', 'yang', 'belum', 'selesai'] },
+  { a: 11.1, b: 14.6, kata: ['antara', 'aku', 'dan', 'kamu'] },
+];
+const img = {};
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => 1 - Math.pow(1 - x, 3);
+const load = (k, src) => new Promise(r => { const i = new Image(); i.onload = () => { img[k] = i; r(); }; i.src = src; });
+
+function lirik(t) {
+  const L = LIRIK.find(l => t >= l.a - 0.05 && t < l.b + 0.25); if (!L) return;
+  const fadeOut = 1 - clamp((t - L.b) / 0.25), n = L.kata.length, step = 2.2 / n;
+  g.font = '700 92px Fredoka'; g.textBaseline = 'middle';
+  // susun jadi 1–2 baris
+  const sp = 26, ws = L.kata.map(w => g.measureText(w).width);
+  let rows = [[0, n]]; const tot = ws.reduce((a, b) => a + b, 0) + sp * (n - 1);
+  if (tot > 900) { const h = Math.ceil(n / 2); rows = [[0, h], [h, n]]; }
+  rows.forEach(([i0, i1], ri) => {
+    const rw = ws.slice(i0, i1).reduce((a, b) => a + b, 0) + sp * (i1 - i0 - 1);
+    let x = 540 - rw / 2; const y = 900 + (ri - (rows.length - 1) / 2) * 118;
+    for (let i = i0; i < i1; i++) {
+      const p = clamp((t - L.a - i * step) / 0.3), active = t >= L.a + i * step && (i === n - 1 || t < L.a + (i + 1) * step);
+      if (p > 0) {
+        g.save(); g.globalAlpha = ease(p) * fadeOut;
+        g.translate(x + ws[i] / 2, y + (1 - ease(p)) * 30); const sc = active ? 1.08 : 1; g.scale(sc, sc);
+        g.shadowColor = active ? 'rgba(255,214,120,.95)' : 'rgba(0,0,0,.6)'; g.shadowBlur = active ? 34 : 16;
+        g.fillStyle = active ? '#ffe9a8' : '#ffffff'; g.textAlign = 'center'; g.fillText(L.kata[i], 0, 0);
+        g.restore();
+      }
+      x += ws[i] + sp;
+    }
+  });
+}
+function progres(t, alpha = 1) {
+  const k = clamp(t / TOTAL);
+  g.globalAlpha = alpha;
+  g.fillStyle = '#ffffff'; g.beginPath(); g.roundRect(100, 1640, 880 * k, 10, 5); g.fill();
+  g.beginPath(); g.arc(100 + 880 * k, 1645, 16, 0, 7); g.fill();
+  g.font = '500 34px Fredoka'; g.fillStyle = '#ffffffcc'; g.textBaseline = 'top';
+  const mm = s => `0:${String(Math.floor(s)).padStart(2, '0')}`;
+  g.textAlign = 'left'; g.fillText(mm(t), 100, 1664); g.textAlign = 'right'; g.fillText(mm(TOTAL), 980, 1664);
+  g.globalAlpha = 1;
+}
+window.drawFrame = (t, mode) => {
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+  if (mode === 'progres') { progres(t); return; }
+  // SLOT 1: foto/video latar, zoom pelan + sedikit geser
+  const sc = 1.04 + 0.10 * (t / TOTAL);
+  g.save(); g.translate(540, 960 - 20 * (t / TOTAL)); g.scale(sc, sc); g.drawImage(img.bg, -540, -960, W, H); g.restore();
+  g.drawImage(img.grad, 0, 0);
+  g.drawImage(img.label, 0, 0);
+  g.drawImage(img.kartu, 0, 0);
+  // judul & penyanyi (di CapCut: pakai Teks biasa supaya bisa diganti)
+  g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+  g.font = '700 54px Fredoka'; g.fillStyle = '#fff'; g.fillText('Judul Lagu', 280, 1505);
+  g.font = '500 40px Fredoka'; g.fillStyle = '#ffffffb0'; g.fillText('Nama Penyanyi', 280, 1562);
+  progres(t);
+  lirik(t);
+  // fade in/out
+  if (t < 0.4) { g.fillStyle = `rgba(0,0,0,${1 - t / 0.4})`; g.fillRect(0, 0, W, H); }
+  if (t > TOTAL - 0.5) { g.fillStyle = `rgba(0,0,0,${(t - TOTAL + 0.5) / 0.5})`; g.fillRect(0, 0, W, H); }
+};
+window.ready = (async () => {
+  await document.fonts.load('700 90px Fredoka'); await document.fonts.load('500 40px Fredoka');
+  await Promise.all([load('bg', '../rekap-2026/contoh-foto/foto-01.jpg'), load('grad', 'overlay/02-gradasi-baca.png'),
+    load('label', 'overlay/03-label-diputar.png'), load('kartu', 'overlay/01-kartu-pemutar.png')]);
+  return true;
+})();
+</script>
