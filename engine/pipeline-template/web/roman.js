@@ -109,6 +109,12 @@ export const OUTFITS = {
   asepPiyama: { tunic: "#9ad0f0", skin: "#d9a07a", hair: "#2a1a10", arms: "#9ad0f0", legs: "#9ad0f0", pants: "#9ad0f0", stripes: "#3a6fd0", bedhead: true },
   ibuPresiden: { tunic: "#1f5a3a", skin: "#f0c49c", hair: "#2b211c", arms: "#1f5a3a", dress: "#1f5a3a", bun: true, glasses: true, kebaya: "#e2c27a", sash: "#f4f1ea" },
   darmanAjudan: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#f4f1ea", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", cap: "#2b2f3a", sash: "#e2b04a" },
+  asepTim: { tunic: "#2f8a4a", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#2b3a5a", pants: "#2b3a5a", headband: "#d8322f" },
+  ibuTim: { tunic: "#2f8a4a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#2f8a4a", bun: true, glasses: true, kebaya: "#f2c94c" },
+  darmanTim: { tunic: "#2f8a4a", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", glasses: true },
+  ujangTim: { tunic: "#f08a2a", skin: "#c99067", hair: "#1e1714", arms: "#c99067", legs: "#3a3f52", pants: "#3a3f52", moustache: "#2a1d18", neckTowel: "#ffffff" },
+  ucupTim: { tunic: "#f08a2a", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#5a4a3a", pants: "#5a4a3a", bedhead: true },
+  hostKuis: { tunic: "#f2c14e", skin: "#e8b48a", hair: "#1a120c", arms: "#f2c14e", legs: "#22304a", pants: "#22304a", tie: "#d8322f", slick: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };

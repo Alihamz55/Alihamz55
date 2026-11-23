@@ -2592,6 +2592,12 @@ export const OUTFITS = {
   asepPiyama: { tunic: "#9ad0f0", skin: "#d9a07a", hair: "#2a1a10", arms: "#9ad0f0", legs: "#9ad0f0", pants: "#9ad0f0", stripes: "#3a6fd0", bedhead: true },
   ibuPresiden: { tunic: "#1f5a3a", skin: "#f0c49c", hair: "#2b211c", arms: "#1f5a3a", dress: "#1f5a3a", bun: true, glasses: true, kebaya: "#e2c27a", sash: "#f4f1ea" },
   darmanAjudan: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#f4f1ea", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", cap: "#2b2f3a", sash: "#e2b04a" },
+  asepTim: { tunic: "#2f8a4a", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#2b3a5a", pants: "#2b3a5a", headband: "#d8322f" },
+  ibuTim: { tunic: "#2f8a4a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#2f8a4a", bun: true, glasses: true, kebaya: "#f2c94c" },
+  darmanTim: { tunic: "#2f8a4a", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", glasses: true },
+  ujangTim: { tunic: "#f08a2a", skin: "#c99067", hair: "#1e1714", arms: "#c99067", legs: "#3a3f52", pants: "#3a3f52", moustache: "#2a1d18", neckTowel: "#ffffff" },
+  ucupTim: { tunic: "#f08a2a", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#5a4a3a", pants: "#5a4a3a", bedhead: true },
+  hostKuis: { tunic: "#f2c14e", skin: "#e8b48a", hair: "#1a120c", arms: "#f2c14e", legs: "#22304a", pants: "#22304a", tie: "#d8322f", slick: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -4268,3 +4274,30 @@ export const fxGalon = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g
 export const fxCentong = (p) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(0.35); g.lineJoin = "round";
   g.beginPath(); g.roundRect(-18, -60, 36, 320, 16); g.fillStyle = "#e8d8b0"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 9; g.stroke();
   g.beginPath(); g.ellipse(0, -150, 80, 105, 0, 0, 7); g.fill(); g.stroke(); g.restore(); };
+
+// ===== Kuis survei keluarga (fiktif, tanpa logo acara asli) =====
+// rows: [[teks, skor], ...]; rev: array 0..1 per baris (animasi balik); flash: baris yang berkedip
+export const fxPapanSurvei = (p, rows, rev, flash = -1, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  for (const x of [120, 480]) { g.fillStyle = "#3a3f4a"; g.fillRect(x - 14, 880, 28, 95); }
+  g.beginPath(); g.roundRect(20, 110, 560, 790, 30); g.fillStyle = "#1d3a8a"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  for (let i = 0; i < 22; i++) { const a = i / 22 * Math.PI * 2, on = (Math.floor(t / 4) + i) % 2; g.beginPath(); g.arc(300 + 268 * Math.cos(a) * 1.0, 505 + 380 * Math.sin(a), 0, 0, 7); }
+  for (let i = 0; i < 18; i++) { const x = 40 + i * 30.5, on = (Math.floor(t / 4) + i) % 2; for (const y of [124, 886]) { g.beginPath(); g.arc(x + 8, y, 7, 0, 7); g.fillStyle = on ? "#ffd84a" : "#fff6d0"; g.fill(); } }
+  g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 40px ${GF}`; g.fillStyle = "#ffd84a"; g.strokeStyle = INKC; g.lineWidth = 7; g.strokeText("KUIS SURVEI KELUARGA", 300, 180); g.fillText("KUIS SURVEI KELUARGA", 300, 180);
+  rows.forEach(([txt, sc], i) => { const y = 250 + i * 122, k = rev[i] || 0, sy = Math.abs(Math.cos(k * Math.PI)), shown = k >= 0.5;
+    g.save(); g.translate(300, y + 50); g.scale(1, Math.max(0.04, sy)); g.translate(-300, -(y + 50));
+    g.beginPath(); g.roundRect(50, y, 500, 100, 14); g.fillStyle = shown ? (flash === i && Math.floor(t / 3) % 2 ? "#ffd84a" : "#2f6ad0") : "#14307a"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 7; g.stroke();
+    if (shown) { g.font = `700 44px ${GF}`; g.fillStyle = "#ffffff"; g.textAlign = "left"; g.fillText(txt, 76, y + 52);
+      g.beginPath(); g.roundRect(440, y + 14, 92, 72, 10); g.fillStyle = "#14101a"; g.fill(); g.font = `700 46px ${GF}`; g.fillStyle = "#ffd84a"; g.textAlign = "center"; g.fillText(String(sc), 486, y + 52); }
+    else { g.beginPath(); g.arc(300, y + 50, 34, 0, 7); g.fillStyle = "#2f6ad0"; g.fill(); g.font = `700 44px ${GF}`; g.fillStyle = "#ffffff"; g.textAlign = "center"; g.fillText(String(i + 1), 300, y + 52); }
+    g.restore(); });
+  g.restore(); };
+export const fxMejaTim = (p, label, col = "#2f8a4a", lit = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(40, 640, 520, 335, 20); g.fillStyle = col; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  g.beginPath(); g.roundRect(20, 610, 560, 60, 14); g.fillStyle = "#f4f1ea"; g.fill(); g.stroke();
+  g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 70px ${GF}`; g.fillStyle = "#ffffff"; g.strokeStyle = INKC; g.lineWidth = 8; g.strokeText(label, 300, 790); g.fillText(label, 300, 790);
+  g.beginPath(); g.ellipse(300, 600, 54, 22, 0, 0, 7); g.fillStyle = lit ? "#ff6a6a" : "#d8322f"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 7; g.stroke();
+  if (lit) { g.strokeStyle = "#ffd84a"; g.lineWidth = 6; for (let i = 0; i < 8; i++) { const a = -Math.PI + i * Math.PI / 7; g.beginPath(); g.moveTo(300 + 70 * Math.cos(a), 590 + 40 * Math.sin(a)); g.lineTo(300 + 100 * Math.cos(a), 590 + 60 * Math.sin(a)); g.stroke(); } }
+  g.restore(); };
+export const fxSilangBesar = (p, k = 1) => { const g = p.g; g.save(); g.translate(300, 500); g.scale(k, k); g.lineCap = "round";
+  for (const s of [1, -1]) { g.beginPath(); g.moveTo(-200, -200 * s); g.lineTo(200, 200 * s); g.strokeStyle = "#14101a"; g.lineWidth = 110; g.stroke(); g.strokeStyle = "#e8344a"; g.lineWidth = 80; g.stroke(); }
+  g.restore(); };
