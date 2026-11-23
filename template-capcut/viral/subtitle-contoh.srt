@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:03,000
+Ternyata selama ini kita salah...
+
+2
+00:00:03,000 --> 00:00:08,000
+(SETUP) Ceritakan situasi awalnya di sini
+
+3
+00:00:08,000 --> 00:00:18,000
+(BUILD-UP) Masalahnya makin lama makin parah
+
+4
+00:00:18,000 --> 00:00:25,000
+(PLOT TWIST) Ternyata jawabannya bukan itu!
+
+5
+00:00:25,000 --> 00:00:30,000
+(PENUTUP) Kalimat terakhir yang bikin penonton komen
