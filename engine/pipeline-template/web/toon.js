@@ -2598,6 +2598,9 @@ export const OUTFITS = {
   ujangTim: { tunic: "#f08a2a", skin: "#c99067", hair: "#1e1714", arms: "#c99067", legs: "#3a3f52", pants: "#3a3f52", moustache: "#2a1d18", neckTowel: "#ffffff" },
   ucupTim: { tunic: "#f08a2a", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#5a4a3a", pants: "#5a4a3a", bedhead: true },
   hostKuis: { tunic: "#f2c14e", skin: "#e8b48a", hair: "#1a120c", arms: "#f2c14e", legs: "#22304a", pants: "#22304a", tie: "#d8322f", slick: true },
+  asepSenja: { tunic: "#7a7f88", skin: "#d9a07a", hair: "#2a1a10", arms: "#7a7f88", legs: "#2b2f3a", pants: "#2b2f3a", plaid: "#4a4f58", beanie: "#7a4a2a" },
+  ibuKuning: { tunic: "#f2c94c", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#f2c94c", bun: true, glasses: true, neckTowel: "#ffffff" },
+  darmanKaosAbu: { tunic: "#9aa0a8", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#3a4a6a", pants: "#3a4a6a", moustache: "#3a2a20", glasses: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -4301,3 +4304,29 @@ export const fxMejaTim = (p, label, col = "#2f8a4a", lit = 0) => { const g = p.g
 export const fxSilangBesar = (p, k = 1) => { const g = p.g; g.save(); g.translate(300, 500); g.scale(k, k); g.lineCap = "round";
   for (const s of [1, -1]) { g.beginPath(); g.moveTo(-200, -200 * s); g.lineTo(200, 200 * s); g.strokeStyle = "#14101a"; g.lineWidth = 110; g.stroke(); g.strokeStyle = "#e8344a"; g.lineWidth = 80; g.stroke(); }
   g.restore(); };
+
+// ===== Hidup Sekadar Hidup: dompet kosong + ngengat, HP saldo, koran =====
+export const fxDompet = (p, open = 1, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(110, 560, 380, 260, 30); g.fillStyle = "#6a3f22"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  g.save(); g.translate(300, 560); g.scale(1, Math.cos(open * Math.PI * 0.85)); g.beginPath(); g.roundRect(-190, -250, 380, 250, 30); g.fillStyle = "#8a5430"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  g.setLineDash([14, 10]); g.strokeStyle = "#d8b07a"; g.lineWidth = 4; g.beginPath(); g.roundRect(-170, -230, 340, 210, 22); g.stroke(); g.setLineDash([]); g.restore();
+  if (open > 0.5) { g.beginPath(); g.roundRect(140, 590, 320, 200, 18); g.fillStyle = "#3a2214"; g.fill(); g.fillStyle = "rgba(255,255,255,0.12)"; g.fillRect(160, 610, 280, 40); }
+  g.setLineDash([14, 10]); g.strokeStyle = "#d8b07a"; g.lineWidth = 4; g.beginPath(); g.roundRect(130, 580, 340, 220, 22); g.stroke(); g.setLineDash([]);
+  if (open > 0.8 && t > 0) { const k = Math.min(1, t / 40), x = 300 + 90 * Math.sin(t * 0.25), y = 620 - 480 * k; const w = Math.sin(t * 1.3) * 0.8;
+    for (const s of [-1, 1]) { g.save(); g.translate(x, y); g.scale(s, 1); g.rotate(w * 0.6); g.beginPath(); g.ellipse(34, -6, 40, 24, -0.3, 0, 7); g.fillStyle = "#b8b0a0"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke(); g.restore(); }
+    g.beginPath(); g.ellipse(x, y, 12, 26, 0, 0, 7); g.fillStyle = "#6a6058"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 5; g.stroke();
+    g.fillStyle = "rgba(200,190,170,0.6)"; for (let i = 0; i < 8; i++) { g.beginPath(); g.arc(300 + 60 * Math.sin(i * 2.3 + t * 0.1), 600 - (t * 3 + i * 23) % 200, 6 + (i % 3) * 3, 0, 7); g.fill(); } }
+  g.restore(); };
+export const fxHPSaldo = (p, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(130, 150, 340, 700, 46); g.fillStyle = "#22262e"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  g.beginPath(); g.roundRect(150, 200, 300, 600, 20); g.fillStyle = "#f4f6fa"; g.fill();
+  g.fillStyle = "#2f6ad0"; g.fillRect(150, 200, 300, 110); g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 30px ${GF}`; g.fillStyle = "#ffffff"; g.fillText("SALDO ANDA", 300, 270);
+  g.font = `700 64px ${GF}`; g.fillStyle = "#e8344a"; g.fillText("Rp12.500", 300, 400); g.font = `700 22px ${GF}`; g.fillStyle = "#6a7080"; g.fillText("per hari ini", 300, 450);
+  for (let i = 0; i < 3; i++) { g.beginPath(); g.roundRect(175, 500 + i * 90, 250, 70, 14); g.fillStyle = "#e4e8f0"; g.fill(); g.font = `700 24px ${GF}`; g.fillStyle = "#3a3f4a"; g.fillText(["CICILAN HP", "LISTRIK", "BAKSO KEMARIN"][i], 300, 525 + i * 90); g.fillStyle = "#e8344a"; g.font = `700 20px ${GF}`; g.fillText(["-Rp350.000", "-Rp200.000", "-Rp15.000"][i], 300, 553 + i * 90); }
+  g.restore(); };
+export const fxKoran = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.moveTo(60, 380); g.lineTo(300, 400); g.lineTo(540, 380); g.lineTo(540, 760); g.lineTo(300, 780); g.lineTo(60, 760); g.closePath(); g.fillStyle = "#f4f1e6"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 9; g.stroke();
+  g.strokeStyle = "#c9c4b4"; g.lineWidth = 3; g.beginPath(); g.moveTo(300, 400); g.lineTo(300, 780); g.stroke();
+  g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 34px ${GF}`; g.fillStyle = "#14101a"; g.fillText("HARGA CABAI", 180, 440); g.fillText("NAIK LAGI", 180, 480);
+  g.fillStyle = "#8a8f98"; for (const x0 of [80, 320]) for (let r = 0; r < 8; r++) g.fillRect(x0, (x0 > 300 ? 430 : 520) + r * 28, 200 - (r % 3) * 30, 10);
+  g.fillStyle = "#c8c0b0"; g.fillRect(330, 420, 190, 0); g.restore(); };
