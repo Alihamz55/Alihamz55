@@ -1175,3 +1175,8 @@ export const fxKoran = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; c
   g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 34px ${GF}`; g.fillStyle = "#14101a"; g.fillText("HARGA CABAI", 180, 440); g.fillText("NAIK LAGI", 180, 480);
   g.fillStyle = "#8a8f98"; for (const x0 of [80, 320]) for (let r = 0; r < 8; r++) g.fillRect(x0, (x0 > 300 ? 430 : 520) + r * 28, 200 - (r % 3) * 30, 10);
   g.fillStyle = "#c8c0b0"; g.fillRect(330, 420, 190, 0); g.restore(); };
+
+// tote bag kanvas polos (tanpa merek)
+export const fxTote = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g.beginPath(); g.moveTo(220, 520); g.quadraticCurveTo(300, 380, 380, 520); g.strokeStyle = "#14101a"; g.lineWidth = 22; g.stroke(); g.strokeStyle = "#e8e0c8"; g.lineWidth = 12; g.stroke();
+  g.beginPath(); g.moveTo(170, 520); g.lineTo(430, 520); g.lineTo(450, 860); g.lineTo(150, 860); g.closePath(); g.fillStyle = "#efe6cc"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 10; g.stroke();
+  g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 40px ${GF}`; g.fillStyle = "#3a5a3a"; g.fillText("SLOW", 300, 640); g.fillText("LIVING", 300, 690); g.restore(); };
