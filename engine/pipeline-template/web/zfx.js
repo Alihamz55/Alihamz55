@@ -1176,7 +1176,25 @@ export const fxKoran = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; c
   g.fillStyle = "#8a8f98"; for (const x0 of [80, 320]) for (let r = 0; r < 8; r++) g.fillRect(x0, (x0 > 300 ? 430 : 520) + r * 28, 200 - (r % 3) * 30, 10);
   g.fillStyle = "#c8c0b0"; g.fillRect(330, 420, 190, 0); g.restore(); };
 
-// tote bag kanvas polos (tanpa merek)
-export const fxTote = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g.beginPath(); g.moveTo(220, 520); g.quadraticCurveTo(300, 380, 380, 520); g.strokeStyle = "#14101a"; g.lineWidth = 22; g.stroke(); g.strokeStyle = "#e8e0c8"; g.lineWidth = 12; g.stroke();
-  g.beginPath(); g.moveTo(170, 520); g.lineTo(430, 520); g.lineTo(450, 860); g.lineTo(150, 860); g.closePath(); g.fillStyle = "#efe6cc"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 10; g.stroke();
-  g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 40px ${GF}`; g.fillStyle = "#3a5a3a"; g.fillText("SLOW", 300, 640); g.fillText("LIVING", 300, 690); g.restore(); };
+// ===== CPNS (generik, tanpa logo instansi/situs asli) =====
+// mode: 'buka' | 'loading' | 'foto' (pas foto filter kucing, stamp DITOLAK saat t>stampAt) | 'formasi' (hl = baris disorot)
+export const fxHPCpns = (p, mode = "buka", t = 0, k = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(130, 120, 340, 760, 46); g.fillStyle = "#22262e"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  g.beginPath(); g.roundRect(150, 170, 300, 660, 20); g.fillStyle = "#f4f6fa"; g.fill(); g.save(); g.beginPath(); g.roundRect(150, 170, 300, 660, 20); g.clip();
+  g.fillStyle = "#c0392b"; g.fillRect(150, 170, 300, 90); g.textAlign = "center"; g.textBaseline = "middle"; g.font = `700 24px ${GF}`; g.fillStyle = "#ffffff"; g.fillText("PENDAFTARAN CPNS", 300, 215);
+  if (mode === "buka") { g.font = `700 56px ${GF}`; g.fillStyle = "#c0392b"; g.fillText("DIBUKA!", 300, 360); g.font = `700 26px ${GF}`; g.fillStyle = "#3a3f4a"; g.fillText("TAHUN 2026", 300, 420);
+    g.beginPath(); g.roundRect(190, 520, 220, 80, 20); g.fillStyle = Math.floor(t / 8) % 2 ? "#2f8a4a" : "#3aa85a"; g.fill(); g.font = `700 34px ${GF}`; g.fillStyle = "#fff"; g.fillText("DAFTAR", 300, 562); }
+  else if (mode === "loading") { g.save(); g.translate(300, 420); g.rotate(t * 0.25); for (let i = 0; i < 10; i++) { g.rotate(Math.PI / 5); g.fillStyle = `rgba(60,70,90,${0.15 + i * 0.08})`; g.beginPath(); g.arc(0, -60, 12, 0, 7); g.fill(); } g.restore();
+    g.font = `700 36px ${GF}`; g.fillStyle = "#3a3f4a"; g.fillText("LOADING...", 300, 560); g.fillStyle = "#d8dde6"; g.fillRect(180, 610, 240, 22); g.fillStyle = "#2f6ad0"; g.fillRect(180, 610, 238, 22); g.font = `700 24px ${GF}`; g.fillStyle = "#6a7080"; g.fillText("99%", 300, 660); }
+  else if (mode === "foto") { g.font = `700 24px ${GF}`; g.fillStyle = "#3a3f4a"; g.fillText("PAS FOTO LATAR MERAH", 300, 300);
+    g.fillStyle = "#e8344a"; g.fillRect(200, 330, 200, 260); const cx = 300, cy = 470;
+    for (const s of [-1, 1]) { g.beginPath(); g.moveTo(cx + s * 70, cy - 40); g.lineTo(cx + s * 75, cy - 120); g.lineTo(cx + s * 25, cy - 75); g.closePath(); g.fillStyle = "#f28a2e"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 5; g.stroke(); }
+    g.beginPath(); g.arc(cx, cy, 70, 0, 7); g.fillStyle = "#d9a07a"; g.fill(); g.stroke(); g.beginPath(); g.arc(cx, cy - 30, 70, Math.PI, 0); g.fillStyle = "#1a120c"; g.fill();
+    for (const s of [-1, 1]) { g.beginPath(); g.arc(cx + s * 25, cy + 5, 9, 0, 7); g.fillStyle = INKC; g.fill(); for (const dy of [-6, 6]) { g.beginPath(); g.moveTo(cx + s * 30, cy + 30 + dy); g.lineTo(cx + s * 90, cy + 24 + dy * 2); g.strokeStyle = INKC; g.lineWidth = 3; g.stroke(); } }
+    g.beginPath(); g.arc(cx, cy + 25, 9, 0, 7); g.fillStyle = "#ff7b9a"; g.fill(); g.font = `700 34px ${GF}`; g.fillStyle = "#ff8ac0"; g.fillText("♥", cx + 60, cy - 70);
+    if (k > 0) { g.save(); g.translate(300, 470); g.rotate(-0.25); const sc = 1 + 0.6 * Math.max(0, 1 - k); g.scale(sc, sc); g.strokeStyle = "#c0392b"; g.lineWidth = 10; g.strokeRect(-150, -48, 300, 96); g.font = `700 64px ${GF}`; g.fillStyle = "#c0392b"; g.fillText("DITOLAK", 0, 4); g.restore(); } }
+  else if (mode === "formasi") { g.font = `700 26px ${GF}`; g.fillStyle = "#3a3f4a"; g.fillText("PILIH FORMASI", 300, 300);
+    ["DOKTER", "GURU", "PERAWAT", "PENJAGA MALAM", "PUSTAKAWAN"].forEach((r, i) => { const y = 350 + i * 86, hl = k > 0 && i === 3; g.beginPath(); g.roundRect(170, y, 260, 68, 14); g.fillStyle = hl ? "#ffd84a" : "#e4e8f0"; g.fill(); if (hl) { g.strokeStyle = "#c0392b"; g.lineWidth = 5; g.stroke(); } g.font = `700 26px ${GF}`; g.fillStyle = "#3a3f4a"; g.fillText(r, 300, y + 36); }); }
+  g.restore(); g.restore(); };
+export const fxMapBerkas = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g.beginPath(); g.roundRect(150, 420, 300, 380, 12); g.fillStyle = "#c89a5a"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 9; g.stroke();
+  g.fillStyle = "#f4f1e6"; g.fillRect(170, 400, 250, 40); g.strokeRect(170, 400, 250, 40); g.fillStyle = "#a87a3a"; g.fillRect(150, 520, 300, 10); g.restore(); };
