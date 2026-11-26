@@ -1216,3 +1216,29 @@ export const fxSenter = (p, rot = 0, on = 1) => { const g = p.g; g.save(); g.tra
   if (on) { const gr = g.createLinearGradient(40, 0, 420, 0); gr.addColorStop(0, "rgba(255,244,190,0.55)"); gr.addColorStop(1, "rgba(255,244,190,0)"); g.fillStyle = gr; g.beginPath(); g.moveTo(40, -18); g.lineTo(420, -110); g.lineTo(420, 110); g.lineTo(40, 18); g.closePath(); g.fill(); }
   g.beginPath(); g.roundRect(-70, -18, 110, 36, 8); g.fillStyle = "#3a3f4a"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 7; g.stroke();
   g.beginPath(); g.roundRect(30, -26, 26, 52, 6); g.fillStyle = "#c9cfd6"; g.fill(); g.stroke(); g.fillStyle = on ? "#fff6c0" : "#8a8f98"; g.fillRect(52, -20, 6, 40); g.restore(); };
+
+// ===== Solo gitar di genteng: gitar listrik polos, payung, ember, pohon pisang =====
+// mode: 'play' (dimainkan, leher ke kiri-atas) | 'hug' (dipeluk tegak) | 'over' (di atas kepala jadi payung)
+export const fxGitar = (p, mode = "play", t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  if (mode === "play") { g.translate(330, 640); g.rotate(-0.55); } else if (mode === "hug") { g.translate(300, 640); g.rotate(-1.45); } else { g.translate(300, 150); g.rotate(0.05); }
+  g.beginPath(); g.roundRect(-330, -14, 260, 28, 6); g.fillStyle = "#6a3f22"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke();
+  for (let i = 1; i < 8; i++) { g.strokeStyle = "#e2c27a"; g.lineWidth = 2; g.beginPath(); g.moveTo(-320 + i * 32, -14); g.lineTo(-320 + i * 32, 14); g.stroke(); }
+  g.beginPath(); g.roundRect(-380, -22, 60, 44, 10); g.fillStyle = "#1a1d22"; g.fill(); g.stroke();
+  g.beginPath(); g.moveTo(-80, -40); g.bezierCurveTo(-30, -110, 60, -90, 70, -50); g.bezierCurveTo(130, -80, 160, -20, 130, 10); g.bezierCurveTo(170, 50, 120, 110, 60, 80); g.bezierCurveTo(10, 120, -70, 90, -80, 40); g.closePath();
+  g.fillStyle = "#d8322f"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 7; g.stroke();
+  g.beginPath(); g.moveTo(-60, -30); g.bezierCurveTo(-20, -70, 40, -60, 50, -36); g.lineTo(40, 30); g.bezierCurveTo(0, 60, -50, 40, -60, 20); g.closePath(); g.fillStyle = "#f4f1ea"; g.fill();
+  for (const x of [-10, 30]) { g.fillStyle = "#1a1d22"; g.fillRect(x, -26, 14, 52); }
+  g.strokeStyle = "rgba(240,240,240,0.8)"; g.lineWidth = 1.5; for (let i = -3; i <= 3; i++) { g.beginPath(); g.moveTo(-370, i * 5); g.lineTo(80, i * 5); g.stroke(); }
+  g.restore(); };
+export const fxPayung = (p, col = "#2a4a8a") => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.strokeStyle = INKC; g.lineWidth = 10; g.beginPath(); g.moveTo(300, 90); g.lineTo(300, 600); g.stroke(); g.beginPath(); g.arc(285, 600, 15, 0, Math.PI); g.stroke();
+  g.beginPath(); g.moveTo(60, 200); g.quadraticCurveTo(300, -20, 540, 200); for (let i = 4; i >= 0; i--) { const x0 = 60 + i * 96; g.quadraticCurveTo(x0 + 48, 160, x0, 200); } g.closePath(); g.fillStyle = col; g.fill(); g.stroke();
+  g.strokeStyle = "rgba(255,255,255,0.35)"; g.lineWidth = 4; for (const x of [156, 252, 348, 444]) { g.beginPath(); g.moveTo(300, 70); g.lineTo(x, 190); g.stroke(); } g.restore(); };
+export const fxEmber = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g.beginPath(); g.moveTo(180, 420); g.lineTo(420, 420); g.lineTo(390, 700); g.lineTo(210, 700); g.closePath(); g.fillStyle = "#3a8fd5"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 9; g.stroke();
+  g.beginPath(); g.ellipse(300, 420, 120, 26, 0, 0, 7); g.fillStyle = "#2a6aa8"; g.fill(); g.stroke(); g.beginPath(); g.arc(300, 430, 130, Math.PI * 1.05, Math.PI * 1.95); g.strokeStyle = "#c9cfd6"; g.lineWidth = 7; g.stroke(); g.restore(); };
+export const fxPisang = (p, burnt = 0, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.fillStyle = burnt ? "#3a3030" : "#7a8a3a"; g.beginPath(); g.moveTo(270, 975); g.lineTo(285, 420); g.lineTo(315, 420); g.lineTo(330, 975); g.closePath(); g.fill(); g.strokeStyle = INKC; g.lineWidth = 8; g.stroke();
+  const lv = burnt ? "#2a2626" : "#4aa84a"; for (const [a, l] of [[-2.6, 260], [-2.0, 280], [-1.4, 250], [-0.6, 270], [-0.1, 240], [-1.0, 300]]) { g.save(); g.translate(300, 430); g.rotate(a + (burnt ? 0.4 : 0.05 * Math.sin(t * 0.1 + a)));
+    g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(l * 0.5, -70, l, -10); g.quadraticCurveTo(l * 0.5, 40, 0, 0); g.fillStyle = lv; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke(); g.restore(); }
+  if (burnt) { g.fillStyle = "rgba(90,90,100,0.5)"; for (let i = 0; i < 6; i++) { g.beginPath(); g.arc(300 + 40 * Math.sin(i * 2 + t * 0.05), 380 - ((t * 4 + i * 60) % 360), 30 + i * 6, 0, 7); g.fill(); } }
+  g.restore(); };
