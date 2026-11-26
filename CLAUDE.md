@@ -137,3 +137,8 @@ Folder kerja `/home/user/shorts/` ada di server sementara dan **tidak ikut tersi
 - **Video baru siap upload:** Asep Maksain Game Berat, Hujan Meteor, Battle Gombal, Antre Jumat Berkah (semua ada versi `-YT.mp4`).
 - **Antrean berikutnya:** (1) produksi naskah EN `naskah/en/potato-phone-game-too-big.md` untuk channel bahasa Inggris (suara sama, arahan bahasa Inggris, teks layar Inggris, akhiran versi Inggris); (2) naskah `asep-nabung-ps5.md`.
 - Program unduhan dari internet (mis. Rhubarb) tidak boleh dijalankan di server ini; pakai `tools/visemes.py`.
+
+## Catatan lanjutan (26 Nov 2026)
+- **Gaya "santai" (permintaan pengguna di video Tebak-tebakan Pos Ronda):** tanpa tawa penonton, shot panjang dengan dorongan kamera pelan, tanpa kick/flash, tempo suara `atempo=1.06`, jeda 0,35–0,65 detik. Contoh: `engine/story-tebak-tebakan.js`, audio `engine/audio-tebak-tebakan.py`. Tawa sitkom (`crowd_laugh` di `engine/audio-cpns.py`) hanya dipakai kalau diminta.
+- **Video baru siap upload (22–26 Nov):** Oyen Lepas di Pesawat, Ibu Kecanduan Sinetron, Wakil Presiden Rumah Tangga, Kata yang Paling Sering Diucapkan Ibu, Hidup Sekadar Hidup, Asep Anak Jaksun, Asep Disuruh Daftar CPNS, Begadang Nonton Bola, Tebak-tebakan Pos Ronda (semua ada versi `-YT.mp4`).
+- **Disk server:** frame proyek lama boleh dihapus kalau disk penuh (video jadi sudah ada di `video/`). Frame kosong/hitam (< 30–60 KB) tanda render gagal; render ulang frame tersebut.

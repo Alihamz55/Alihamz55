@@ -124,6 +124,8 @@ export const OUTFITS = {
   asepJersey: { tunic: "#2f8a4a", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#f4f1ea", pants: "#f4f1ea", stripes: "#f4f1ea", scarf: "#8a5a3a", bedhead: true },
   darmanJersey: { tunic: "#c0392b", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", scarf: "#f2c94c" },
   ibuRolUngu: { tunic: "#c8a0e8", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#c8a0e8", bun: true, glasses: true, rollers: "#ff8ac0" },
+  asepParka: { tunic: "#5a6a3a", skin: "#d9a07a", hair: "#2a1a10", arms: "#5a6a3a", legs: "#2b2f3a", pants: "#2b2f3a", zipJacket: true, scarf: "#6a3fb5" },
+  ucupHoodie: { tunic: "#f2c94c", skin: "#d9a07a", hair: "#3a2418", arms: "#f2c94c", legs: "#3a4a6a", pants: "#3a4a6a", hoodie: "#e2b03a" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };

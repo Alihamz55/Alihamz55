@@ -2607,6 +2607,8 @@ export const OUTFITS = {
   asepJersey: { tunic: "#2f8a4a", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#f4f1ea", pants: "#f4f1ea", stripes: "#f4f1ea", scarf: "#8a5a3a", bedhead: true },
   darmanJersey: { tunic: "#c0392b", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", scarf: "#f2c94c" },
   ibuRolUngu: { tunic: "#c8a0e8", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#c8a0e8", bun: true, glasses: true, rollers: "#ff8ac0" },
+  asepParka: { tunic: "#5a6a3a", skin: "#d9a07a", hair: "#2a1a10", arms: "#5a6a3a", legs: "#2b2f3a", pants: "#2b2f3a", zipJacket: true, scarf: "#6a3fb5" },
+  ucupHoodie: { tunic: "#f2c94c", skin: "#d9a07a", hair: "#3a2418", arms: "#f2c94c", legs: "#3a4a6a", pants: "#3a4a6a", hoodie: "#e2b03a" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -4371,3 +4373,9 @@ export const fxTVIklan = (p, t = 0) => { const g = p.g; g.save(); g.lineJoin = "
   g.font = '700 54px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = "#fff"; g.strokeStyle = "#14101a"; g.lineWidth = 8; const sc = 1 + 0.08 * Math.sin(t * 0.5);
   g.save(); g.translate(300, 590); g.scale(sc, sc); g.strokeText("GOOOL!", 0, 0); g.fillText("GOOOL!", 0, 0); g.restore();
   g.font = '700 30px "Fredoka", sans-serif'; g.fillStyle = "#ffd84a"; g.fillText("KOPI MANTAP • IKLAN", 300, 850); g.restore(); g.restore(); };
+
+// senter + sorot cahaya (rot: radian, on 0/1)
+export const fxSenter = (p, rot = 0, on = 1) => { const g = p.g; g.save(); g.translate(300, 500); g.rotate(rot);
+  if (on) { const gr = g.createLinearGradient(40, 0, 420, 0); gr.addColorStop(0, "rgba(255,244,190,0.55)"); gr.addColorStop(1, "rgba(255,244,190,0)"); g.fillStyle = gr; g.beginPath(); g.moveTo(40, -18); g.lineTo(420, -110); g.lineTo(420, 110); g.lineTo(40, 18); g.closePath(); g.fill(); }
+  g.beginPath(); g.roundRect(-70, -18, 110, 36, 8); g.fillStyle = "#3a3f4a"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 7; g.stroke();
+  g.beginPath(); g.roundRect(30, -26, 26, 52, 6); g.fillStyle = "#c9cfd6"; g.fill(); g.stroke(); g.fillStyle = on ? "#fff6c0" : "#8a8f98"; g.fillRect(52, -20, 6, 40); g.restore(); };
