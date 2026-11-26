@@ -2604,6 +2604,9 @@ export const OUTFITS = {
   asepTesCPNS: { tunic: "#f8f8f4", skin: "#d9a07a", hair: "#1a120c", arms: "#f8f8f4", legs: "#1a1d22", pants: "#1a1d22", slick: true },
   ibuMint: { tunic: "#9ad8c0", skin: "#f0c49c", hair: "#2b211c", arms: "#9ad8c0", dress: "#9ad8c0", glasses: true, mukena: "#3a8a6a" },
   darmanKrem: { tunic: "#c8b89a", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", glasses: true },
+  asepJersey: { tunic: "#2f8a4a", skin: "#d9a07a", hair: "#2a1a10", arms: "#d9a07a", legs: "#f4f1ea", pants: "#f4f1ea", stripes: "#f4f1ea", scarf: "#8a5a3a", bedhead: true },
+  darmanJersey: { tunic: "#c0392b", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#2b2f3a", pants: "#2b2f3a", moustache: "#3a2a20", scarf: "#f2c94c" },
+  ibuRolUngu: { tunic: "#c8a0e8", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#c8a0e8", bun: true, glasses: true, rollers: "#ff8ac0" },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -4356,3 +4359,15 @@ export const fxHPCpns = (p, mode = "buka", t = 0, k = 0) => { const g = p.g; g.s
   g.restore(); g.restore(); };
 export const fxMapBerkas = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; g.beginPath(); g.roundRect(150, 420, 300, 380, 12); g.fillStyle = "#c89a5a"; g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 9; g.stroke();
   g.fillStyle = "#f4f1e6"; g.fillRect(170, 400, 250, 40); g.strokeRect(170, 400, 250, 40); g.fillStyle = "#a87a3a"; g.fillRect(150, 520, 300, 10); g.restore(); };
+
+// TV iklan kopi generik (tanpa merek): pria teriak "GOOOL!" sambil pegang cangkir
+export const fxTVIklan = (p, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round";
+  g.fillStyle = "#2a2a30"; g.fillRect(250, 900, 100, 70); g.fillRect(170, 960, 260, 30);
+  g.fillStyle = "#1a1a20"; g.beginPath(); g.roundRect(20, 520, 560, 390, 26); g.fill(); g.lineWidth = 8; g.strokeStyle = "#0c0c10"; g.stroke();
+  g.save(); g.beginPath(); g.roundRect(44, 544, 512, 342, 10); g.clip(); const gr = g.createLinearGradient(0, 544, 0, 886); gr.addColorStop(0, "#ff9a3c"); gr.addColorStop(1, "#c0392b"); g.fillStyle = gr; g.fillRect(44, 544, 512, 342);
+  g.save(); g.translate(300, 720); g.rotate(t * 0.04); g.fillStyle = "rgba(255,255,255,0.15)"; for (let i = 0; i < 12; i++) { g.rotate(Math.PI / 6); g.beginPath(); g.moveTo(0, 0); g.lineTo(-40, -400); g.lineTo(40, -400); g.fill(); } g.restore();
+  g.fillStyle = "#6a3f22"; g.beginPath(); g.roundRect(240, 680, 120, 130, 16); g.fill(); g.strokeStyle = "#14101a"; g.lineWidth = 6; g.stroke(); g.beginPath(); g.arc(360, 745, 30, -1.2, 1.2); g.stroke();
+  g.strokeStyle = "rgba(255,255,255,0.7)"; g.lineWidth = 5; for (const x of [270, 300, 330]) { g.beginPath(); g.moveTo(x, 670); g.quadraticCurveTo(x + 14 * Math.sin(t * 0.3), 640, x, 610); g.stroke(); }
+  g.font = '700 54px "Fredoka", sans-serif'; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = "#fff"; g.strokeStyle = "#14101a"; g.lineWidth = 8; const sc = 1 + 0.08 * Math.sin(t * 0.5);
+  g.save(); g.translate(300, 590); g.scale(sc, sc); g.strokeText("GOOOL!", 0, 0); g.fillText("GOOOL!", 0, 0); g.restore();
+  g.font = '700 30px "Fredoka", sans-serif'; g.fillStyle = "#ffd84a"; g.fillText("KOPI MANTAP • IKLAN", 300, 850); g.restore(); g.restore(); };
