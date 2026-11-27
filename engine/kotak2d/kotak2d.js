@@ -1,6 +1,6 @@
 // Kotak Kocak 2D: gaya datar, garis tebal, ekspresi lebay. Tokoh orisinal.
-const W = 1080, H = 1920, INK = '#2a1f3d', LW = 10;
 const cv = document.getElementById('c'), g = cv.getContext('2d');
+const W = cv.width, H = cv.height, INK = '#2a1f3d', LW = 10;   // ukuran ikut kanvas (video 1080x1920, banner, logo)
 
 function rr(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); }
 function fs(fill, lw = LW) { g.fillStyle = fill; g.fill(); g.lineWidth = lw; g.strokeStyle = INK; g.lineJoin = 'round'; g.stroke(); }

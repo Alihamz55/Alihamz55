@@ -8,7 +8,7 @@ Channel terpisah dari @malamkomedi. Animasi 3D bergaya blok dengan tokoh **baru 
 - Jangan tiru avatar, UI, suara, atau peta game asli. Contohnya avatar "noob" (kepala kuning, badan biru, kaki hijau) atau bunyi "oof".
 - Tokoh, warna, dan dunia didesain sendiri. Bentuk blok boleh karena itu gaya umum.
 - Semua aturan konten di `CLAUDE.md` tetap berlaku: tanpa politik nyata, tragedi, atau merek. Caption: "Konten komedi. Semua tokoh fiktif."
-- **Target penonton:** kalau videonya ditujukan untuk anak, wajib diset "Made for kids" di YouTube. Akibatnya kolom komentar mati dan iklan terbatas. Rekomendasi: target remaja 13+ dengan humor yang tetap aman untuk anak.
+- **Target penonton: anak-anak** (diputuskan 27 Nov 2026). Channel wajib diset "Dibuat untuk Anak". Pengaturan, deskripsi, dan gambar channel ada di `panduan/kotak-kocak-channel-yt.md`.
 
 ## Nama channel (pilih satu, cek ketersediaannya di YouTube)
 
