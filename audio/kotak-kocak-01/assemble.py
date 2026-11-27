@@ -5,7 +5,17 @@ def load(p):
     with wave.open(p) as w: a = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
     # buang hening di awal/akhir
     idx = np.where(np.abs(a) > 0.02)[0]
-    return a[max(idx[0] - 960, 0): idx[-1] + 2400] if len(idx) else a
+    a = a[max(idx[0] - 960, 0): idx[-1] + 2400] if len(idx) else a
+    # pendekkan jeda di tengah kalimat yang > 0,4 detik menjadi 0,3 detik
+    loud = np.convolve(np.abs(a) > 0.02, np.ones(480), 'same') > 0
+    out, i = [], 0
+    while i < len(a):
+        j = i
+        while j < len(a) and loud[j] == loud[i]: j += 1
+        seg = a[i:j]
+        if not loud[i] and len(seg) > SR * .4: seg = np.concatenate([seg[:int(SR * .15)], seg[-int(SR * .15):]])
+        out.append(seg); i = j
+    return np.concatenate(out)
 def bruk():  # bunyi jatuh: dentum rendah + derak kotak
     t = np.arange(int(SR * .45)) / SR
     thud = np.sin(2 * np.pi * (90 - 60 * t) * t) * np.exp(-t * 9)
