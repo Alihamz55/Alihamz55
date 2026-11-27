@@ -131,14 +131,14 @@ export function Asep(p: TokohProps) {
           <Rect width={24} height={64} x={112} y={-30} radius={10} fill={IKAT}
             rotation={() => 25 + Math.sin(t() * 18) * 15 * (0.3 + run())} />
           {[-1, 1].map(s => (
-            <>
+            <Node>
               <Rect width={42} height={10} x={s * 42} y={() => -8 - alis() * 8} radius={5} fill={HAIR}
-                rotation={() => s * (6 - alis() * 14)} />
+                rotation={() => s * (alis() * 14 - 2)} />
               <Circle width={28} height={() => 28 * kedip(t(), p.blinkSeed ?? 0)} x={s * 42} y={18} fill="#1a1a1a">
                 <Circle size={9} x={() => 4 + look() * 4} y={-5} fill="#fff" />
               </Circle>
               <Circle size={32} x={s * 70} y={52} fill="#f28482" opacity={0.4} />
-            </>
+            </Node>
           ))}
           <Circle size={22} y={38} fill="#c98a64" />
           <Rect y={66} width={() => 46 + mouth() * 10} height={() => 8 + mouth() * 40} radius={22} fill="#7a1f2b" />
@@ -196,14 +196,14 @@ export function Darman(p: TokohProps) {
           <Rect width={40} height={70} x={98} y={-40} radius={16} fill={HAIR} />
           <Part w={170} h={70} y={-112} r={[14, 14, 6, 6]} fill="#1b1b1b" texOp={0.2} />
           {[-1, 1].map(s => (
-            <>
+            <Node>
               <Rect width={52} height={14} x={s * 46} y={() => -32 - alis() * 10} radius={7} fill={HAIR}
-                rotation={() => s * (-4 - alis() * 16)} />
+                rotation={() => s * (alis() * 16 - 4)} />
               <Circle width={24} height={() => 24 * kedip(t(), p.blinkSeed ?? 1.3)} x={s * 46} y={-2} fill="#1a1a1a">
                 <Circle size={8} x={() => 3 + look() * 4} y={-4} fill="#fff" />
               </Circle>
               <Rect width={30} height={6} x={s * 46} y={18} radius={3} fill="#b07a58" opacity={0.7} />
-            </>
+            </Node>
           ))}
           <Circle size={36} y={34} fill="#c58b66" />
           <Rect y={() => 78 + mouth() * 6} width={() => 44 + mouth() * 8} height={() => 8 + mouth() * 34} radius={20} fill="#6b1d27" />

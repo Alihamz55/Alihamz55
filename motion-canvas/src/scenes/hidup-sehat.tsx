@@ -194,7 +194,7 @@ export default makeScene2D(function* (view) {
 
       {/* ===== CAHAYA SINEMATIK (overlay layar) ===== */}
       <Rect width={1080} height={1920} fill="#ff9a4a" opacity={0.22} compositeOperation="soft-light" />
-      <Node compositeOperation="screen" opacity={0.5} filters={[blur(18)]}>
+      <Node compositeOperation="screen" opacity={0.3} filters={[blur(18)]}>
         {[0, 1, 2, 3].map(i => (
           <Line points={[[620, -1100], [-500 + i * 260, 1100], [-380 + i * 260, 1100]]} closed
             fill="#fff0c0" opacity={() => 0.18 + 0.08 * Math.sin(now() * 0.8 + i * 1.7)} />
@@ -259,7 +259,7 @@ export default makeScene2D(function* (view) {
   });
 
   // ===== 0 | ASEP: "Pak Darman! ... personal trainer!" — wide, kamera rendah =====
-  cut(0, -260, 1.0, 2);
+  cut(0, 40, 1.08, 2);
   asep().x(-760);
   aRun(1);
   spawn(kartu().scale(1.2, 0.45, easeOutBack));
@@ -274,7 +274,7 @@ export default makeScene2D(function* (view) {
 
   // ===== 1 | DARMAN: "Trainer? Kamu punya kereta pribadi?" — OTS dari bahu Asep =====
   yield* sampai(L[1].start);
-  cut(90, -330, 2.0, 8); aBlur(7); dAlis(1); aLook(1); dLook(-1);
+  cut(100, -85, 2.0, 8); aBlur(7); dAlis(1); aLook(1); dLook(-1);
   dorong(2.12, 2.6);
   yield* setBanner('KERETA PRIBADI?');
   yield* sampai(L[1].end - 0.6);
@@ -282,7 +282,7 @@ export default makeScene2D(function* (view) {
 
   // ===== 2 | ASEP: "Bukan kereta, Pak! Pelatih! ..." — reverse OTS =====
   yield* sampai(L[2].start);
-  cut(-90, -330, 2.0, 8); aBlur(0); dBlur(7); dAlis(0); aAlis(1);
+  cut(-100, -33, 2.0, 8); aBlur(0); dBlur(7); dAlis(0); aAlis(1);
   dorong(2.25, 6);
   yield* setBanner('BUKAN KERETA!');
   yield* sampai(9.9);
@@ -291,7 +291,7 @@ export default makeScene2D(function* (view) {
 
   // ===== 3 | DARMAN: "Wah, mahal itu..." — medium Darman =====
   yield* sampai(L[3].start);
-  cut(230, -280, 1.55, 6); dBlur(0); aBlur(0); dAlis(-1); aAlis(0);
+  cut(230, -25, 1.55, 6); dBlur(0); aBlur(0); dAlis(-1); aAlis(0);
   dorong(1.65, 2.8);
   yield* setBanner('');
   yield* sampai(14.7);
@@ -301,7 +301,7 @@ export default makeScene2D(function* (view) {
   // ===== 4 | ASEP: "Gratis, Pak. Cuma dikasih tulang." — close-up Asep =====
   yield* sampai(L[4].start);
   hideJudge();
-  cut(-230, -420, 2.6, 10); aAlis(0);
+  cut(-230, -43, 2.6, 10); aAlis(0);
   dorong(2.75, 2.2);
   yield* setBanner('GRATIS!');
   yield* sampai(18.6);
@@ -311,14 +311,14 @@ export default makeScene2D(function* (view) {
   // ===== 5 | DARMAN: "Tulang?" — extreme close-up, kick =====
   yield* sampai(L[5].start);
   hideJudge();
-  cut(230, -480, 3.3, 12); dAlis(1); dLook(0);
+  cut(230, -94, 2.8, 12); dAlis(1); dLook(0);
   tendang(1.15);
   yield* waitFor(0.1);
 
   // ===== 6 | ASEP: "Hari pertama lari lima kilo!..." — adegan lari, kamera handheld =====
   yield* sampai(L[6].start);
   darman().opacity(0);
-  cut(-230, -250, 1.35, 5); aAlis(1); aLook(1);
+  cut(-230, 65, 1.35, 5); aAlis(1); aLook(1);
   aRun(1); shake(8);
   yield* setBanner('HARI 1: 5 KILO!');
   yield* sampai(21.9);
@@ -329,7 +329,7 @@ export default makeScene2D(function* (view) {
   yield* sampai(L[7].start);
   aRun(0); shake(0); scroll(0);
   darman().opacity(1);
-  cut(0, -280, 1.25, 4); dAlis(1); dLook(-1); aAlis(0);
+  cut(0, 78, 1.25, 4); dAlis(1); dLook(-1); aAlis(0);
   dorong(1.35, 2.9);
   yield* setBanner('HEBAT!');
   yield* sampai(25.0);
@@ -337,7 +337,7 @@ export default makeScene2D(function* (view) {
 
   // ===== 8 | ASEP: "Hari ketiga pelatihnya dibawa mudik. Asep juga libur." — close-up =====
   yield* sampai(L[8].start);
-  cut(-230, -400, 2.3, 9); dAlis(0);
+  cut(-230, -32, 2.3, 9); dAlis(0);
   dorong(2.4, 3);
   yield* setBanner('PELATIH: MUDIK');
   yield* sampai(28.4);
@@ -346,14 +346,14 @@ export default makeScene2D(function* (view) {
 
   // ===== 9 | DARMAN: "Pelatih kok dibawa mudik? Emang siapa?" — OTS, dorong pelan (tegang) =====
   yield* sampai(L[9].start);
-  cut(90, -340, 1.9, 8); aBlur(7); dAlis(-1);
+  cut(100, -80, 1.9, 8); aBlur(7); dAlis(-1);
   dorong(2.45, 4.4);
   yield* setBanner('SIAPA PELATIHNYA?');
 
   // ===== 10 | ASEP: "Si Bleki, Pak." — reveal two-shot, Bleki lompat masuk =====
   yield* sampai(L[10].start);
   aBlur(0); dAlis(1); dLook(-1); aLook(1);
-  cut(0, -260, 1.2, 4);
+  cut(0, 70, 1.2, 4);
   bleki().position([0, 900]);
   peluit(1);
   yield* setBanner('');
@@ -364,7 +364,7 @@ export default makeScene2D(function* (view) {
   yield* sampai(L[10].end + 0.1);
   hideJudge();
   // gonggong "GUK!"
-  cut(0, -150, 1.9, 9);
+  cut(0, 335, 1.9, 9);
   yield* all(gonggong(1, 0.08).to(0, 0.15).to(1, 0.08).to(0, 0.15), setBanner('GUK! GUK!'));
   tendang(1.1);
 
@@ -374,7 +374,7 @@ export default makeScene2D(function* (view) {
   asep().opacity(0);
   darman().x(140); bleki().x(-280); bleki().y(470); bleki().scale(1.1);
   dRun(1); bRun(1); dAlis(1); dLook(1); shake(9);
-  cut(-40, -260, 1.15, 5);
+  cut(-40, 60, 1.15, 5);
   yield* all(flash(0, 0.3), setBanner('BESOKNYA...'));
   yield* sampai(38.9);
   yield* setBanner('KERETA PRIBADI!');

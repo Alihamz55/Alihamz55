@@ -22,6 +22,7 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
+| Asep Hidup Sehat (Motion Canvas) | kaos lari oranye no. 17, ikat kepala merah, sepatu lari **baru** (`motion-canvas/src/tokoh.tsx`) | jaket training jadul hijau bergaris putih, peci **baru** | | Bleki (anjing) pakai peluit |
 | Ibu Ngambek Dibonceng | `asepMartabak` (kaos merah, celemek, ikat kepala) **baru** | `darmanJeans` (jaket jeans, helm putih) **baru** | `ibuGamis` (gamis hijau, helm pink) **baru** | |
 | HP Baru Gaptek 2 (Asisten AI) | `asepHoodie` (hoodie abu) **baru** | `darmanKoko` (koko putih, kacamata di dahi) **baru** | `ibuDasterUngu darmanJeans ibuGamis asepMartabak` (daster ungu bunga) **baru** | |
 | Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak` **baru** |
