@@ -1,5 +1,5 @@
 import numpy as np, wave
-SR=48000; DUR=736/30; N=int(DUR*SR); rng=np.random.default_rng(139); F=lambda fr: fr/30
+SR=48000; DUR=931/30; N=int(DUR*SR); rng=np.random.default_rng(139); F=lambda fr: fr/30
 def W(name,x):
     x=x/(np.abs(x).max()+1e-9)*0.9
     with wave.open(name,'wb') as w: w.setnchannels(1);w.setsampwidth(2);w.setframerate(SR);w.writeframes((x*32767).astype(np.int16).tobytes())
@@ -14,11 +14,11 @@ def pad(ms,dur):
     n=int(dur*SR); t=np.arange(n)/SR; x=sum(np.sin(2*np.pi*midi(m)*t+0.3*np.sin(2*np.pi*5*t))+0.3*np.sin(4*np.pi*midi(m)*t) for m in ms)
     return x*np.minimum(1,t/.4)*np.minimum(1,(dur-t)/.4)
 music=np.zeros(N); sfx=np.zeros(N)
-HIHU=[66,163,274,477,594]
+HIHU=[91,250,423,626,788]
 b=60/128; t=0; k=0; prog=[(50,[62,66,69]),(55,[62,67,71]),(57,[64,69,73]),(55,[62,67,71])]
 while t<DUR-1.0:
     fr=t*30
-    if not any(h-3<=fr<h+30 for h in HIHU) and fr<702:
+    if not any(h-3<=fr<h+30 for h in HIHU) and fr<897:
         root,ch=prog[(k//4)%4]; place(music,synth(midi(root-12),b*.9,.12,.3),t,.8)
         for j_,m in enumerate(ch): place(music,synth(midi(m+12),.12,.05,.6),t+j_*b/3,.2)
     t+=b; k+=1
@@ -30,5 +30,5 @@ def trombone():
         n=int(d*SR); tt=np.arange(n)/SR; f=midi(m)*(1+.02*np.sin(2*np.pi*6*tt)*(d>.5)); ph=2*np.pi*np.cumsum(f)/SR; o.append(sum(np.sin(ph*(h+1))/(h+1) for h in range(6))*np.minimum(1,tt/.03)*np.minimum(1,(d-tt)/.05))
     return np.concatenate(o)*.35
 for h in HIHU[:3]: place(sfx,stab(),F(h+28),.4)
-place(sfx,clink(),F(590),.6); place(sfx,trombone(),F(645),.5)
+place(sfx,clink(),F(735),.6); place(sfx,trombone(),F(835),.5)
 W('music.wav',music); W('sfx.wav',sfx)

@@ -18,13 +18,18 @@
 Ibu: "Sep! Ada duit jatuh di bawah kursi!" Asep nunduk, lalu "HIHU!"
 
 ## 3. Naskah lengkap
-- **Ibu:** Sep! Ada duit jatuh di bawah kursi! → **HIHU!**
-- **Pak Darman:** Sep, sendalmu dibawa kucing! → **HIHU!**
-- **Ucup:** Sep! Ada Neng nyariin di depan! → **HIHU!**
+- **Ibu:** Sep! Ada duit jatuh di bawah kursi!
+- **Asep:** Mana, Bu? Mana?! → **HIHU!**
+- **Pak Darman:** Sep, sendalmu dibawa kucing!
+- **Asep:** Hah?! Itu sendal Asep satu-satunya! → **HIHU!**
+- **Ucup:** Sep! Ada Neng nyariin di depan!
+- **Asep:** Bentar! Asep rapihin rambut dulu! → **HIHU!**
 - **Asep:** Pokoknya Asep nggak bakal ketipu lagi!
 - **Ibu:** Sep, makan! Ada rendang! *(beneran)*
 - **Asep:** *(menyilangkan tangan)* **HIHU...** Asep nggak ketipu lagi!
-- *(Cut ke meja: piring rendang sudah kosong, Pak Darman mengunyah)* **Pak Darman:** **HIHU.**
+- *(Cut ke meja: piring rendang sudah kosong, Pak Darman mengunyah)*
+- **Asep:** Lho... rendangnya mana, Pak?
+- **Pak Darman:** **HIHU.**
 - **Asep:** ...Ini hihu paling jahat.
 
 ## 4. Punchline utama
@@ -37,7 +42,7 @@ Asep akhirnya tidak percaya, padahal rendangnya beneran, dan malah dihabiskan Pa
 Kartu penutup: "HIHU – KORBAN: ASEP (4X)".
 
 ## 7. Estimasi durasi
-24,5 detik + akhiran 6 detik.
+31 detik + akhiran 6 detik (revisi 28 Nov: Asep menjawab dulu sebelum setiap HIHU).
 
 ## 8. Arahan intonasi & jeda
 Setiap pancingan dibuat pura-pura serius dan cepat, lalu klip "HIHU!" + zoom ke muka Asep yang kaget. Musik berhenti sebentar di setiap hihu. Asep sok pintar, lalu sedih di akhir.
