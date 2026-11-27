@@ -22,6 +22,7 @@
 
 | Video | Asep | Pak Darman | Ibu | Lainnya |
 |---|---|---|---|---|
+| Ibu Checkout Promo 12.12 (rencana) | `asepPiyama` (piyama garis biru, tutup mata tidur) **baru** | `darmanSinglet` (singlet putih, celana kotak-kotak, handuk) **baru** | `ibuRoll` (daster oranye, roll rambut, masker hijau) **baru** | |
 | Ibu Ngambek Dibonceng | `asepMartabak` (kaos merah, celemek, ikat kepala) **baru** | `darmanJeans` (jaket jeans, helm putih) **baru** | `ibuGamis` (gamis hijau, helm pink) **baru** | |
 | HP Baru Gaptek 2 (Asisten AI) | `asepHoodie` (hoodie abu) **baru** | `darmanKoko` (koko putih, kacamata di dahi) **baru** | `ibuDasterUngu darmanJeans ibuGamis asepMartabak` (daster ungu bunga) **baru** | |
 | Parkir Rp35 Ribu | `asepParkir` (rompi oranye, topi pet, peluit) **baru** | `darmanMotor` (jaket kulit, helm merah) **baru** | | Mang Ujang `ujangGorengan darmanKoko asepHoodie ibuDasterUngu darmanJeans ibuGamis asepMartabak` **baru** |
