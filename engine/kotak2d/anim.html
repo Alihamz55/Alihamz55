@@ -2,8 +2,6 @@
 <link rel="stylesheet" href="../pipeline-template/web/fonts/fonts.css">
 <style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
 <body><canvas id="c" width="1080" height="1920"></canvas>
-<script>window.ANIM = true;</script>
-<script src="kotak2d.js"></script>
-<script src="ep01/data.js"></script>
-<script src="ep01/story.js"></script>
+<script>window.ANIM = true; const EP = new URLSearchParams(location.search).get('ep') || 'ep01';
+for (const f of ['kotak2d.js', 'anim-lib.js', EP + '/data.js', EP + '/story.js']) document.write(`<script src="${f}"><\/script>`);</script>
 </body></html>

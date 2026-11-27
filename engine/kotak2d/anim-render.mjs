@@ -7,7 +7,7 @@ const srv = http.createServer((q, r) => { const f = path.join(root, decodeURICom
 await new Promise(res => srv.listen(8767, res));
 const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
 p.on('pageerror', e => console.log('[err]', e.message));
-await p.goto('http://localhost:8767/kotak2d/anim.html'); await p.waitForFunction('window.__ready === true');
+await p.goto('http://localhost:8767/kotak2d/anim.html?ep=' + (process.env.EP || 'ep01')); await p.waitForFunction('window.__ready === true');
 const grab = async f => Buffer.from((await p.evaluate(f => { drawFrame(f); return document.getElementById('c').toDataURL('image/jpeg', .93); }, f)).split(',')[1], 'base64');
 if (process.argv[2] === 'test') {
   for (const f of process.argv[3].split(',').map(Number)) fs.writeFileSync(`frame-${f}.jpg`, await grab(f));

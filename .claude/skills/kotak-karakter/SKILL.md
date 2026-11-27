@@ -84,6 +84,13 @@ Bagian layar yang dipakai:
 
 Tokoh tiarap: `g.translate` lalu `g.rotate(-Math.PI/2)` sebelum `char()`. Close-up: `g.scale(1.75)` di sekitar titik kaki.
 
+## Animasi dan akhiran channel
+
+- **Struktur:** pustaka bersama `engine/kotak2d/anim-lib.js` (kamera, tokoh bergerak, gerak mulut, subtitle, teks pop) dan satu folder per episode (`ep01/`, `akhiran/`) berisi `story.js` (TEXT + SHOT) dan `data.js` (TIMING + LIPS).
+- **Render:** `EP=<folder> node anim-render.mjs <mulai> <akhir> <audio.wav> <out.mp4>`, atau `... test "f1,f2"` untuk gambar tes. Render 52 detik butuh sekitar 1 menit.
+- **Audio episode:** `audio/kotak-kocak-01/`: `assemble.py` (suara + SFX dasar), `musik.py` (musik + SFX), `../../engine/pipeline-template/mix.py`, lalu `lips.py` (gerak mulut).
+- **Akhiran channel:** `video/Akhiran-Kotak-Kocak.mp4` (6,7 detik, Bobi mengajak subscribe, tombol generik tanpa logo platform). Tempel di akhir setiap episode dengan ffmpeg concat menjadi `*-YT.mp4`, dan pastikan totalnya di bawah 60 detik (episode maksimal sekitar 52 detik).
+
 ## Larangan (wajib)
 
 - **Jangan meniru tokoh channel lain.** Contohnya anak berambut cokelat dengan baju oranye bergambar petir dari channel animasi game populer. Gaya umum boleh (kepala kotak, mata besar, ekspresi lebay), desain tokoh orang lain tidak.
