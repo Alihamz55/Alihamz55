@@ -1242,3 +1242,35 @@ export const fxPisang = (p, burnt = 0, t = 0) => { const g = p.g; g.save(); g.li
     g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(l * 0.5, -70, l, -10); g.quadraticCurveTo(l * 0.5, 40, 0, 0); g.fillStyle = lv; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke(); g.restore(); }
   if (burnt) { g.fillStyle = "rgba(90,90,100,0.5)"; for (let i = 0; i < 6; i++) { g.beginPath(); g.arc(300 + 40 * Math.sin(i * 2 + t * 0.05), 380 - ((t * 4 + i * 60) % 360), 30 + i * 6, 0, 7); g.fill(); } }
   g.restore(); };
+
+// ===== Nabung PS: celengan ayam, kertas utang, kalkulator =====
+// state: 'utuh' | 'slip' (kertas masuk lubang; label, k 0..1) | 'pecah' (pecahan + kertas utang beterbangan, t)
+export const fxCelengan = (p, state = "utuh", t = 0, label = "", k = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a", OR = "#f08a2a";
+  const shake = state === "utuh" && t > 0 ? 10 * Math.sin(t * 1.3) : 0; g.translate(shake, 0);
+  if (state !== "pecah") {
+    g.beginPath(); g.ellipse(300, 640, 190, 160, 0, 0, 7); g.fillStyle = OR; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+    g.beginPath(); g.ellipse(460, 520, 85, 80, 0, 0, 7); g.fill(); g.stroke();
+    g.beginPath(); g.moveTo(470, 440); g.quadraticCurveTo(480, 380, 500, 420); g.quadraticCurveTo(520, 380, 530, 445); g.fillStyle = "#d8322f"; g.fill(); g.stroke();
+    g.beginPath(); g.moveTo(540, 520); g.lineTo(600, 535); g.lineTo(540, 552); g.closePath(); g.fillStyle = "#f2c94c"; g.fill(); g.stroke();
+    g.beginPath(); g.arc(478, 505, 11, 0, 7); g.fillStyle = INKC; g.fill(); g.beginPath(); g.arc(482, 500, 4, 0, 7); g.fillStyle = "#fff"; g.fill();
+    g.beginPath(); g.moveTo(110, 600); g.quadraticCurveTo(40, 520, 90, 470); g.quadraticCurveTo(120, 540, 150, 560); g.fillStyle = "#e8742c"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 8; g.stroke();
+    for (const x of [230, 370]) { g.beginPath(); g.roundRect(x - 22, 770, 44, 60, 10); g.fillStyle = "#e8742c"; g.fill(); g.stroke(); }
+    g.fillStyle = INKC; g.fillRect(240, 485, 110, 14);
+    g.fillStyle = "rgba(255,255,255,0.25)"; g.beginPath(); g.ellipse(230, 580, 60, 30, -0.5, 0, 7); g.fill();
+    if (state === "slip" && k < 1) { const y = 380 + 110 * k; g.save(); g.beginPath(); g.rect(150, 0, 300, 492); g.clip(); g.fillStyle = "#fffbea"; g.fillRect(230, y - 140, 140, 150); g.strokeStyle = INKC; g.lineWidth = 6; g.strokeRect(230, y - 140, 140, 150);
+      g.font = `700 26px ${GF}`; g.textAlign = "center"; g.fillStyle = "#c0392b"; g.fillText("UTANG", 300, y - 95); g.fillStyle = "#3a3f4a"; g.font = `700 22px ${GF}`; g.fillText(label, 300, y - 62); g.restore(); }
+  } else {
+    for (const [x, y, r] of [[160, 820, 0.4], [420, 840, -0.6], [300, 870, 0.1], [520, 800, 1.0]]) { g.save(); g.translate(x, y); g.rotate(r); g.beginPath(); g.moveTo(-70, 0); g.lineTo(0, -55); g.lineTo(80, -10); g.lineTo(30, 40); g.closePath(); g.fillStyle = OR; g.fill(); g.strokeStyle = INKC; g.lineWidth = 7; g.stroke(); g.restore(); }
+    const lab = ["UTANG IBU", "UTANG BAPAK", "UTANG NENG", "UTANG IBU", "UTANG BAPAK"];
+    lab.forEach((L, i) => { const a = Math.min(1, t / 20), x = 300 + (i - 2) * 105 * a + 20 * Math.sin(t * 0.1 + i), y = 760 - (180 + 90 * (i % 3)) * a + 10 * Math.cos(t * 0.13 + i);
+      g.save(); g.translate(x, y); g.rotate((i - 2) * 0.2 + 0.05 * Math.sin(t * 0.2 + i)); g.fillStyle = "#fffbea"; g.fillRect(-75, -50, 150, 100); g.strokeStyle = INKC; g.lineWidth = 5; g.strokeRect(-75, -50, 150, 100);
+      g.font = `700 24px ${GF}`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = "#c0392b"; g.fillText(L.split(" ")[0], 0, -15); g.fillStyle = "#3a3f4a"; g.fillText(L.split(" ")[1], 0, 18); g.restore(); });
+    g.beginPath(); g.arc(300, 880, 34, 0, 7); g.fillStyle = "#e2b04a"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke(); g.font = `700 24px ${GF}`; g.textAlign = "center"; g.textBaseline = "middle"; g.fillStyle = "#7a5a1a"; g.fillText("500", 300, 882);
+  }
+  g.restore(); };
+export const fxKalkulator = (p, text = "0") => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(160, 260, 280, 440, 30); g.fillStyle = "#3a3f4a"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+  g.beginPath(); g.roundRect(185, 290, 230, 100, 12); g.fillStyle = "#b8d8a0"; g.fill(); g.stroke();
+  g.font = `700 ${text.length > 9 ? 30 : 44}px ${GF}`; g.textAlign = "right"; g.textBaseline = "middle"; g.fillStyle = "#1a2a1a"; g.fillText(text, 400, 342);
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) { g.beginPath(); g.roundRect(190 + c * 57, 415 + r * 68, 46, 52, 10); g.fillStyle = c === 3 ? "#e8742c" : "#c9cfd6"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 4; g.stroke(); }
+  g.restore(); };

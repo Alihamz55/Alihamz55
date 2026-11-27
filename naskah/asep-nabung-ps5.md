@@ -6,6 +6,8 @@
 - **Tanpa rokok, judi, atau utang yang menyakitkan:** "utang" anggota keluarga ke celengan dibuat ringan dan lucu.
 - **Caption:** "Konten komedi. Semua tokoh fiktif."
 
+**Status:** diproduksi 27 Nov 2026 → `video/Asep-Nabung-Beli-PS-YT.mp4`. Kostum Pak Darman jadi `darmanKalkulator` (nama `darmanKotak` sudah dipakai di video stand up).
+
 **Tokoh, suara, dan kostum baru:**
 
 | Tokoh | Kostum (baru) | Suara |
