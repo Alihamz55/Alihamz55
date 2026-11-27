@@ -1,0 +1,175 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;background:#000;width:1080px;height:1920px;overflow:hidden;font-family:'DejaVu Sans',Arial,sans-serif}
+  canvas{display:block}
+  .lab{position:absolute;transform:translateX(-50%);color:#fff;font-weight:900;letter-spacing:1px;
+    -webkit-text-stroke:12px #000;paint-order:stroke fill;white-space:nowrap;text-align:center}
+  .sub{font-size:30px;-webkit-text-stroke:8px #000;margin-top:4px}
+</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { raka, mama, pose, makeHead, HAIR, rbox, plain, fabric } from './avatar.js';
+
+const W = 1080, H = 1920;
+const mode = new URLSearchParams(location.search).get('mode') || 'hero';
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+
+function gradTex(stops) {
+  const c = document.createElement('canvas'); c.width = 4; c.height = 512; const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 0, 512); stops.forEach(([p, col]) => gr.addColorStop(p, col));
+  g.fillStyle = gr; g.fillRect(0, 0, 4, 512); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+function tileTex(base, line, n, noise = 18) {
+  const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
+  g.fillStyle = base; g.fillRect(0, 0, 256, 256);
+  const d = g.getImageData(0, 0, 256, 256); for (let i = 0; i < d.data.length; i += 4) { const k = (Math.random() - .5) * noise; d.data[i] += k; d.data[i + 1] += k; d.data[i + 2] += k; }
+  g.putImageData(d, 0, 0);
+  if (line) { g.strokeStyle = line; g.lineWidth = 3; for (let i = 0; i <= 256; i += 256 / n) { g.beginPath(); g.moveTo(i, 0); g.lineTo(i, 256); g.stroke(); g.beginPath(); g.moveTo(0, i); g.lineTo(256, i); g.stroke(); } }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const box = (w, h, d, m, x, y, z, r = 0.06) => { const b = rbox(w, h, d, r, m); b.position.set(x, y, z); scene.add(b); return b; };
+
+function lights() {
+  scene.add(new THREE.HemisphereLight(0xdff0ff, 0x7d935f, 1.15));
+  const sun = new THREE.DirectionalLight(0xfff0d8, 2.4);
+  sun.position.set(7, 14, 10); sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+  Object.assign(sun.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: 1, far: 60 });
+  scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xcfe3ff, 0.5); fill.position.set(-8, 5, 6); scene.add(fill);
+}
+
+function house(x, z, w, h, col, roof, rot = 0) {
+  const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = rot; scene.add(g);
+  const add = (m) => (m.castShadow = m.receiveShadow = true, g.add(m), m);
+  const b = add(rbox(w, h, 5, 0.08, plain(col, 0.85))); b.position.y = h / 2;
+  const tri = new THREE.Shape(); tri.moveTo(-w / 2 - 0.4, 0); tri.lineTo(0, 2.2); tri.lineTo(w / 2 + 0.4, 0); tri.closePath();
+  const rf = add(new THREE.Mesh(new THREE.ExtrudeGeometry(tri, { depth: 5.6, bevelEnabled: true, bevelSize: 0.06, bevelThickness: 0.06 }), plain(roof, 0.75)));
+  rf.position.set(0, h, -2.8);
+  const glass = new THREE.MeshStandardMaterial({ color: '#9fd3f0', roughness: 0.2, metalness: 0.1, emissive: '#3a6f8f', emissiveIntensity: 0.15 });
+  const frame = plain('#ffffff', 0.6);
+  [[-w / 4, h * 0.62], [w / 4, h * 0.62]].forEach(([wx, wy]) => {
+    const f = add(rbox(1.3, 1.3, 0.12, 0.04, frame)); f.position.set(wx, wy, 2.52);
+    const gl = add(rbox(1.08, 1.08, 0.12, 0.02, glass)); gl.position.set(wx, wy, 2.56);
+    const bar = add(rbox(0.08, 1.08, 0.14, 0.02, frame)); bar.position.set(wx, wy, 2.57);
+    const bar2 = add(rbox(1.08, 0.08, 0.14, 0.02, frame)); bar2.position.set(wx, wy, 2.57);
+  });
+  const door = add(rbox(1.1, 2.0, 0.12, 0.04, plain('#7a4e33', 0.7))); door.position.set(0, 1.0, 2.53);
+  const knob = add(new THREE.Mesh(new THREE.SphereGeometry(0.07, 12, 8), plain('#e2c35a', 0.3))); knob.position.set(0.35, 1.0, 2.62);
+}
+function shop(x, z, w, col) {
+  const h = 3.6; box(w, h, 5, plain(col, 0.85), x, h / 2, z, 0.08);
+  const c = document.createElement('canvas'); c.width = 256; c.height = 16; const g = c.getContext('2d');
+  for (let i = 0; i < 8; i++) { g.fillStyle = i % 2 ? '#ffffff' : '#e5534b'; g.fillRect(i * 32, 0, 32, 16); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  const aw = box(w + 0.3, 0.12, 1.6, new THREE.MeshStandardMaterial({ map: t, roughness: 0.8 }), x, h * 0.72, z + 3.1, 0.04);
+  aw.rotation.x = 0.35;
+  box(w * 0.75, 1.6, 0.12, new THREE.MeshStandardMaterial({ color: '#a9dcf5', roughness: 0.2, emissive: '#3a6f8f', emissiveIntensity: 0.2 }), x, 1.3, z + 2.53, 0.03);
+  box(w * 0.6, 0.6, 0.12, plain('#fff6dd', 0.6), x, h + 0.3, z + 2.4, 0.06); // papan nama polos
+}
+function tree(x, z, s = 1) {
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.28 * s, 0.36 * s, 2.6 * s, 10), plain('#8a5a3a', 0.9));
+  trunk.position.set(x, 1.3 * s, z); trunk.castShadow = true; scene.add(trunk);
+  const leaf = plain('#4fa350', 0.85), leaf2 = plain('#62b85a', 0.85);
+  box(2.8 * s, 1.8 * s, 2.8 * s, leaf, x, 3.3 * s, z, 0.5 * s);
+  box(2.1 * s, 1.5 * s, 2.1 * s, leaf2, x + 0.15 * s, 4.6 * s, z + 0.1, 0.45 * s);
+  box(1.2 * s, 0.9 * s, 1.2 * s, leaf, x - 0.1, 5.6 * s, z, 0.3 * s);
+}
+function lamp(x, z) {
+  const m = plain('#3d4450', 0.45);
+  const p = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.14, 5.2, 10), m); p.position.set(x, 2.6, z); p.castShadow = true; scene.add(p);
+  box(0.9, 0.12, 0.16, m, x + 0.4 * Math.sign(-x || 1), 5.15, z, 0.04);
+  box(0.6, 0.3, 0.45, plain('#fff4c9', 0.4), x + 0.8 * Math.sign(-x || 1), 5.0, z, 0.06);
+}
+function playground(x, z) {
+  const red = plain('#e0533f', 0.6), yel = plain('#f2c230', 0.6), blue = plain('#3a7bd5', 0.6);
+  box(1.6, 2.4, 1.6, blue, x, 1.2, z, 0.1);
+  box(1.8, 0.2, 1.8, red, x, 2.5, z, 0.06);
+  const sl = box(0.9, 0.14, 3.4, yel, x + 1.6, 1.3, z + 0.2, 0.06); sl.rotation.z = 0; sl.rotation.y = Math.PI / 2; sl.rotation.x = 0;
+  sl.rotation.set(0, 0, -0.6); sl.scale.set(1, 1, 1); sl.geometry = new RoundedBoxGeometry(3.4, 0.14, 0.9, 3, 0.06);
+}
+
+function world() {
+  scene.background = gradTex([[0, '#5aa7ec'], [0.55, '#9fd0f6'], [1, '#e4f3fd']]);
+  scene.fog = new THREE.Fog('#d7ecfb', 28, 75);
+  const grass = tileTex('#78b95a', null, 1, 26); grass.repeat.set(30, 30);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshStandardMaterial({ map: grass, roughness: 0.95 }));
+  ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+  const walk = tileTex('#d4d3cc', '#b5b3aa', 4, 10); walk.repeat.set(20, 1);
+  box(80, 0.12, 2.4, new THREE.MeshStandardMaterial({ map: walk, roughness: 0.9 }), 0, 0.06, -4.2, 0.03);
+  box(80, 0.12, 2.4, new THREE.MeshStandardMaterial({ map: walk, roughness: 0.9 }), 0, 0.06, -12.4, 0.03);
+  box(80, 0.04, 5.8, plain('#4b4f58', 0.9), 0, 0.02, -8.3, 0.01);
+  for (let i = -20; i < 20; i++) box(1.6, 0.05, 0.22, plain('#f3f3f3', 0.8), i * 3.2, 0.04, -8.3, 0.02);
+  house(-6.2, -17, 5.4, 4.2, '#f4d6a0', '#c8553d');
+  house(0, -18.5, 5.8, 4.8, '#a9d6e5', '#3d5a80');
+  shop(6.4, -17, 5.2, '#f7f1e3');
+  house(12.5, -18, 5.4, 4.2, '#d8c7f0', '#7a5195');
+  house(-12.4, -18.5, 5.4, 4.6, '#c7e9b0', '#b5651d');
+  tree(-4.6, -2.6, 0.95); tree(4.9, -3.0, 0.9); tree(-9.5, -14, 1.1); tree(9.5, -13.5, 1.0); tree(2.9, -14.5, 0.9);
+  lamp(-3.4, -5.6); lamp(3.6, -5.6);
+  playground(-7.5, -1.5);
+  // pagar rendah
+  for (let i = -12; i <= 12; i++) box(0.16, 0.8, 0.16, plain('#ffffff', 0.7), i * 0.9, 0.4, -2.9, 0.04);
+  box(22, 0.12, 0.1, plain('#ffffff', 0.7), 0, 0.62, -2.9, 0.03);
+}
+
+function label(text, sub, worldPos, cam, size, dy = 0) {
+  const v = worldPos.clone().project(cam);
+  const d = document.createElement('div'); d.className = 'lab';
+  d.style.left = ((v.x + 1) / 2 * W) + 'px'; d.style.top = ((1 - v.y) / 2 * H + dy) + 'px';
+  d.style.fontSize = size + 'px'; d.innerHTML = text + (sub ? `<div class="sub">${sub}</div>` : '');
+  document.body.appendChild(d);
+}
+
+if (mode === 'hero') {
+  lights(); world();
+  const r = raka('smug'); r.scale.setScalar(0.86); r.position.set(-1.85, 0, 0.6); r.rotation.y = 0.25; scene.add(r);
+  pose(r, -1, -2.95, 0.55); pose(r, 1, 0.02, -0.05);
+  const m = mama('gentle'); m.position.set(1.95, 0, 0); m.rotation.y = -0.25; scene.add(m);
+  pose(m, 1, 2.95, -0.2); pose(m, -1, -0.03, 0.1);
+  const cam = new THREE.PerspectiveCamera(34, W / H, 0.1, 200);
+  cam.position.set(0, 3.0, 25); cam.lookAt(0, 4.6, 0);
+  renderer.render(scene, cam);
+  label('RAKA', 'anak SMP · narator', new THREE.Vector3(-1.85, -0.3, 0.6), cam, 64);
+  label('MAMA RINA', 'presenter cuaca', new THREE.Vector3(1.95, -0.3, 0), cam, 64);
+  const t = document.createElement('div'); t.className = 'lab'; t.style.left = '540px'; t.style.top = '120px'; t.style.fontSize = '92px';
+  t.innerHTML = 'BADAI RAPOR<div class="sub" style="font-size:38px">contoh tokoh</div>'; document.body.appendChild(t);
+} else {
+  // lembar ekspresi
+  scene.background = gradTex([[0, '#fff4df'], [1, '#ffe0b8']]);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xc9a77a, 1.6));
+  const key = new THREE.DirectionalLight(0xfff2dd, 1.8); key.position.set(3, 4, 8); scene.add(key);
+  const cam = new THREE.OrthographicCamera(-4.5, 4.5, 8, -8, 0.1, 50); cam.position.set(0, 0, 20); cam.lookAt(0, 0, 0);
+  const rows = [
+    ['raka', [['smug', 'sok pede'], ['surprised', 'kaget'], ['worried', 'panik']]],
+    ['raka', [['sad', 'sedih'], ['confused', 'bingung'], ['laugh', 'ngakak']]],
+    ['mama', [['annoyed', 'tegas'], ['gentle', 'lembut'], ['surprised', 'kaget']]],
+    ['mama', [['laugh', 'tertawa'], ['worried', 'khawatir'], ['sad', 'sedih']]],
+  ];
+  const cfgs = {
+    raka: { skin: '#c48a5c', hairColor: '#231914', hair: HAIR.quiff },
+    mama: { skin: '#bd8357', hairColor: '#3a2318', hair: HAIR.bun, face: { lashes: true, blush: true } },
+  };
+  rows.forEach(([who, list], ri) => list.forEach(([e, name], ci) => {
+    const h = makeHead({ ...cfgs[who], expr: e });
+    h.scale.setScalar(ri < 2 ? 1.5 : 1.4); const x = (ci - 1) * 2.95, y = [5.4, 2.05, -2.5, -6.2][ri];
+    h.position.set(x, y, 0); h.rotation.set(0.12, -0.18, 0); scene.add(h);
+    label(name.toUpperCase(), null, new THREE.Vector3(x, y - (ri < 2 ? 1.3 : 1.2), 0), cam, 40);
+  }));
+  renderer.render(scene, cam);
+  label('RAKA', null, new THREE.Vector3(0, 7.85, 0), cam, 54);
+  label('MAMA RINA', null, new THREE.Vector3(0, -0.05, 0), cam, 54);
+}
+window.__done = true;
+</script>
+</body></html>
