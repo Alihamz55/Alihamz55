@@ -162,12 +162,48 @@ function bubble(name, col, text, hl) {
 function narrTag(y) { rr(W / 2 - 150, y, 300, 60, 30); g.fillStyle = 'rgba(42,31,61,.85)'; g.fill();
   g.font = '600 36px Fredoka'; g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('NARASI · BOBI', W / 2, y + 31); }
 
+// ---------- aset Kenney (CC0) ----------
+const IMG = {};
+function loadImg(path) { return new Promise(r => { const im = new Image(); im.onload = () => r(im); im.onerror = () => r(null); im.src = path; }); }
+async function loadKenney() {
+  const el = ['cloud1','cloud3','cloud4','cloud6','sun','tree','treeOrange','treeLong','treePine','house1','house2','houseAlt1','houseSmall1','houseSmallAlt2',
+    'bush1','bush2','bushAlt1','bushOrange1','fence','treeSmall_green1','treeSmall_greenAlt2'];
+  const ly = ['cloudLayer1','cloudLayerB1','hills','hillsLarge','mountains','groundLayer1','groundLayer2'];
+  await Promise.all([...el.map(async n => IMG[n] = await loadImg(`assets/kenney/elemen/${n}.png`)),
+    ...ly.map(async n => IMG[n] = await loadImg(`assets/kenney/latar/Elements/${n}.png`))]);
+}
+// gambar elemen; (x,y) = titik bawah-tengah
+function el(n, x, y, s = 1, flip = 1) { const im = IMG[n]; if (!im) return;
+  g.save(); g.translate(x, y); g.scale(flip, 1); g.drawImage(im, -im.width * s / 2, -im.height * s, im.width * s, im.height * s); g.restore(); }
+// lapisan selebar layar; y = tepi bawah lapisan
+function layer(n, y, alpha = 1, dx = 0) { const im = IMG[n]; if (!im) return; const k = W / im.width * 1.1;
+  g.save(); g.globalAlpha = alpha; g.drawImage(im, -W * .05 + dx, y - im.height * k, im.width * k, im.height * k); g.restore(); }
+// latar kampung kartun berwarna (Kenney + rumput kita)
+// bukit bergelombang bergaris tebal (gaya kita)
+function hill(y, amp, wl, ph, col) { g.beginPath(); g.moveTo(-20, H);
+  for (let x = -20; x <= W + 20; x += 10) g.lineTo(x, y - amp * (0.5 + 0.5 * Math.sin(x / wl + ph)));
+  g.lineTo(W + 20, H); g.closePath(); fs(col, 8); }
+// latar kampung kartun berwarna (elemen Kenney CC0 + bukit dan rumput kita)
+function kampung(gy) {
+  sky('#3fb0ff', '#bdeaff');
+  g.save(); g.translate(890, 560); for (let i = 0; i < 12; i++) { g.rotate(Math.PI / 6); rr(-12, -150, 24, 50, 12); fs('#ffb52e', 6); } g.restore();
+  circ(890, 560, 80); fs('#ffd23f', 8);
+  el('cloud4', 170, 640, 1.0); el('cloud3', 640, 520, .8); el('cloud1', 980, 760, .7);
+  hill(gy - 250, 120, 140, 1.2, '#a8e66f');
+  el('treePine', 120, gy - 190, .9); el('treeLong', 760, gy - 220, .85); el('houseSmallAlt2', 520, gy - 180, 1.4);
+  hill(gy - 120, 90, 110, 3.1, '#7ed957');
+  el('house2', 840, gy + 6, 1.15); el('houseAlt1', 130, gy + 4, 1.0);
+  el('treeOrange', 320, gy + 8, 1.25); el('tree', 1010, gy + 8, 1.2); el('treeLong', 640, gy + 8, 1.1);
+  el('fence', 470, gy + 6, 1.2); el('fence', 590, gy + 6, 1.2);
+  ground(gy);
+  el('bushAlt1', 160, gy + 60, 1.3); el('bush1', 960, gy + 70, 1.3); el('bushOrange1', 540, gy + 120, 1.1);
+}
+
 // ---------- adegan ----------
 const SCENES = {
   // A: dialog. Lebar, area tutorial.
   a() {
-    sky('#58b6ff', '#cfeeff'); cloud(150, 560, 1.0); cloud(860, 640, .8);
-    ground(1260); stairs(700, 1260); sign(40, 1000, 'TUTORIAL:\nNAIK TANGGA');
+    kampung(1260); stairs(700, 1260); sign(40, 1000, 'TUTORIAL:\nNAIK TANGGA');
     char(250, 1440, 0.95, { who: 'bobi', arms: [0.25, 2.7], face: { look: 6, brow: [-10, 10], mouth: 'grin' } });
     char(640, 1410, 0.88, { who: 'kubi', arms: [0.15, 0.15], face: { look: -14, eye: 'normal', brow: [8, -8], mouth: 'smirk', blush: true } });
     piko(440, 1500, 0.75, -1);
@@ -186,8 +222,7 @@ const SCENES = {
   },
   // C: Om Blok datang (dialog), Bobi tiarap.
   c() {
-    sky('#58b6ff', '#cfeeff'); cloud(160, 560, 1);
-    ground(1300); stairs(620, 1300);
+    kampung(1300); stairs(620, 1300);
     // Bobi tiarap: diputar 90 derajat
     g.save(); g.translate(460, 1330); g.rotate(-Math.PI / 2);
     char(0, 0, 0.62, { who: 'bobi', arms: [3.0, 3.0], face: { look: 0, eye: 'flat', brow: [0, 0], mouth: 'flat' } });
@@ -233,7 +268,7 @@ SCENES.ekspresi = () => {
   });
 };
 (async () => {
-  await document.fonts.load('700 100px Fredoka'); await document.fonts.load('600 40px Fredoka');
+  await loadKenney(); await document.fonts.load('700 100px Fredoka'); await document.fonts.load('600 40px Fredoka');
   SCENES[new URLSearchParams(location.search).get('s') || 'a']();
   window.__done = true;
 })();

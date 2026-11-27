@@ -62,6 +62,14 @@ Pilihan nilai:
 
 Ekspresi baru ditambahkan sebagai cabang baru di `eyes()` atau `mouth()`, lalu dimasukkan ke `SCENES.ekspresi`.
 
+## Latar berwarna (aset Kenney, CC0)
+
+Aset ada di `engine/kotak2d/assets/kenney/` (lisensi di `LICENSE-Kenney-CC0.txt`, bebas dipakai komersial; kredit "Kenney" di deskripsi video bersifat opsional tapi disarankan).
+- `elemen/`: pohon, semak, rumah, pagar, awan, kaktus, kastil (PNG). Daftarkan namanya di `loadKenney()`, lalu gambar dengan `el(nama, x, yBawah, skala)`.
+- `latar/` dan `latar-platformer/`: lapisan latar jadi. Warnanya pucat, cocok hanya untuk latar sangat jauh (`layer()`).
+- `kampung(gy)`: latar kampung siap pakai (langit, matahari, awan, 2 bukit `hill()`, rumah, pohon, pagar, semak, rumput). Pakai ini sebagai contoh untuk membuat latar baru, misalnya pantai atau pasar.
+- Unduh paket Kenney baru lewat Playwright (curl ditolak situsnya). Environment "Alihamz55" sudah mengizinkan kenney.nl.
+
 ## Membuat adegan
 
 Tambahkan fungsi baru di `SCENES`, misalnya `SCENES.d = () => {...}`. Urutan menggambar:
