@@ -30,8 +30,9 @@ const SUBCOL = { N: ['rgba(42,31,61,.9)', 'BOBI · NARASI'], bobi: ['rgba(255,12
 
 // ---------- bantu ----------
 let F = 0, CUR = null, TS = 0;
-function lipOf(who) { return CUR && CUR.who === who ? (LIPS[F] || 0) : 0; }
-function talkFace(who, face) { const v = lipOf(who); return v > .07 ? Object.assign({}, face, { mouth: v }) : face; }
+const speaks = who => CUR && CUR.active && (CUR.who === who || (who === 'bobi' && CUR.who === 'N'));
+function lipOf(who) { return speaks(who) ? (LIPS[F] || 0) : 0; }
+function talkFace(who, face) { return speaks(who) ? Object.assign({}, face, { mouth: lipOf(who) }) : face; }
 function blink(face, off) { return ((F + off) % 97 < 3 && (!face.eye || face.eye === 'normal')) ? Object.assign({}, face, { eye: 'flat' }) : face; }
 function C(who, x, y, s, o = {}) {
   const breath = 1 + .018 * Math.sin(F * .16 + who.length), sq = (o.sq || 1) * breath;
@@ -97,7 +98,7 @@ const SHOT = {
     const walk = t < 1, x = walk ? lerp(-220, BOBI.x, eOut(t)) : BOBI.x, sw = Math.sin(t * 14);
     const arms = walk ? [.15 + .5 * sw, .15 - .5 * sw] : [.25, .15 - 2.75 * eBack((t - 1) / .35)];
     cam(1 + .02 * t, 540, 960, 0, () => { world();
-      C('bobi', x, BOBI.y - (walk ? Math.abs(sw) * 24 : 0), BOBI.s, { arms, face: FACE.pede, rot: walk ? sw * .04 : 0, talk: false });
+      C('bobi', x, BOBI.y - (walk ? Math.abs(sw) * 24 : 0), BOBI.s, { arms, face: FACE.pede, rot: walk ? sw * .04 : 0 });
       C('kubi', KUBI.x, KUBI.y, KUBI.s, { face: FACE.kubiSinis }); piko(480, 1500, .75, -1);
       if (t > 1.2) sparkle(x, 780, t);
     });
@@ -110,7 +111,7 @@ const SHOT = {
   3(t) { // Bobi membusungkan dada
     const puff = 1 + .05 * Math.sin(t * 5);
     cam(1.5 + .03 * t, 310, 1010, 0, () => { world();
-      C('bobi', BOBI.x, BOBI.y, BOBI.s, { face: t > 1.3 ? { eye: 'star', brow: [10, 10], mouth: 'grin' } : FACE.pede, arms: [.55, .55], sq: puff, talk: false });
+      C('bobi', BOBI.x, BOBI.y, BOBI.s, { face: t > 1.3 ? { eye: 'star', brow: [10, 10], mouth: 'grin' } : FACE.pede, arms: [.55, .55], sq: puff });
       C('kubi', KUBI.x, KUBI.y, KUBI.s, { face: FACE.kubiSinis }); });
     narrTag(150); pop('3 TAHUN!', 320, 140, '#ffd23f', t - 1.3, .05);
   },
@@ -123,12 +124,12 @@ const SHOT = {
     sky('#ffb44a', '#ff7a2f'); g.save(); g.translate(540, 900); g.rotate(t * .25); g.translate(-540, -900);
     speed(540, 900, 'rgba(255,255,255,.28)', 'rgba(255,255,255,0)'); g.restore();
     cam(z, 540, 1500, t < .3 ? 14 : 0, () => { g.save(); g.translate(540, 1500); g.scale(1.75, 1.75); g.translate(-540, -1500);
-      C('bobi', 540, 1820, 1, { face: FACE.kaget, arms: [.4, .4], talk: false }); g.restore(); });
+      C('bobi', 540, 1820, 1, { face: FACE.kaget, arms: [.4, .4] }); g.restore(); });
     narrTag(150); pop('NONTON DOANG.', 330, 118, '#ffffff', t - .05); star(180, 430, 46, '#ffd23f'); star(910, 250, 38, '#ffd23f');
   },
   6(t) { // kamera geser ke tangga
     cam(1.2, lerp(420, 800, eInOut(t / 2.5)), 1010, 0, () => { world();
-      C('bobi', 560, BOBI.y, BOBI.s, { face: { look: 16, brow: [-10, 10], mouth: 'grin' }, arms: [.25, .25], talk: false });
+      C('bobi', 560, BOBI.y, BOBI.s, { face: { look: 16, brow: [-10, 10], mouth: 'grin' }, arms: [.25, .25] });
       C('kubi', 1040, KUBI.y, KUBI.s, { face: FACE.kubiSinis }); piko(420, 1500, .75, 1); });
     narrTag(150); pop('CUMA 3 TANGGA', 320, 112, '#ffd23f', t - 1.6, -.03);
   },
@@ -160,7 +161,7 @@ const SHOT = {
   priit(t) { // Om Blok datang
     const bx = lerp(1350, 880, eOut(t / .45));
     cam(1.05, 600, 1000, 6, () => { world(); bobiLying(745, FACE.kaget); C('kubi', lerp(930, 1060, eOut(t / .45)), KUBI.y, KUBI.s, { face: FACE.kaget });
-      C('blok', bx, 1420, 1, { face: FACE.galak, arms: [.2, 1.9], prop: 'whistle', talk: false }); });
+      C('blok', bx, 1420, 1, { face: FACE.galak, arms: [.2, 1.9], prop: 'whistle' }); });
     pop('PRIIIT!', 320, 160, '#ffffff', t, .05);
   },
   12(t) { // Om Blok menegur
@@ -185,7 +186,7 @@ const SHOT = {
   15(t) { // close-up Bobi berbisik
     cam(1.4, 540, 900, 0, () => { world(); }); darken(.25);
     g.save(); g.translate(540, 1500); g.scale(1.9, 1.9); g.translate(-540, -1500);
-    C('bobi', 540, 1860, 1, { face: FACE.curiga, arms: [.3, 2.2], armsFront: true }); g.restore();
+    C('bobi', 540, 1860, 1, { face: FACE.curiga, arms: [.3, -1.3 - .15 * Math.sin(t * 6)] }); g.restore();
     pop('ORANG DALAM!', 320, 120, '#ffd23f', t - .8, .04);
   },
   16(t) { // Om Blok menasihati
@@ -193,7 +194,7 @@ const SHOT = {
       C('blok', 860, 1420, 1, { face: { look: -12, brow: [-6, -6], mouth: 'flat' }, arms: [.2, .2 - .6 * lipOf('blok')] }); piko(STEP(2).x, STEP(2).y, .9, -1); });
   },
   17(t) { // penutup: hormat
-    cam(1.25, 520, 1000, 0, () => { world(); C('bobi', 470, BOBI.y, BOBI.s, { face: FACE.senang, arms: [.2, lerp(.2, 2.5, eBack(t / .4))], armsFront: true, talk: false });
+    cam(1.25, 520, 1000, 0, () => { world(); C('bobi', 470, BOBI.y, BOBI.s, { face: FACE.senang, arms: [.2, lerp(.2, -2.5, eBack(t / .4)) + (t > .4 ? .35 * Math.sin(t * 9) : 0)] });
       C('blok', 860, 1420, 1, { face: { eye: 'happy', brow: [0, 0], mouth: 'grin' } }); piko(STEP(2).x, STEP(2).y, .9, -1); });
     narrTag(150); pop('SAMPAI JUMPA!', 320, 124, '#ffd23f', t - .2);
     if (t > 2.2) { const k = eBack((t - 2.2) / .3); g.save(); g.translate(540, 560); g.scale(k, k); g.translate(-540, -560);
@@ -205,8 +206,8 @@ window.drawFrame = function (f) {
   F = f; const t = f / FPS; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, W, H);
   // kalimat aktif = yang terakhir dimulai (jeda antar kalimat menahan adegan sebelumnya)
   CUR = TIMING[0]; for (const d of TIMING) if (d.start <= t) CUR = d;
-  const isLine = typeof CUR.id === 'number', nowTalking = isLine && t <= CUR.end + .05;
+  const isLine = typeof CUR.id === 'number';
+  CUR = Object.assign({}, CUR, { active: isLine && t <= CUR.end + .05 });
   TS = t - CUR.start; SHOT[CUR.id](TS);
   if (isLine) sub(CUR.id, CUR.who);
-  if (!nowTalking) CUR = { who: null };
 };
