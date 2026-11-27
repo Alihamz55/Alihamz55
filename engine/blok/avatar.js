@@ -141,6 +141,14 @@ export function makeHead(cfg) {
   return g;
 }
 
+// kacamata bulat (mata di y≈0, x≈±0.2 pada kepala)
+export function addGlasses(head) {
+  const m = metalMat('#5a3b2a');
+  [-1, 1].forEach(s => { const r = new THREE.Mesh(new THREE.TorusGeometry(0.13, 0.025, 8, 28), m); r.position.set(s * 0.2, 0.0, HEAD_R + 0.05); head.add(r); });
+  const br = rbox(0.14, 0.03, 0.03, 0.01, m); br.position.set(0, 0.03, HEAD_R + 0.06); head.add(br);
+  [-1, 1].forEach(s => { const t = rbox(0.03, 0.03, 0.5, 0.01, m); t.position.set(s * 0.33, 0.03, HEAD_R - 0.18); head.add(t); });
+}
+
 // cangkang rambut: tutup atas + belakang
 function hairCap(g, m, { top = 0.36, back = 0.75, r = HEAD_R + 0.05 } = {}) {
   const cap = new THREE.Mesh(latheCyl(r, top + BEV, BEV + 0.03), m);
@@ -166,6 +174,13 @@ export const HAIR = {
     const f = rbox(1.05, 0.2, 0.32, 0.1, m); f.position.set(0.02, HEAD_H / 2 + 0.06, HEAD_R - 0.08); f.rotation.x = -0.5; g.add(f);
     // cambang
     [-1, 1].forEach(s => { const sb = rbox(0.16, 0.34, 0.3, 0.06, m); sb.position.set(s * (HEAD_R - 0.02), 0.22, 0.12); g.add(sb); });
+  },
+  // rambut bob sebahu (Bu Guru Sari)
+  bob(g, m) {
+    hairCap(g, m, { top: 0.38, back: 1.05, r: HEAD_R + 0.07 });
+    const fr = rbox(1.1, 0.24, 0.3, 0.11, m); fr.position.set(0, HEAD_H / 2 + 0.0, HEAD_R - 0.06); fr.rotation.x = -0.3; g.add(fr);
+    [-1, 1].forEach(s => { const sd = rbox(0.24, 0.95, 0.75, 0.1, m); sd.position.set(s * (HEAD_R - 0.0), 0.0, -0.02); g.add(sd);
+      const tip = rbox(0.28, 0.18, 0.5, 0.08, m); tip.position.set(s * (HEAD_R + 0.02), -0.48, 0.12); tip.rotation.z = s * 0.25; g.add(tip); });
   },
   // cepol + poni samping (Mama Rina)
   bun(g, m) {
@@ -210,8 +225,9 @@ export function makeCharacter(cfg) {
   const skin = skinMat(cfg.skin);
 
   // kaki
+  root.userData.hips = {}; root.userData.body = body;
   [-1, 1].forEach(s => {
-    const hip = new THREE.Group(); hip.position.set(s * 0.51, 2.0, 0); body.add(hip);
+    const hip = new THREE.Group(); hip.position.set(s * 0.51, 2.0, 0); body.add(hip); root.userData.hips[s] = hip;
     const leg = rbox(S.legW || 0.98, 1.58, S.legD || 1.0, 0.12, S.pants); leg.position.y = -0.83; hip.add(leg);
     if (S.flare) { const fl = rbox(1.1, 0.42, 1.14, 0.1, S.pants); fl.position.y = -1.4; hip.add(fl); }
     if (S.cuff) { const cf = rbox(1.02, 0.14, 1.04, 0.05, S.cuff); cf.position.y = -1.56; hip.add(cf); }
@@ -226,6 +242,7 @@ export function makeCharacter(cfg) {
 
   // kepala
   const head = makeHead(cfg); head.position.y = 4.0 + HEAD_H / 2 + 0.03; body.add(head);
+  if (cfg.glasses) addGlasses(head);
   root.userData.head = head;
 
   // lengan
@@ -301,4 +318,52 @@ export function mama(expr = 'gentle') {
       },
     },
   });
+}
+
+// Mama Rina versi presenter TV: blazer biru, blus putih, bros awan
+export function mamaTV(expr = 'smug') {
+  const navy = fabric('#2b4b8f'), white = fabric('#f7f5f0'), grey = fabric('#3b3f4a');
+  return makeCharacter({
+    skin: '#bd8357', expr, face: { lashes: true, blush: true }, hairColor: '#3a2318', hair: HAIR.bun,
+    style: {
+      shirt: navy, pants: grey, shoe: plain('#1d1d22', 0.4), sole: plain('#111', 0.5),
+      sleeveLen: 1.02, sleeve: navy, lowerSleeve: navy, armCuff: white, watchSide: 0,
+      torsoExtras(b, at) {
+        const blouse = rbox(0.7, 1.0, 0.06, 0.04, white); at(blouse, 0, 3.5, 0.53); b.add(blouse);
+        [-1, 1].forEach(s => { const l = rbox(0.34, 1.15, 0.08, 0.04, fabric('#22407c')); at(l, s * 0.42, 3.45, 0.55); l.rotation.z = s * 0.22; b.add(l); });
+        [3.0, 2.6].forEach(y => { const k = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.04, 14), metalMat('#e2c35a')); k.rotation.x = Math.PI / 2; at(k, 0.12, y, 0.56); b.add(k); });
+        [[0, 0, 0.11], [0.12, 0.04, 0.13], [0.24, 0, 0.1]].forEach(([x, y, r]) => { const c = new THREE.Mesh(new THREE.SphereGeometry(r, 14, 10), plain('#ffffff', 0.5)); c.scale.z = 0.4; at(c, -0.62 + x, 3.6 + y, 0.6); b.add(c); });
+        const pin = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.025, 8, 24), metalMat('#e2c35a')); at(pin, -0.5, 3.6, 0.58); b.add(pin);
+      },
+    },
+  });
+}
+
+// Bu Guru Sari: batik ungu, rok panjang, kacamata, rambut bob
+function batikTex() {
+  const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d');
+  g.fillStyle = '#7b4fa0'; g.fillRect(0, 0, 128, 128);
+  for (let y = 0; y < 128; y += 32) for (let x = 0; x < 128; x += 32) {
+    g.fillStyle = '#e8c87a';
+    [[0, -8], [8, 0], [0, 8], [-8, 0]].forEach(([dx, dy]) => { g.beginPath(); g.ellipse(x + 16 + dx, y + 16 + dy, dx ? 6 : 3.5, dy ? 6 : 3.5, 0, 0, 7); g.fill(); });
+    g.fillStyle = '#4a2a66'; g.beginPath(); g.arc(x + 16, y + 16, 2.5, 0, 7); g.fill();
+  }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2, 2); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+export function guru(expr = 'gentle') {
+  const batik = new THREE.MeshStandardMaterial({ map: batikTex(), roughness: 0.85 });
+  const skirt = fabric('#4a3326');
+  return makeCharacter({
+    skin: '#c99366', expr, face: { lashes: true }, hairColor: '#1e1612', hair: HAIR.bob, glasses: true,
+    style: {
+      shirt: batik, sleeve: batik, lowerSleeve: batik, sleeveLen: 1.02, pants: skirt, flare: true, legW: 1.02, legD: 1.04,
+      shoe: plain('#3a2a20', 0.5), sole: plain('#1a120c', 0.6),
+      torsoExtras(b, at) { const sk = rbox(2.12, 1.2, 1.16, 0.12, skirt); at(sk, 0, 1.55, 0); b.add(sk); },
+    },
+  });
+}
+
+// pegang benda di tangan (side: -1 kanan tokoh / +1 kiri tokoh)
+export function hold(ch, side, obj, x = 0, y = -1.0, z = 0.45) {
+  const el = ch.userData.arms[side].userData.elbow; obj.position.set(x, y, z); el.add(obj); return obj;
 }
