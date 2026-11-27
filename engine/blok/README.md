@@ -15,3 +15,10 @@ node render.cjs hero hero.png
 node render.cjs faces faces.png
 ```
 Ekspresi: neutral, happy, smug, surprised, worried, annoyed, sad, gentle, confused, laugh.
+
+## Film "Badai Rapor"
+- `film.js` + `film.html`: 5 set (studio TV, ruang tamu, sekolah, kompleks, rumah), 27 shot, cuaca (cerah, mendung, hujan, senja, pelangi), petir, caption satu kata (kata kunci merah).
+- `render-film.cjs`: `node render-film.cjs test "60,300"` atau `node render-film.cjs frames "0-599"` (±0,55 dtk/frame; 3 proses paralel ±6 menit).
+- Butuh `words.json` dari `audio/badai-rapor/` di folder kerja.
+- `finish.sh frames mix_raw.wav out.mp4`: gabung + loudness -14 LUFS + QA.
+- Hasil: `video/Badai-Rapor.mp4` (59,8 dtk).

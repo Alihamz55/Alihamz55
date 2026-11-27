@@ -429,7 +429,7 @@ const SHOTS = [
   // L10: Raka jujur -> petir
   [43.6, 'room', 'nightRain', (t) => { place(C.raka, X.room - 3.6, -3.3, 0.2); sit(C.raka, 1.35); pose(C.raka, -1, 0, 0, -1.1); expr(C.raka, 'neutral'); props(['towel', 'mugMama']); idle(C.raka, t, 0.6);
       place(C.mama, X.room - 1.2, -1.6, -2.2); },
-    closeUp(C.raka, 5.2, 4.2, 0.3, 30)],
+    closeUp(C.raka, 5.0, 4.2, 0, 30, 0.1, -0.7)],
   [47.07, 'room', 'nightRain', (t) => { place(C.mama, X.room - 1.2, -1.6, -2.2); pose(C.mama, 1, 0.3, 0, -0.6); pose(C.mama, -1, -0.5, 0.4, -0.4); expr(C.mama, 'surprised'); props(['towel']);
       place(C.raka, X.room - 3.6, -3.3, 0.2); sit(C.raka, 1.35); },
     (lt, u) => { const k = Math.min(1, lt / 0.12), c = closeUp(C.mama, 5.6, 5.6, 0, 30, 0.1, 0.75)(lt, u); c.fov = 32 - k * 7; return c; }],
