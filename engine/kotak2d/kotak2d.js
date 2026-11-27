@@ -14,16 +14,21 @@ function eyes(cx, cy, s, o) {
     const ex = cx + k * 62 * s, er = 46 * s;
     circ(ex, cy, er); fs('#fff', 8 * s);
     if (o.eye === 'star') { star(ex, cy, er * .8, '#ffd23f'); return; }
+    if (o.eye === 'happy') { g.lineWidth = 11 * s; g.strokeStyle = INK; g.beginPath(); g.arc(ex, cy + er * .35, er * .6, Math.PI * 1.1, Math.PI * 1.9); g.stroke(); return; }
     if (o.eye === 'flat') { g.lineWidth = 9 * s; g.strokeStyle = INK; g.beginPath(); g.moveTo(ex - er * .7, cy); g.lineTo(ex + er * .7, cy); g.stroke(); return; }
     const pr = (o.eye === 'tiny' ? 11 : 22) * s;
     circ(ex + o.look * s, cy + 4 * s, pr); g.fillStyle = INK; g.fill();
     circ(ex + o.look * s + pr * .35, cy - pr * .3, pr * .38); g.fillStyle = '#fff'; g.fill();
   });
-  // alis
-  g.lineWidth = 12 * s; g.strokeStyle = INK; g.lineCap = 'round';
+}
+// alis digambar terakhir (di atas rambut) supaya ekspresi terbaca
+function brows(cx, cy, s, o, halo) {
   const b = o.brow || [0, 0];
-  [-1, 1].forEach((k, i) => { g.beginPath();
-    g.moveTo(cx + k * 30 * s, cy - 66 * s + b[i] * s); g.lineTo(cx + k * 98 * s, cy - 66 * s - b[i] * s); g.stroke(); });
+  const line = (w, col) => { g.lineWidth = w; g.strokeStyle = col; g.lineCap = 'round';
+    [-1, 1].forEach((k, i) => { g.beginPath();
+      g.moveTo(cx + k * 30 * s, cy - 62 * s + b[i] * s); g.lineTo(cx + k * 98 * s, cy - 62 * s - b[i] * s); g.stroke(); }); };
+  if (halo) line(24 * s, halo);
+  line(12 * s, INK);
 }
 function mouth(cx, cy, s, type) {
   g.lineWidth = 9 * s; g.strokeStyle = INK;
@@ -32,6 +37,12 @@ function mouth(cx, cy, s, type) {
   else if (type === 'shock') { rr(cx - 50 * s, cy - 22 * s, 100 * s, 112 * s, 44 * s); fs('#5a1426', 8 * s);
     g.save(); rr(cx - 50 * s, cy - 22 * s, 100 * s, 112 * s, 44 * s); g.clip();
     g.beginPath(); g.ellipse(cx, cy + 82 * s, 38 * s, 26 * s, 0, 0, 7); g.fillStyle = '#ff7f9c'; g.fill(); g.restore(); }
+  else if (type === 'open') { g.beginPath(); g.moveTo(cx - 75 * s, cy - 10 * s); g.lineTo(cx + 75 * s, cy - 10 * s);
+    g.quadraticCurveTo(cx + 70 * s, cy + 110 * s, cx, cy + 110 * s); g.quadraticCurveTo(cx - 70 * s, cy + 110 * s, cx - 75 * s, cy - 10 * s);
+    g.closePath(); fs('#5a1426', 8 * s);
+    g.save(); g.clip(); g.beginPath(); g.ellipse(cx, cy + 100 * s, 48 * s, 30 * s, 0, 0, 7); g.fillStyle = '#ff7f9c'; g.fill(); g.restore(); }
+  else if (type === 'wavy') { g.lineWidth = 9 * s; g.beginPath(); g.moveTo(cx - 60 * s, cy + 20 * s);
+    for (let i = 1; i <= 6; i++) g.lineTo(cx - 60 * s + i * 20 * s, cy + 20 * s + (i % 2 ? -14 : 0) * s); g.stroke(); }
   else if (type === 'smirk') { g.beginPath(); g.moveTo(cx - 40 * s, cy + 12 * s); g.quadraticCurveTo(cx + 20 * s, cy + 30 * s, cx + 60 * s, cy - 10 * s); g.stroke(); }
   else if (type === 'flat') { g.beginPath(); g.moveTo(cx - 40 * s, cy + 10 * s); g.lineTo(cx + 40 * s, cy + 10 * s); g.stroke(); }
 }
@@ -82,11 +93,19 @@ function head(x, y, s, o) {
   const f = o.face, cy = hy + hh * .48;
   if (f.blush) { g.fillStyle = 'rgba(255,110,140,.5)'; [-1, 1].forEach(k => { g.beginPath(); g.ellipse(x + k * 105 * s, cy + 62 * s, 30 * s, 16 * s, 0, 0, 7); g.fill(); }); }
   eyes(x, cy, s, f); mouth(x, cy + 70 * s, s, f.mouth);
+  if (f.tears) [-1, 1].forEach(k => {
+    const x0 = x + k * 62 * s, y0 = cy + 20 * s, cx1 = x + k * 230 * s, cy1 = cy - 170 * s, x1 = x + k * 300 * s, y1 = cy + 330 * s;
+    g.lineCap = 'round';
+    g.beginPath(); g.moveTo(x0, y0); g.quadraticCurveTo(cx1, cy1, x1, y1); g.lineWidth = 46 * s; g.strokeStyle = INK; g.stroke();
+    g.beginPath(); g.moveTo(x0, y0); g.quadraticCurveTo(cx1, cy1, x1, y1); g.lineWidth = 32 * s; g.strokeStyle = '#8fd3ff'; g.stroke();
+    for (let t = 0.12; t < 1; t += 0.11) { const u = 1 - t;
+      const px = u * u * x0 + 2 * u * t * cx1 + t * t * x1, py = u * u * y0 + 2 * u * t * cy1 + t * t * y1;
+      circ(px, py, 7 * s); g.fillStyle = '#e8f7ff'; g.fill(); } });
   if (f.sweat) { g.beginPath(); const sx = x + hw * .46, sy = hy + 60 * s; g.moveTo(sx, sy); g.quadraticCurveTo(sx + 26 * s, sy + 50 * s, sx, sy + 62 * s);
     g.quadraticCurveTo(sx - 26 * s, sy + 50 * s, sx, sy); fs('#8fd3ff', 6 * s); }
   if (o.who === 'bobi') { // rambut jabrik + topi tosca terbalik
     g.beginPath(); g.moveTo(hx - 6 * s, hy + 80 * s);
-    for (let i = 0; i <= 6; i++) g.lineTo(hx + i * hw / 6, hy + (i % 2 ? 118 : 70) * s);
+    for (let i = 0; i <= 6; i++) g.lineTo(hx + i * hw / 6, hy + (i % 2 ? 96 : 62) * s);
     g.lineTo(hx + hw + 6 * s, hy + 20 * s); g.lineTo(hx - 6 * s, hy + 20 * s); g.closePath(); fs('#4a2c1a');
     rr(hx - 14 * s, hy - 40 * s, hw + 28 * s, 110 * s, 50 * s); fs('#14a39a');
     rr(hx + hw - 10 * s, hy + 10 * s, 120 * s, 44 * s, 20 * s); fs('#0f8079');
@@ -99,6 +118,7 @@ function head(x, y, s, o) {
     rr(hx - 20 * s, hy - 70 * s, hw + 40 * s, 120 * s, 30 * s); fs('#27325a');
     rr(hx - 10 * s, hy + 34 * s, hw + 20 * s, 34 * s, 14 * s); fs('#1b2340');
     star(x, hy - 12 * s, 34 * s, '#ffd23f'); }
+  brows(x, cy, s, f, c.skin);
 }
 function piko(x, y, s, flip = 1) {
   g.save(); g.translate(x, y); g.scale(flip * s, s);
@@ -158,7 +178,7 @@ const SCENES = {
   b() {
     sky('#ffb44a', '#ff7a2f'); speed(540, 900, 'rgba(255,255,255,.28)', 'rgba(255,255,255,0)');
     g.save(); g.translate(540, 1500); g.scale(1.75, 1.75); g.translate(-540, -1500);
-    char(540, 1820, 1, { who: 'bobi', arms: [0.4, 0.4], face: { look: 0, eye: 'tiny', brow: [14, 14], mouth: 'shock', sweat: true } });
+    char(540, 1820, 1, { who: 'bobi', arms: [0.4, 0.4], face: { look: 0, eye: 'tiny', brow: [-16, -16], mouth: 'shock', sweat: true } });
     g.restore();
     narrTag(150);
     bigWord('NONTON DOANG.', 330, 118, '#ffffff');
@@ -172,10 +192,45 @@ const SCENES = {
     g.save(); g.translate(460, 1330); g.rotate(-Math.PI / 2);
     char(0, 0, 0.62, { who: 'bobi', arms: [3.0, 3.0], face: { look: 0, eye: 'flat', brow: [0, 0], mouth: 'flat' } });
     g.restore();
-    char(800, 1420, 1.0, { who: 'blok', arms: [0.2, 1.9], prop: 'whistle', face: { look: -16, brow: [-14, -14], mouth: 'shock' } });
+    char(800, 1420, 1.0, { who: 'blok', arms: [0.2, 1.9], prop: 'whistle', face: { look: -16, brow: [14, 14], mouth: 'shock' } });
     bigWord('PRIIIT!', 330, 150, '#ffffff');
     bubble('OM BLOK', 'rgba(40,70,160,.95)', 'Dilarang ', 'tiduran di sini!');
   },
+};
+// LEMBAR TOKOH: semua tokoh berdiri berjajar
+SCENES.tokoh = () => {
+  sky('#fff6e0', '#ffe2b8'); ground(1500);
+  bigWord('TOKOH KOTAK KOCAK', 180, 92);
+  char(200, 1560, 1.0, { who: 'bobi', arms: [0.2, 0.2], face: { look: 4, brow: [-10, 10], mouth: 'grin' } });
+  char(540, 1560, 0.97, { who: 'kubi', arms: [0.15, 0.15], face: { look: -8, brow: [8, -8], mouth: 'smirk', blush: true } });
+  char(880, 1560, 0.92, { who: 'blok', arms: [0.15, 0.15], face: { look: -6, brow: [12, 12], mouth: 'flat' } });
+  piko(560, 1820, 0.7, 1);
+  g.font = '700 46px Fredoka'; g.fillStyle = INK; g.textAlign = 'center';
+  [['BOBI', 200], ['NENG KUBI', 540], ['OM BLOK', 880]].forEach(([n, x]) => g.fillText(n, x, 1640));
+  g.fillText('PIKO', 700, 1770);
+};
+// LEMBAR EKSPRESI: 9 ekspresi Bobi
+SCENES.ekspresi = () => {
+  sky('#58b6ff', '#cfeeff');
+  bigWord('EKSPRESI BOBI', 150, 100);
+  const L = [
+    ['pede', { look: 6, brow: [-10, 10], mouth: 'grin' }],
+    ['senang', { eye: 'happy', brow: [6, 6], mouth: 'open', blush: true }],
+    ['kaget', { eye: 'tiny', brow: [-16, -16], mouth: 'shock' }],
+    ['mata bintang', { eye: 'star', brow: [10, 10], mouth: 'open' }],
+    ['nangis', { eye: 'normal', look: 0, brow: [-18, -18], mouth: 'open', tears: true }],
+    ['panik', { eye: 'tiny', brow: [-16, -16], mouth: 'wavy', sweat: true }],
+    ['curiga', { look: 18, brow: [-12, 12], mouth: 'smirk' }],
+    ['pingsan', { eye: 'flat', brow: [0, 0], mouth: 'flat' }],
+    ['marah', { look: 0, brow: [18, 18], mouth: 'wavy' }],
+  ];
+  L.forEach(([n, f], i) => {
+    const cx = 190 + (i % 3) * 350, cy = 560 + Math.floor(i / 3) * 520;
+    rr(cx - 165, cy - 290, 330, 470, 36); g.fillStyle = 'rgba(255,255,255,.55)'; g.fill();
+    g.save(); g.beginPath(); g.roundRect(cx - 165, cy - 290, 330, 470, 36); g.clip();
+    head(cx, cy + 80, 0.82, { who: 'bobi', face: Object.assign({ look: 0 }, f) }); g.restore();
+    g.font = '700 42px Fredoka'; g.fillStyle = INK; g.textAlign = 'center'; g.fillText(n.toUpperCase(), cx, cy + 140);
+  });
 };
 (async () => {
   await document.fonts.load('700 100px Fredoka'); await document.fonts.load('600 40px Fredoka');
