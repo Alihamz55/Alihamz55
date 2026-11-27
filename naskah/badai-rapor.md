@@ -1,82 +1,79 @@
 # Badai Rapor (Ramalan Cuaca Bohong)
 
 Status: **naskah + rencana adegan**, belum dirender.
-Gaya visual: avatar game blok 3D (kepala silinder, badan kotak) sesuai brief pengguna. Tanpa nama/logo game asli.
-Caption upload: **"Konten komedi. Semua tokoh fiktif."**
+**Produksi terpisah:** tokoh dan cerita baru. Tidak memakai tokoh tetap (Asep, Ibu, Pak Darman, dll.), akhiran YouTube, telop game-show, atau gaya visual Malam Komedi.
+Gaya visual: avatar game blok 3D (kepala silinder, badan kotak) sesuai brief. Tanpa nama/logo game asli.
+Caption: "Konten komedi. Semua tokoh fiktif."
 
-Ide inti (analogi + misdirection): aplikasi cuaca bilang cerah 100%, tapi "badai" sebenarnya ada di rumah: rapor Asep sudah dikirim wali kelas ke Ibu.
-Penonton menunggu Ibu meledak, tapi Ibu malah hangat. Lalu ada twist kecil, dan cerita ditutup dengan senja yang manis.
+Ide inti (ironi + misdirection): **Mama Rina adalah pembawa acara ramalan cuaca di TV.** Pagi itu Mama meramalkan "cerah seharian". Tapi badai sebenarnya ada di rumah, karena rapor Raka sudah dikirim ke HP Mama.
+
+---
+
+## Tokoh baru
+
+| Tokoh | Ciri | Suara (usulan Speko/Gemini) | Kostum |
+|---|---|---|---|
+| **Raka** (narator, 13 th) | anak SMP, jujur kebablasan, panik tapi optimis | **Leda**, "Anak laki-laki remaja Indonesia, polos, cepat, jenaka, bercerita sebagai narator" | Seragam putih biru, ransel kuning, rambut jambul tebal, sepatu kets merah polos |
+| **Mama Rina** | pembawa acara ramalan cuaca, rapi di TV, galak di rumah, ternyata lembut | **Sulafat**, "Ibu Indonesia, suara pembawa acara TV yang rapi, bisa tegas lalu lembut" | Blazer biru + bros awan (di TV); kaus oversize + celana kulot + rambut cepol (di rumah) |
+| **Bu Guru Sari** (figuran, tanpa suara) | wali kelas | | Kemeja batik ungu, kacamata bulat, map rapor |
+
+Tokoh baru tanpa wajah tokoh lama. Geometrinya sama untuk semua: kepala silinder, badan kotak.
 
 ---
 
 ## 1. Judul
-**Badai Rapor**. Alternatif: "Aplikasi Cuaca Bohong" atau "Ramalan Cerah, Rumah Badai".
+**Badai Rapor**. Alternatif: "Ramalan Cuaca Mama Salah" atau "Cerah Seharian, Katanya".
 
 ## 2. Hook (0–3 dtk)
-> "Aplikasi cuaca bilang hari ini cerah seratus persen. Aplikasi cuaca **bohong**."
+> "Mamaku pembawa ramalan cuaca. Tadi pagi Mama bilang: cerah seharian. Mama **salah**."
 
-## 3. Naskah lengkap (narasi orang pertama, suara Asep / Achird)
-
-Ibu tidak lip-sync. Kalimatnya disisipkan sebagai suara Gacrux di atas close-up wajah Ibu.
+## 3. Naskah lengkap (narasi orang pertama, tanpa lip-sync)
 
 | # | Waktu | Pembicara | Kalimat | Fungsi |
 |---|---|---|---|---|
-| 1 | 0,0–3,0 | Asep | Aplikasi cuaca bilang hari ini cerah seratus persen. Aplikasi cuaca bohong. | Hook |
-| 2 | 3,0–6,5 | Asep | Pagi di sekolah, matahari terang. Wali kelas bagi rapor. | Setup |
-| 3 | 6,5–10,0 | Asep | Nilai matematika aku... empat. Bukan peringkat. Nilai. | Setup + punch kecil |
-| 4 | 10,0–14,0 | Asep | Sore, langit mulai mendung. Bukan di langit. Di grup keluarga. | Misdirection |
-| 5 | 14,0–17,5 | Asep | Wali kelas sudah kirim foto rapor... ke Ibu. | Build-up |
-| 6 | 17,5–21,5 | Asep | Aku siapin tiga hal: payung, doa, sama alasan. Alasannya basah duluan. | Rule of three |
-| 7 | 21,5–25,0 | Asep | Sampai rumah, hujan deras. Ibu berdiri di pintu. Megang rapor. | Ketegangan |
-| 8 | 25,0–29,5 | Ibu | Sep! Mandi dulu! Jangan basahin lantai! Kipasnya matiin, listrik mahal! | Ciri Ibu cerewet + hemat |
-| 9 | 29,5–33,5 | Ibu | ...Habis itu sini. Ibu bikinin teh. Nilai empat nggak apa-apa, yang penting jujur. | **Punchline** (dikira marah, ternyata hangat) |
-| 10 | 33,5–37,5 | Asep | Bu... yang empat itu sebenarnya yang paling bagus. | **Tag** (petir) |
-| 11 | 37,5–42,5 | Asep | Besoknya aku belajar sama Ibu sampai sore. Ternyata nilai Ibu dulu... tiga. | Tag 2 + kehangatan |
-| 12 | 42,5–47,0 | Asep | Dan begitulah badai berakhir. | Ending, matahari senja |
-| 13 | 47,0–50,5 | Asep | Aplikasi cuaca tetap bohong. Tapi Ibu nggak. | Callback penutup |
+| 1 | 0,0–4,0 | Raka | Mamaku pembawa ramalan cuaca. Tadi pagi Mama bilang: cerah seharian. Mama salah. | Hook |
+| 2 | 4,0–7,5 | Raka | Di sekolah memang cerah. Bu Guru bagi rapor. | Setup |
+| 3 | 7,5–11,0 | Raka | Nilai matematikaku... empat. Bukan peringkat. Nilai. | Setup + punch kecil |
+| 4 | 11,0–15,0 | Raka | Siang, langit mulai mendung. Bukan di langit. Di HP Mama. | Misdirection |
+| 5 | 15,0–18,5 | Raka | Bu Guru kirim foto rapor. Centang dua. Biru. | Build-up |
+| 6 | 18,5–23,0 | Raka | Aku siapin tiga hal: payung, doa, sama alasan. Alasannya basah duluan. | Rule of three |
+| 7 | 23,0–26,5 | Raka | Sampai rumah, hujan deras. Mama berdiri di pintu. Pegang rapor. | Ketegangan |
+| 8 | 26,5–30,5 | Mama | Raka. Ramalan sore ini: kamu basah kuyup. Mandi. Sekarang. | Ciri Mama (gaya presenter) |
+| 9 | 30,5–35,0 | Mama | ...Habis itu sini. Mama bikinin cokelat panas. Nilai empat nggak apa-apa, yang penting jujur. | **Punchline** |
+| 10 | 35,0–38,5 | Raka | Ma... yang empat itu sebenarnya yang paling bagus. | **Tag** (petir) |
+| 11 | 38,5–43,5 | Raka | Besoknya Mama ngajarin aku sampai sore. Ternyata nilai Mama dulu... tiga. | Tag 2 + kehangatan |
+| 12 | 43,5–48,0 | Raka | Dan begitulah badai berakhir. | Ending, matahari senja |
+| 13 | 48,0–52,0 | Raka | Ramalan Mama memang suka salah. Tapi pelukannya nggak pernah. | Callback penutup |
 
-Total sekitar **50 detik**, lalu tempel `Akhiran-YouTube-Asep.mp4` (5,9 detik), jadi semuanya ±56 detik.
+Total sekitar **52 detik**. Bisa ditambah kartu judul atau penutup buatan sendiri, asal total di bawah 60 detik.
+
+> Versi Inggris kalimat 12, kalau mau persis sesuai brief: *"And that's how the storm ends."*
 
 ## 4. Punchline utama
-Ibu berdiri di pintu sambil memegang rapor. Penonton menunggu omelan, ternyata Ibu malah **"Ibu bikinin teh. Nilai empat nggak apa-apa, yang penting jujur."**
+Mama berdiri di pintu sambil memegang rapor. Penonton menunggu omelan, ternyata Mama malah bilang **"Mama bikinin cokelat panas. Nilai empat nggak apa-apa, yang penting jujur."**
 
 ## 5. Tag
-- "Bu... yang empat itu sebenarnya **yang paling bagus**." Petir menyambar dan wajah Ibu langsung berubah.
-- "Ternyata nilai Ibu dulu... **tiga**." Asep dan Ibu tertawa bareng.
+- "Ma... yang empat itu sebenarnya **yang paling bagus**." Petir menyambar dan wajah Mama langsung berubah.
+- "Ternyata nilai Mama dulu... **tiga**." Raka dan Mama tertawa bareng.
 
 ## 6. Callback penutup
-"Aplikasi cuaca tetap bohong. Tapi Ibu nggak." Ini membalas hook di kalimat 1.
+"Ramalan Mama memang suka salah. Tapi pelukannya nggak pernah." Ini membalas hook (pekerjaan Mama sebagai peramal cuaca).
 
 ## 7. Estimasi durasi
-Cerita ±50 dtk (batas 52), ditambah akhiran 5,9 dtk, jadi total ±56 dtk.
+±52 detik (di bawah 60).
 
-## 8. Arahan intonasi & jeda (sebelum `atempo=1.12`)
-- **L1:** cepat dan yakin di "cerah seratus persen", jeda 0,3 dtk, lalu "bohong" datar, kesal.
-- **L3:** "Nilai matematika aku..." jeda 0,4, "empat" lirih. "Bukan peringkat. Nilai." cepat, malu.
-- **L4:** gaya pembaca berita cuaca, lalu "Di grup keluarga." pelan dan horor.
-- **L6:** tiga hal dibaca berirama (payung–doa–alasan), jeda 0,2, "Alasannya basah duluan" lesu.
-- **L8 (Ibu):** cerewet nonstop tanpa jeda, makin tinggi di "listrik mahal!".
-- **L9 (Ibu):** jeda 0,5 dulu (hening, hanya hujan), lalu lembut dan hangat. Ini momen emosional, musik berubah hangat.
-- **L10:** Asep jujur dan polos, pelan. Begitu kalimat selesai, langsung suara petir dan zoom kick ke wajah Ibu.
+## 8. Arahan intonasi & jeda
+- **L1:** "cerah seharian" ditirukan dengan gaya presenter TV, jeda 0,3 dtk, lalu "Mama salah" datar.
+- **L3:** "Nilai matematikaku..." jeda 0,4, "empat" lirih. "Bukan peringkat. Nilai." cepat, malu.
+- **L4:** gaya ramalan cuaca, lalu "Di HP Mama." pelan dan horor.
+- **L5:** tiga potongan pendek, makin pelan: "Centang dua... Biru."
+- **L6:** berirama (payung–doa–alasan), jeda 0,2, "Alasannya basah duluan" lesu.
+- **L8 (Mama):** nada presenter yang dingin dan rapi. Setiap kalimat diakhiri titik tegas.
+- **L9 (Mama):** jeda 0,6 dulu (hening, hanya hujan), lalu lembut. Musik berubah hangat.
+- **L10:** polos dan pelan. Begitu kalimat selesai, langsung suara petir dan zoom kick ke wajah Mama.
 - **L11:** ceria. Sebelum "tiga" ada jeda 0,4, lalu tawa kecil.
 - **L12:** pelan, hangat, sinematik.
-- **L13:** senyum, ringan, akhiri dengan nada naik.
-
-Instruksi suara Speko:
-- **Asep (Achird):** "Anak muda Indonesia logat Sunda, polos, sok pede, semangat, bicara cepat dan lucu. Bercerita sebagai narator."
-- **Ibu (Gacrux):** "Ibu Indonesia cerewet dan hemat. L8 ngomel cepat, L9 tiba-tiba lembut dan penuh sayang."
-
----
-
-## Rencana kostum (semuanya baru, belum dipakai di 5 video terakhir)
-
-| Tokoh | Kostum | Detail |
-|---|---|---|
-| Asep | `asepSMA` | Seragam putih abu-abu, dasi abu, ransel biru tua, sepatu hitam. **Tanpa peci** (ganti rambut jambul pendek). Badge sekolah polos tanpa tulisan. |
-| Ibu | `ibuRoll` | Daster hijau toska, roll rambut warna-warni, sandal jepit. Di adegan senja ditambah jaket rajut krem. |
-| Wali kelas (figuran) | `guruBatik` | Kemeja batik cokelat, kacamata, map rapor. |
-
-Kostum ini dicatat di `panduan/kostum.md` waktu benar-benar dibuat di `roman.js`.
+- **L13:** senyum, akhiri dengan nada naik.
 
 ---
 
@@ -84,26 +81,26 @@ Kostum ini dicatat di `panduan/kostum.md` waktu benar-benar dibuat di `roman.js`
 
 | Dtk | Shot | Visual | Cuaca/cahaya | Caption (merah = kata kunci) |
 |---|---|---|---|---|
-| 0–1,5 | Close-up | Layar HP: ikon matahari "CERAH 100%" (UI generik) | Cerah terang | CERAH |
-| 1,5–3 | Wide | Asep jalan dengan badan kotak, ayunan tangan kaku, di jalan kompleks | Cerah | **BOHONG** |
-| 3–5 | Wide establishing | Gedung sekolah geometris, lapangan, pohon bulat | Pagi cerah | SEKOLAH |
-| 5–6,5 | Medium | Wali kelas membagikan rapor | Cerah | RAPOR |
-| 6,5–8,5 | Close-up | Rapor dibuka, angka besar "4" | Cerah | **EMPAT** |
-| 8,5–10 | Close-up wajah | Wajah Asep berganti dari senyum ke kaget | Cerah | NILAI |
-| 10–12 | Wide | Langit berubah mendung, bayangan memanjang | Sore mendung | MENDUNG |
-| 12–14 | Close-up | HP: grup keluarga, ikon "foto" masuk | Mendung | **GRUP KELUARGA** |
-| 14–17,5 | Over-the-shoulder | Asep melihat HP, notifikasi "dibaca Ibu" | Mendung | **IBU** |
-| 17,5–21,5 | 3 cut cepat | Payung, Asep berdoa, Asep latihan bicara ke pohon | Gerimis | PAYUNG / DOA / **ALASAN** |
-| 21,5–23 | Wide | Rumah kotak, hujan deras, genangan | Hujan, biru gelap | HUJAN |
-| 23–25 | Low angle | Ibu di pintu memegang rapor, siluet | Hujan + lampu teras hangat | **RAPOR** |
-| 25–29,5 | Close-up Ibu, cut cepat | Ibu menunjuk lantai, lalu kipas | Hujan | MANDI / **LISTRIK MAHAL** |
-| 29,5–33,5 | Medium hangat | Ibu menyerahkan teh, wajah Ibu lembut | Dalam rumah, lampu kuning | **JUJUR** |
-| 33,5–35 | Close-up Asep | Wajah polos | Hangat | PALING BAGUS |
-| 35–37,5 | Zoom kick Ibu | Petir di jendela, wajah Ibu kaget | Kilat putih | **⚡** |
-| 37,5–40 | Medium | Asep dan Ibu belajar di meja | Sore, mulai terang | BELAJAR |
-| 40–42,5 | Close-up | Rapor lama Ibu, angka "3", keduanya tertawa | Hangat | **TIGA** |
-| 42,5–47 | Wide | Teras, langit senja emas, pelangi tipis | Golden hour | **BADAI BERAKHIR** |
-| 47–50,5 | Close-up HP | Aplikasi cuaca "cerah", lalu kamera naik ke wajah Ibu yang tersenyum | Senja | BOHONG / **IBU NGGAK** |
+| 0–2 | Medium | Mama di studio TV, layar peta cuaca ikon matahari (grafis generik) | Studio terang | **CERAH** |
+| 2–4 | Close-up | Raka di sofa menonton, wajah datar | Pagi | **SALAH** |
+| 4–6 | Wide establishing | Sekolah geometris, lapangan, pohon bulat | Cerah terang | SEKOLAH |
+| 6–7,5 | Medium | Bu Guru membagikan rapor | Cerah | RAPOR |
+| 7,5–9,5 | Close-up | Rapor dibuka, angka besar "4" | Cerah | **EMPAT** |
+| 9,5–11 | Close-up wajah | Wajah Raka berganti dari senyum ke kaget | Cerah | NILAI |
+| 11–13 | Wide | Langit berubah mendung, bayangan memanjang | Siang mendung | MENDUNG |
+| 13–15 | Close-up | HP Mama di meja studio bergetar | Mendung | **HP MAMA** |
+| 15–18,5 | Over-the-shoulder | Raka lihat HP sendiri: pesan terkirim, centang biru | Mendung | **BIRU** |
+| 18,5–23 | 3 cut cepat | Payung, Raka berdoa, Raka latihan bicara ke tiang lampu | Gerimis | PAYUNG / DOA / **ALASAN** |
+| 23–25 | Wide | Rumah kotak, hujan deras, genangan | Hujan, biru gelap | HUJAN |
+| 25–26,5 | Low angle | Mama di pintu memegang rapor, siluet | Hujan + lampu teras | **RAPOR** |
+| 26,5–30,5 | Close-up Mama | Mama menunjuk kamar mandi dengan gaya menunjuk peta cuaca | Hujan | **BASAH KUYUP** |
+| 30,5–35 | Medium hangat | Mama menyerahkan cokelat panas, wajah lembut | Dalam rumah, lampu kuning | **JUJUR** |
+| 35–36,5 | Close-up Raka | Wajah polos | Hangat | PALING BAGUS |
+| 36,5–38,5 | Zoom kick Mama | Petir di jendela, wajah Mama kaget | Kilat putih | **⚡** |
+| 38,5–41 | Medium | Raka dan Mama belajar di meja | Sore, mulai terang | BELAJAR |
+| 41–43,5 | Close-up | Rapor lama Mama, angka "3", keduanya tertawa | Hangat | **TIGA** |
+| 43,5–48 | Wide | Teras, langit senja emas, pelangi tipis | Golden hour | **BADAI BERAKHIR** |
+| 48–52 | Medium → close-up | Mama memeluk Raka, kamera naik ke matahari senja | Senja | SALAH / **PELUKAN** |
 
-**Musik:** ukulele ceria (sekolah) → nada minor dan hujan (mendung–hujan) → piano hangat mulai L9 → kembali ceria lembut saat senja.
-**SFX:** notifikasi HP, petir (L10), hujan (loop L7–L10), seruput teh, tawa.
+**Musik:** ukulele ceria (pagi–sekolah) → minor dan hujan (mendung–hujan) → piano hangat mulai L9 → ceria lembut saat senja.
+**SFX:** jingle ramalan cuaca generik, getar HP, petir (L10), hujan (loop L7–L10), seruput, tawa.
