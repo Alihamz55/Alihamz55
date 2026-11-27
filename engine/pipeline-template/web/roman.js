@@ -133,6 +133,10 @@ export const OUTFITS = {
   darmanKalkulator: { tunic: "#4a7a5a", skin: "#dca27a", hair: "#4e4844", arms: "#4a7a5a", legs: "#2b2f3a", pants: "#2b2f3a", plaid: "#2f5a3e", glasses: true, moustache: "#3a2a20" },
   ibuArisan: { tunic: "#d8a830", skin: "#f0c49c", hair: "#2b211c", arms: "#d8a830", dress: "#d8a830", bun: true, glasses: true, sash: "#7a4a2a" },
   nengOverall: { tunic: "#f4f1ea", skin: "#f2c6a0", hair: "#2a1a14", arms: "#f2c6a0", legs: "#3a6fd0", pants: "#3a6fd0", bib: "#3a6fd0", bun: true, headband: "#ff8ac0" },
+  asepTieDye: { tunic: "#9a5ac8", skin: "#d9a07a", hair: "#2a1a10", arms: "#9a5ac8", legs: "#8a8f98", pants: "#8a8f98", floral: "#ff9a3c" },
+  ibuBungaCoklat: { tunic: "#8a5a3a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#8a5a3a", floral: "#f2c94c", bun: true, glasses: true },
+  darmanGaris: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", stripes: "#3a6fd0", sarung: "#8a8f98", plaid: "#5a5f68", moustache: "#3a2a20" },
+  ucupMerah: { tunic: "#d8322f", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a4a6a", pants: "#3a4a6a", bedhead: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };

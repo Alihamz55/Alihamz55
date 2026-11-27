@@ -1274,3 +1274,14 @@ export const fxKalkulator = (p, text = "0") => { const g = p.g; g.save(); g.line
   g.font = `700 ${text.length > 9 ? 30 : 44}px ${GF}`; g.textAlign = "right"; g.textBaseline = "middle"; g.fillStyle = "#1a2a1a"; g.fillText(text, 400, 342);
   for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) { g.beginPath(); g.roundRect(190 + c * 57, 415 + r * 68, 46, 52, 10); g.fillStyle = c === 3 ? "#e8742c" : "#c9cfd6"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 4; g.stroke(); }
   g.restore(); };
+
+// meja makan + piring rendang (empty 0/1)
+export const fxMejaRendang = (p, empty = 0, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(30, 640, 540, 50, 10); g.fillStyle = "#9a6a42"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 9; g.stroke();
+  for (const x of [70, 530]) { g.fillStyle = "#7a4a2a"; g.fillRect(x - 14, 690, 28, 285); g.strokeRect(x - 14, 690, 28, 285); }
+  g.beginPath(); g.ellipse(300, 620, 150, 40, 0, 0, 7); g.fillStyle = "#f4f1ea"; g.fill(); g.stroke(); g.beginPath(); g.ellipse(300, 615, 115, 28, 0, 0, 7); g.strokeStyle = "#c9cfd6"; g.lineWidth = 4; g.stroke();
+  if (!empty) { for (let i = 0; i < 6; i++) { g.beginPath(); g.ellipse(250 + (i % 3) * 50, 600 - Math.floor(i / 3) * 16, 30, 18, 0.2 * i, 0, 7); g.fillStyle = "#5a2a14"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 5; g.stroke(); }
+    g.strokeStyle = "rgba(255,255,255,0.6)"; g.lineWidth = 4; for (const x of [260, 300, 340]) { g.beginPath(); g.moveTo(x, 570); g.quadraticCurveTo(x + 12 * Math.sin(t * 0.2 + x), 540, x, 510); g.stroke(); } }
+  else { g.fillStyle = "#7a3a1a"; for (const [x, y] of [[270, 612], [330, 608], [300, 620]]) { g.beginPath(); g.arc(x, y, 5, 0, 7); g.fill(); } }
+  g.beginPath(); g.ellipse(470, 625, 50, 16, 0, 0, 7); g.fillStyle = "#f4f1ea"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke(); g.fillStyle = "#f8f8f4"; g.beginPath(); g.ellipse(470, 610, 36, 18, 0, Math.PI, 0); g.fill();
+  g.restore(); };

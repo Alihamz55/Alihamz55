@@ -2616,6 +2616,10 @@ export const OUTFITS = {
   darmanKalkulator: { tunic: "#4a7a5a", skin: "#dca27a", hair: "#4e4844", arms: "#4a7a5a", legs: "#2b2f3a", pants: "#2b2f3a", plaid: "#2f5a3e", glasses: true, moustache: "#3a2a20" },
   ibuArisan: { tunic: "#d8a830", skin: "#f0c49c", hair: "#2b211c", arms: "#d8a830", dress: "#d8a830", bun: true, glasses: true, sash: "#7a4a2a" },
   nengOverall: { tunic: "#f4f1ea", skin: "#f2c6a0", hair: "#2a1a14", arms: "#f2c6a0", legs: "#3a6fd0", pants: "#3a6fd0", bib: "#3a6fd0", bun: true, headband: "#ff8ac0" },
+  asepTieDye: { tunic: "#9a5ac8", skin: "#d9a07a", hair: "#2a1a10", arms: "#9a5ac8", legs: "#8a8f98", pants: "#8a8f98", floral: "#ff9a3c" },
+  ibuBungaCoklat: { tunic: "#8a5a3a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#8a5a3a", floral: "#f2c94c", bun: true, glasses: true },
+  darmanGaris: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", stripes: "#3a6fd0", sarung: "#8a8f98", plaid: "#5a5f68", moustache: "#3a2a20" },
+  ucupMerah: { tunic: "#d8322f", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a4a6a", pants: "#3a4a6a", bedhead: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -4443,4 +4447,15 @@ export const fxKalkulator = (p, text = "0") => { const g = p.g; g.save(); g.line
   g.beginPath(); g.roundRect(185, 290, 230, 100, 12); g.fillStyle = "#b8d8a0"; g.fill(); g.stroke();
   g.font = `700 ${text.length > 9 ? 30 : 44}px ${GF}`; g.textAlign = "right"; g.textBaseline = "middle"; g.fillStyle = "#1a2a1a"; g.fillText(text, 400, 342);
   for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) { g.beginPath(); g.roundRect(190 + c * 57, 415 + r * 68, 46, 52, 10); g.fillStyle = c === 3 ? "#e8742c" : "#c9cfd6"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 4; g.stroke(); }
+  g.restore(); };
+
+// meja makan + piring rendang (empty 0/1)
+export const fxMejaRendang = (p, empty = 0, t = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.roundRect(30, 640, 540, 50, 10); g.fillStyle = "#9a6a42"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 9; g.stroke();
+  for (const x of [70, 530]) { g.fillStyle = "#7a4a2a"; g.fillRect(x - 14, 690, 28, 285); g.strokeRect(x - 14, 690, 28, 285); }
+  g.beginPath(); g.ellipse(300, 620, 150, 40, 0, 0, 7); g.fillStyle = "#f4f1ea"; g.fill(); g.stroke(); g.beginPath(); g.ellipse(300, 615, 115, 28, 0, 0, 7); g.strokeStyle = "#c9cfd6"; g.lineWidth = 4; g.stroke();
+  if (!empty) { for (let i = 0; i < 6; i++) { g.beginPath(); g.ellipse(250 + (i % 3) * 50, 600 - Math.floor(i / 3) * 16, 30, 18, 0.2 * i, 0, 7); g.fillStyle = "#5a2a14"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 5; g.stroke(); }
+    g.strokeStyle = "rgba(255,255,255,0.6)"; g.lineWidth = 4; for (const x of [260, 300, 340]) { g.beginPath(); g.moveTo(x, 570); g.quadraticCurveTo(x + 12 * Math.sin(t * 0.2 + x), 540, x, 510); g.stroke(); } }
+  else { g.fillStyle = "#7a3a1a"; for (const [x, y] of [[270, 612], [330, 608], [300, 620]]) { g.beginPath(); g.arc(x, y, 5, 0, 7); g.fill(); } }
+  g.beginPath(); g.ellipse(470, 625, 50, 16, 0, 0, 7); g.fillStyle = "#f4f1ea"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke(); g.fillStyle = "#f8f8f4"; g.beginPath(); g.ellipse(470, 610, 36, 18, 0, Math.PI, 0); g.fill();
   g.restore(); };
