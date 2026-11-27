@@ -32,6 +32,12 @@ function brows(cx, cy, s, o, halo) {
 }
 function mouth(cx, cy, s, type) {
   g.lineWidth = 9 * s; g.strokeStyle = INK;
+  if (typeof type === 'number') { // mulut bicara, 0..1 = seberapa terbuka
+    const v = Math.max(0, Math.min(1, type)), h = (14 + 96 * v) * s, w = (70 + 30 * v) * s;
+    g.beginPath(); g.roundRect(cx - w / 2, cy - 4 * s, w, h, Math.min(h, w) / 2); fs('#5a1426', 8 * s);
+    if (v > .35) { g.save(); g.beginPath(); g.roundRect(cx - w / 2, cy - 4 * s, w, h, Math.min(h, w) / 2); g.clip();
+      g.beginPath(); g.ellipse(cx, cy - 4 * s + h, w * .38, h * .3, 0, 0, 7); g.fillStyle = '#ff7f9c'; g.fill(); g.restore(); }
+    return; }
   if (type === 'grin') { g.beginPath(); g.moveTo(cx - 70 * s, cy); g.quadraticCurveTo(cx, cy + 95 * s, cx + 70 * s, cy);
     g.closePath(); fs('#6b1e2e', 8 * s); rr(cx - 50 * s, cy + 2 * s, 100 * s, 18 * s, 4 * s); g.fillStyle = '#fff'; g.fill(); }
   else if (type === 'shock') { rr(cx - 50 * s, cy - 22 * s, 100 * s, 112 * s, 44 * s); fs('#5a1426', 8 * s);
@@ -68,7 +74,7 @@ function char(x, y, s, o) {
     rr(-42 * s, 0, 84 * s, 80 * s, 26 * s); fs(c.shirt);
     if (o.prop === 'whistle' && k === 1) { rr(-30 * s, 190 * s, 60 * s, 40 * s, 12 * s); fs('#c9ced6'); }
     g.restore(); };
-  arm(-1, o.arms[0]); arm(1, o.arms[1]);
+  if (!o.armsFront) { arm(-1, o.arms[0]); arm(1, o.arms[1]); }
   // badan
   rr(x - bw / 2, y - 380 * s, bw, 220 * s, 36 * s); fs(c.shirt);
   g.save(); rr(x - bw / 2, y - 380 * s, bw, 220 * s, 36 * s); g.clip();
@@ -82,6 +88,7 @@ function char(x, y, s, o) {
   rr(x - bw / 2, y - 380 * s, bw, 220 * s, 36 * s); g.lineWidth = LW; g.strokeStyle = INK; g.stroke();
   shade(x - bw / 2, y - 380 * s, bw, 220 * s, 36 * s);
   head(x, y - 380 * s, s, o);
+  if (o.armsFront) { arm(-1, o.arms[0]); arm(1, o.arms[1]); }
   g.restore();
 }
 // kepala; (x,y)=leher
@@ -268,6 +275,7 @@ SCENES.ekspresi = () => {
   });
 };
 (async () => {
+  if (window.ANIM) { await loadKenney(); await document.fonts.load('700 100px Fredoka'); await document.fonts.load('600 40px Fredoka'); window.__ready = true; return; }
   await loadKenney(); await document.fonts.load('700 100px Fredoka'); await document.fonts.load('600 40px Fredoka');
   SCENES[new URLSearchParams(location.search).get('s') || 'a']();
   window.__done = true;
