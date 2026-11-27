@@ -5,7 +5,7 @@ Versi ini menggantikan `kotak-kocak-01-bobi-ngaku-pro.md` untuk gaya **2D datar*
 Tanpa nama, logo, atau bunyi khas game mana pun. Caption: **"Konten komedi. Semua tokoh fiktif."**
 
 **Aturan tampilan:**
-- **NARASI:** suara Bobi (Sadachbia) dengan instruksi *"Bocah sok jago bercerita ke penonton, santai, sedikit dramatis, seperti curhat"*. Mulut Bobi diam, ekspresinya lebay. Label kecil "NARASI · BOBI", kata kunci tampil besar di tengah atas.
+- **NARASI:** suara Bobi (**Zephyr**) dengan instruksi *"Suara anak laki-laki kecil umur 8 tahun, nada tinggi dan cempreng, bercerita ke penonton"*. Neng Kubi: **Leda**, "anak perempuan kecil umur 8 tahun". Om Blok: Iapetus. Mulut Bobi diam, ekspresinya lebay. Label kecil "NARASI · BOBI", kata kunci tampil besar di tengah atas.
 - **DIALOG:** suara masing-masing tokoh, mulut bergerak, papan subtitle berwarna dengan label nama (Bobi oranye, Neng Kubi ungu, Om Blok biru tua).
 
 **Kostum:** dasar (episode pertama). Bobi kaos oranye bergaris + topi tosca terbalik, Neng Kubi rambut ungu + overall, Om Blok rompi satpam + topi + kumis kotak.

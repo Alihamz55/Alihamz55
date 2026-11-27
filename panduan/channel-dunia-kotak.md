@@ -20,8 +20,8 @@ Channel terpisah dari @malamkomedi. Animasi 3D bergaya blok dengan tokoh **baru 
 
 | Tokoh | Tampilan | Suara (Gemini) | Ciri |
 |---|---|---|---|
-| **Bobi** | bocah blok, kaos oranye bergaris, topi terbalik | Sadachbia | pemula yang merasa pro, sok jago, selalu kalah |
-| **Neng Kubi** | rambut kotak ungu, overall jeans, palu kecil | Leda | jago membangun, pintar, sarkastik ke Bobi |
+| **Bobi** | bocah blok, kaos oranye bergaris, topi terbalik | Zephyr (anak kecil) | pemula yang merasa pro, sok jago, selalu kalah |
+| **Neng Kubi** | rambut kotak ungu, overall jeans, palu kecil | Leda (anak kecil) | jago membangun, pintar, sarkastik ke Bobi |
 | **Om Blok** | badan besar, kumis kotak, rompi satpam | Iapetus | "satpam server" galak tapi baper |
 | **Piko** | ayam kotak kuning | (tidak bicara, cuma "petok") | selalu muncul di saat yang salah |
 
