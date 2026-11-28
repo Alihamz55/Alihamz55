@@ -140,6 +140,8 @@ export const OUTFITS = {
   asepRompi: { tunic: "#8a5a32", skin: "#d9a07a", hair: "#2a1a10", arms: "#f4f1ea", legs: "#6a5a48", pants: "#6a5a48", koko: true },
   jali: { tunic: "#3a6fd0", skin: "#c99067", hair: "#1a120c", arms: "#3a6fd0", legs: "#2b2f3a", pants: "#2b2f3a", zipJacket: true, bedhead: true, chain: "#c9cfd6" },
   ucupHijau: { tunic: "#2f8a4a", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a4a6a", pants: "#3a4a6a", bedhead: true },
+  asepNgapel: { tunic: "#1d3a6a", skin: "#d9a07a", hair: "#1a120c", arms: "#1d3a6a", legs: "#2b2f3a", pants: "#2b2f3a", batik: "#e2b04a", slick: true },
+  ucupJomblo: { tunic: "#1a1d22", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a4a6a", pants: "#3a4a6a", sash: "#7a4a2a", bedhead: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };

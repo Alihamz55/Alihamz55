@@ -1296,3 +1296,16 @@ export const fxEsTeh = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; c
   g.beginPath(); g.moveTo(212, 440); g.lineTo(388, 440); g.lineTo(370, 750); g.lineTo(230, 750); g.closePath(); g.fillStyle = "#b8662a"; g.fill();
   g.fillStyle = "rgba(255,255,255,0.75)"; for (const [x, y] of [[260, 480], [320, 520], [280, 590], [340, 640]]) g.fillRect(x, y, 34, 34);
   g.strokeStyle = "#e8344a"; g.lineWidth = 12; g.beginPath(); g.moveTo(320, 700); g.lineTo(350, 250); g.lineTo(390, 220); g.stroke(); g.restore(); };
+
+// bunga mawar dalam plastik; layu 0..1 (kelopak menunduk, warna kusam)
+export const fxBunga = (p, layu = 0) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.moveTo(300, 900); g.lineTo(200, 520); g.lineTo(400, 520); g.closePath(); g.fillStyle = "rgba(240,240,255,0.45)"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke();
+  g.fillStyle = "#e8344a"; g.fillRect(270, 800, 60, 30);
+  [[-60, -10], [0, -40], [60, -10]].forEach(([dx, dy], i) => { const a = layu * (i - 1) * 1.1 + layu * 0.6, x0 = 300 + dx * 0.3, y0 = 800;
+    const x1 = x0 + dx + Math.sin(a) * 170, y1 = 500 + dy + (1 - Math.cos(a)) * 170 + layu * 80;
+    g.strokeStyle = "#3a8a3a"; g.lineWidth = 9; g.beginPath(); g.moveTo(x0, y0); g.quadraticCurveTo(x0 + dx * 0.5, (y0 + y1) / 2, x1, y1); g.stroke();
+    g.save(); g.translate(x1, y1); g.rotate(a); const col = layu > 0.5 ? "#8a3a4a" : "#e8344a";
+    for (let k = 0; k < 5; k++) { g.beginPath(); g.ellipse(Math.cos(k * 1.26) * 18, -10 + Math.sin(k * 1.26) * 12, 30, 24, k, 0, 7); g.fillStyle = col; g.fill(); g.strokeStyle = INKC; g.lineWidth = 5; g.stroke(); }
+    g.beginPath(); g.arc(0, -10, 12, 0, 7); g.fillStyle = layu > 0.5 ? "#6a2a3a" : "#b81e3a"; g.fill(); g.restore(); });
+  if (layu > 0.5) { g.fillStyle = "#8a3a4a"; for (const [x, y] of [[230, 960], [380, 975]]) { g.beginPath(); g.ellipse(x, y, 22, 10, 0.4, 0, 7); g.fill(); } }
+  g.restore(); };
