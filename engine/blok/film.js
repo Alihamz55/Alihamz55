@@ -499,3 +499,89 @@ export function renderFrame(f) {
   return cap.toDataURL('image/jpeg', 0.9);
 }
 export const TOTAL_FRAMES = Math.round(END * FPS);
+
+// ---------- AKHIRAN (end card) Kota Kotak ----------
+// Mama 0,35-2,74 dtk, Raka 2,95-5,5 dtk; total 6 dtk.
+export const END_FRAMES = 180;
+const EP = { title: 'EPISODE 1 · BADAI RAPOR', next: 'Episode 2 besok!' };
+export function setEpisode(title, next) { EP.title = title; EP.next = next; }
+function rr(g, x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); }
+function drawTiles(g, t) {
+  const word = 'KOTA KOTAK', cols = ['#e5534b', '#f2a93b', '#3a7bd5', '#4fae5a', '#8c6bff'];
+  const S = 100, GAP = 9, SP = 30; let w = 0; for (const ch of word) w += ch === ' ' ? SP : S + GAP; w -= GAP;
+  let x = (W - w) / 2, k = 0;
+  for (const ch of word) {
+    if (ch === ' ') { x += SP; continue; }
+    const d = 0.07 * k, a = Math.min(1, Math.max(0, (t - d) / 0.25)), drop = (1 - ease(a)) * -260, bounce = a >= 1 ? Math.max(0, Math.sin((t - d - 0.25) * 18)) * 8 * Math.exp(-(t - d) * 4) : 0;
+    if (a > 0) {
+      g.save(); g.translate(x + S / 2, 250 + drop - bounce); g.rotate((k % 2 ? 1 : -1) * 0.05);
+      g.fillStyle = '#1d1b2e'; rr(g, -S / 2, -S / 2 + 9, S, S, 18); g.fill();
+      g.fillStyle = cols[k % 5]; rr(g, -S / 2, -S / 2, S, S, 18); g.fill(); g.lineWidth = 7; g.strokeStyle = '#1d1b2e'; g.stroke();
+      g.fillStyle = 'rgba(255,255,255,0.25)'; rr(g, -S / 2 + 8, -S / 2 + 6, S - 16, 12, 6); g.fill();
+      g.font = '52px Boldonse'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+      g.lineWidth = 12; g.strokeStyle = '#1d1b2e'; g.strokeText(ch, 0, 8); g.fillStyle = '#fff'; g.fillText(ch, 0, 8);
+      g.restore();
+    }
+    x += S + GAP; k++;
+  }
+}
+function pill(g, text, cx, cy, size, bg, fg, s = 1) {
+  g.save(); g.translate(cx, cy); g.scale(s, s); g.font = `700 ${size}px Outfit`; const w = g.measureText(text).width + size * 1.4, h = size * 1.6;
+  g.fillStyle = '#1d1b2e'; rr(g, -w / 2, -h / 2 + 7, w, h, h / 2); g.fill();
+  g.fillStyle = bg; rr(g, -w / 2, -h / 2, w, h, h / 2); g.fill(); g.lineWidth = 5; g.strokeStyle = '#1d1b2e'; g.stroke();
+  g.fillStyle = fg; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, 0, 3); g.restore();
+}
+const popS = (t, t0) => { const a = (t - t0) / 0.22; return a <= 0 ? 0 : a >= 1 ? 1 : 1 + Math.sin(a * Math.PI) * 0.25 - (1 - a) * 0.0; };
+function drawEndUI(t) {
+  const g = cg;
+  drawTiles(g, t);
+  if (t > 0.8) pill(g, EP.title, W / 2, 400, 40, '#ffffff', '#1d1b2e', Math.min(1, popS(t, 0.8)));
+  // tombol subscribe generik
+  const clicked = t >= 4.25, sb = popS(t, 2.9);
+  if (sb > 0) {
+    const cx = W / 2 - 50, cy = 1480, press = t >= 4.15 && t < 4.3 ? 0.92 : 1;
+    g.save(); g.translate(cx, cy); g.scale(sb * press, sb * press);
+    const w = 560, h = 132;
+    g.fillStyle = '#1d1b2e'; rr(g, -w / 2, -h / 2 + 10, w, h, 30); g.fill();
+    g.fillStyle = clicked ? '#d9d9df' : '#e53935'; rr(g, -w / 2, -h / 2, w, h, 30); g.fill(); g.lineWidth = 7; g.strokeStyle = '#1d1b2e'; g.stroke();
+    g.font = '700 62px Outfit'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillStyle = clicked ? '#3a3a46' : '#fff'; g.fillText(clicked ? 'SUBSCRIBED ✓' : 'SUBSCRIBE', 0, 4);
+    g.restore();
+    // lonceng
+    const bs = popS(t, 4.45);
+    if (bs > 0) { g.save(); g.translate(cx + 360, cy); g.scale(bs, bs); g.rotate(Math.sin(t * 30) * 0.3 * Math.exp(-(t - 4.45) * 3));
+      g.fillStyle = '#1d1b2e'; g.beginPath(); g.arc(0, 8, 66, 0, 7); g.fill(); g.fillStyle = '#ffd23f'; g.beginPath(); g.arc(0, 0, 66, 0, 7); g.fill(); g.lineWidth = 7; g.strokeStyle = '#1d1b2e'; g.stroke();
+      g.fillStyle = '#1d1b2e'; g.beginPath(); g.moveTo(-30, 20); g.quadraticCurveTo(-30, -38, 0, -38); g.quadraticCurveTo(30, -38, 30, 20); g.lineTo(38, 28); g.lineTo(-38, 28); g.closePath(); g.fill();
+      g.beginPath(); g.arc(0, 36, 9, 0, 7); g.fill(); g.restore(); }
+    // kursor
+    if (t > 3.3 && t < 5.2) {
+      const a = ease((t - 3.3) / 0.8), x = lerp(cx + 420, cx + 60, a), y = lerp(cy + 330, cy + 40, a), s = t >= 4.15 && t < 4.3 ? 0.85 : 1;
+      g.save(); g.translate(x, y); g.scale(s * 1.6, s * 1.6); g.fillStyle = '#fff'; g.strokeStyle = '#1d1b2e'; g.lineWidth = 4; g.lineJoin = 'round';
+      g.beginPath(); g.moveTo(0, 0); g.lineTo(0, 52); g.lineTo(13, 40); g.lineTo(23, 62); g.lineTo(32, 58); g.lineTo(22, 37); g.lineTo(39, 37); g.closePath(); g.fill(); g.stroke(); g.restore();
+      if (t >= 4.15 && t < 4.5) { const r = (t - 4.15) * 400; g.strokeStyle = `rgba(255,255,255,${1 - (t - 4.15) / 0.35})`; g.lineWidth = 8; g.beginPath(); g.arc(cx + 60, cy + 40, r, 0, 7); g.stroke(); }
+    }
+  }
+  if (t > 4.7) pill(g, EP.next, W / 2, 1680, 50, '#ffd23f', '#1d1b2e', Math.min(1, popS(t, 4.7)));
+  // fade keluar
+  if (t > 5.7) { g.fillStyle = `rgba(0,0,0,${(t - 5.7) / 0.3})`; g.fillRect(0, 0, W, H); }
+}
+export function renderEnding(f) {
+  const t = f / FPS, u = t / 6;
+  Object.values(C).forEach(resetChar); props([]); STUDIO.phone.position.x = X.studio + 5.6;
+  place(C.raka, X.street - 1.45, 0.6, 0.25); place(C.mama, X.street + 1.55, 0, -0.25);
+  idle(C.raka, t); idle(C.mama, t);
+  // Mama: menunjuk ke atas ala presenter saat bicara
+  const mu = ease((t - 0.2) / 0.4) * (1 - ease((t - 2.9) / 0.4));
+  pose(C.mama, 1, lerp(0.05, 2.75, mu) + Math.sin(t * 6) * 0.06 * mu, -0.2 * mu); expr(C.mama, t < 2.9 ? 'happy' : 'gentle');
+  // Raka: melambai saat bicara, girang setelah klik
+  const ru = ease((t - 2.8) / 0.35);
+  pose(C.raka, -1, lerp(-0.05, -2.8, ru), 0.5 * ru + Math.sin(t * 11) * 0.35 * ru); expr(C.raka, t < 2.8 ? 'smug' : t < 4.25 ? 'happy' : 'laugh');
+  if (t > 4.25 && t < 4.6) C.raka.userData.body.position.y += Math.sin((t - 4.25) / 0.35 * Math.PI) * 0.5;
+  scene.updateMatrixWorld(true);
+  cam.position.set(X.street + lerp(0.2, 0, u), lerp(3.0, 3.2, u), lerp(22, 20.5, ease(u))); cam.fov = 36; cam.updateProjectionMatrix(); cam.lookAt(X.street, 3.5, 0);
+  applySky('clear', X.street, V(0, 0, 0)); updateRain(t, 0);
+  renderer.render(scene, cam);
+  cg.clearRect(0, 0, W, H); cg.drawImage(renderer.domElement, 0, 0);
+  drawEndUI(t);
+  return cap.toDataURL('image/jpeg', 0.9);
+}

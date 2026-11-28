@@ -22,3 +22,9 @@ Ekspresi: neutral, happy, smug, surprised, worried, annoyed, sad, gentle, confus
 - Butuh `words.json` dari `audio/badai-rapor/` di folder kerja.
 - `finish.sh frames mix_raw.wav out.mp4`: gabung + loudness -14 LUFS + QA.
 - Hasil: `video/Badai-Rapor.mp4` (59,8 dtk).
+
+## Akhiran (end card) Kota Kotak
+- `renderEnding(f)` di `film.js` (180 frame = 6 dtk). Render: `END=1 node render-film.cjs frames "0-179"` -> `end-frames/`.
+- Ganti teks episode lewat `setEpisode('EPISODE 2 · ...', 'Episode 3 besok!')`, atau ubah objek `EP` di `film.js`.
+- Audio: `audio/badai-rapor/akhiran_audio.py` (butuh `mama_f.wav` dan `raka_f.wav` = `akhiran-mama.wav`, `akhiran-raka.wav`).
+- Hasil: `video/Akhiran-KotaKotak-Ep1.mp4`, dan versi tersambung `video/Badai-Rapor-YT.mp4` (65,9 dtk).

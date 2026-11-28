@@ -5,9 +5,10 @@
 const { chromium } = require('playwright');
 const http = require('http'), fs = require('fs'), path = require('path');
 const [mode = 'test', spec = '0'] = process.argv.slice(2);
-const outDir = mode === 'test' ? 'test' : 'frames'; fs.mkdirSync(outDir, { recursive: true });
+const END = process.env.END === '1';
+const outDir = (END ? 'end-' : '') + (mode === 'test' ? 'test' : 'frames'); fs.mkdirSync(outDir, { recursive: true });
 const list = spec.split(',').flatMap(s => { const [a, b] = s.split('-').map(Number); return b === undefined ? [a] : Array.from({ length: b - a + 1 }, (_, i) => a + i); });
-const types = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json' };
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.ttf': 'font/ttf' };
 const srv = http.createServer((q, s) => {
   const f = path.join(process.cwd(), decodeURIComponent(q.url.split('?')[0]));
   fs.readFile(f, (e, d) => { if (e) { s.writeHead(404); return s.end(); } s.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' }); s.end(d); });
@@ -16,7 +17,7 @@ const srv = http.createServer((q, s) => {
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
   p.on('pageerror', e => console.log('[err]', e.message));
   p.on('console', m => { if (m.type() === 'error') console.log('[page]', m.text()); });
-  await p.goto(`http://localhost:${srv.address().port}/film.html`);
+  await p.goto(`http://localhost:${srv.address().port}/film.html${END ? '?end=1' : ''}`);
   await p.waitForFunction('window.__ready', null, { timeout: 120000 });
   const t0 = Date.now(); let n = 0;
   for (const f of list) {

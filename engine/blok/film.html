@@ -1,12 +1,13 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
-<style>html,body{margin:0;background:#000}</style>
+<style>@font-face{font-family:Boldonse;src:url(fonts/Boldonse-Regular.ttf)}@font-face{font-family:Outfit;src:url(fonts/Outfit-Bold.ttf);font-weight:700}html,body{margin:0;background:#000}</style>
 <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
 </head><body>
 <script type="module">
-import { renderFrame, setWords, TOTAL_FRAMES } from './film.js';
+import { renderFrame, renderEnding, END_FRAMES, setWords, TOTAL_FRAMES } from './film.js';
+await Promise.all([document.fonts.load('52px Boldonse'), document.fonts.load('700 40px Outfit')]);
 const words = await (await fetch('./words.json')).json();
 setWords(words);
-window.renderFrame = renderFrame; window.TOTAL_FRAMES = TOTAL_FRAMES; window.__ready = true;
+window.renderFrame = new URLSearchParams(location.search).get('end') ? renderEnding : renderFrame; window.TOTAL_FRAMES = TOTAL_FRAMES; window.__ready = true;
 </script>
 </body></html>
