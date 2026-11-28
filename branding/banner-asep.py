@@ -1,6 +1,6 @@
 # Banner YouTube "Asep in My Life" (2560x1440).
 # Area aman semua perangkat: 1546x423 di tengah (x 507-2053, y 508-931).
-# Karakter: Asep sarung+peci, render transparan dari pipeline kartun (karakter-asep-sarung.png).
+# Versi teks saja (tanpa karakter).
 import random
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
@@ -28,14 +28,18 @@ for _ in range(120):
     x, y, r = random.randint(0, W), random.randint(0, 420), random.choice((2, 2, 3, 4))
     a = random.randint(150, 255); d.ellipse((x - r, y - r, x + r, y + r), fill=(a, a, 230))
 
-# matahari terbenam besar di belakang Asep
-sun = Image.new("RGBA", (W, H), (0, 0, 0, 0)); sd = ImageDraw.Draw(sun)
-sd.ellipse((420, 560, 1180, 1320), fill=(255, 226, 120, 255))
-mask = sun.split()[3].copy()
-for i, yy in enumerate((900, 960, 1015)):  # garis-garis retro di matahari (hanya di dalam lingkaran)
-    sd.rectangle((400, yy, 1200, yy + 14 + i * 6), fill=(236, 120, 96, 255))
-sun.putalpha(mask)
-g = sun.filter(ImageFilter.GaussianBlur(60)); im.paste(g, (0, 0), g); im.paste(sun, (0, 0), sun)
+# sinar sunburst dari tengah (di belakang judul)
+import math
+ray = Image.new("RGBA", (W, H), (0, 0, 0, 0)); rd_ = ImageDraw.Draw(ray)
+cx, cy = 1280, 720
+for i in range(24):
+    a0 = i * 2 * math.pi / 24; a1 = a0 + math.pi / 24
+    rd_.polygon([(cx, cy), (cx + 3000 * math.cos(a0), cy + 3000 * math.sin(a0)), (cx + 3000 * math.cos(a1), cy + 3000 * math.sin(a1))], fill=(255, 230, 160, 38))
+im.paste(ray, (0, 0), ray)
+# cahaya lembut di tengah
+glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+ImageDraw.Draw(glow).ellipse((cx - 700, cy - 330, cx + 700, cy + 330), fill=(255, 200, 120, 150))
+glow = glow.filter(ImageFilter.GaussianBlur(120)); im.paste(glow, (0, 0), glow)
 d = ImageDraw.Draw(im)
 
 # awan
@@ -61,14 +65,6 @@ rumah(1500, 1150, 170); rumah(1800, 1120, 210); rumah(2250, 1160, 160); rumah(12
 kelapa(1380, 1260, 330); kelapa(2120, 1250, 380); kelapa(380, 1270, 300)
 d.rectangle((0, 1250, W, H), fill=(44, 18, 48))
 
-# ---- Asep ----
-ch = Image.open(HERE + "karakter-asep-sarung.png").convert("RGBA").crop((500, 480, 1500, 2960))
-k = 0.36
-ch = ch.resize((int(ch.width * k), int(ch.height * k)), Image.LANCZOS)
-ox, oy = 790 - ch.width // 2, 515
-sh = Image.new("RGBA", ch.size, (0, 0, 0, 0)); sh.paste((0, 0, 0, 120), mask=ch.split()[3]); sh = sh.filter(ImageFilter.GaussianBlur(14))
-im.paste(sh, (ox + 16, oy + 18), sh); im.paste(ch, (ox, oy), ch)
-
 # ---- judul ----
 L = Image.new("RGBA", (W, H), (0, 0, 0, 0)); ld = ImageDraw.Draw(L)
 def judul(text, x, y, size, fills, extr, rot, gap, anchor_left=True):
@@ -84,8 +80,24 @@ def judul(text, x, y, size, fills, extr, rot, gap, anchor_left=True):
         L.paste(G, (int(x + w_ / 2 - size), int(y + (-10 if i % 2 else 8) - size)), G)
         x += w_ + gap
 
-judul("ASEP", 1190, 625, 220, [(255, 216, 74), (255, 255, 255)], 20, 6, 14)
-judul("in My Life", 1210, 780, 112, [(255, 255, 255), (255, 140, 190)], 12, 4, 6)
+def lebar(text, size, gap):
+    f = LIL(size); return sum(f.getlength(c) for c in text) + gap * (len(text.replace(" ", "")) - 1)
+judul("ASEP", 1280 - lebar("ASEP", 260, 22) / 2, 617, 260, [(255, 216, 74), (255, 110, 180), (110, 220, 255), (255, 255, 255)], 24, 7, 22)
+judul("in My Life", 1280 - lebar("in My Life", 108, 8) / 2, 776, 108, [(255, 255, 255)], 12, 4, 8)
+# bintang-bintang kartun di sekitar judul
+def bintang(x, y, r, col, rot=0):
+    pts = []
+    for i in range(10):
+        rr = r if i % 2 == 0 else r * 0.45; a_ = math.radians(rot + i * 36 - 90)
+        pts.append((x + rr * math.cos(a_), y + rr * math.sin(a_)))
+    ld.polygon(pts, fill=col, outline=INK, width=8)
+bintang(860, 545, 58, (255, 216, 74), 10); bintang(1745, 575, 50, (255, 110, 180), -12)
+bintang(1760, 800, 38, (110, 220, 255), 20); bintang(820, 800, 40, (255, 255, 255), -8)
+# huruf "Haha!" kecil miring
+for (tx, ty, rot, txt) in ((680, 680, 12, "HAHA!"), (1890, 690, -12, "WKWK!")):
+    G = Image.new("RGBA", (420, 200), (0, 0, 0, 0))
+    ImageDraw.Draw(G).text((210, 100), txt, font=LIL(76), fill=(255, 255, 255), anchor="mm", stroke_width=9, stroke_fill=INK)
+    G = G.rotate(rot, resample=Image.BICUBIC); L.paste(G, (tx - 210, ty - 100), G)
 sh = Image.new("RGBA", L.size, (0, 0, 0, 0)); sh.paste((0, 0, 0, 140), mask=L.split()[3]); sh = sh.filter(ImageFilter.GaussianBlur(16))
 im.paste(sh, (14, 20), sh); im.paste(L, (0, 0), L)
 
@@ -94,10 +106,11 @@ rib = Image.new("RGBA", (860, 110), (0, 0, 0, 0)); rd = ImageDraw.Draw(rib)
 rd.polygon([(0, 28), (60, 28), (60, 96), (0, 96), (28, 62)], fill=(200, 60, 140), outline=INK)
 rd.polygon([(860, 28), (800, 28), (800, 96), (860, 96), (832, 62)], fill=(200, 60, 140), outline=INK)
 rd.rounded_rectangle((40, 12, 820, 100), 20, fill=(255, 255, 255), outline=INK, width=8)
-rd.text((430, 56), "Kartun komedi sehari-hari · Malam Komedi", font=FRE(38), fill=INK, anchor="mm")
+rd.text((430, 56), "Cerita lucu sehari-hari · Malam Komedi", font=FRE(38), fill=INK, anchor="mm")
+rib = rib.resize((int(rib.width * 0.8), int(rib.height * 0.8)), Image.LANCZOS)
 rib = rib.rotate(1.5, resample=Image.BICUBIC, expand=True)
 rsh = Image.new("RGBA", rib.size, (0, 0, 0, 0)); rsh.paste((0, 0, 0, 130), mask=rib.split()[3]); rsh = rsh.filter(ImageFilter.GaussianBlur(10))
-rx, ry = 1600 - rib.width // 2, 875 - rib.height // 2
+rx, ry = 1280 - rib.width // 2, 878 - rib.height // 2
 im.paste(rsh, (rx + 10, ry + 14), rsh); im.paste(rib, (rx, ry), rib)
 
 im.save(HERE + "banner-asep-in-my-life.png")
