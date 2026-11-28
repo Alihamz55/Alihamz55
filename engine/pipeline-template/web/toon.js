@@ -2620,6 +2620,9 @@ export const OUTFITS = {
   ibuBungaCoklat: { tunic: "#8a5a3a", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#8a5a3a", floral: "#f2c94c", bun: true, glasses: true },
   darmanGaris: { tunic: "#f4f1ea", skin: "#dca27a", hair: "#4e4844", arms: "#dca27a", legs: "#dca27a", stripes: "#3a6fd0", sarung: "#8a8f98", plaid: "#5a5f68", moustache: "#3a2a20" },
   ucupMerah: { tunic: "#d8322f", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a4a6a", pants: "#3a4a6a", bedhead: true },
+  asepRompi: { tunic: "#8a5a32", skin: "#d9a07a", hair: "#2a1a10", arms: "#f4f1ea", legs: "#6a5a48", pants: "#6a5a48", koko: true },
+  jali: { tunic: "#3a6fd0", skin: "#c99067", hair: "#1a120c", arms: "#3a6fd0", legs: "#2b2f3a", pants: "#2b2f3a", zipJacket: true, bedhead: true, chain: "#c9cfd6" },
+  ucupHijau: { tunic: "#2f8a4a", skin: "#d9a07a", hair: "#3a2418", arms: "#d9a07a", legs: "#3a4a6a", pants: "#3a4a6a", bedhead: true },
   ibuDaster: { tunic: "#3a8fd5", skin: "#f0c49c", hair: "#2b211c", arms: "#f0c49c", dress: "#3a8fd5", bun: true, glasses: true, kebaya: "#ffffff" },
   teman: { tunic: "#8fa8d8", skin: "#d9a07a", hair: "#3a2418", arms: "#8fa8d8", legs: "#8fa8d8", stripes: "#5f7bb5", bedhead: true },
 };
@@ -4459,3 +4462,14 @@ export const fxMejaRendang = (p, empty = 0, t = 0) => { const g = p.g; g.save();
   else { g.fillStyle = "#7a3a1a"; for (const [x, y] of [[270, 612], [330, 608], [300, 620]]) { g.beginPath(); g.arc(x, y, 5, 0, 7); g.fill(); } }
   g.beginPath(); g.ellipse(470, 625, 50, 16, 0, 0, 7); g.fillStyle = "#f4f1ea"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 6; g.stroke(); g.fillStyle = "#f8f8f4"; g.beginPath(); g.ellipse(470, 610, 36, 18, 0, Math.PI, 0); g.fill();
   g.restore(); };
+
+// sepasang sendal jepit beda warna (close-up) dan es teh plastik
+export const fxSendalBeda = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  for (const [x, c] of [[200, "#d8322f"], [400, "#2a6ad0"]]) { g.beginPath(); g.ellipse(x, 600, 80, 190, 0, 0, 7); g.fillStyle = c; g.fill(); g.strokeStyle = INKC; g.lineWidth = 10; g.stroke();
+    g.strokeStyle = "#f4f1ea"; g.lineWidth = 14; g.beginPath(); g.moveTo(x - 60, 640); g.quadraticCurveTo(x, 480, x + 60, 640); g.stroke(); g.beginPath(); g.moveTo(x, 520); g.lineTo(x, 470); g.stroke(); }
+  g.restore(); };
+export const fxEsTeh = (p) => { const g = p.g; g.save(); g.lineJoin = "round"; const INKC = "#14101a";
+  g.beginPath(); g.moveTo(200, 360); g.lineTo(400, 360); g.lineTo(370, 760); g.lineTo(230, 760); g.closePath(); g.fillStyle = "rgba(220,240,255,0.55)"; g.fill(); g.strokeStyle = INKC; g.lineWidth = 8; g.stroke();
+  g.beginPath(); g.moveTo(212, 440); g.lineTo(388, 440); g.lineTo(370, 750); g.lineTo(230, 750); g.closePath(); g.fillStyle = "#b8662a"; g.fill();
+  g.fillStyle = "rgba(255,255,255,0.75)"; for (const [x, y] of [[260, 480], [320, 520], [280, 590], [340, 640]]) g.fillRect(x, y, 34, 34);
+  g.strokeStyle = "#e8344a"; g.lineWidth = 12; g.beginPath(); g.moveTo(320, 700); g.lineTo(350, 250); g.lineTo(390, 220); g.stroke(); g.restore(); };
